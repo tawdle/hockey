@@ -51,6 +51,9 @@ Hockey::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   # config.action_mailer.raise_delivery_errors = false
 
+  # So devise can send email
+  config.action_mailer.default_url_options = { :host => 'hockey.agulnick.com' }
+
   # Enable threaded mode
   # config.threadsafe!
 

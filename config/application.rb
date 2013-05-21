@@ -62,6 +62,9 @@ module Hockey
     # Enable the asset pipeline
     config.assets.enabled = true
 
+    # Recommended by devise when deploying on Heroku
+    config.assets.initialize_on_precompile = false
+
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
   end
