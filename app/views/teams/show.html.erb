@@ -1,0 +1,20 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Name:</b>
+  <%= @team.name %>
+</p>
+
+<p>
+  <b>League:</b>
+  <%= @team.league.name %>
+</p>
+
+<p>
+  <b>Managers:</b>
+  <%#Turn this into a link once user profiles are available.%>
+  <%= @team.managers.collect {|manager| manager.name }.join(", ") %>
+</p>
+
+<%= link_to 'Edit', edit_team_path(@team) %> |
+<%= link_to 'Back', teams_path %>
