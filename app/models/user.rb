@@ -13,14 +13,16 @@ class User < ActiveRecord::Base
   validates_format_of :name, :with => /\A[a-zA-Z0-9_]*\Z/, :message => 'can contain only alphanumeric characters'
   validates_length_of :name, :within => 3..20
 
+  has_many :authorizations, :dependent => :destroy
+
   # Add helpers for authorizations
   Authorization::GlobalRoles.each do |role|
-    define_method("#{role}?") { Authorization.where(:user_id => id, :role => role).count > 0 }
+    define_method("#{role}?") { authorizations.where(:role => role).count > 0 }
   end
 
   Authorization::ScopedRoles.each do |role|
-    define_method("#{role}_for?") { |authorizable| Authorization.where(
-      :user_id => id, :role => role, :authorizable_class => authorizable.class.name,
+    define_method("#{role}_for?") { |authorizable| authorizations.where(
+      :role => role, :authorizable_class => authorizable.class.name,
       :authorizable_id => authorizable.id).count > 0 }
   end
 end
