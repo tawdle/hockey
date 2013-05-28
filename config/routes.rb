@@ -1,4 +1,7 @@
 Hockey::Application.routes.draw do
+  resources :leagues
+
+
   devise_for :users
 
   # The priority is based upon order of creation:
