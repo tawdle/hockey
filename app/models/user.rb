@@ -15,6 +15,9 @@ class User < ActiveRecord::Base
 
   has_many :authorizations, :dependent => :destroy
 
+  has_many :team_users
+  has_many :teams, :through => :team_users
+
   # Add helpers for authorizations
   Authorization::GlobalRoles.each do |role|
     define_method("#{role}?") { authorizations.where(:role => role).count > 0 }
