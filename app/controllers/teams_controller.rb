@@ -49,7 +49,6 @@ class TeamsController < ApplicationController
         format.html { redirect_to @team, notice: 'Team was successfully created.' }
         format.json { render json: @team, status: :created, location: @team }
       else
-        debugger
         format.html { render action: "new" }
         format.json { render json: @team.errors, status: :unprocessable_entity }
       end

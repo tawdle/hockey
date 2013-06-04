@@ -1,8 +1,8 @@
 class Team < ActiveRecord::Base
   after_create :set_manager
   belongs_to :league
-  has_many :team_users
-  has_many :members, :through => :team_users, :source => :user
+  has_many :team_members
+  has_many :members, :through => :team_members
 
   attr_accessor :manager
   attr_accessible :name, :league_id, :manager

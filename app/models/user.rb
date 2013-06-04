@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
 
   has_many :authorizations, :dependent => :destroy
 
-  has_many :team_users
+  has_many :team_members, :dependent => :destroy
   has_many :teams, :through => :team_users
 
   # Add helpers for authorizations

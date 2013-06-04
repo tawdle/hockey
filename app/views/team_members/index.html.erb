@@ -1,0 +1,20 @@
+<h1>Listing members of team <%= @team.name %></h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+  </tr>
+
+<% @team_members.each do |team_member| %>
+  <tr>
+    <td><%= format_user_link(team_member.member) %></td>
+    <td><%= link_to 'Remove', team_member_path(@team, team_member), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Team Member', new_team_member_path %>
+

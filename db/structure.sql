@@ -101,23 +101,23 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: team_users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: team_members; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE TABLE team_users (
+CREATE TABLE team_members (
     id integer NOT NULL,
     team_id integer,
-    user_id integer,
+    member_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
 
 
 --
--- Name: team_users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+-- Name: team_members_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE team_users_id_seq
+CREATE SEQUENCE team_members_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -126,10 +126,10 @@ CREATE SEQUENCE team_users_id_seq
 
 
 --
--- Name: team_users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+-- Name: team_members_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE team_users_id_seq OWNED BY team_users.id;
+ALTER SEQUENCE team_members_id_seq OWNED BY team_members.id;
 
 
 --
@@ -223,7 +223,7 @@ ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::r
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY team_users ALTER COLUMN id SET DEFAULT nextval('team_users_id_seq'::regclass);
+ALTER TABLE ONLY team_members ALTER COLUMN id SET DEFAULT nextval('team_members_id_seq'::regclass);
 
 
 --
@@ -260,7 +260,7 @@ ALTER TABLE ONLY leagues
 -- Name: team_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
-ALTER TABLE ONLY team_users
+ALTER TABLE ONLY team_members
     ADD CONSTRAINT team_users_pkey PRIMARY KEY (id);
 
 
@@ -284,21 +284,21 @@ ALTER TABLE ONLY users
 -- Name: index_team_users_on_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_team_users_on_team_id ON team_users USING btree (team_id);
+CREATE INDEX index_team_users_on_team_id ON team_members USING btree (team_id);
 
 
 --
 -- Name: index_team_users_on_team_id_and_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_team_users_on_team_id_and_user_id ON team_users USING btree (team_id, user_id);
+CREATE INDEX index_team_users_on_team_id_and_user_id ON team_members USING btree (team_id, member_id);
 
 
 --
 -- Name: index_team_users_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_team_users_on_user_id ON team_users USING btree (user_id);
+CREATE INDEX index_team_users_on_user_id ON team_members USING btree (member_id);
 
 
 --
@@ -351,3 +351,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130528183821');
 INSERT INTO schema_migrations (version) VALUES ('20130528211238');
 
 INSERT INTO schema_migrations (version) VALUES ('20130603185005');
+
+INSERT INTO schema_migrations (version) VALUES ('20130604005917');
