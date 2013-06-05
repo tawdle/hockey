@@ -16,5 +16,5 @@
 
 <br />
 
-<%= link_to 'New Team Member', new_team_member_path %>
+<%= link_to 'New Team Member', new_team_member_path if can? :create, TeamMember.new(:team => @team) %>
 

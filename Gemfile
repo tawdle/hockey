@@ -23,6 +23,7 @@ end
 gem 'jquery-rails'
 
 # Manually added:
+gem 'cancan'
 gem 'debugger'
 gem 'devise'
 gem 'symbolize'

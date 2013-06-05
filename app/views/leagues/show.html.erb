@@ -5,6 +5,11 @@
   <%= @league.name %>
 </p>
 
+<p>
+  <b>Managers:</b>
+  <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
+</p>
+
 <h2>Teams</h2>
 
 <table>

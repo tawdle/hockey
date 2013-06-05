@@ -1,5 +1,6 @@
 class TeamMembersController < ApplicationController
-  before_filter :load_team
+  load_and_authorize_resource :team
+  load_and_authorize_resource :team_member
 
   def index
     @team_members = @team.team_members
@@ -31,11 +32,5 @@ class TeamMembersController < ApplicationController
       format.html { redirect_to team_members_url }
       format.json { head :no_content }
     end
-  end
-
-  private
-
-  def load_team
-    @team = Team.find(params[:team_id])
   end
 end

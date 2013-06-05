@@ -1,11 +1,8 @@
 class UsersController < ApplicationController
-  before_filter :load_user
+  load_resource
+  authorize_resource :except => :show
+  skip_authorization_check :only => :show
 
-  def show; end
-
-  private
-
-  def load_user
-    @user = User.find(params[:id])
+  def show
   end
 end

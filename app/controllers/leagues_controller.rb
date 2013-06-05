@@ -1,11 +1,9 @@
 class LeaguesController < ApplicationController
-  before_filter :require_admin
+  load_and_authorize_resource
 
   # GET /leagues
   # GET /leagues.json
   def index
-    @leagues = League.all
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @leagues }
@@ -15,8 +13,6 @@ class LeaguesController < ApplicationController
   # GET /leagues/1
   # GET /leagues/1.json
   def show
-    @league = League.find(params[:id])
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @league }
@@ -26,8 +22,6 @@ class LeaguesController < ApplicationController
   # GET /leagues/new
   # GET /leagues/new.json
   def new
-    @league = League.new
-
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @league }
@@ -36,7 +30,6 @@ class LeaguesController < ApplicationController
 
   # GET /leagues/1/edit
   def edit
-    @league = League.find(params[:id])
   end
 
   # POST /leagues
@@ -58,8 +51,6 @@ class LeaguesController < ApplicationController
   # PUT /leagues/1
   # PUT /leagues/1.json
   def update
-    @league = League.find(params[:id])
-
     respond_to do |format|
       if @league.update_attributes(params[:league])
         format.html { redirect_to @league, notice: 'League was successfully updated.' }
@@ -74,19 +65,11 @@ class LeaguesController < ApplicationController
   # DELETE /leagues/1
   # DELETE /leagues/1.json
   def destroy
-    @league = League.find(params[:id])
     @league.destroy
 
     respond_to do |format|
       format.html { redirect_to leagues_url }
       format.json { head :no_content }
     end
-  end
-
-  private
-
-  def require_admin
-    authenticate_user!
-    render :file => 'public/404.html', :formats => [:html], :status => 404, :layout => false unless current_user.admin?
   end
 end
