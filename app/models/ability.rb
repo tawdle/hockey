@@ -11,15 +11,15 @@ class Ability
     end
 
     can :read, Team
-    can :read, TeamMember
+    can :read, TeamMembership
 
     can :create, Team do |team|
       league = team.league || League.managed_by(user).first
       league && user.manager_of?(league)
     end
 
-    can [:create, :destroy], TeamMember do |team_member|
-      user.manager_of?(team_member.team)
+    can [:create, :destroy], TeamMembership do |team_membership|
+      user.manager_of?(team_membership.team)
     end
 
     # Define abilities for the passed in user here. For example:

@@ -15,8 +15,8 @@ class User < ActiveRecord::Base
 
   has_many :authorizations, :dependent => :destroy
 
-  has_many :team_members, :dependent => :destroy
-  has_many :teams, :through => :team_users
+  has_many :team_memberships, :dependent => :destroy
+  has_many :teams, :through => :team_memberships
 
   # Add helpers for authorizations
   Authorization::GlobalRoles.each do |role|
