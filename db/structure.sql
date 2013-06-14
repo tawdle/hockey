@@ -281,24 +281,24 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_team_users_on_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_team_memberships_on_member_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_team_users_on_team_id ON team_memberships USING btree (team_id);
-
-
---
--- Name: index_team_users_on_team_id_and_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_team_users_on_team_id_and_user_id ON team_memberships USING btree (team_id, member_id);
+CREATE INDEX index_team_memberships_on_member_id ON team_memberships USING btree (member_id);
 
 
 --
--- Name: index_team_users_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_team_memberships_on_member_id_and_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_team_users_on_user_id ON team_memberships USING btree (member_id);
+CREATE INDEX index_team_memberships_on_member_id_and_team_id ON team_memberships USING btree (member_id, team_id);
+
+
+--
+-- Name: index_team_memberships_on_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_team_memberships_on_team_id ON team_memberships USING btree (team_id);
 
 
 --
@@ -355,3 +355,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130603185005');
 INSERT INTO schema_migrations (version) VALUES ('20130604005917');
 
 INSERT INTO schema_migrations (version) VALUES ('20130605233442');
+
+INSERT INTO schema_migrations (version) VALUES ('20130614183906');

@@ -14,5 +14,10 @@ describe League do
       @league.name = nil
       @league.should_not be_valid
     end
+    it "requires league's name be unique" do
+      other_league = FactoryGirl.create(:league)
+      @league.name = other_league.name
+      @league.should_not be_valid
+    end
   end
 end
