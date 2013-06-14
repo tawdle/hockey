@@ -4,6 +4,8 @@ class Team < ActiveRecord::Base
   has_many :team_memberships, :dependent => :destroy
   has_many :members, :through => :team_memberships
 
+  validates_presence_of :name
+
   attr_accessor :manager
   attr_accessible :name, :league_id, :manager
 

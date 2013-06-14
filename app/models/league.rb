@@ -6,6 +6,8 @@ class League < ActiveRecord::Base
 
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
 
+  validates_presence_of :name
+
   def managers
     User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class, :authorizable_id => self.id})
   end

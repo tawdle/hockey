@@ -23,8 +23,13 @@ end
 gem 'jquery-rails'
 
 # Manually added:
+group :development, :test do
+  gem 'debugger'
+  gem "factory_girl_rails", "~> 3.0"
+  gem 'rspec-rails', '~> 2.0'
+end
+
 gem 'cancan'
-gem 'debugger'
 gem 'devise'
 gem 'symbolize'
 
