@@ -10,5 +10,10 @@ FactoryGirl.define do
     end
     password "abcd1234"
   end
+  factory :admin, :parent => :user do
+    after(:create) do |u|
+      create(:authorization, :user => u, :role => :admin)
+    end
+  end
 end
 
