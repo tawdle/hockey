@@ -18,6 +18,10 @@ class Ability
       league && user.manager_of?(league)
     end
 
+    can :edit, Team do |team|
+      user.manager_of?(team)
+    end
+
     can [:create, :destroy], TeamMembership do |team_membership|
       user.manager_of?(team_membership.team)
     end
