@@ -1,4 +1,4 @@
-<%= form_for(@team_membership) do |f| %>
+<%= form_for(@team_membership, :url => team_members_path(@team)) do |f| %>
   <% if @team_membership.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@team.errors.count, "error") %> prohibited this team member from being saved:</h2>

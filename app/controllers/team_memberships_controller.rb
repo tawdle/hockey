@@ -1,6 +1,6 @@
 class TeamMembershipsController < ApplicationController
   load_and_authorize_resource :team
-  load_and_authorize_resource :team_membership
+  load_and_authorize_resource :team_membership, :except => [:new, :create]
 
   def index
     @team_memberships = @team.team_memberships
@@ -8,10 +8,12 @@ class TeamMembershipsController < ApplicationController
 
   def new
     @team_membership = TeamMembership.new(:team => @team)
+    authorize! :create, @team_membership
   end
 
   def create
     @team_membership = TeamMembership.new(params[:team_membership].merge(team: @team))
+    authorize! :create, @team_membership
 
     respond_to do |format|
       if @team_membership.save
@@ -29,7 +31,7 @@ class TeamMembershipsController < ApplicationController
     @team_membership.destroy
 
     respond_to do |format|
-      format.html { redirect_to team_memberships_url }
+      format.html { redirect_to team_members_url(@team) }
       format.json { head :no_content }
     end
   end

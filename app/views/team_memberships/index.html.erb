@@ -9,12 +9,12 @@
 <% @team_memberships.each do |team_membership| %>
   <tr>
     <td><%= format_user_link(team_membership.member) %></td>
-    <td><%= link_to 'Remove', team_membership_path(@team, team_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    <td><%= link_to 'Remove', team_member_path(@team, team_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<%= link_to 'New Team Member', new_team_membership_path if can? :create, TeamMemberShip.new(:team => @team) %>
+<%= link_to 'New Team Member', new_team_member_path if can? :create, TeamMembership.new(:team => @team) %>
 
