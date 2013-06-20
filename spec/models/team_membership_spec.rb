@@ -20,6 +20,10 @@ describe TeamMembership do
       @team_membership.save!
       other_membership = FactoryGirl.build(:team_membership, :member => @team_membership.member, :team => @team_membership.team)
       other_membership.should_not be_valid
+      other_membership = FactoryGirl.build(:team_membership, :member => @team_membership.member)
+      other_membership.should be_valid
+      other_membership = FactoryGirl.build(:team_membership, :team => @team_membership.team)
+      other_membership.should be_valid
     end
   end
 end
