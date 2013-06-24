@@ -1,28 +1,36 @@
-<p id="notice"><%= notice %></p>
+<dl class="dl-horizontal">
+  <dt>League Name</dt>
+  <dd>
+    <%= @league.name %>
+    (<%= link_to 'edit', edit_league_path(@league) %>)
+  </dd>
 
-<p>
-  <b>Name:</b>
-  <%= @league.name %>
-</p>
+  <dt>Managers</dt>
+  <dd>
+    <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
+    (<%= link_to 'invite', new_league_manager_path(@league) %>)
+  </dd>
+</dl>
 
-<p>
-  <b>Managers:</b>
-  <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
-</p>
 
-<h2>Teams</h2>
+<h3>Teams</h3>
 
-<table>
+<table class="table table-hover">
   <tr>
     <th>Name</th>
+    <th></th>
+    <th></th>
   </tr>
 
   <% @league.teams.each do |team| %>
     <tr>
       <td><%= link_to team.name, team %></td>
+      <td><%= link_to 'Edit', edit_team_path(team) if can? :edit, team %></td>
+      <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, team %></td>
     </tr>
   <% end %>
 </table>
 
-<%= link_to 'Edit', edit_league_path(@league) %> |
+<%= link_to "New Team", new_team_path(@league), :class => "btn" %>
+
 <%= link_to 'Back', leagues_path %>
