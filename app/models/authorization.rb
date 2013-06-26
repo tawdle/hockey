@@ -8,6 +8,7 @@ class Authorization < ActiveRecord::Base
 
   validates_presence_of :user
   validates_presence_of :authorizable, :if => :authorization_is_scoped
+  validates_uniqueness_of :user_id, :scope => [:role, :authorizable_type, :authorizable_id]
 
   attr_accessible :user, :role, :authorizable
 

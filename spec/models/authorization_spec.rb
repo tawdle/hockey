@@ -17,6 +17,10 @@ describe Authorization do
         @authorization.role = nil
         @authorization.should_not be_valid
       end
+      it "should prevent duplicates" do
+        FactoryGirl.create(:authorization, :user => @authorization.user, :role => @authorization.role)
+        @authorization.should_not be_valid
+      end
     end
     context "with a scoped role" do
       before do
@@ -27,6 +31,10 @@ describe Authorization do
       end
       it "should require an authorizable" do
         @authorization.authorizable = nil
+        @authorization.should_not be_valid
+      end
+      it "should prevent duplicates" do
+        FactoryGirl.create(:authorization, :user => @authorization.user, :role => @authorization.role, :authorizable => @authorization.authorizable)
         @authorization.should_not be_valid
       end
     end

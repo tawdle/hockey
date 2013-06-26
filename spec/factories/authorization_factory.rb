@@ -7,7 +7,7 @@ FactoryGirl.define do
 
     trait :with_authorizable do
       role :manager
-      authorizable { build(:team) }
+      association :authorizable, :factory => :team
     end
   end
 end
