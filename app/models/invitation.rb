@@ -3,10 +3,14 @@ class Invitation < ActiveRecord::Base
   belongs_to :target, :polymorphic => true
 
   symbolize :state, :in => [:pending, :accepted, :declined]
-  symbolize :action, :in => [:manage, :join]
+  symbolize :predicate, :in => [:manage, :join]
+
+  attr_accessible :creator, :predicate, :target, :target_id, :target_type, :email
+
+  validates_presence_of :creator
   validates_presence_of :email
   validates_presence_of :target
-  validates_uniqueness_of :email, :scope => [:action, :target_id, :target_type]
+  validates_uniqueness_of :email, :scope => [:predicate, :target_id, :target_type]
 
   # XXX: Validate email addresss
 
@@ -16,15 +20,23 @@ class Invitation < ActiveRecord::Base
   # XXX: Convert @username to email address if neccessary
   after_create :send_invitation
 
-  def accept!
-    user = User.find_by_email(email)
-    target.send("accepted_invitation_to_#{action}", user) if user
+  def to_param
+    code
+  end
+
+  def self.find(id)
+    find_by_code!(id)
+  end
+
+  def accept!(user=nil)
+    user ||= User.find_by_email(email)
+    target.send("accepted_invitation_to_#{predicate}", user) if user
     update_attribute(:state, :accepted)
   end
 
   def decline!
     user = User.find_by_email(email)
-    target.send("declined_invitation_to_#{action}", user) if user
+    target.send("declined_invitation_to_#{predicate}", user) if user
     update_attribute(:state, :declined)
   end
 
@@ -39,6 +51,6 @@ class Invitation < ActiveRecord::Base
   end
 
   def send_invitation
-    Invitations.send("#{action}_#{target.class.name.downcase}", self)
+    InvitationMailer.send("#{predicate}_#{target.class.name.downcase}", self).deliver
   end
 end

@@ -1,0 +1,8 @@
+Hello!
+
+<%= @invitation.creator.name %> has invited you to manage the team <%= @invitation.target.name %>.
+
+Cut and paste the link below to create an account and accept <%= @invitation.creator.name %>'s invitation.
+
+<%= accept_invitation_url(@invitation) %>
+

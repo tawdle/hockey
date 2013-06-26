@@ -20,4 +20,14 @@ describe League do
       @league.should_not be_valid
     end
   end
+  describe "#accepted_invitation_to_manage" do
+    let(:league) { FactoryGirl.build(:league) }
+    let(:user) { FactoryGirl.build(:user) }
+
+    it "should add the provided user to the list of managers" do
+      expect {
+        league.accepted_invitation_to_manage(user)
+      }.to change { league.managers.count }.by(1)
+    end
+  end
 end

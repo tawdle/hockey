@@ -26,6 +26,14 @@ class Ability
       user.manager_of?(team_membership.team)
     end
 
+    can :create, Invitation do |invitation|
+      user.manager_of?(invitation.target)
+    end
+
+    can :accept, Invitation do
+      user.persisted?
+    end
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

@@ -32,6 +32,7 @@ end
 gem 'bootstrap-sass'
 gem 'cancan'
 gem 'devise'
+gem 'figaro'
 gem 'symbolize'
 
 # To use ActiveModel has_secure_password

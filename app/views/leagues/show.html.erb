@@ -8,7 +8,7 @@
   <dt>Managers</dt>
   <dd>
     <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
-    (<%= link_to 'invite', new_league_manager_path(@league) %>)
+    (<%= link_to 'invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League") %>)
   </dd>
 </dl>
 

@@ -70,7 +70,7 @@ CREATE TABLE invitations (
     state character varying(255),
     creator_id integer,
     email character varying(255),
-    action character varying(255),
+    predicate character varying(255),
     target_id integer,
     target_type character varying(255),
     created_at timestamp without time zone NOT NULL,
@@ -385,7 +385,7 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 -- Name: invitations_unique; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE UNIQUE INDEX invitations_unique ON invitations USING btree (email, action, target_type, target_id);
+CREATE UNIQUE INDEX invitations_unique ON invitations USING btree (email, predicate, target_type, target_id);
 
 
 --
@@ -418,3 +418,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130605233442');
 INSERT INTO schema_migrations (version) VALUES ('20130614183906');
 
 INSERT INTO schema_migrations (version) VALUES ('20130622000014');
+
+INSERT INTO schema_migrations (version) VALUES ('20130627183238');

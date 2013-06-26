@@ -1,12 +1,16 @@
 Hockey::Application.routes.draw do
 
   resources :teams do
-    resources :members, :controller => "team_memberships", :only => [:index, :new, :create, :destroy]
+    resources :members, :controller => "team_memberships", :only => [:new, :create, :destroy]
   end
-
 
   resources :leagues
 
+  resources :invitations, :only => [:new, :create] do
+    member do
+      get :accept
+    end
+  end
 
   devise_for :users
 
