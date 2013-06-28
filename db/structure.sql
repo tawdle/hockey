@@ -65,8 +65,7 @@ ALTER SEQUENCE authorizations_id_seq OWNED BY authorizations.id;
 --
 
 CREATE TABLE invitations (
-    id integer NOT NULL,
-    code character varying(255),
+    code character varying(255) NOT NULL,
     state character varying(255),
     creator_id integer,
     email character varying(255),
@@ -76,25 +75,6 @@ CREATE TABLE invitations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
-
-
---
--- Name: invitations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE invitations_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: invitations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE invitations_id_seq OWNED BY invitations.id;
 
 
 --
@@ -253,13 +233,6 @@ ALTER TABLE ONLY authorizations ALTER COLUMN id SET DEFAULT nextval('authorizati
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY invitations ALTER COLUMN id SET DEFAULT nextval('invitations_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::regclass);
 
 
@@ -297,7 +270,7 @@ ALTER TABLE ONLY authorizations
 --
 
 ALTER TABLE ONLY invitations
-    ADD CONSTRAINT invitations_pkey PRIMARY KEY (id);
+    ADD CONSTRAINT invitations_pkey PRIMARY KEY (code);
 
 
 --
@@ -420,3 +393,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130614183906');
 INSERT INTO schema_migrations (version) VALUES ('20130622000014');
 
 INSERT INTO schema_migrations (version) VALUES ('20130627183238');
+
+INSERT INTO schema_migrations (version) VALUES ('20130627234254');

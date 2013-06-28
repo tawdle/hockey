@@ -20,14 +20,6 @@ class Invitation < ActiveRecord::Base
   # XXX: Convert @username to email address if neccessary
   after_create :send_invitation
 
-  def to_param
-    code
-  end
-
-  def self.find(id)
-    find_by_code!(id)
-  end
-
   def accept!(user=nil)
     user ||= User.find_by_email(email)
     target.send("accepted_invitation_to_#{predicate}", user) if user
