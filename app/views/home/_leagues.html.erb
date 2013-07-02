@@ -1,0 +1,7 @@
+<% if League.managed_by(current_user).any? %>
+  <% League.managed_by(current_user).each do |league| %>
+    <div class="page-header">
+      <h2><%= league.name %> <small>You manage this league</small></h2>
+    </div>
+  <% end %>
+<% end %>
