@@ -9,6 +9,7 @@ Hockey::Application.routes.draw do
   resources :invitations, :only => [:new, :create] do
     member do
       get :accept
+      get :decline
     end
   end
 

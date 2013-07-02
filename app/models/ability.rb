@@ -30,7 +30,7 @@ class Ability
       user.manager_of?(invitation.target)
     end
 
-    can :accept, Invitation do
+    can [:accept, :decline], Invitation do
       user.persisted?
     end
 

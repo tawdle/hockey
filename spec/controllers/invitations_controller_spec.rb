@@ -47,4 +47,17 @@ describe InvitationsController do
       response.should be_success
     end
   end
+
+  describe "#decline" do
+    def do_request
+      get :decline, :id => invitation.to_param
+    end
+    it "should work" do
+      sign_in(invited_user)
+      expect {
+        do_request
+      }.to change { invitation.reload.state }.from(:pending).to(:declined)
+      response.should be_redirect
+    end
+  end
 end

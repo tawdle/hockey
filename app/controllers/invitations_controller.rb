@@ -35,4 +35,11 @@ class InvitationsController < ApplicationController
       render :congratulations
     end
   end
+
+  def decline
+    if @invitation.state == :pending
+      @invitation.decline!
+    end
+    redirect_to :root
+  end
 end
