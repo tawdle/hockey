@@ -1,0 +1,15 @@
+<% if Invitation.pending.for_user(current_user).any? %>
+  <div class="invitations">
+    <% Invitation.pending.for_user(current_user).each do |invitation| %>
+      <div class="alert alert-info">
+        <a class="close" href="#" data-dismiss="alert">&#215;</a>
+        You have been invited to <%= invitation.predicate %> <%= invitation.target.name %>.
+        <div class="btn-group" style="margin-left: 20px">
+          <%= link_to "Accept", accept_invitation_path(invitation), :class => "btn btn-small" %>
+          <%= link_to "Decline", decline_invitation_path(invitation), :class => "btn btn-small" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
