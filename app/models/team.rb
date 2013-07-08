@@ -8,11 +8,13 @@ class Team < ActiveRecord::Base
   validates_presence_of :league
 
   attr_accessor :manager
-  attr_accessible :name, :league_id, :league, :manager
+  attr_accessible :name, :logo_cache, :logo, :manager
 
   def managers
     User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class, :authorizable_id => self.id})
   end
+
+  mount_uploader :logo, LogoUploader
 
   private
 

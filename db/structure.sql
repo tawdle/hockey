@@ -159,7 +159,8 @@ CREATE TABLE teams (
     name character varying(255) NOT NULL,
     league_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    logo character varying(255)
 );
 
 
@@ -398,3 +399,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130627183238');
 INSERT INTO schema_migrations (version) VALUES ('20130627234254');
 
 INSERT INTO schema_migrations (version) VALUES ('20130702231546');
+
+INSERT INTO schema_migrations (version) VALUES ('20130708212642');

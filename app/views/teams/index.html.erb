@@ -1,7 +1,8 @@
 <h1>Listing teams</h1>
 
-<table>
+<table class="table table-hover">
   <tr>
+    <th style="width: 50px;">Logo</th>
     <th>Name</th>
     <th>League</th>
     <th></th>
@@ -11,15 +12,11 @@
 
 <% @teams.each do |team| %>
   <tr>
+    <td><%= image_tag(team.logo_url(:thumbnail), :width => 50, :height => 50) if team.logo.present? %>
     <td><%= team.name %></td>
     <td><%= team.league.name %></td>
     <td><%= link_to 'Show', team %></td>
     <td><%= link_to 'Edit', edit_team_path(team) %></td>
-    <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } %></td>
   </tr>
 <% end %>
 </table>
-
-<br />
-
-<%= link_to 'New Team', new_team_path %>
