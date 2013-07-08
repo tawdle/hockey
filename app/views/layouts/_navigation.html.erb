@@ -1,16 +1,6 @@
 <%= link_to "MyGameShot", root_path, :class => 'brand' %>
 <ul class="nav">
   <% if user_signed_in? %>
-    <% if can? :edit, League %>
-      <li>
-        <%= link_to "Leagues", leagues_path %>
-      </li>
-    <% end %>
-    <% if can? :edit, Team %>
-      <li>
-        <%= link_to "Teams", teams_path %>
-      </li>
-    <% end %>
     <li>
       <p class="navbar-text">Hello, <%= format_user_link(current_user) %>. </p>
     </li>

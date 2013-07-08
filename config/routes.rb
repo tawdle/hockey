@@ -4,7 +4,9 @@ Hockey::Application.routes.draw do
     resources :members, :controller => "team_memberships", :only => [:new, :create, :destroy]
   end
 
-  resources :leagues
+  resources :leagues do
+    resources :teams, :only => [:new, :create]
+  end
 
   resources :invitations, :only => [:new, :create] do
     member do

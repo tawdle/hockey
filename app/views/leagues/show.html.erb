@@ -1,29 +1,24 @@
-<dl class="dl-horizontal">
-  <dt>League Name</dt>
-  <dd>
-    <%= @league.name %>
-    (<%= link_to 'edit', edit_league_path(@league) %>)
-  </dd>
-
+<h2 class="page-header">
   <% if @league.logo.present? %>
-    <dt>Logo</dt>
-    <dd>
-      <%= image_tag(@league.logo_url(:thumbnail), :width => 50, :height => 50) %>
-    </dd>
+    <%= image_tag @league.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
   <% end %>
+  <%= @league.name %>
+  <small>(<%= link_to 'edit', edit_league_path(@league) %>)</small>
+</h2>
 
-  <dt>Managers</dt>
-  <dd>
-    <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
-    (<%= link_to 'invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League") %>)
-  </dd>
-</dl>
+<h3>Managers
+<small>
+  (<%= link_to 'invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League") %>)
+</small>
+</h3>
 
+<%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
 
 <h3>Teams</h3>
 
 <table class="table table-hover">
   <tr>
+    <th style="width: 50px;">Logo</th>
     <th>Name</th>
     <th></th>
     <th></th>
@@ -31,6 +26,7 @@
 
   <% @league.teams.each do |team| %>
     <tr>
+      <td><%= image_tag team.logo_url(:thumbnail), :height => 50, :width => 50 if team.logo.present? %></td>
       <td><%= link_to team.name, team %></td>
       <td><%= link_to 'Edit', edit_team_path(team) if can? :edit, team %></td>
       <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, team %></td>
@@ -38,6 +34,6 @@
   <% end %>
 </table>
 
-<%= link_to "New Team", new_team_path(@league), :class => "btn" %>
+<%= link_to "New Team", new_league_team_path(@league), :class => "btn" %>
 
 <%= link_to 'Back', leagues_path %>

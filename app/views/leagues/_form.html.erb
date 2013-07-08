@@ -18,13 +18,11 @@
 
   <%= f.hidden_field :logo_cache %>
 
-  <% if @league.logo.present? %>
-    <div class="field">
-      <%= image_tag @league.logo_url(:thumbnail), :height => 50, :width => 50 %>
-    </div>
-  <% end %>
-
   <div class="field">
+    <% if @league.logo.present? %>
+      <%= image_tag @league.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
+    <% end %>
+
     <%= f.label :logo %>
     <%= f.file_field :logo %>
   </div>
