@@ -24,7 +24,7 @@ describe TeamsController do
 
   describe "#new" do
     def do_request
-      get :new
+      get :new, :league_id => league.to_param
     end
     it "should work" do
       do_request
@@ -42,7 +42,7 @@ describe TeamsController do
 
   describe "#create" do
     def do_request
-      post :create, :team => {:name => "My New Team", :league_id => league.to_param }
+      post :create, :team => {:name => "My New Team" }, :league_id => league.to_param
     end
     it "should work" do
       do_request

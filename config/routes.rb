@@ -1,6 +1,6 @@
 Hockey::Application.routes.draw do
 
-  resources :teams do
+  resources :teams, :only => [:index, :show, :edit, :update, :destroy] do
     resources :members, :controller => "team_memberships", :only => [:new, :create, :destroy]
   end
 

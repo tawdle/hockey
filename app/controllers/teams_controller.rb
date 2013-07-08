@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
+  load_and_authorize_resource :league, :only => [:new, :create]
   load_and_authorize_resource
 
   # GET /teams
@@ -35,10 +36,10 @@ class TeamsController < ApplicationController
   def edit
   end
 
-  # POST /teams
-  # POST /teams.json
+  # POST /leagues/1/teams
+  # POST /leagues/1/teams.json
   def create
-    @team = Team.new(params[:team].merge(:manager => current_user))
+    @team = Team.new(params[:team].merge(:manager => current_user, :league => @league))
 
     respond_to do |format|
       if @team.save
