@@ -27,7 +27,8 @@ class Ability
     end
 
     can :create, Invitation do |invitation|
-      user.manager_of?(invitation.target)
+      user.manager_of?(invitation.target) ||
+        (invitation.target.is_a? Team && user.manager_of?(invitation.target.league))
     end
 
     can [:accept, :decline], Invitation do
