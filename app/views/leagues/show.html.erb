@@ -5,6 +5,13 @@
     (<%= link_to 'edit', edit_league_path(@league) %>)
   </dd>
 
+  <% if @league.logo.present? %>
+    <dt>Logo</dt>
+    <dd>
+      <%= image_tag(@league.logo_url(:thumbnail), :width => 50, :height => 50) %>
+    </dd>
+  <% end %>
+
   <dt>Managers</dt>
   <dd>
     <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>

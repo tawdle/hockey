@@ -4,6 +4,7 @@
 
 <table class="table table-hover">
   <tr>
+    <th>Logo</th>
     <th>Name</th>
     <th></th>
     <th></th>
@@ -11,6 +12,7 @@
 
 <% @leagues.each do |league| %>
   <tr>
+    <td><%= image_tag(league.logo_url(:thumbnail)) if league.logo.present? %></td>
     <td><%= link_to league.name, league %></td>
     <td><%= link_to 'Edit', edit_league_path(league) if can? :edit, league %></td>
     <td><%= link_to 'Destroy', league, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, league %></td>

@@ -31,6 +31,8 @@ end
 
 gem 'bootstrap-sass'
 gem 'cancan'
+gem 'carrierwave'
+gem 'cloudinary'
 gem 'devise'
 gem 'figaro'
 gem 'symbolize'

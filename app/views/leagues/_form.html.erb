@@ -15,6 +15,20 @@
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
+
+  <%= f.hidden_field :logo_cache %>
+
+  <% if @league.logo.present? %>
+    <div class="field">
+      <%= image_tag @league.logo_url(:thumbnail), :height => 50, :width => 50 %>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :logo %>
+    <%= f.file_field :logo %>
+  </div>
+
   <div class="actions">
     <%= f.submit :class => "btn-primary" %>
   </div>
