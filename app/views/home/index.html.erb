@@ -1,3 +1,4 @@
-<%= render :partial => "invitations" %>
-
-<%= render :partial => "leagues" %>
+<% if current_user %>
+  <%= render :partial => "invitations" %>
+  <%= render :partial => "leagues" %>
+<% end %>
