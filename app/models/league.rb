@@ -18,7 +18,7 @@ class League < ActiveRecord::Base
     Authorization.create!(:user => user, :role => :manager, :authorizable => self)
   end
 
-  def declined_invitation_to_manage(invitation)
+  def declined_invitation_to_manage(user)
     # Whatevs
   end
 end

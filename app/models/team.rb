@@ -14,6 +14,14 @@ class Team < ActiveRecord::Base
     User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class, :authorizable_id => self.id})
   end
 
+  def accepted_invitation_to_manage(user)
+    Authorization.create!(:user => user, :role => :manager, :authorizable => self)
+  end
+
+  def declined_invitation_to_manage(user)
+    # Whatevs
+  end
+
   mount_uploader :logo, LogoUploader
 
   private

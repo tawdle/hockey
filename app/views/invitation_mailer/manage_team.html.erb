@@ -1,0 +1,13 @@
+<p>Hello!</p>
+
+<p><%= @invitation.creator.name %> has invited you to manage the team <%= @invitation.target.name %>. </p>
+
+<p>Click the link below to create an account and accept <%= @invitation.creator.name %>'s invitation.<p>
+
+<%= link_to "I accept!", accept_invitation_url(@invitation) %>
+
+<p>If this link doesn't work, cut and paste the following link into your browser:<p>
+
+<%= accept_invitation_url(@invitation) %>
+
+
