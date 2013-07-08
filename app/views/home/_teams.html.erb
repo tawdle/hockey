@@ -1,0 +1,7 @@
+<% if Team.managed_by(current_user).any? %>
+  <% Team.managed_by(current_user).each do |team| %>
+    <div class="page-header">
+      <h2><%= team.name %> <small>You manage this team</small></h2>
+    </div>
+  <% end %>
+<% end %>
