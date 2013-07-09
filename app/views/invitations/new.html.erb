@@ -5,7 +5,7 @@
 <%= form_for @invitation do |f| %>
   <% if @invitation.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@invitation.errors.count, "error") %> prohibited this league from being saved:</h2>
+      <h2><%= pluralize(@invitation.errors.count, "error") %> prohibited this invitation from being created:</h2>
 
       <ul>
       <% @invitation.errors.full_messages.each do |msg| %>
@@ -16,7 +16,7 @@
   <% end %>
 
   <div class="fields">
-    <%= f.text_field :email %>
+    <%= f.text_field :username_or_email %>
     <%= f.hidden_field :predicate, :value => @invitation.predicate %>
     <%= f.hidden_field :target_id, :value => @invitation.target.to_param %>
     <%= f.hidden_field :target_type, :value => @invitation.target.class.to_s %>
