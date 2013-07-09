@@ -6,4 +6,6 @@ class TeamMembership < ActiveRecord::Base
   validates_presence_of :team
   validates_presence_of :member
   validates_uniqueness_of :member_id, :scope => :team_id
+
+  scope :for_user, lambda {|user| where(:member_id => user.id) }
 end

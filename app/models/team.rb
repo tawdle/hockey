@@ -25,6 +25,14 @@ class Team < ActiveRecord::Base
     # Whatevs
   end
 
+  def accepted_invitation_to_join(user)
+    TeamMembership.create!(:member => user, :team => self)
+  end
+
+  def declined_invitation_to_join(user)
+    # Whatevs
+  end
+
   mount_uploader :logo, LogoUploader
 
   private

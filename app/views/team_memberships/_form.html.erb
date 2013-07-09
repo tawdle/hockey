@@ -13,10 +13,10 @@
 
   <div class="field">
     <%= f.label :member %><br />
-    <%= f.collection_select :member_id, User.all, :id, :name %>
+    <%= f.collection_select :member_id, User.all - @team.members, :id, :name %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit :class => "btn btn-primary" %>
   </div>
 <% end %>
 

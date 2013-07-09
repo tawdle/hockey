@@ -1,5 +1,5 @@
 class TeamMembershipsController < ApplicationController
-  load_and_authorize_resource :team
+  load_and_authorize_resource :team, :only => [:new, :create]
   load_and_authorize_resource :team_membership, :except => [:new, :create]
 
   def index
@@ -17,7 +17,7 @@ class TeamMembershipsController < ApplicationController
 
     respond_to do |format|
       if @team_membership.save
-        format.html { redirect_to action: "index", notice: 'Team member was successfully added.' }
+        format.html { redirect_to @team, notice: "#{@team_membership.member.name} was successfully added as a team member." }
         format.json { render json: @team_membership, status: :created, location: @team_membership }
       else
         format.html { render action: "new" }

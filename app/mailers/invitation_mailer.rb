@@ -22,4 +22,10 @@ class InvitationMailer < ActionMailer::Base
 
     mail to: @invitation.email, subject: "[MyGameShot] Invitation to Manage Team"
   end
+
+  def join_team(invitation)
+    @invitation = invitation
+
+    mail to: @invitation.email, subject: "[MyGameShot] Invitation to Join Team"
+  end
 end

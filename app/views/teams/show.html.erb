@@ -6,7 +6,7 @@
   <small>(<%= link_to 'edit', edit_team_path(@team) %>)</small>
 </h2>
 
-<h3>Managers
+<h3 class="page-header">Managers
   <% if can? :create, Invitation.new(:target => @team) %>
     <small>
       (<%= link_to 'invite', new_invitation_path(:predicate => :manage, :target_id => @team.to_param, :target_type => "Team") %>)
@@ -16,7 +16,32 @@
 
 <%= @team.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
 
+<h3 class="page-header">Players
+  <% if can? :create, Invitation.new(:target => @team) %>
+    <small>
+      (<%= link_to 'invite', new_invitation_path(:predicate => :join, :target_id => @team.to_param, :target_type => "Team") %>)
+    </small>
+  <% end %>
+</h3>
+
+<table class="table table-hover">
+  <tr>
+    <th>Name</th>
+    <th></th>
+  </tr>
+
+<% @team.team_memberships.each do |team_membership| %>
+  <tr>
+    <td><%= format_user_link(team_membership.member) %></td>
+    <td><%= link_to 'Remove', team_member_path(team_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
 <br />
 
-<%= link_to 'Edit', edit_team_path(@team) %> |
+<%= link_to 'Add Team Member', new_team_member_path(@team), :class => "btn" if can? :create, TeamMembership.new(:team => @team) %>
+
+<br />
+
 <%= link_to 'Back', league_path(@team.league) %>
