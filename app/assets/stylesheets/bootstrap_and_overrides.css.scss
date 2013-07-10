@@ -7,3 +7,12 @@ input[type=file] {
   line-height: inherit;
 }
 
+span.username {
+  a {
+    color: inherit;
+  }
+  a:hover {
+    color: #0088CC;
+  }
+}
+

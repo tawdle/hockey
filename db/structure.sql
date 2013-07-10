@@ -29,6 +29,39 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: activity_feed_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE activity_feed_items (
+    id integer NOT NULL,
+    target_id integer,
+    target_type character varying(255),
+    message character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: activity_feed_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE activity_feed_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: activity_feed_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE activity_feed_items_id_seq OWNED BY activity_feed_items.id;
+
+
+--
 -- Name: authorizations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -228,6 +261,13 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY activity_feed_items ALTER COLUMN id SET DEFAULT nextval('activity_feed_items_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY authorizations ALTER COLUMN id SET DEFAULT nextval('authorizations_id_seq'::regclass);
 
 
@@ -257,6 +297,14 @@ ALTER TABLE ONLY teams ALTER COLUMN id SET DEFAULT nextval('teams_id_seq'::regcl
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: activity_feed_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY activity_feed_items
+    ADD CONSTRAINT activity_feed_items_pkey PRIMARY KEY (id);
 
 
 --
@@ -401,3 +449,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130627234254');
 INSERT INTO schema_migrations (version) VALUES ('20130702231546');
 
 INSERT INTO schema_migrations (version) VALUES ('20130708212642');
+
+INSERT INTO schema_migrations (version) VALUES ('20130709184114');

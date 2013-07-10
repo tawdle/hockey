@@ -30,12 +30,12 @@
     <th></th>
   </tr>
 
-<% @team.team_memberships.each do |team_membership| %>
-  <tr>
-    <td><%= format_user_link(team_membership.member) %></td>
-    <td><%= link_to 'Remove', team_member_path(team_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
-<% end %>
+  <% @team.team_memberships.each do |team_membership| %>
+    <tr>
+      <td><%= format_user_link(team_membership.member) %></td>
+      <td><%= link_to 'Remove', team_member_path(team_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+    </tr>
+  <% end %>
 </table>
 
 <br />
@@ -43,5 +43,7 @@
 <%= link_to 'Add Team Member', new_team_member_path(@team), :class => "btn" if can? :create, TeamMembership.new(:team => @team) %>
 
 <br />
+
+<%= render :partial => "activity_feed" %>
 
 <%= link_to 'Back', league_path(@team.league) %>

@@ -15,4 +15,21 @@ describe Team do
       @team.should_not be_valid
     end
   end
+
+  describe "#accepted_invitation_to_join" do
+    let(:team) { FactoryGirl.create(:team) }
+    let(:user) { FactoryGirl.create(:user) }
+    it "should add the user to the list of team members" do
+      expect {
+        team.accepted_invitation_to_join(user)
+      }.to change { team.members.include?(user) }.from(false).to(true)
+    end
+
+    it "should generate an activity feed item" do
+      expect {
+        team.accepted_invitation_to_join(user)
+      }.to change { team.activity_feed_items.count }.by(1)
+    end
+  end
+
 end

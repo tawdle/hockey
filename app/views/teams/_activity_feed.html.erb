@@ -1,0 +1,15 @@
+<h3 class="header">Activity</h3>
+<table class="table">
+  <tr>
+    <th>Activity</th>
+    <th>Time</th>
+  </tr>
+
+  <% @team.activity_feed_items.each do |item| %>
+    <tr>
+      <td><%= format_message_with_usernames(item.message).html_safe %></td>
+      <td><%= distance_of_time_in_words_to_now(item.created_at) %> ago</td>
+    </tr>
+  <% end %>
+</table>
+
