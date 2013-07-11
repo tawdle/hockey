@@ -4,6 +4,10 @@ class Ability
   def initialize(user)
     user ||= User.new
 
+    can [:edit, :update], User do |user_object|
+      user_object == user
+    end
+
     can :read, League
 
     can [:create, :update, :destroy], League do |league|

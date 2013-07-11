@@ -1,0 +1,35 @@
+<h2>Editing user profile for @<%= @user.name %>
+<%= form_for(@user) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@user.errors.count, "error") %> prohibited this user profile from being saved:</h2>
+
+      <ul>
+      <% @user.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.text_field :email %>
+  </div>
+
+  <%= f.hidden_field :avatar_cache %>
+
+  <div class="field">
+    <% if @user.avatar.present? %>
+      <%= image_tag @user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
+    <% end %>
+
+    <%= f.label :avatar %>
+    <%= f.file_field :avatar %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit :class => "btn-primary" %>
+  </div>
+<% end %>
+

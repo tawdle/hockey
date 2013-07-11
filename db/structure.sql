@@ -38,7 +38,8 @@ CREATE TABLE activity_feed_items (
     target_type character varying(255),
     message character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    creator integer
 );
 
 
@@ -234,7 +235,8 @@ CREATE TABLE users (
     last_sign_in_ip character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    name character varying(255)
+    name character varying(255),
+    avatar character varying(255)
 );
 
 
@@ -451,3 +453,7 @@ INSERT INTO schema_migrations (version) VALUES ('20130702231546');
 INSERT INTO schema_migrations (version) VALUES ('20130708212642');
 
 INSERT INTO schema_migrations (version) VALUES ('20130709184114');
+
+INSERT INTO schema_migrations (version) VALUES ('20130711000658');
+
+INSERT INTO schema_migrations (version) VALUES ('20130711220356');

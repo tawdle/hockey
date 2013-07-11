@@ -6,7 +6,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   # Setup accessible (or protected) attributes for your model
+  attr_accessor :avatar_cache
   attr_accessible :email, :password, :password_confirmation, :remember_me, :name
+  attr_accessible :avatar, :avatar_cache
 
   validates_presence_of :name
   validates_uniqueness_of :name, :case_sensitive => false
@@ -17,6 +19,8 @@ class User < ActiveRecord::Base
 
   has_many :team_memberships, :dependent => :destroy
   has_many :teams, :through => :team_memberships
+
+  mount_uploader :avatar, AvatarUploader
 
   # Add helpers for authorizations
   Authorization::GlobalRoles.each do |role|

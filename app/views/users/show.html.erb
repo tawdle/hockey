@@ -1,6 +1,9 @@
-<p id="notice"><%= notice %></p>
+<h2 class="page-header">User Profile</h2>
+
+<%= image_tag(@user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px;") %>
 
 <p>
-  <b>User profile for:</b>
   <%= @user.name %>
 </p>
+
+<%= link_to "Edit", edit_user_path(@user), :class => "btn" %>
