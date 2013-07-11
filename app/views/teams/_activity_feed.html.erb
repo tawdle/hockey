@@ -1,14 +1,16 @@
 <h3 class="header">Activity</h3>
 <table class="table">
   <tr>
+    <th style="width: 50px;"></th>
     <th>Activity</th>
     <th>Time</th>
   </tr>
 
   <% @team.activity_feed_items.each do |item| %>
     <tr>
+      <td><%= image_tag(item.avatar_url(:thumbnail), :width => 50, :height => 50) %>
       <td><%= format_message_with_usernames(item.message).html_safe %></td>
-      <td><%= distance_of_time_in_words_to_now(item.created_at) %> ago</td>
+      <td><span title="<%= item.created_at %>"><%= distance_of_time_in_words_to_now(item.created_at) %> ago</span></td>
     </tr>
   <% end %>
 </table>
