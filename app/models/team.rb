@@ -1,16 +1,21 @@
 class Team < ActiveRecord::Base
   after_create :set_manager
   belongs_to :league
+  has_one :user, :as => :nameable # solely for team.name
   has_many :team_memberships, :dependent => :destroy
   has_many :members, :through => :team_memberships
   has_many :authorizations, :as => :authorizable
   has_many :activity_feed_items, :as => :target
+  delegate :name, :to => :user
 
-  validates_presence_of :name
+  validates_presence_of :user
+  validates_presence_of :full_name
   validates_presence_of :league
 
   attr_accessor :manager
-  attr_accessible :name, :logo_cache, :logo, :manager
+  attr_accessible :full_name, :logo_cache, :logo, :manager, :user_attributes, :league
+
+  accepts_nested_attributes_for :user
 
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
 

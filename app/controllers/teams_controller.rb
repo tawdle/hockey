@@ -25,6 +25,7 @@ class TeamsController < ApplicationController
   # GET /teams/new.json
   def new
     @team = Team.new
+    @team.build_user
 
     respond_to do |format|
       format.html # new.html.erb
@@ -39,6 +40,14 @@ class TeamsController < ApplicationController
   # POST /leagues/1/teams
   # POST /leagues/1/teams.json
   def create
+    params[:team] ||= {}
+    params[:team][:user_attributes] ||= {}
+    username = params[:team][:user_attributes][:name]
+    params[:team][:user_attributes] =  {
+      :name => username,
+      :email => "#{username}_fake@mygameshot.com",
+      :password => Digest::SHA1.hexdigest(Time.now.to_s) }
+
     @team = Team.new(params[:team].merge(:manager => current_user, :league => @league))
 
     respond_to do |format|

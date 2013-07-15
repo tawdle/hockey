@@ -2,17 +2,31 @@ require 'spec_helper'
 
 describe Team do
   describe "#validations" do
-    before do
-      @team = FactoryGirl.build(:team)
-    end
+    let(:team) { FactoryGirl.build(:team) }
     it "should generate a valid object" do
-      @team.should be_valid
+      team.should be_valid
     end
-    it "should require a name" do
-      @team.name = ""
-      @team.should_not be_valid
-      @team.name = nil
-      @team.should_not be_valid
+    it "should require a full_name" do
+      team.full_name = ""
+      team.should_not be_valid
+      team.full_name = nil
+      team.should_not be_valid
+    end
+    it "should require a league" do
+      team.league = nil
+      team.should_not be_valid
+    end
+    it "should require a user" do
+      team.user = nil
+      team.should_not be_valid
+    end
+  end
+
+  describe "#name" do
+    let(:team) { FactoryGirl.build(:team) }
+
+    it "should delegate to the user object" do
+      team.name.should == team.user.name
     end
   end
 

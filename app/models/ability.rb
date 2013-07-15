@@ -23,7 +23,11 @@ class Ability
     end
 
     can [:edit, :update], Team do |team|
-      user.manager_of?(team)
+      user.manager_of?(team) || user.manager_of?(team.league)
+    end
+
+    can :destroy, Team do |team|
+      user.admin?
     end
 
     can [:create, :destroy], TeamMembership do |team_membership|
@@ -32,7 +36,7 @@ class Ability
 
     can :create, Invitation do |invitation|
       user.manager_of?(invitation.target) ||
-        (invitation.target.is_a? Team && user.manager_of?(invitation.target.league))
+        (invitation.target.is_a?(Team) && user.manager_of?(invitation.target.league))
     end
 
     can [:accept, :decline], Invitation do
