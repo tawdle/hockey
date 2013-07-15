@@ -14,11 +14,14 @@ class User < ActiveRecord::Base
   validates_uniqueness_of :name, :case_sensitive => false
   validates_format_of :name, :with => /\A[a-zA-Z0-9_]*\Z/, :message => 'can contain only alphanumeric characters'
   validates_length_of :name, :within => 3..20
+  validates_uniqueness_of :nameable_id, :scope => :nameable_type, :allow_nil => true
 
   has_many :authorizations, :dependent => :destroy
 
   has_many :team_memberships, :dependent => :destroy
   has_many :teams, :through => :team_memberships
+
+  belongs_to :nameable, :polymorphic => true
 
   mount_uploader :avatar, AvatarUploader
 
