@@ -19,7 +19,7 @@
       <span class="pull-left" style="margin-right: 10px;">
         <%= format_user_link(team.user) %>
       </span>
-      <%= render :partial => 'follow_button', :locals => {:following => @following[team.id], :unfollowing => @unfollowing[team.id] } %>
+      <%= render :partial => 'follow_button', :locals => {:target => team } %>
     </td>
     <td><%= team.league.name %></td>
     <td><%= link_to 'Edit', edit_team_path(team) %></td>

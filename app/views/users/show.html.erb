@@ -4,16 +4,6 @@
 
 <%= @user.name %>
 
-<% if @following %>
-  <%= form_for @following do |f| %>
-    <%= f.hidden_field :user_id %>
-    <%= f.hidden_field :target_id %>
-    <%= f.submit "Follow", :class => "btn btn-mini btn-primary" %>
-  <% end %>
-<% elsif @unfollowing %>
-  <%= form_for @unfollowing, :method => "delete" do |f| %>
-    <%= f.submit "Unfollow", :class => "btn btn-mini" %>
-  <% end %>
-<% end %>
+<%= render :partial => "follow_button", :locals => {:target => @user } %>
 
 <%= link_to("Edit", edit_user_path(@user), :class => "btn") if can? :edit, @user %>

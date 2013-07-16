@@ -4,7 +4,7 @@
   <% end %>
   <%= @team.name %>
   <small>(<%= link_to 'edit', edit_team_path(@team) %>)</small>
-  <%= render :partial => "follow_button", :locals => {:following => @following, :unfollowing => @unfollowing } %>
+  <%= render :partial => "follow_button", :locals => {:target => @team } %>
 </h2>
 
 <h3 class="page-header">Managers

@@ -6,16 +6,6 @@ class TeamsController < ApplicationController
   # GET /teams
   # GET /teams.json
   def index
-    @following = {}
-    @unfollowing = {}
-
-    if current_user
-      @teams.each do |team|
-        @unfollowing[team.id] = Following.lookup(current_user, team)
-        @following[team.id] = Following.new(:user => current_user, :target => team) unless @unfollowing[team.id]
-      end
-    end
-
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @teams }
@@ -25,11 +15,6 @@ class TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
-    if current_user
-      @unfollowing = Following.lookup(current_user, @team)
-      @following = Following.new(:user => current_user, :target => @team) unless @unfollowing
-    end
-
     respond_to do |format|
       format.html # show.html.erb
       format.json { render json: @team }
