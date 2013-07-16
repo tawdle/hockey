@@ -9,6 +9,7 @@ describe FollowingsController do
 
     describe "#create" do
       def do_request
+        request.env["HTTP_REFERER"] = "/"
         post :create, :following => { :user_id => user.to_param, :target_id => other_user.to_param }
       end
 

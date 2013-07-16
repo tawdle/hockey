@@ -7,10 +7,10 @@ class FollowingsController < ApplicationController
 
     respond_to do |format|
       if @following.save
-        format.html { redirect_to @following.target, notice: "You are now following #{@following.target.name}." }
+        format.html { redirect_to :back, notice: "You are now following #{@following.target.name}." }
         format.json { render json: @following, status: :created, location: @following.target }
       else
-        format.html { redirect_to @following.target, error: "Follow action failed." }
+        format.html { redirect_to :back, error: "Follow action failed." }
         format.json { render json: @following.errors, status: :unprocessable_entity }
       end
     end
