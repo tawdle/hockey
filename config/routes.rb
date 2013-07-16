@@ -1,5 +1,7 @@
 Hockey::Application.routes.draw do
 
+  resources :activity_feed_items, :only => [:create]
+
   resources :followings, :only => [:create, :destroy]
 
   resources :teams, :only => [:index, :show, :edit, :update, :destroy] do

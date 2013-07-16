@@ -39,7 +39,7 @@ CREATE TABLE activity_feed_items (
     message character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    creator integer
+    creator_id integer
 );
 
 
@@ -531,3 +531,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130711220356');
 INSERT INTO schema_migrations (version) VALUES ('20130715194942');
 
 INSERT INTO schema_migrations (version) VALUES ('20130715221511');
+
+INSERT INTO schema_migrations (version) VALUES ('20130716201724');

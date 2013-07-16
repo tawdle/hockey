@@ -1,0 +1,29 @@
+<h2 class="page-header">Activity Feed</h2>
+
+<%= form_for(ActivityFeedItem.new) do |f| %>
+  <div class="field pull-left" style="margin-right: 10px;" >
+    <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit "Post", :class => "btn-primary" %>
+  </div>
+<% end %>
+
+<table class="table">
+  <tr>
+    <th>Avatar</th>
+    <th>Name</th>
+    <th>Message</th>
+    <th>When</th>
+  </tr>
+
+  <% ActivityFeedItem.for(current_user).each do |item| %>
+    <tr>
+      <td><%= image_tag(item.avatar_url(:thumbnail), :width => 50, :height => 50) %>
+      <td><%= format_user_link(item.creator) %>
+      <td><%= format_message_with_usernames(item.message).html_safe %></td>
+      <td><span title="<%= item.created_at %>"><%= distance_of_time_in_words_to_now(item.created_at) %> ago</span></td>
+    </tr>
+  <% end %>
+</table>

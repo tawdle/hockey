@@ -4,6 +4,10 @@ class Ability
   def initialize(user)
     user ||= User.new
 
+    can :create, ActivityFeedItem do |item|
+      item.creator == user
+    end
+
     can [:create, :destroy], Following do |following|
       user == following.user
     end
