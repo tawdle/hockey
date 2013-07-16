@@ -2,8 +2,18 @@
 
 <%= image_tag(@user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px;") %>
 
-<p>
-  <%= @user.name %>
-</p>
+<%= @user.name %>
 
-<%= link_to "Edit", edit_user_path(@user), :class => "btn" %>
+<% if @following %>
+  <%= form_for @following do |f| %>
+    <%= f.hidden_field :user_id %>
+    <%= f.hidden_field :target_id %>
+    <%= f.submit "Follow", :class => "btn btn-mini btn-primary" %>
+  <% end %>
+<% elsif @unfollowing %>
+  <%= form_for @unfollowing, :method => "delete" do |f| %>
+    <%= f.submit "Unfollow", :class => "btn btn-mini" %>
+  <% end %>
+<% end %>
+
+<%= link_to("Edit", edit_user_path(@user), :class => "btn") if can? :edit, @user %>

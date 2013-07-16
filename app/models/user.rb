@@ -35,4 +35,8 @@ class User < ActiveRecord::Base
       :role => role, :authorizable_type => authorizable.class.name,
       :authorizable_id => authorizable.id).count > 0 }
   end
+
+  def following?(target_user)
+    Following.where(:user_id => id, :target_id => target_user.id).any?
+  end
 end

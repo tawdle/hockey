@@ -95,6 +95,38 @@ ALTER SEQUENCE authorizations_id_seq OWNED BY authorizations.id;
 
 
 --
+-- Name: followings; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE followings (
+    id integer NOT NULL,
+    user_id integer,
+    target_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: followings_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE followings_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: followings_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE followings_id_seq OWNED BY followings.id;
+
+
+--
 -- Name: invitations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -279,6 +311,13 @@ ALTER TABLE ONLY authorizations ALTER COLUMN id SET DEFAULT nextval('authorizati
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY followings ALTER COLUMN id SET DEFAULT nextval('followings_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::regclass);
 
 
@@ -320,6 +359,14 @@ ALTER TABLE ONLY authorizations
 
 
 --
+-- Name: followings_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY followings
+    ADD CONSTRAINT followings_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: invitations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -357,6 +404,27 @@ ALTER TABLE ONLY teams
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_followings_on_target_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_followings_on_target_id ON followings USING btree (target_id);
+
+
+--
+-- Name: index_followings_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_followings_on_user_id ON followings USING btree (user_id);
+
+
+--
+-- Name: index_followings_on_user_id_and_target_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_followings_on_user_id_and_target_id ON followings USING btree (user_id, target_id);
 
 
 --
@@ -461,3 +529,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130711000658');
 INSERT INTO schema_migrations (version) VALUES ('20130711220356');
 
 INSERT INTO schema_migrations (version) VALUES ('20130715194942');
+
+INSERT INTO schema_migrations (version) VALUES ('20130715221511');
