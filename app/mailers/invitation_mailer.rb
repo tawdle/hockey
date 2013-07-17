@@ -1,5 +1,11 @@
 class InvitationMailer < ActionMailer::Base
-  default from: "mailer@mygameshot.com"
+  def self.format_address(email, display_name)
+    address = Mail::Address.new(email)
+    address.display_name = display_name
+    address.format
+  end
+
+  default from: format_address("mailer@mygameshot.com", "MyGameShot.com")
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -9,7 +15,7 @@ class InvitationMailer < ActionMailer::Base
   def manage_league(invitation)
     @invitation = invitation
 
-    mail to: @invitation.email, subject: "[MyGameShot] Invitation to Manage League"
+    mail to: @invitation.email, subject: "Invitation to Manage League"
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -20,12 +26,13 @@ class InvitationMailer < ActionMailer::Base
   def manage_team(invitation)
     @invitation = invitation
 
-    mail to: @invitation.email, subject: "[MyGameShot] Invitation to Manage Team"
+    mail to: @invitation.email, subject: "Invitation to Manage Team"
   end
 
   def join_team(invitation)
     @invitation = invitation
 
-    mail to: @invitation.email, subject: "[MyGameShot] Invitation to Join Team"
+    mail to: @invitation.email, subject: "Invitation to Join Team"
   end
+
 end
