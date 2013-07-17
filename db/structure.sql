@@ -34,7 +34,6 @@ SET default_with_oids = false;
 
 CREATE TABLE activity_feed_items (
     id integer NOT NULL,
-    target_id integer,
     target_type character varying(255),
     message character varying(255),
     created_at timestamp without time zone NOT NULL,
@@ -173,6 +172,38 @@ CREATE SEQUENCE leagues_id_seq
 --
 
 ALTER SEQUENCE leagues_id_seq OWNED BY leagues.id;
+
+
+--
+-- Name: mentions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE mentions (
+    id integer NOT NULL,
+    activity_feed_item_id integer,
+    user_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: mentions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE mentions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: mentions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE mentions_id_seq OWNED BY mentions.id;
 
 
 --
@@ -325,6 +356,13 @@ ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::r
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY mentions ALTER COLUMN id SET DEFAULT nextval('mentions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY team_memberships ALTER COLUMN id SET DEFAULT nextval('team_memberships_id_seq'::regclass);
 
 
@@ -383,6 +421,14 @@ ALTER TABLE ONLY leagues
 
 
 --
+-- Name: mentions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY mentions
+    ADD CONSTRAINT mentions_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: team_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -425,6 +471,20 @@ CREATE INDEX index_followings_on_user_id ON followings USING btree (user_id);
 --
 
 CREATE UNIQUE INDEX index_followings_on_user_id_and_target_id ON followings USING btree (user_id, target_id);
+
+
+--
+-- Name: index_mentions_on_activity_feed_item_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_mentions_on_activity_feed_item_id ON mentions USING btree (activity_feed_item_id);
+
+
+--
+-- Name: index_mentions_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_mentions_on_user_id ON mentions USING btree (user_id);
 
 
 --
@@ -533,3 +593,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130715194942');
 INSERT INTO schema_migrations (version) VALUES ('20130715221511');
 
 INSERT INTO schema_migrations (version) VALUES ('20130716201724');
+
+INSERT INTO schema_migrations (version) VALUES ('20130716235637');

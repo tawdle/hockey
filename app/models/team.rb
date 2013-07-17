@@ -5,12 +5,15 @@ class Team < ActiveRecord::Base
   has_many :team_memberships, :dependent => :destroy
   has_many :members, :through => :team_memberships
   has_many :authorizations, :as => :authorizable
-  has_many :activity_feed_items, :as => :target
   delegate :name, :to => :user
 
   validates_presence_of :user
   validates_presence_of :full_name
   validates_presence_of :league
+
+  def activity_feed_items
+    ActivityFeedItem.for(user)
+  end
 
   attr_accessor :manager
   attr_accessible :full_name, :logo_cache, :logo, :manager, :user_attributes, :league
@@ -26,7 +29,7 @@ class Team < ActiveRecord::Base
   def accepted_invitation_to_manage(user)
     Team.transaction do
       Authorization.create!(:user => user, :role => :manager, :authorizable => self)
-      ActivityFeedItem.create!(:target => self, :message => "@#{user.name} became a manager of #{name}")
+      ActivityFeedItem.create!(:creator => self.user, :message => "@#{user.name} became a manager of #{name}")
     end
   end
 
@@ -37,7 +40,7 @@ class Team < ActiveRecord::Base
   def accepted_invitation_to_join(user)
     Team.transaction do
       TeamMembership.create!(:member => user, :team => self)
-      ActivityFeedItem.create!(:target => self, :message => "@#{user.name} joined #{name}")
+      ActivityFeedItem.create!(:creator => self.user, :message => "@#{user.name} joined #{name}")
     end
   end
 
