@@ -22,6 +22,10 @@ class Ability
       user.admin?
     end
 
+    can [:read, :create, :edit, :update], Location do
+      user.admin?
+    end
+
     can :read, Team
     can :read, TeamMembership
 
