@@ -45,6 +45,24 @@
 
 <br />
 
+<h3 class="page-header">Upcoming Games</h3>
+
+<table class="table table-hover">
+  <tr>
+    <th>When</th>
+    <th>Where</th>
+    <th><i>vs</i></th>
+  </tr>
+
+  <% Game.for_team(@team).upcoming.each do |game| %>
+    <tr>
+      <td><%= game.start %></td>
+      <td><%= game.location.name %></td>
+      <td><%= game.home_team == @team ? game.visiting_team.name : game.home_team.name %></td>
+    </tr>
+  <% end %>
+</table>
+
 <%= render :partial => "activity_feed" %>
 
 <%= link_to 'Back', league_path(@team.league) %>

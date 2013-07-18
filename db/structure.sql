@@ -126,6 +126,43 @@ ALTER SEQUENCE followings_id_seq OWNED BY followings.id;
 
 
 --
+-- Name: games; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE games (
+    id integer NOT NULL,
+    status character varying(255),
+    home_team_id integer,
+    visiting_team_id integer,
+    location_id integer,
+    start timestamp without time zone,
+    home_team_score integer,
+    visiting_team_score integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: games_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE games_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: games_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE games_id_seq OWNED BY games.id;
+
+
+--
 -- Name: invitations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -380,6 +417,13 @@ ALTER TABLE ONLY followings ALTER COLUMN id SET DEFAULT nextval('followings_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY games ALTER COLUMN id SET DEFAULT nextval('games_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::regclass);
 
 
@@ -440,6 +484,14 @@ ALTER TABLE ONLY authorizations
 
 ALTER TABLE ONLY followings
     ADD CONSTRAINT followings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: games_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY games
+    ADD CONSTRAINT games_pkey PRIMARY KEY (id);
 
 
 --
@@ -517,6 +569,34 @@ CREATE INDEX index_followings_on_user_id ON followings USING btree (user_id);
 --
 
 CREATE UNIQUE INDEX index_followings_on_user_id_and_target_id ON followings USING btree (user_id, target_id);
+
+
+--
+-- Name: index_games_on_home_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_games_on_home_team_id ON games USING btree (home_team_id);
+
+
+--
+-- Name: index_games_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_games_on_location_id ON games USING btree (location_id);
+
+
+--
+-- Name: index_games_on_start; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_games_on_start ON games USING btree (start);
+
+
+--
+-- Name: index_games_on_visiting_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_games_on_visiting_team_id ON games USING btree (visiting_team_id);
 
 
 --
@@ -650,3 +730,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130716201724');
 INSERT INTO schema_migrations (version) VALUES ('20130716235637');
 
 INSERT INTO schema_migrations (version) VALUES ('20130717184343');
+
+INSERT INTO schema_migrations (version) VALUES ('20130717204132');

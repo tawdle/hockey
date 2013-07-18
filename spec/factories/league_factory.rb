@@ -11,5 +11,11 @@ FactoryGirl.define do
         create(:authorization, :authorizable => league, :role => :manager)
       end
     end
+
+    trait :with_team do
+      after :create do |league|
+        create(:team, :league => league)
+      end
+    end
   end
 end
