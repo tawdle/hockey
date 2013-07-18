@@ -12,7 +12,8 @@ class Game < ActiveRecord::Base
   validates_presence_of :start
   validate :start_is_in_future, :only => :create
 
-  attr_accessible :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id, :start
+  attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id, :start
+  attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   after_initialize :initialize_defaults
 

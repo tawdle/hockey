@@ -22,6 +22,8 @@
     <th>Home Team</th>
     <th>Visting Team</th>
     <th>Location</th>
+    <th />
+    <th />
   </tr>
 
   <% Game.for_league(@league).upcoming.each do |game| %>
@@ -30,6 +32,8 @@
       <td><%= game.home_team.name %></td>
       <td><%= game.visiting_team.name %></td>
       <td><%= game.location.name %></td>
+      <td><%= link_to "Change", edit_league_game_path(@league, game) if can? :edit, game %></td>
+      <td><%= link_to "Cancel", game, method: :delete, data: { confirm: 'Are you sure you want to cancel this game?' } if can? :destroy, game %></td>
     </tr>
   <% end %>
 </table>

@@ -43,4 +43,15 @@ describe Game do
       game.should_not be_valid
     end
   end
+
+  describe "#readonly attributes" do
+    let(:game) { FactoryGirl.build(:game) }
+    let(:new_team) { FactoryGirl.build(:team) }
+    it "should not update home_team" do
+      game.save!
+      expect {
+        game.update_attributes!(:home_team => new_team)
+      }.not_to change { game.reload.home_team }
+    end
+  end
 end
