@@ -10,9 +10,10 @@ class Game < ActiveRecord::Base
   validate :home_and_visiting_teams_are_different
   validates_presence_of :location
   validates_presence_of :start
-  validate :start_is_in_future, :only => :create
+  validate :start_is_in_future, :on => :create
+  validate :scores_not_set_until_game_starts
 
-  attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id, :start
+  attr_accessible :status, :home_team, :home_team_id, :home_team_score, :visiting_team, :visiting_team_id, :visiting_team_score, :location, :location_id, :start
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   after_initialize :initialize_defaults
@@ -25,6 +26,10 @@ class Game < ActiveRecord::Base
 
   def home_and_visiting_teams_are_different
     errors.add(:base, "Home and visiting teams must be different") if home_team == visiting_team
+  end
+
+  def scores_not_set_until_game_starts
+    errors.add(:base, "Scores may not be set until the game starts") if (start.nil? || start > Time.now) && (home_team_score || visiting_team_score)
   end
 
   def start_is_in_future

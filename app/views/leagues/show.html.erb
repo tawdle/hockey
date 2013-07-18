@@ -20,8 +20,11 @@
   <tr>
     <th>When</th>
     <th>Home Team</th>
+    <th><i>vs</i></th>
     <th>Visting Team</th>
     <th>Location</th>
+    <th>Score</th>
+    <th />
     <th />
     <th />
   </tr>
@@ -30,8 +33,11 @@
     <tr>
       <td><%= game.start %></td>
       <td><%= game.home_team.name %></td>
+      <td></td>
       <td><%= game.visiting_team.name %></td>
       <td><%= game.location.name %></td>
+      <td><%= game.home_team_score %> - <%= game.visiting_team_score %></td>
+      <td><%= link_to "Update Score", edit_score_league_game_path(@league, game) if can? :edit, game %>
       <td><%= link_to "Change", edit_league_game_path(@league, game) if can? :edit, game %></td>
       <td><%= link_to "Cancel", game, method: :delete, data: { confirm: 'Are you sure you want to cancel this game?' } if can? :destroy, game %></td>
     </tr>

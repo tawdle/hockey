@@ -1,6 +1,6 @@
 class GamesController < ApplicationController
-  load_and_authorize_resource :league, :only => [:new, :create, :edit, :update]
-  load_and_authorize_resource :only => [:edit, :update, :destroy]
+  load_and_authorize_resource :league, :except => [:destroy]
+  load_and_authorize_resource :except => [:new, :create]
 
   def new
     @game = Game.new(:home_team => @league.teams.first, :visiting_team => @league.teams.second)
@@ -25,6 +25,9 @@ class GamesController < ApplicationController
   def edit
   end
 
+  def edit_score
+  end
+
   def update
     respond_to do |format|
       if @game.update_attributes(params[:game])
@@ -32,6 +35,19 @@ class GamesController < ApplicationController
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
+        format.json { render json: @game.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update_score
+    scores = (params[:game] || {}).select { |key| ["home_team_score", "visiting_team_score"].include?(key) }
+    respond_to do |format|
+      if @game.update_attributes(scores)
+        format.html { redirect_to @league, notice: 'Game was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit_score" }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end

@@ -14,7 +14,12 @@ Hockey::Application.routes.draw do
 
   resources :leagues do
     resources :teams, :only => [:new, :create]
-    resources :games, :only => [:new, :create, :edit, :update]
+    resources :games, :only => [:new, :create, :edit, :update] do
+      member do
+        get :edit_score
+        put :update_score
+      end
+    end
   end
 
   resources :invitations, :only => [:new, :create] do

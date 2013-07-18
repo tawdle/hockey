@@ -42,6 +42,15 @@ describe Game do
       game.start = 1.week.ago
       game.should_not be_valid
     end
+
+    it "should prevent setting scores for a game not yet started" do
+      game.home_team_score = 2
+      game.should_not be_valid
+      game.start = 2.hours.ago
+      game.save!(:validate => false)
+      game.reload
+      game.should be_valid
+    end
   end
 
   describe "#readonly attributes" do

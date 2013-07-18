@@ -30,6 +30,17 @@ describe GamesController do
       end
     end
 
+    describe "#edit_score" do
+      def do_request
+        get :edit_score, :league_id => league.to_param, :id => game.to_param
+      end
+
+      it "should work" do
+        do_request
+        response.should be_ok
+      end
+    end
+
     describe "#create" do
       let(:home_team) { FactoryGirl.create(:team, :league => league) }
       let(:visiting_team) { FactoryGirl.create(:team) }
@@ -62,6 +73,23 @@ describe GamesController do
         }.to change { game.reload.start.to_i }.to(new_start.to_i)
       end
     end
+    describe "#update_score" do
+      def do_request
+        request.env["HTTP_REFERER"] = "/"
+        put :update_score, :league_id => league.to_param, :id => game.to_param, :game => { :home_team_score => 3, :visiting_team_score => 2 }
+      end
+
+      before do
+        game.update_attribute(:start, 2.hours.ago)
+      end
+
+      it "should change the score" do
+        expect {
+          do_request
+        }.to change { game.reload.home_team_score }.to(3)
+      end
+    end
+
     describe "#destroy" do
       def do_request
         request.env["HTTP_REFERER"] = "/"
