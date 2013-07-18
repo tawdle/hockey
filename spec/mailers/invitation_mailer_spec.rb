@@ -7,7 +7,7 @@ describe InvitationMailer do
     let(:mail) { InvitationMailer.manage_league(invitation) }
 
     it "renders the headers" do
-      mail.subject.should eq("[MyGameShot] Invitation to Manage League")
+      mail.subject.should eq("Invitation to Manage League")
       mail.to.should eq([invitation.email])
       mail.from.should eq(["mailer@mygameshot.com"])
     end
@@ -23,7 +23,7 @@ describe InvitationMailer do
     let(:mail) { InvitationMailer.manage_team(invitation) }
 
     it "renders the headers" do
-      mail.subject.should eq("[MyGameShot] Invitation to Manage Team")
+      mail.subject.should eq("Invitation to Manage Team")
       mail.to.should eq([invitation.email])
       mail.from.should eq(["mailer@mygameshot.com"])
     end
