@@ -56,7 +56,7 @@
 
   <% Game.for_team(@team).scheduled.upcoming.each do |game| %>
     <tr>
-      <td><%= game.start %></td>
+      <td><%= game.start_time %></td>
       <td><%= game.location.name %></td>
       <td><%= game.home_team == @team ? game.visiting_team.name : game.home_team.name %></td>
     </tr>

@@ -1,6 +1,6 @@
 <h3 class="page-header">
   <%= @game.home_team.name %> <i>vs.</i> <%= @game.visiting_team.name %>
-  <small><%= @game.start %> at <%= @game.location.name %></small>
+  <small><%= @game.start_time %> at <%= @game.location.name %></small>
 </h3>
 
 <%= form_for([@league, @game], :url => update_score_league_game_path(@league, @game)) do |f| %>
@@ -24,6 +24,12 @@
   <div class="field">
     <%= f.label :visiting_team_score, "#{@game.visiting_team.name} score" %>
     <%= f.number_field :visiting_team_score, :class => "span1" %>
+  </div>
+
+  <div class="field">
+    <%= label_tag :final_score, :class => "checkbox" do %>This is the final score
+      <%= check_box_tag :final_score %>
+    <% end %>
   </div>
 
   <div class="actions">

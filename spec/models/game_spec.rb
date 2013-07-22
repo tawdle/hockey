@@ -46,23 +46,33 @@ describe Game do
     it "should prevent setting scores for a game not yet started" do
       game.home_team_score = 2
       game.should_not be_valid
-      game.start!
-      game.home_team_score = 2
-      game.should be_valid
     end
 
-    it "should prevent changing the start_time after the game has started" do
-      game.start!
-      expect {
+    context "with an active game" do
+      let(:game) { FactoryGirl.create(:active_game) }
+
+      it "should allow setting scores" do
+        game.home_team_score = 2
+        game.should be_valid
+      end
+
+      it "should prevent changing the start_time after the game has started" do
         game.start_time = 3.weeks.from_now
-      }.to change { game.valid? }.from(true).to(false)
-    end
+        game.should_not be_valid
+      end
 
-    it "should prevent changing the location after the game has started" do
-      game.start!
-      expect {
+      it "should prevent changing the location after the game has started" do
         game.location = FactoryGirl.build(:location)
-      }.to change { game.valid? }.from(true).to(false)
+        game.should_not be_valid
+      end
+    end
+    context "with a finished game" do
+      let(:game) { FactoryGirl.create(:finished_game) }
+
+      it "should prevent changing scores" do
+        game.visiting_team_score = 7
+        game.should_not be_valid
+      end
     end
   end
 

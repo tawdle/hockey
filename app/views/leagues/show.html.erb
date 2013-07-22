@@ -31,7 +31,7 @@
 
   <% Game.for_league(@league).scheduled.upcoming.each do |game| %>
     <tr>
-      <td><%= game.start %></td>
+      <td><%= game.start_time %></td>
       <td><%= game.home_team.name %></td>
       <td></td>
       <td><%= game.visiting_team.name %></td>

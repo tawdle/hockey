@@ -42,8 +42,9 @@ class GamesController < ApplicationController
 
   def update_score
     scores = (params[:game] || {}).select { |key| ["home_team_score", "visiting_team_score"].include?(key) }
+    finished = params[:final_score] == "1"
     respond_to do |format|
-      if @game.update_attributes(scores)
+      if @game.update_attributes(scores) && (!finished || @game.finish)
         format.html { redirect_to @league, notice: 'Game was successfully updated.' }
         format.json { head :no_content }
       else
