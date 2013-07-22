@@ -29,7 +29,7 @@
     <th />
   </tr>
 
-  <% Game.for_league(@league).upcoming.each do |game| %>
+  <% Game.for_league(@league).scheduled.upcoming.each do |game| %>
     <tr>
       <td><%= game.start %></td>
       <td><%= game.home_team.name %></td>

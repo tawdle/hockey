@@ -54,7 +54,7 @@
     <th><i>vs</i></th>
   </tr>
 
-  <% Game.for_team(@team).upcoming.each do |game| %>
+  <% Game.for_team(@team).scheduled.upcoming.each do |game| %>
     <tr>
       <td><%= game.start %></td>
       <td><%= game.location.name %></td>
