@@ -37,6 +37,7 @@ gem 'carrierwave'
 gem 'cloudinary'
 gem 'devise'
 gem 'figaro'
+gem 'state_machine'
 gem 'symbolize'
 
 # To use ActiveModel has_secure_password

@@ -51,7 +51,7 @@ describe GamesController do
           :home_team_id => home_team.to_param,
           :visiting_team_id => visiting_team.to_param,
           :location_id => location.to_param,
-          :start => 1.week.from_now }
+          :start_time => 1.week.from_now }
       end
       it "should create a game" do
         expect {
@@ -64,13 +64,13 @@ describe GamesController do
 
       def do_request
         request.env["HTTP_REFERER"] = "/"
-        put :update, :league_id => league.to_param, :id => game.to_param, :game => { :start => new_start }
+        put :update, :league_id => league.to_param, :id => game.to_param, :game => { :start_time => new_start }
       end
 
       it "should reschedule to a new date" do
         expect {
           do_request
-        }.to change { game.reload.start.to_i }.to(new_start.to_i)
+        }.to change { game.reload.start_time.to_i }.to(new_start.to_i)
       end
     end
     describe "#update_score" do
@@ -80,7 +80,7 @@ describe GamesController do
       end
 
       before do
-        game.update_attribute(:start, 2.hours.ago)
+        game.start!
       end
 
       it "should change the score" do
@@ -99,7 +99,7 @@ describe GamesController do
       it "should change the game's state to canceled" do
         expect {
           do_request
-        }.to change { game.reload.status }.to(:canceled)
+        }.to change { game.reload.canceled? }.to(true)
       end
     end
   end

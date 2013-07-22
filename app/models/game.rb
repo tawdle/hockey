@@ -1,5 +1,19 @@
 class Game < ActiveRecord::Base
-  symbolize :status, :in => [:scheduled, :active, :finished, :canceled]
+  state_machine :initial => :scheduled do
+    event :start do
+      transition :scheduled => :active
+    end
+
+    event :finish do
+      transition :active => :finished
+    end
+
+    event :cancel do
+      transition [:scheduled, :active] => :canceled
+    end
+  end
+
+  #symbolize :status, :in => [:scheduled, :active, :finished, :canceled]
 
   belongs_to :home_team, :class_name => 'Team'
   belongs_to :visiting_team, :class_name => 'Team'
@@ -9,18 +23,18 @@ class Game < ActiveRecord::Base
   validates_presence_of :visiting_team
   validate :home_and_visiting_teams_are_different
   validates_presence_of :location
-  validates_presence_of :start
-  validate :start_is_in_future, :on => :create
+  validates_presence_of :start_time
+  validate :schedule_not_changed_after_game_starts
+  validate :location_not_changed_after_game_starts
+  validate :start_time_is_in_future, :if => :start_time_changed?
   validate :scores_not_set_until_game_starts
 
-  attr_accessible :status, :home_team, :home_team_id, :home_team_score, :visiting_team, :visiting_team_id, :visiting_team_score, :location, :location_id, :start
+  attr_accessible :status, :home_team, :home_team_id, :home_team_score, :visiting_team, :visiting_team_id, :visiting_team_score, :location, :location_id, :start_time, :complete
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
-
-  after_initialize :initialize_defaults
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
   scope :for_league, lambda {|league| joins("INNER JOIN teams h on home_team_id = h.id").joins("INNER JOIN teams v on visiting_team_id = v.id").where("h.league_id = ? or v.league_id = ?", league.id, league.id) }
-  scope :upcoming, lambda { where(:status => :scheduled).where("start > ?", DateTime.now) }
+  scope :upcoming, lambda { where(:status => :scheduled).where("start_time > ?", DateTime.now) }
 
   private
 
@@ -29,14 +43,18 @@ class Game < ActiveRecord::Base
   end
 
   def scores_not_set_until_game_starts
-    errors.add(:base, "Scores may not be set until the game starts") if (start.nil? || start > Time.now) && (home_team_score || visiting_team_score)
+    errors.add(:base, "Scores may not be set until the game starts") if scheduled? && (home_team_score || visiting_team_score)
   end
 
-  def start_is_in_future
-    errors.add(:start, "must be in the future") if start && start < Time.now
+  def start_time_is_in_future
+    errors.add(:start_time, "must be in the future") if start_time && start_time < Time.now
   end
 
-  def initialize_defaults
-    self.status ||= :scheduled
+  def schedule_not_changed_after_game_starts
+    errors.add(:start_time, "can't be changed after game starts") if persisted? && start_time_changed? && !scheduled?
+  end
+
+  def location_not_changed_after_game_starts
+    errors.add(:location, "can't be changed after game starts") if persisted? && location_id_changed? && !scheduled?
   end
 end

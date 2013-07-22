@@ -55,7 +55,7 @@ class GamesController < ApplicationController
 
   def destroy
     respond_to do |format|
-      if @game.update_attributes(:status => :canceled)
+      if @game.cancel
         format.html { redirect_to :back, notice: 'Game was successfully canceled.' }
         format.json { head :no_content }
       else

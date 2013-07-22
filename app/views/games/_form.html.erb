@@ -27,8 +27,8 @@
   </div>
 
   <div class="field">
-    <%= f.label :start %>
-    <%= f.datetime_select :start, { :default => DateTime.now.at_beginning_of_hour + 7.days, :start_year => DateTime.now.year}, { :class => "span1" } %>
+    <%= f.label :start_time %>
+    <%= f.datetime_select :start_time, { :default => DateTime.now.at_beginning_of_hour + 7.days, :start_year => DateTime.now.year}, { :class => "span1" } %>
   </div>
 
   <div class="actions">

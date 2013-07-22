@@ -8,8 +8,8 @@ describe Game do
       game.should be_valid
     end
 
-    it "should require a valid status" do
-      game.status = :foo
+    it "should require a valid state" do
+      game.state = :foo
       game.should_not be_valid
     end
 
@@ -33,23 +33,36 @@ describe Game do
       game.should_not be_valid
     end
 
-    it "should require a start" do
-      game.start = nil
+    it "should require a start_time" do
+      game.start_time = nil
       game.should_not be_valid
     end
 
-    it "should require the start be in the future" do
-      game.start = 1.week.ago
+    it "should require the start_time be in the future" do
+      game.start_time = 1.week.ago
       game.should_not be_valid
     end
 
     it "should prevent setting scores for a game not yet started" do
       game.home_team_score = 2
       game.should_not be_valid
-      game.start = 2.hours.ago
-      game.save!(:validate => false)
-      game.reload
+      game.start!
+      game.home_team_score = 2
       game.should be_valid
+    end
+
+    it "should prevent changing the start_time after the game has started" do
+      game.start!
+      expect {
+        game.start_time = 3.weeks.from_now
+      }.to change { game.valid? }.from(true).to(false)
+    end
+
+    it "should prevent changing the location after the game has started" do
+      game.start!
+      expect {
+        game.location = FactoryGirl.build(:location)
+      }.to change { game.valid? }.from(true).to(false)
     end
   end
 

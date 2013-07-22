@@ -131,11 +131,11 @@ ALTER SEQUENCE followings_id_seq OWNED BY followings.id;
 
 CREATE TABLE games (
     id integer NOT NULL,
-    status character varying(255),
+    state character varying(255),
     home_team_id integer,
     visiting_team_id integer,
     location_id integer,
-    start timestamp without time zone,
+    start_time timestamp without time zone,
     home_team_score integer,
     visiting_team_score integer,
     created_at timestamp without time zone NOT NULL,
@@ -589,7 +589,14 @@ CREATE INDEX index_games_on_location_id ON games USING btree (location_id);
 -- Name: index_games_on_start; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_games_on_start ON games USING btree (start);
+CREATE INDEX index_games_on_start ON games USING btree (start_time);
+
+
+--
+-- Name: index_games_on_state; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_games_on_state ON games USING btree (state);
 
 
 --
@@ -732,3 +739,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130716235637');
 INSERT INTO schema_migrations (version) VALUES ('20130717184343');
 
 INSERT INTO schema_migrations (version) VALUES ('20130717204132');
+
+INSERT INTO schema_migrations (version) VALUES ('20130722174443');
