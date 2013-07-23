@@ -1,6 +1,6 @@
 module UsersHelper
   def format_user_link(user)
-    "<span class='username'>@#{link_to(user.name, user.nameable || user)}</span>".html_safe
+    "<span class='username'>@#{link_to(user.name, user.nameable || user)}</span>".html_safe if user
   end
 
   def format_message_with_usernames(msg)

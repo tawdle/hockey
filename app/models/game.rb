@@ -12,6 +12,10 @@ class Game < ActiveRecord::Base
       transition [:scheduled, :active] => :canceled
     end
 
+    after_transition any => :canceled, :do => :generate_cancel_feed_item
+    after_transition any => :active, :do => :generate_game_started_feed_item
+    after_transition any => :finished, :do => :generate_game_over_feed_item
+
     state all - :scheduled do
       validate {|game| game.send(:schedule_not_changed) }
     end
@@ -43,7 +47,8 @@ class Game < ActiveRecord::Base
   validates_presence_of :start_time
   validate :start_time_is_in_future, :if => :start_time_changed?
 
-  attr_accessible :status, :home_team, :home_team_id, :home_team_score, :visiting_team, :visiting_team_id, :visiting_team_score, :location, :location_id, :start_time
+  attr_accessor :updater
+  attr_accessible :status, :home_team, :home_team_id, :home_team_score, :visiting_team, :visiting_team_id, :visiting_team_score, :location, :location_id, :start_time, :updater
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
@@ -55,6 +60,9 @@ class Game < ActiveRecord::Base
   scope :finished, where(:state => :finished)
   scope :asc, order("start_time ASC")
   scope :desc, order("start_time DESC")
+
+  before_create :generate_create_feed_item
+  before_update :generate_update_feed_item
 
   def printable_state
     {:scheduled => "is scheduled",
@@ -76,6 +84,31 @@ class Game < ActiveRecord::Base
   end
 
   private
+
+  def updater_name
+    updater.try(:at_name) || "The System"
+  end
+
+  def generate_create_feed_item
+    activity_feed_items.build(:message => "#{updater_name} scheduled a game between @#{home_team.name} and @#{visiting_team.name}.")
+  end
+
+  def generate_cancel_feed_item
+    activity_feed_items.create!(:message => "#{updater_name} canceled a game between @#{home_team.name} and @#{visiting_team.name}.")
+  end
+
+  def generate_update_feed_item
+    activity_feed_items.create!(:message => "#{updater_name} changed the scheduled start time for a game between @#{home_team.name} and @#{visiting_team.name}.") if start_time_changed?
+    activity_feed_items.create!(:message => "#{updater_name} changed the location of a game between @#{home_team.name} and @#{visiting_team.name}.") if location_id_changed?
+  end
+
+  def generate_game_started_feed_item
+    activity_feed_items.create!(:message => "The game between @#{home_team.name} and @#{visiting_team} started.")
+  end
+
+  def generate_game_over_feed_item
+    activity_feed_items.create!(:message => "The between @#{home_team.name} and @#{visiting_team} ended.")
+  end
 
   def home_and_visiting_teams_are_different
     errors.add(:base, "Home and visiting teams must be different") if home_team == visiting_team

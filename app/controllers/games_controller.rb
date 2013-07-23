@@ -11,7 +11,7 @@ class GamesController < ApplicationController
   end
 
   def create
-    @game = Game.new(params[:game])
+    @game = Game.new(params[:game].merge(:updater => current_user))
     authorize! :create, @game
 
     respond_to do |format|
@@ -33,7 +33,7 @@ class GamesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @game.update_attributes(params[:game])
+      if @game.update_attributes(params[:game].merge(:updater => current_user))
         format.html { redirect_to @league, notice: 'Game was successfully updated.' }
         format.json { head :no_content }
       else
@@ -47,7 +47,7 @@ class GamesController < ApplicationController
     scores = (params[:game] || {}).select { |key| ["home_team_score", "visiting_team_score"].include?(key) }
     finished = params[:final_score] == "1"
     respond_to do |format|
-      if @game.update_attributes(scores) && (!finished || @game.finish)
+      if @game.update_attributes(scores.merge(:updater => current_user)) && (!finished || @game.finish)
         format.html { redirect_to @league, notice: 'Game was successfully updated.' }
         format.json { head :no_content }
       else
@@ -59,6 +59,7 @@ class GamesController < ApplicationController
 
   def destroy
     respond_to do |format|
+      @game.updater = current_user
       if @game.cancel
         format.html { redirect_to :back, notice: 'Game was successfully canceled.' }
         format.json { head :no_content }

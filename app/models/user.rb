@@ -40,4 +40,8 @@ class User < ActiveRecord::Base
     target = target.user unless target.is_a? User
     Following.where(:user_id => id, :target_id => target.id).any?
   end
+
+  def at_name
+    "@#{name}"
+  end
 end

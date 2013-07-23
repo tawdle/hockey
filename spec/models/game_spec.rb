@@ -76,6 +76,42 @@ describe Game do
     end
   end
 
+  describe "actions that create an activity feed item" do
+    let(:game) { FactoryGirl.build(:game) }
+    let(:saved_game) { FactoryGirl.create(:game) }
+    let(:new_start_time) { 3.weeks.from_now }
+    let(:new_location) { FactoryGirl.create(:location) }
+
+    describe "#create" do
+      let(:action) { game.save! }
+      it_behaves_like "an action that creates an activity feed item"
+    end
+
+    describe "#update start_time" do
+      let(:action) { saved_game.update_attributes(:start_time => new_start_time) }
+      let(:count ) { 2 }
+      it_behaves_like "an action that creates an activity feed item"
+    end
+
+    describe "#update location" do
+      let(:action) { saved_game.update_attributes(:location => new_location) }
+      let(:count) { 2 }
+      it_behaves_like "an action that creates an activity feed item"
+    end
+
+    describe "#update start_time AND location" do
+      let(:action) { saved_game.update_attributes(:start_time => new_start_time, :location => new_location) }
+      let(:count) { 3 }
+      it_behaves_like "an action that creates an activity feed item"
+    end
+
+    describe "#cancel" do
+      let(:action) { saved_game.cancel! }
+      let(:count) { 2 }
+      it_behaves_like "an action that creates an activity feed item"
+    end
+  end
+
   describe "#readonly attributes" do
     let(:game) { FactoryGirl.build(:game) }
     let(:new_team) { FactoryGirl.build(:team) }
