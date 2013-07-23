@@ -52,18 +52,18 @@
   <table class="table table-hover">
     <tr>
       <th>Status</th>
+      <th><i>vs</i></th>
       <th>When</th>
       <th>Where</th>
-      <th><i>vs</i></th>
       <th>Score</th>
     </tr>
 
     <% Game.for_team(@team).scheduled_or_active.asc.each do |game| %>
       <tr>
-        <td><%= game.state.humanize %></td>
+        <td><%= link_to game.state.humanize, game %></td>
+        <td><%= link_to game.their_team(@team).name, game.their_team(@team) %></td>
         <td><%= game.start_time %></td>
         <td><%= game.location.name %></td>
-        <td><%= game.their_team(@team).name %></td>
         <td><%= "#{game.our_score(@team)} - #{game.their_score(@team)}" if game.active? %></td>
       </tr>
     <% end %>
