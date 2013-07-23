@@ -1,6 +1,6 @@
 <% if current_user %>
   <% unfollowing = Following.lookup(current_user, target)
-     following = Following.new(:user => current_user, :target => target) unless unfollowing 
+     following = Following.new(:user => current_user, :target => target) unless unfollowing || current_user == target
    %>
 
   <% if following %>
