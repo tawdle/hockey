@@ -1,6 +1,6 @@
-<h2 class="page-header"><%= @game.home_team.name %> <i>vs</i> <%= @game.visiting_team.name %> <small><%= @game.start_time.to_s(:long) %> at <%= @game.location.name %></small></h2>
+<h2 class="page-header"><%= @game.home_team.name %> <i>vs</i> <%= @game.visiting_team.name %> <br /> <small><%= @game.start_time.to_s(:long) %> at <%= @game.location.name %></small></h2>
 
 <p>This game <%= @game.printable_state %>.</p>
 
-<%= render :partial => "activity_feed", :locals => { :new_activity_feed_item => ActivityFeedItem.new(:game => @game), :activity_feed_items => @game.activity_feed_items } %>
+<%= render :partial => "activity_feed", :locals => { :new_activity_feed_item => ActivityFeedItem.new(:game => @game), :activity_feed_items => @game.activity_feed_items, :in_game_context => true } %>
 

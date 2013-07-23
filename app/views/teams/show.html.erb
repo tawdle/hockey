@@ -70,6 +70,6 @@
   </table>
 <% end %>
 
-<%= render :partial => "activity_feed" %>
+<%= render :partial => "activity_feed", :locals => {:activity_feed_items => @team.activity_feed_items, :in_game_context => false } %>
 
 <%= link_to 'Back', league_path(@team.league) %>

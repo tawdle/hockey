@@ -1,35 +1,43 @@
-<h2 class="page-header">Activity Feed</h2>
+<% if (current_user && defined?(new_activity_feed_item)) || activity_feed_items.any? %>
+  <h2 class="page-header">Activity Feed</h2>
 
-<% if current_user %>
-  <%= form_for(new_activity_feed_item) do |f| %>
-    <div class="field pull-left" style="margin-right: 10px;" >
-      <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
-    </div>
+  <% if current_user && defined?(new_activity_feed_item) %>
+    <%= form_for(new_activity_feed_item) do |f| %>
+      <div class="field pull-left" style="margin-right: 10px;" >
+        <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
+      </div>
 
-    <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
+      <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
 
-    <div class="actions">
-      <%= f.submit "Post", :class => "btn btn-primary" %>
-    </div>
-  <% end %>
-<% end %>
-
-<% if activity_feed_items.any? %>
-  <table class="table">
-    <tr>
-      <th>Avatar</th>
-      <th>Name</th>
-      <th>Message</th>
-      <th>When</th>
-    </tr>
-
-    <% activity_feed_items.each do |item| %>
-      <tr>
-        <td><%= image_tag(item.avatar_url(:thumbnail), :width => 50, :height => 50) %></td>
-        <td><%= format_user_link(item.creator) %></td>
-        <td><%= format_message_with_usernames(item.message).html_safe %></td>
-        <td><span title="<%= item.created_at %>"><%= distance_of_time_in_words_to_now(item.created_at) %> ago</span></td>
-      </tr>
+      <div class="actions">
+        <%= f.submit "Post", :class => "btn btn-primary" %>
+      </div>
     <% end %>
-  </table>
+  <% end %>
+
+  <% if activity_feed_items.any? %>
+    <table class="table">
+      <tr>
+        <th>Avatar</th>
+        <th>Name</th>
+        <th>Message</th>
+        <th>When</th>
+      </tr>
+
+      <% activity_feed_items.each do |item| %>
+        <tr>
+          <td><%= image_tag(item.avatar_url(:thumbnail), :width => 50, :height => 50) %></td>
+          <td><%= format_user_link(item.creator) %></td>
+          <td>
+            <%= format_message_with_usernames(item.message).html_safe %>
+            <% if item.game && !in_game_context %>
+              <br />
+              <small><i>from <%= link_to "#{item.game.home_team.name} vs. #{item.game.visiting_team.name}", item.game %></i></small>
+            <% end %>
+          </td>
+          <td><span title="<%= item.created_at %>"><%= distance_of_time_in_words_to_now(item.created_at) %> ago</span></td>
+        </tr>
+      <% end %>
+    </table>
+  <% end %>
 <% end %>
