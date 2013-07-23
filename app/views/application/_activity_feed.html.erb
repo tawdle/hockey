@@ -14,20 +14,22 @@
   <% end %>
 <% end %>
 
-<table class="table">
-  <tr>
-    <th>Avatar</th>
-    <th>Name</th>
-    <th>Message</th>
-    <th>When</th>
-  </tr>
-
-  <% activity_feed_items.each do |item| %>
+<% if activity_feed_items.any? %>
+  <table class="table">
     <tr>
-      <td><%= image_tag(item.avatar_url(:thumbnail), :width => 50, :height => 50) %>
-      <td><%= format_user_link(item.creator) %>
-      <td><%= format_message_with_usernames(item.message).html_safe %></td>
-      <td><span title="<%= item.created_at %>"><%= distance_of_time_in_words_to_now(item.created_at) %> ago</span></td>
+      <th>Avatar</th>
+      <th>Name</th>
+      <th>Message</th>
+      <th>When</th>
     </tr>
-  <% end %>
-</table>
+
+    <% activity_feed_items.each do |item| %>
+      <tr>
+        <td><%= image_tag(item.avatar_url(:thumbnail), :width => 50, :height => 50) %>
+        <td><%= format_user_link(item.creator) %>
+        <td><%= format_message_with_usernames(item.message).html_safe %></td>
+        <td><span title="<%= item.created_at %>"><%= distance_of_time_in_words_to_now(item.created_at) %> ago</span></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
