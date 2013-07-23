@@ -31,7 +31,7 @@
   <% Game.for_league(@league).scheduled_or_active.asc.each do |game| %>
     <tr>
       <td><%= link_to game.state.humanize, game %></td>
-      <td><%= game.start_time %></td>
+      <td><%= game.start_time.to_s(:long) %></td>
       <td><%= link_to game.home_team.name, game.home_team %></td>
       <td></td>
       <td><%= link_to game.visiting_team.name, game.visiting_team %></td>
@@ -60,7 +60,7 @@
 
   <% Game.for_league(@league).finished.desc.each do |game| %>
     <tr>
-      <td><%= game.start_time %></td>
+      <td><%= game.start_time.to_s(:long) %></td>
       <td><%= game.home_team.name %></td>
       <td></td>
       <td><%= game.visiting_team.name %></td>

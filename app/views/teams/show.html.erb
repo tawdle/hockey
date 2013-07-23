@@ -62,7 +62,7 @@
       <tr>
         <td><%= link_to game.state.humanize, game %></td>
         <td><%= link_to game.their_team(@team).name, game.their_team(@team) %></td>
-        <td><%= game.start_time %></td>
+        <td><%= game.start_time.to_s(:long) %></td>
         <td><%= game.location.name %></td>
         <td><%= "#{game.our_score(@team)} - #{game.their_score(@team)}" if game.active? %></td>
       </tr>

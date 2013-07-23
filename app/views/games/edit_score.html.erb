@@ -1,6 +1,6 @@
 <h3 class="page-header">
   <%= @game.home_team.name %> <i>vs.</i> <%= @game.visiting_team.name %>
-  <small><%= @game.start_time %> at <%= @game.location.name %></small>
+  <small><%= @game.start_time.to_s(:long) %> at <%= @game.location.name %></small>
 </h3>
 
 <%= form_for([@league, @game], :url => update_score_league_game_path(@league, @game)) do |f| %>
