@@ -34,6 +34,7 @@ class Game < ActiveRecord::Base
   belongs_to :home_team, :class_name => 'Team'
   belongs_to :visiting_team, :class_name => 'Team'
   belongs_to :location
+  has_many :activity_feed_items
 
   validates_presence_of :home_team
   validates_presence_of :visiting_team
@@ -50,6 +51,13 @@ class Game < ActiveRecord::Base
   scope :scheduled, where(:state => :scheduled)
   scope :due, lambda { where("start_time < ?", DateTime.now) }
   scope :upcoming, lambda { where("start_time > ?", DateTime.now) }
+
+  def printable_state
+    {:scheduled => "is scheduled",
+     :active => "is currently being played",
+     :canceled => "has been canceled",
+     :finished => "has ended" }[state.to_sym]
+  end
 
   private
 

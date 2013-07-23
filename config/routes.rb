@@ -4,7 +4,7 @@ Hockey::Application.routes.draw do
 
   resources :followings, :only => [:create, :destroy]
 
-  resources :games, :only => [:destroy]
+  resources :games, :only => [:show, :destroy]
 
   resources :locations, :except => [:destroy]
 

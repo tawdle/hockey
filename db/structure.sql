@@ -34,11 +34,11 @@ SET default_with_oids = false;
 
 CREATE TABLE activity_feed_items (
     id integer NOT NULL,
-    target_type character varying(255),
     message character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    creator_id integer
+    creator_id integer,
+    game_id integer
 );
 
 
@@ -741,3 +741,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130717184343');
 INSERT INTO schema_migrations (version) VALUES ('20130717204132');
 
 INSERT INTO schema_migrations (version) VALUES ('20130722174443');
+
+INSERT INTO schema_migrations (version) VALUES ('20130722232330');

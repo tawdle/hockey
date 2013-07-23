@@ -1,6 +1,9 @@
 class GamesController < ApplicationController
-  load_and_authorize_resource :league, :except => [:destroy]
+  load_and_authorize_resource :league, :except => [:show, :destroy]
   load_and_authorize_resource :except => [:new, :create]
+
+  def show
+  end
 
   def new
     @game = Game.new(:home_team => @league.teams.first, :visiting_team => @league.teams.second)

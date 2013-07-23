@@ -1,9 +1,9 @@
 class ActivityFeedItem < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
-  belongs_to :target, :polymorphic => true
+  belongs_to :game
   has_many :mentions
 
-  attr_accessible :creator, :target, :message
+  attr_accessible :creator, :target, :message, :game, :game_id
 
   validates_presence_of :message
 
@@ -15,6 +15,8 @@ class ActivityFeedItem < ActiveRecord::Base
     joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
       where("creator_id = ? or creator_id in (select target_id from followings where user_id = ?) or mentions.user_id = ?", user.id, user.id, user.id)
   end
+
+  scope :for_game, lambda {|game| where(:game_id => game.id) }
 
   def avatar_url(version_name = nil)
     creator ?

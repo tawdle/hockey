@@ -1,13 +1,17 @@
 <h2 class="page-header">Activity Feed</h2>
 
-<%= form_for(ActivityFeedItem.new) do |f| %>
-  <div class="field pull-left" style="margin-right: 10px;" >
-    <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
-  </div>
+<% if current_user %>
+  <%= form_for(new_activity_feed_item) do |f| %>
+    <div class="field pull-left" style="margin-right: 10px;" >
+      <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
+    </div>
 
-  <div class="actions">
-    <%= f.submit "Post", :class => "btn btn-primary" %>
-  </div>
+    <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
+
+    <div class="actions">
+      <%= f.submit "Post", :class => "btn btn-primary" %>
+    </div>
+  <% end %>
 <% end %>
 
 <table class="table">
@@ -18,7 +22,7 @@
     <th>When</th>
   </tr>
 
-  <% ActivityFeedItem.for(current_user).each do |item| %>
+  <% activity_feed_items.each do |item| %>
     <tr>
       <td><%= image_tag(item.avatar_url(:thumbnail), :width => 50, :height => 50) %>
       <td><%= format_user_link(item.creator) %>

@@ -5,6 +5,17 @@ describe GamesController do
   let(:manager) { league.managers.first }
   let(:game) { FactoryGirl.create(:game, :home_team => league.teams.first) }
 
+  describe "#show" do
+    def do_request
+      get :show, :id => game.to_param
+    end
+
+    it "should work" do
+      do_request
+      response.should be_ok
+    end
+  end
+
   context "with a logged in league manager" do
     before { sign_in(manager) }
 

@@ -12,6 +12,8 @@ class Ability
       user == following.user
     end
 
+    can :read, Game
+
     can :manage, Game do |game|
       user.manager_of?(game.home_team.try(:league)) || user.manager_of?(game.visiting_team.try(:league))
     end
