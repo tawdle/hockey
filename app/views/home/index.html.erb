@@ -4,4 +4,7 @@
   <%= render :partial => "teams" %>
   <%= render :partial => "leagues_managed" %>
   <%= render :partial => "teams_managed" %>
+<% else %>
+  <%= render :partial => "welcome" %>
+  <%= render :partial => "games" %>
 <% end %>
