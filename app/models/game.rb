@@ -63,6 +63,18 @@ class Game < ActiveRecord::Base
      :finished => "has ended" }[state.to_sym]
   end
 
+  def our_score(team)
+    team == home_team ? home_team_score : visiting_team_score
+  end
+
+  def their_score(team)
+    team == home_team ? visiting_team_score : home_team_score
+  end
+
+  def their_team(team)
+    team == home_team ? visiting_team : home_team
+  end
+
   private
 
   def home_and_visiting_teams_are_different

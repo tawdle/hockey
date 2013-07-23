@@ -45,23 +45,30 @@
 
 <br />
 
-<h3 class="page-header">Upcoming Games</h3>
+<% if Game.for_team(@team).scheduled_or_active.any? %>
 
-<table class="table table-hover">
-  <tr>
-    <th>When</th>
-    <th>Where</th>
-    <th><i>vs</i></th>
-  </tr>
+  <h3 class="page-header">Current Games</h3>
 
-  <% Game.for_team(@team).scheduled.upcoming.each do |game| %>
+  <table class="table table-hover">
     <tr>
-      <td><%= game.start_time %></td>
-      <td><%= game.location.name %></td>
-      <td><%= game.home_team == @team ? game.visiting_team.name : game.home_team.name %></td>
+      <th>Status</th>
+      <th>When</th>
+      <th>Where</th>
+      <th><i>vs</i></th>
+      <th>Score</th>
     </tr>
-  <% end %>
-</table>
+
+    <% Game.for_team(@team).scheduled_or_active.asc.each do |game| %>
+      <tr>
+        <td><%= game.state.humanize %></td>
+        <td><%= game.start_time %></td>
+        <td><%= game.location.name %></td>
+        <td><%= game.their_team(@team).name %></td>
+        <td><%= "#{game.our_score(@team)} - #{game.their_score(@team)}" if game.active? %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
 
 <%= render :partial => "activity_feed" %>
 
