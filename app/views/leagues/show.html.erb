@@ -14,7 +14,39 @@
 
 <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
 
-<h3>Upcoming Games</h3>
+<h3 class="page-header">Current Games</h3>
+
+<table class="table table-hover">
+  <tr>
+    <th>When</th>
+    <th>Status</th>
+    <th>Home Team</th>
+    <th><i>vs</i></th>
+    <th>Visting Team</th>
+    <th>Location</th>
+    <th>Score</th>
+    <th />
+  </tr>
+
+  <% Game.for_league(@league).scheduled_or_active.asc.each do |game| %>
+    <tr>
+      <td><%= game.start_time %></td>
+      <td><%= game.state.humanize %></td>
+      <td><%= game.home_team.name %></td>
+      <td></td>
+      <td><%= game.visiting_team.name %></td>
+      <td><%= game.location.name %></td>
+      <td><%= "#{game.home_team_score} - #{game.visiting_team_score}" if game.active? %></td>
+      <td>
+        <%= link_to "Update Score", edit_score_league_game_path(@league, game), :class => "btn" if (game.active? && can?(:edit, game)) %>
+        <%= link_to "Change", edit_league_game_path(@league, game), :class => "btn" if game.scheduled? && can?(:edit, game) %>
+        <%= link_to "Cancel", game, method: :delete, data: { confirm: 'Are you sure you want to cancel this game?' }, class: "btn" if (game.scheduled? && can?(:destroy, game)) %>
+      </td>
+    </tr>
+  <% end %>
+</table>
+
+<h3 class="page-header">Past Games</h3>
 
 <table class="table table-hover">
   <tr>
@@ -24,27 +56,23 @@
     <th>Visting Team</th>
     <th>Location</th>
     <th>Score</th>
-    <th />
-    <th />
-    <th />
   </tr>
 
-  <% Game.for_league(@league).scheduled.upcoming.each do |game| %>
+  <% Game.for_league(@league).finished.desc.each do |game| %>
     <tr>
       <td><%= game.start_time %></td>
       <td><%= game.home_team.name %></td>
       <td></td>
       <td><%= game.visiting_team.name %></td>
       <td><%= game.location.name %></td>
-      <td><%= game.home_team_score %> - <%= game.visiting_team_score %></td>
-      <td><%= link_to "Update Score", edit_score_league_game_path(@league, game) if can? :edit, game %>
-      <td><%= link_to "Change", edit_league_game_path(@league, game) if can? :edit, game %></td>
-      <td><%= link_to "Cancel", game, method: :delete, data: { confirm: 'Are you sure you want to cancel this game?' } if can? :destroy, game %></td>
+      <td><%= "#{game.home_team_score} - #{game.visiting_team_score}" %></td>
     </tr>
   <% end %>
 </table>
 
-<%= link_to "Schedule a Game", new_league_game_path(@league), :class => "btn" %>
+
+
+<%= link_to "Schedule a New Game", new_league_game_path(@league), :class => "btn" %>
 
 <h3>Teams</h3>
 

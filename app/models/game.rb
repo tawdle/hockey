@@ -51,6 +51,10 @@ class Game < ActiveRecord::Base
   scope :scheduled, where(:state => :scheduled)
   scope :due, lambda { where("start_time < ?", DateTime.now) }
   scope :upcoming, lambda { where("start_time > ?", DateTime.now) }
+  scope :scheduled_or_active, where(:state => [:scheduled, :active])
+  scope :finished, where(:state => :finished)
+  scope :asc, order("start_time ASC")
+  scope :desc, order("start_time DESC")
 
   def printable_state
     {:scheduled => "is scheduled",
