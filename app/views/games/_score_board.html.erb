@@ -1,0 +1,22 @@
+<% score_board = game.score_board %>
+
+<table class="table" style="width: 640px;">
+  <tr>
+    <th>Team</th>
+    <th>1</th>
+    <th>2</th>
+    <th>3</th>
+    <th>OT</th>
+    <th>Total</th>
+  </tr>
+
+  <% game.teams.each do |team| %>
+    <tr>
+      <td><%= link_to team.name, team %></td>
+      <% (Game::Periods + [:total]).each_with_index do |period, index| %>
+        <td <%= "style='font-weight: bold;'".html_safe if period == :total %>><%= score_board[team.name][index] %></td>
+      <% end %>
+    </tr>
+  <% end %>
+</table>
+

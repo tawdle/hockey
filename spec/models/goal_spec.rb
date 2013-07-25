@@ -19,6 +19,10 @@ describe Goal do
       goal.player = nil
       goal.should_not be_valid
     end
+    it "requires a valid period" do
+      goal.period = "foo"
+      goal.should_not be_valid
+    end
     it "requires that the team be in the game" do
       goal.team = FactoryGirl.build(:team)
       goal.should_not be_valid

@@ -27,8 +27,13 @@ $(function() {
     </div>
   <% end %>
 
-  <h4>Which team scored?</h4>
-  <div class="field team">
+  <div id="choose-period">
+    <h4>In which period was the goal scored?</h4>
+    <%= f.select :period, [""] + Game::Periods %>
+  </div>
+
+  <div class="field" id="choose-team" style="display: none;">
+    <h4>Which team scored?</h4>
     <%= f.label "team_id_#{@game.home_team_id}", :class => "radio" do %>
       <%= f.radio_button :team_id, @game.home_team.id, { "data-team" => "home_team" } %>
       <%= @game.home_team.name %>
@@ -51,9 +56,11 @@ $(function() {
 
   <div id="choose-assist" style="display: none;">
     <h4>Which player assisted?</h4>
+    <div class="field">
       <select id="assisting-player-id" name="goal[assisting_player_id]" />
         <%# Options provided by JS %>
       </select>
+    </div>
   </div>
 
   <br />

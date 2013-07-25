@@ -4,8 +4,10 @@
   <p>This game is scheduled to start in <%= distance_of_time_in_words_to_now(@game.start_time) %>.
 <% elsif @game.active? %>
   <p>This game is currently being played.</p>
+  <%= render :partial => "score_board", :locals => {:game => @game } %>
 <% elsif @game.finished? %>
   <p>This game ended.</p>
+  <%= render :partial => "score_board", :locals => {:game => @game } %>
 <% elsif @game.canceled? %>
   <p>This game was canceled.</p>
 <% end %>
@@ -15,7 +17,7 @@
 </div>
 
 <% if can? :create, Goal.new(:game => @game) %>
-  <div>
+  <div style="margin-top: 10px;">
     <%= link_to "Record Goal", new_game_goal_path(@game), :class => "btn" %>
   </div>
 <% end %>

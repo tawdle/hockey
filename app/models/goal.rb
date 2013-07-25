@@ -5,7 +5,9 @@ class Goal < ActiveRecord::Base
   belongs_to :player, :class_name => "User"
   belongs_to :assisting_player, :class_name => "User"
 
-  attr_accessible :game, :game_id, :creator, :team_id, :player_id, :assisting_player_id
+  attr_accessible :game, :game_id, :creator, :team_id, :player_id, :assisting_player_id, :period
+
+  validates_inclusion_of :period, :in => Game::Periods
 
   validates_presence_of :creator
   validates_presence_of :game
@@ -37,7 +39,7 @@ class Goal < ActiveRecord::Base
   def assisting_player_is_on_team
     errors.add(:assisting_player, "must be on team") unless assisting_player.nil? || team.nil? || team.players.include?(assisting_player)
   end
-  
+
   def assisting_player_is_different
     errors.add(:assisting_player, "cannot be the same as player") unless assisting_player.nil? || player.nil? || assisting_player != player
   end

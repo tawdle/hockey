@@ -39,6 +39,7 @@ class Game < ActiveRecord::Base
   belongs_to :visiting_team, :class_name => 'Team'
   belongs_to :location
   has_many :activity_feed_items
+  has_many :goals
 
   validates_presence_of :home_team
   validates_presence_of :visiting_team
@@ -65,6 +66,8 @@ class Game < ActiveRecord::Base
   before_create :generate_create_feed_item
   before_update :generate_update_feed_item
 
+  Periods = %w(1 2 3 OT)
+
   def our_score(team)
     team == home_team ? home_team_score : visiting_team_score
   end
@@ -75,6 +78,25 @@ class Game < ActiveRecord::Base
 
   def their_team(team)
     team == home_team ? visiting_team : home_team
+  end
+
+  def teams
+    [home_team, visiting_team]
+  end
+
+  def score_board
+    data = goals.group(:period, :team_id).order(:period).select("period, team_id, count(*)").all
+    results = {}
+    teams.each do |team|
+      results[team.name] = Game::Periods.map do |period|
+        data.find {|d| d.team_id == team.id && d.period == period }.try(:count).try(:to_i) || 0
+      end
+    end
+    results[:total] = Game::Periods.map do |period|
+      data.select {|d| d.period == period }.sum {|d| d.count.to_i }
+    end
+
+    Hash[results.map {|k,v| [k, v.append(v.sum)] }]
   end
 
   private

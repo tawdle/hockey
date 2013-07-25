@@ -23,7 +23,7 @@ describe GoalsController do
 
     describe "#create" do
       def do_request
-        post :create, :game_id => game.to_param, :goal => { :game_id => game.to_param, :team_id => team.to_param, :player_id => player.to_param }
+        post :create, :game_id => game.to_param, :goal => { :game_id => game.to_param, :team_id => team.to_param, :player_id => player.to_param, :period => "OT" }
       end
       it "should create a goal" do
         expect {
