@@ -1,0 +1,65 @@
+<%= javascript_tag do =%>
+$(function() {
+  window.mygs = window.mygys || {};
+  mygs.goals = mygs.goals || {};
+  mygs.goals.players = {};
+  mygs.goals.players.home_team = [
+    <%= @game.home_team.players.map {|player| "[\"#{player.id}\" , \"#{player.name}\"]"}.join(",\n").html_safe %> 
+  ];
+  mygs.goals.players.visiting_team = [
+    <%= @game.visiting_team.players.map {|player| "[\"#{player.id}\" , \"#{player.name}\"]"}.join(",\n").html_safe %> 
+  ];
+});
+<% end %>
+
+<h2>Record a goal</h2>
+
+<%= form_for([@game, @goal]) do |f| %>
+  <% if @goal.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@goal.errors.count, "error") %> prohibited this goal from being saved:</h2>
+
+      <ul>
+      <% @goal.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <h4>Which team scored?</h4>
+  <div class="field team">
+    <%= f.label "team_id_#{@game.home_team_id}", :class => "radio" do %>
+      <%= f.radio_button :team_id, @game.home_team.id, { "data-team" => "home_team" } %>
+      <%= @game.home_team.name %>
+    <% end %>
+    <%= f.label "team_id_#{@game.visiting_team_id}", :class => "radio" do %>
+      <%= f.radio_button :team_id, @game.visiting_team.id, { "data-team" => "visiting_team" } %>
+      <%= @game.visiting_team.name %>
+    <% end %>
+  </div>
+
+  <div id="choose-player" style="display: none;">
+    <h4>Which player scored?</h4>
+
+    <div class="field">
+      <select id="player-id" name="goal[player_id]">
+        <%# Options provided by JS %>
+      </select>
+    </div>
+  </div>
+
+  <div id="choose-assist" style="display: none;">
+    <h4>Which player assisted?</h4>
+      <select id="assisting-player-id" name="goal[assisting_player_id]" />
+        <%# Options provided by JS %>
+      </select>
+  </div>
+
+  <br />
+
+  <div class="actions">
+    <%= f.submit :class => "btn btn-primary", :disabled => true %>
+  </div>
+<% end %>
+

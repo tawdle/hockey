@@ -11,6 +11,8 @@ class Team < ActiveRecord::Base
   validates_presence_of :full_name
   validates_presence_of :league
 
+  alias_method :players, :members
+
   def activity_feed_items
     ActivityFeedItem.for(user)
   end

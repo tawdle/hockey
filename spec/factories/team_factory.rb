@@ -8,6 +8,10 @@ FactoryGirl.define do
     league
     manager { build(:user) }
     association :user
+
+    trait :with_players do
+      members { [ build(:user), build(:user) ] }
+    end
   end
 end
 

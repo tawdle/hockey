@@ -18,6 +18,10 @@ class Ability
       user.manager_of?(game.home_team.try(:league)) || user.manager_of?(game.visiting_team.try(:league))
     end
 
+    can :manage, Goal do |goal|
+      goal && goal.game && (user.recorder_of?(goal.game.home_team.league) || user.recorder_of?(goal.game.visiting_team.league))
+    end
+
     can [:edit, :update], User do |user_object|
       user_object == user
     end

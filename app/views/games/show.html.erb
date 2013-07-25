@@ -1,6 +1,24 @@
 <h2 class="page-header"><%= @game.home_team.name %> <i>vs</i> <%= @game.visiting_team.name %> <br /> <small><%= @game.start_time.to_s(:long) %> at <%= @game.location.name %></small></h2>
 
-<p>This game <%= @game.printable_state %>.</p>
+<% if @game.scheduled? %>
+  <p>This game is scheduled to start in <%= distance_of_time_in_words_to_now(@game.start_time) %>.
+<% elsif @game.active? %>
+  <p>This game is currently being played.</p>
+<% elsif @game.finished? %>
+  <p>This game ended.</p>
+<% elsif @game.canceled? %>
+  <p>This game was canceled.</p>
+<% end %>
+
+<div>
+  <%= image_tag("sample_frame.png") %>
+</div>
+
+<% if can? :create, Goal.new(:game => @game) %>
+  <div>
+    <%= link_to "Record Goal", new_game_goal_path(@game), :class => "btn" %>
+  </div>
+<% end %>
 
 <%= render :partial => "activity_feed", :locals => { :new_activity_feed_item => ActivityFeedItem.new(:game => @game), :activity_feed_items => @game.activity_feed_items, :in_game_context => true } %>
 
