@@ -65,13 +65,6 @@ class Game < ActiveRecord::Base
   before_create :generate_create_feed_item
   before_update :generate_update_feed_item
 
-  def printable_state
-    {:scheduled => "is scheduled",
-     :active => "is currently being played",
-     :canceled => "has been canceled",
-     :finished => "has ended" }[state.to_sym]
-  end
-
   def our_score(team)
     team == home_team ? home_team_score : visiting_team_score
   end
@@ -104,7 +97,7 @@ class Game < ActiveRecord::Base
   end
 
   def generate_game_started_feed_item
-    activity_feed_items.create!(:message => "The game between @#{home_team.name} and @#{visiting_team} started.")
+    activity_feed_items.create!(:message => "The game between @#{home_team.name} and @#{visiting_team.name} started.")
   end
 
   def generate_game_over_feed_item

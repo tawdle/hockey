@@ -1,5 +1,5 @@
 <% if (current_user && defined?(new_activity_feed_item)) || activity_feed_items.any? %>
-  <h2 class="page-header">Activity Feed</h2>
+  <h3 class="page-header">Activity Feed</h2>
 
   <% if current_user && defined?(new_activity_feed_item) %>
     <%= form_for(new_activity_feed_item) do |f| %>
