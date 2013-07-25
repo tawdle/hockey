@@ -61,10 +61,10 @@
     <% Game.for_team(@team).scheduled_or_active.asc.each do |game| %>
       <tr>
         <td><%= link_to game.state.humanize, game %></td>
-        <td><%= link_to game.their_team(@team).name, game.their_team(@team) %></td>
+        <td><%= link_to game.opposing_team(@team).name, game.opposing_team(@team) %></td>
         <td><%= game.start_time.to_s(:long) %></td>
         <td><%= game.location.name %></td>
-        <td><%= "#{game.our_score(@team)} - #{game.their_score(@team)}" if game.active? %></td>
+        <td><%= "#{game.score_for(@team)} - #{game.score_for_opposing_team(@team)}" if game.active? %></td>
       </tr>
     <% end %>
   </table>

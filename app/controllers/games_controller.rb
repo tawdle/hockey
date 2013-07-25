@@ -28,9 +28,6 @@ class GamesController < ApplicationController
   def edit
   end
 
-  def edit_score
-  end
-
   def update
     respond_to do |format|
       if @game.update_attributes(params[:game].merge(:updater => current_user))
@@ -38,20 +35,6 @@ class GamesController < ApplicationController
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
-        format.json { render json: @game.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  def update_score
-    scores = (params[:game] || {}).select { |key| ["home_team_score", "visiting_team_score"].include?(key) }
-    finished = params[:final_score] == "1"
-    respond_to do |format|
-      if @game.update_attributes(scores.merge(:updater => current_user)) && (!finished || @game.finish)
-        format.html { redirect_to @league, notice: 'Game was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit_score" }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end

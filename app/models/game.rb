@@ -23,14 +23,6 @@ class Game < ActiveRecord::Base
     state any - :scheduled do
       validate {|game| game.send(:location_not_changed) }
     end
-
-    state any - :active do
-      validate {|game| game.send(:scores_are_not_changed) }
-    end
-
-    state :finished do
-      validate :scores_are_set
-    end
   end
 
   #symbolize :status, :in => [:scheduled, :active, :finished, :canceled]
@@ -49,7 +41,7 @@ class Game < ActiveRecord::Base
   validate :start_time_is_in_future, :if => :start_time_changed?
 
   attr_accessor :updater
-  attr_accessible :status, :home_team, :home_team_id, :home_team_score, :visiting_team, :visiting_team_id, :visiting_team_score, :location, :location_id, :start_time, :updater
+  attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id, :start_time, :updater
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
@@ -68,20 +60,28 @@ class Game < ActiveRecord::Base
 
   Periods = %w(1 2 3 OT)
 
-  def our_score(team)
-    team == home_team ? home_team_score : visiting_team_score
+  def teams
+    [home_team, visiting_team]
   end
 
-  def their_score(team)
-    team == home_team ? visiting_team_score : home_team_score
-  end
-
-  def their_team(team)
+  def opposing_team(team)
     team == home_team ? visiting_team : home_team
   end
 
-  def teams
-    [home_team, visiting_team]
+  def score_for(team)
+    goals.for_team(team).count
+  end
+
+  def home_team_score
+    score_for(home_team)
+  end
+
+  def visiting_team_score
+    score_for(visiting_team)
+  end
+
+  def score_for_opposing_team(team)
+    score_for(opposing_team(team))
   end
 
   def score_board
@@ -130,10 +130,6 @@ class Game < ActiveRecord::Base
     errors.add(:base, "Home and visiting teams must be different") if home_team == visiting_team
   end
 
-  def scores_are_not_changed
-    errors.add(:base, "Scores may only be changed while the game is in progress") if (home_team_score_changed? || visiting_team_score_changed?)
-  end
-
   def start_time_is_in_future
     errors.add(:start_time, "must be in the future") if start_time && start_time < Time.now
   end
@@ -144,9 +140,5 @@ class Game < ActiveRecord::Base
 
   def location_not_changed
     errors.add(:location, "can't be changed after game starts") if location_id_changed? && persisted?
-  end
-
-  def scores_are_set
-    errors.add(:base, "Game may not be finished unless scores have been provided") unless (home_team_score && visiting_team_score)
   end
 end

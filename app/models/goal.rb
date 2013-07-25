@@ -20,10 +20,12 @@ class Goal < ActiveRecord::Base
 
   before_create :generate_feed_item
 
+  scope :for_team, lambda {|team| where(:team_id => team.id) }
+
   private
 
   def generate_feed_item
-    message = "@#{player.name} scored a goal for @#{team.name} against @#{game.their_team(team).name}"
+    message = "@#{player.name} scored a goal for @#{team.name} against @#{game.opposing_team(team).name}"
     message << ", assisted by @#{assisting_player.name}" if assisting_player
     game.activity_feed_items.create!(:message => message)
   end

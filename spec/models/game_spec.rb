@@ -43,36 +43,21 @@ describe Game do
       game.should_not be_valid
     end
 
-    it "should prevent setting scores for a game not yet started" do
-      game.home_team_score = 2
-      game.should_not be_valid
-    end
-
     context "with an active game" do
       let(:game) { FactoryGirl.create(:active_game) }
 
-      it "should allow setting scores" do
-        game.home_team_score = 2
-        game.should be_valid
-      end
-
-      it "should prevent changing the start_time after the game has started" do
+      it "should prevent changing the start_time" do
         game.start_time = 3.weeks.from_now
         game.should_not be_valid
       end
 
-      it "should prevent changing the location after the game has started" do
+      it "should prevent changing the location" do
         game.location = FactoryGirl.build(:location)
         game.should_not be_valid
       end
     end
     context "with a finished game" do
       let(:game) { FactoryGirl.create(:finished_game) }
-
-      it "should prevent changing scores" do
-        game.visiting_team_score = 7
-        game.should_not be_valid
-      end
     end
   end
 

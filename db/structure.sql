@@ -136,8 +136,6 @@ CREATE TABLE games (
     visiting_team_id integer,
     location_id integer,
     start_time timestamp without time zone,
-    home_team_score integer,
-    visiting_team_score integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -819,3 +817,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130722174443');
 INSERT INTO schema_migrations (version) VALUES ('20130722232330');
 
 INSERT INTO schema_migrations (version) VALUES ('20130724220046');
+
+INSERT INTO schema_migrations (version) VALUES ('20130725224612');
