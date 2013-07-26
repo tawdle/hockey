@@ -24,6 +24,10 @@ class Team < ActiveRecord::Base
 
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
 
+  def at_name
+    "@#{name}"
+  end
+
   def managers
     User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class, :authorizable_id => self.id})
   end

@@ -19,6 +19,7 @@
 <% if can? :create, Goal.new(:game => @game) %>
   <div style="margin-top: 10px;">
     <%= link_to "Record Goal", new_game_goal_path(@game), :class => "btn" %>
+    <%= link_to "See all Goals for this game", game_goals_path(@game), :class => "btn" %>
   </div>
 <% end %>
 

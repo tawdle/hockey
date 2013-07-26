@@ -45,4 +45,9 @@ describe Goal do
     let(:count) { 2 }
     it_behaves_like "an action that creates an activity feed item"
   end
+  describe "#destroy" do
+    let(:action) { goal.save!; goal.destroy }
+    let(:count) { 3 }
+    it_behaves_like "an action that creates an activity feed item"
+  end
 end

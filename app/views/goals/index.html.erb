@@ -1,0 +1,28 @@
+<h2 class="page-header">Goals for <%= @game.home_team.name %> <i>vs</i> <%= @game.visiting_team.name %> <br /> <small><%= @game.start_time.to_s(:long) %> at <%= @game.location.name %></small></h2>
+
+<table class="table">
+  <tr>
+    <th>Team</th>
+    <th>Player</th>
+    <th>Assist</th>
+    <th>Period</th>
+    <th></th>
+  </tr>
+
+  <% @game.goals.each do |goal| %>
+    <tr>
+      <td><%= goal.team.name %></td>
+      <td><%= goal.player.name %></td>
+      <td><%= goal.assisting_player.try(:name) %></td>
+      <td><%= goal.period %></td>
+      <td><%= link_to 'Destroy', game_goal_path(@game, goal), method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, goal %></td>
+    </tr>
+  <% end %>
+</table>
+
+<div>
+  <%= link_to "Back", @game %>
+  <%= link_to "Record new goal", new_game_goal_path(@game), :class => "btn" %>
+</div>
+
+

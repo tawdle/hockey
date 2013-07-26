@@ -5,6 +5,7 @@ class Goal < ActiveRecord::Base
   belongs_to :player, :class_name => "User"
   belongs_to :assisting_player, :class_name => "User"
 
+  attr_accessor :updater
   attr_accessible :game, :game_id, :creator, :team_id, :player_id, :assisting_player_id, :period
 
   validates_inclusion_of :period, :in => Game::Periods
@@ -18,15 +19,25 @@ class Goal < ActiveRecord::Base
   validate :assisting_player_is_on_team
   validate :assisting_player_is_different
 
-  before_create :generate_feed_item
+  before_create :generate_create_feed_item
+  before_destroy :generate_destroy_feed_item
 
   scope :for_team, lambda {|team| where(:team_id => team.id) }
 
   private
 
-  def generate_feed_item
+  def updater_name
+    updater.try(:at_name) || "The System"
+  end
+
+  def generate_create_feed_item
     message = "@#{player.name} scored a goal for @#{team.name} against @#{game.opposing_team(team).name}"
     message << ", assisted by @#{assisting_player.name}" if assisting_player
+    game.activity_feed_items.create!(:message => message)
+  end
+
+  def generate_destroy_feed_item
+    message = "#{updater_name} revoked #{player.at_name}'s goal against #{game.opposing_team(team).at_name}"
     game.activity_feed_items.create!(:message => message)
   end
 

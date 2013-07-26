@@ -10,6 +10,17 @@ describe GoalsController do
   context "with a signed in recorder" do
     before { sign_in(recorder) }
 
+    describe "#index" do
+      def do_request
+        get :index, :game_id => game.to_param
+      end
+
+      it "should works" do
+        do_request
+        response.should be_ok
+      end
+    end
+
     describe "#new" do
       def do_request
         get :new, :game_id => game.to_param
@@ -29,6 +40,20 @@ describe GoalsController do
         expect {
           do_request
         }.to change { Goal.count }.by(1)
+      end
+    end
+
+    describe "#destroy" do
+      let!(:goal) { FactoryGirl.create(:goal, :game => game, :team => team) }
+
+      def do_request
+        delete :destroy, :game_id => game.to_param, :id => goal.to_param
+      end
+
+      it "should destroy a goal" do
+        expect {
+          do_request
+        }.to change { Goal.count }.by(-1)
       end
     end
   end
