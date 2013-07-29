@@ -93,9 +93,9 @@ describe Invitation do
     end
 
     it "should notify target" do
-      target.should_receive(:accepted_invitation_to_manage).with(user).and_return(mail)
+      target.should_receive(:accepted_invitation_to_manage).with(user, invitation).and_return(mail)
       expect {
-        invitation.accept!
+        invitation.accept!(user)
       }.to change { invitation.state }.from(:pending).to(:accepted)
     end
   end
@@ -110,7 +110,7 @@ describe Invitation do
     end
 
     it "should notify target" do
-      target.should_receive(:declined_invitation_to_manage).with(user).and_return(mail)
+      target.should_receive(:declined_invitation_to_manage).with(user, invitation).and_return(mail)
       expect {
         invitation.decline!
       }.to change { invitation.state }.from(:pending).to(:declined)

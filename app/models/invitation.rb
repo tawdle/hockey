@@ -1,12 +1,13 @@
 class Invitation < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :target, :polymorphic => true
+  belongs_to :user
 
   symbolize :state, :in => [:pending, :accepted, :declined]
   symbolize :predicate, :in => [:manage, :join]
 
   attr_accessor :username_or_email
-  attr_accessible :creator, :predicate, :target, :target_id, :target_type, :email, :username_or_email
+  attr_accessible :creator, :predicate, :target, :target_id, :target_type, :email, :username_or_email, :user
 
   validate :provided_username_or_email, :if => :username_or_email?
   validates_presence_of :email, :unless => :username_or_email?
@@ -18,12 +19,10 @@ class Invitation < ActiveRecord::Base
 
   after_initialize :set_defaults
   before_create :set_code
-
-  # XXX: Convert @username to email address if neccessary
   after_create :send_invitation
 
   scope :pending, where(:state => :pending)
-  scope :for_user, lambda {|user| where(:email => user.email) }
+  scope :for_user, lambda {|user| where("email = ? OR user_id = ?", user.email, user.id) }
 
   def provided_username_or_email
     username_match = /^\@(.*)$/.match(username_or_email)
@@ -48,15 +47,19 @@ class Invitation < ActiveRecord::Base
     username_or_email.present?
   end
 
-  def accept!(user=nil)
-    user ||= User.find_by_email(email)
-    target.send("accepted_invitation_to_#{predicate}", user) if user
-    update_attribute(:state, :accepted)
+  def accept!(accepting_user)
+    Invitation.transaction do
+      if user && accepting_user != user
+        accepting_user.merge(user)
+      end
+      target.send("accepted_invitation_to_#{predicate}", accepting_user, self)
+      update_attribute(:state, :accepted)
+    end
   end
 
   def decline!
-    user = User.find_by_email(email)
-    target.send("declined_invitation_to_#{predicate}", user) if user
+    declining_user = user || User.find_by_email(email)
+    target.send("declined_invitation_to_#{predicate}", declining_user, self)
     update_attribute(:state, :declined)
   end
 

@@ -50,6 +50,6 @@ class TeamMembership < ActiveRecord::Base
   end
 
   def send_invitation
-    Invitation.create!(:creator => creator, :target => team, :predicate => :join, :email => member.email)
+    Invitation.create!(:creator => creator, :user => member, :target => team, :predicate => :join, :email => member.email)
   end
 end

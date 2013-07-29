@@ -44,10 +44,7 @@ class Team < ActiveRecord::Base
   end
 
   def accepted_invitation_to_join(user)
-    Team.transaction do
-      TeamMembership.create!(:member => user, :team => self)
-      ActivityFeedItem.create!(:creator => self.user, :message => "@#{user.name} joined #{name}")
-    end
+    ActivityFeedItem.create!(:message => "#{user.at_name} joined #{at_name}")
   end
 
   def declined_invitation_to_join(user)

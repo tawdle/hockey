@@ -44,4 +44,28 @@ class User < ActiveRecord::Base
   def at_name
     "@#{name}"
   end
+
+  def merge(other)
+    # Find all references to other, change them to references to us
+    update_id(Authorization, :user, other)
+    uodate_id(Following, :user, other)
+    update_id(Following, :target, other)
+    update_id(Invitation, :user, other)
+    update_id(Invitation, :creator, other)
+    ActivityFeedItem.joins(:mentions).where(:mentions => {:user_id => other.id}).each do |item|
+      item.message.gsub!(other.at_name, at_name)
+      item.save!
+    end
+    update_id(Mention, :user, other)
+    update_id(TeamMembership, :member, other)
+    update_id(ActivityFeedItem, :creator, other)
+    update_id(Goal, :creator, other)
+    update_id(Goal, :player, other)
+    update_id(Goal, :assisting_player, other)
+    other.destroy!
+  end
+
+  def update_id(model, field, other)
+    model.update_all("#{field}_id = #{id}", "#{field}_id = #{other.id}")
+  end
 end
