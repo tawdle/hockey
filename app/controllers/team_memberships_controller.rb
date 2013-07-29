@@ -12,7 +12,7 @@ class TeamMembershipsController < ApplicationController
   end
 
   def create
-    @team_membership = TeamMembership.new(params[:team_membership].merge(team: @team))
+    @team_membership = TeamMembership.new(params[:team_membership].merge(team: @team, creator: current_user))
     authorize! :create, @team_membership
 
     respond_to do |format|
@@ -31,7 +31,7 @@ class TeamMembershipsController < ApplicationController
     @team_membership.destroy
 
     respond_to do |format|
-      format.html { redirect_to team_members_url(@team) }
+      format.html { redirect_to @team_membership.team }
       format.json { head :no_content }
     end
   end

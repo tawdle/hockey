@@ -17,13 +17,7 @@
 
 <%= @team.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
 
-<h3 class="page-header">Players
-  <% if can?(:create, Invitation.new(:target => @team)) %>
-    <small>
-      (<%= link_to 'invite', new_invitation_path(:predicate => :join, :target_id => @team.to_param, :target_type => "Team") %>)
-    </small>
-  <% end %>
-</h3>
+<h3 class="page-header">Players</h3>
 
 <table class="table table-hover">
   <tr>
