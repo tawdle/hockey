@@ -31,8 +31,8 @@ class Goal < ActiveRecord::Base
   end
 
   def generate_create_feed_item
-    message = "@#{player.name} scored a goal for @#{team.name} against @#{game.opposing_team(team).name}"
-    message << ", assisted by @#{assisting_player.name}" if assisting_player
+    message = "#{player.at_name} scored a goal for #{team.at_name} against #{game.opposing_team(team).at_name}"
+    message << ", assisted by #{assisting_player.at_name}" if assisting_player
     game.activity_feed_items.create!(:message => message)
   end
 
