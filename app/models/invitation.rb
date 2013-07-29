@@ -26,7 +26,7 @@ class Invitation < ActiveRecord::Base
   scope :for_user, lambda {|user| where(:email => user.email) }
 
   def provided_username_or_email
-    username_match = /^\@(.*)$/.match(@username_or_email)
+    username_match = /^\@(.*)$/.match(username_or_email)
     if username_match
       username = username_match[1].strip
       user = User.find_by_name(username)
@@ -36,7 +36,7 @@ class Invitation < ActiveRecord::Base
         errors.add(:username_or_email, "there is no user @#{username}")
       end
     else
-      if @username_or_email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+      if username_or_email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
         self.email = username_or_email
       else
         errors.add(:username_or_email, "isn't a valid @username or email address")

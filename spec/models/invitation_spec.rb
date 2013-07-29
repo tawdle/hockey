@@ -2,36 +2,57 @@ require 'spec_helper'
 
 describe Invitation do
   let(:mail) { double("mail", :deliver => true) }
+  let(:invitation) { FactoryGirl.build(:invitation) }
 
   describe "#validations" do
-    before do
-      @invitation = FactoryGirl.build(:invitation)
-    end
     it "creates a valid object" do
-      @invitation.should be_valid
+      invitation.should be_valid
     end
     it "requires a creator" do
-      @invitation.creator = nil
-      @invitation.should_not be_valid
+      invitation.creator = nil
+      invitation.should_not be_valid
     end
     it "requires an email address" do
-      @invitation.email = nil
-      @invitation.should_not be_valid
+      invitation.email = nil
+      invitation.should_not be_valid
     end
     it "requires a target" do
-      @invitation.target = nil
-      @invitation.should_not be_valid
+      invitation.target = nil
+      invitation.should_not be_valid
     end
     it "requires a predicate" do
-      @invitation.predicate = nil
-      @invitation.should_not be_valid
+      invitation.predicate = nil
+      invitation.should_not be_valid
     end
     it "allows only one invitation per email/predicate/target" do
       other_invitation = FactoryGirl.create(:invitation,
-                                            :email => @invitation.email,
-                                            :predicate => @invitation.predicate,
-                                            :target => @invitation.target)
-      @invitation.should_not be_valid
+                                            :email => invitation.email,
+                                            :predicate => invitation.predicate,
+                                            :target => invitation.target)
+      invitation.should_not be_valid
+    end
+
+    describe "#username_or_email" do
+      before do
+        invitation.email = nil
+      end
+
+      it "requires a valid username or email address" do
+        invitation.username_or_email = "foo"
+        invitation.should_not be_valid
+      end
+
+      it "requires a provided username to match an existing user" do
+        invitation.username_or_email = "@foo"
+        invitation.should_not be_valid
+        invitation.username_or_email = FactoryGirl.create(:user).at_name
+        invitation.should be_valid
+      end
+
+      it "accepts any email address" do
+        invitation.username_or_email = "foo@foo.com"
+        invitation.should be_valid
+      end
     end
   end
 
