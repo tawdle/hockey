@@ -329,7 +329,8 @@ CREATE TABLE team_memberships (
     team_id integer,
     member_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    jersey_number character varying(255)
 );
 
 
@@ -822,3 +823,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130724220046');
 INSERT INTO schema_migrations (version) VALUES ('20130725224612');
 
 INSERT INTO schema_migrations (version) VALUES ('20130729224238');
+
+INSERT INTO schema_migrations (version) VALUES ('20130730222758');

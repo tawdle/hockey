@@ -4,12 +4,13 @@ class TeamMembership < ActiveRecord::Base
   belongs_to :team
   belongs_to :member, :class_name => 'User'
   attr_accessor :username_or_email, :creator
-  attr_accessible :team, :username_or_email, :creator
+  attr_accessible :team, :username_or_email, :creator, :jersey_number
 
   validates_presence_of :team
   validate :provided_username_or_email, :if => :username_or_email?
   validates_presence_of :member, :unless => :username_or_email?
   validates_uniqueness_of :member_id, :scope => :team_id
+  validates_uniqueness_of :jersey_number, :scope => :team_id, :allow_nil => true, :allow_blank => true
 
   scope :for_user, lambda {|user| where(:member_id => user.id) }
 

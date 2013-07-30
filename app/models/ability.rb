@@ -52,7 +52,7 @@ class Ability
       user.admin?
     end
 
-    can [:create, :destroy], TeamMembership do |team_membership|
+    can :manage, TeamMembership do |team_membership|
       user.manager_of?(team_membership.team)
     end
 

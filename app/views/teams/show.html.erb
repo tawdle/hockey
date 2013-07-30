@@ -21,21 +21,26 @@
 
 <table class="table table-hover">
   <tr>
+    <th style="width: 20px;">#</th>
     <th>Name</th>
     <th></th>
   </tr>
 
   <% @team.team_memberships.each do |team_membership| %>
     <tr>
+      <td><%= team_membership.jersey_number %></td>
       <td><%= format_user_link(team_membership.member) %></td>
-      <td><%= link_to 'Remove', team_member_path(team_membership), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      <td>
+        <%= link_to 'Edit', edit_team_membership_path(team_membership) %>
+        <%= link_to 'Remove', team_membership, method: :delete, data: { confirm: 'Are you sure?' } %>
+      </td>
     </tr>
   <% end %>
 </table>
 
 <br />
 
-<%= link_to 'Add Team Member', new_team_member_path(@team), :class => "btn" if can? :create, TeamMembership.new(:team => @team) %>
+<%= link_to 'Add Team Member', new_team_team_membership_path(@team), :class => "btn" if can? :create, TeamMembership.new(:team => @team) %>
 
 <br />
 
