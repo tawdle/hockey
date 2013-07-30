@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, :except => [:accept, :update_fake_user]
   load_and_authorize_resource :except => [:new, :create]
 
   Target_classes = [League, Team]
@@ -26,6 +26,13 @@ class InvitationsController < ApplicationController
   end
 
   def accept
+    if current_user.nil? && @invitation.for_fake_user?
+      render :edit_fake_user
+      return
+    end
+
+    authenticate_user!
+
     if @invitation.state == :accepted
       render :already_accepted
     elsif current_user.email != @invitation.email && params[:confirm].nil?
@@ -41,5 +48,22 @@ class InvitationsController < ApplicationController
       @invitation.decline!
     end
     redirect_to :root
+  end
+
+  def update_fake_user
+    if current_user.nil? && @invitation.for_fake_user?
+
+      respond_to do |format|
+        if @invitation.user.update_attributes(params[:user])
+          sign_in(@invitation.user)
+          format.html { redirect_to accept_invitation_path(@invitation), notice: 'User account was successfully updated.' }
+          format.json { head :no_content }
+        else
+          format.html { render action: :edit_fake_user }
+          format.json { render json: @invitation.user.errors, status: :unprocessable_entity }
+        end
+      end
+
+    end
   end
 end

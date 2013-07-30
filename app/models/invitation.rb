@@ -24,6 +24,28 @@ class Invitation < ActiveRecord::Base
   scope :pending, where(:state => :pending)
   scope :for_user, lambda {|user| where("email = ? OR user_id = ?", user.email, user.id) }
 
+  def accept!(accepting_user)
+    Invitation.transaction do
+      if for_fake_user? && accepting_user != user
+        accepting_user.merge(user)
+      end
+      target.send("accepted_invitation_to_#{predicate}", accepting_user, self)
+      update_attribute(:state, :accepted)
+    end
+  end
+
+  def decline!
+    declining_user = user || User.find_by_email(email)
+    target.send("declined_invitation_to_#{predicate}", declining_user, self)
+    update_attribute(:state, :declined)
+  end
+
+  def for_fake_user?
+    state == :pending && user && !user.last_sign_in_at?
+  end
+
+  private
+
   def provided_username_or_email
     username_match = /^\@(.*)$/.match(username_or_email)
     if username_match
@@ -46,24 +68,6 @@ class Invitation < ActiveRecord::Base
   def username_or_email?
     username_or_email.present?
   end
-
-  def accept!(accepting_user)
-    Invitation.transaction do
-      if user && accepting_user != user
-        accepting_user.merge(user)
-      end
-      target.send("accepted_invitation_to_#{predicate}", accepting_user, self)
-      update_attribute(:state, :accepted)
-    end
-  end
-
-  def decline!
-    declining_user = user || User.find_by_email(email)
-    target.send("declined_invitation_to_#{predicate}", declining_user, self)
-    update_attribute(:state, :declined)
-  end
-
-  private
 
   def set_defaults
     self.state ||= :pending

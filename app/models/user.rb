@@ -25,6 +25,8 @@ class User < ActiveRecord::Base
 
   mount_uploader :avatar, AvatarUploader
 
+  before_update :update_mentions, :if => :name_changed?
+
   # Add helpers for authorizations
   Authorization::GlobalRoles.each do |role|
     define_method("#{role}?") { authorizations.where(:role => role).count > 0 }
@@ -47,25 +49,30 @@ class User < ActiveRecord::Base
 
   def merge(other)
     # Find all references to other, change them to references to us
-    update_id(Authorization, :user, other)
-    uodate_id(Following, :user, other)
-    update_id(Following, :target, other)
-    update_id(Invitation, :user, other)
-    update_id(Invitation, :creator, other)
-    ActivityFeedItem.joins(:mentions).where(:mentions => {:user_id => other.id}).each do |item|
-      item.message.gsub!(other.at_name, at_name)
-      item.save!
+    User.transaction do
+      update_id(Authorization, :user, other)
+      uodate_id(Following, :user, other)
+      update_id(Following, :target, other)
+      update_id(Invitation, :user, other)
+      update_id(Invitation, :creator, other)
+      Mention.rename(other, other.at_name, at_name)
+      update_id(Mention, :user, other)
+      update_id(TeamMembership, :member, other)
+      update_id(ActivityFeedItem, :creator, other)
+      update_id(Goal, :creator, other)
+      update_id(Goal, :player, other)
+      update_id(Goal, :assisting_player, other)
+      other.destroy!
     end
-    update_id(Mention, :user, other)
-    update_id(TeamMembership, :member, other)
-    update_id(ActivityFeedItem, :creator, other)
-    update_id(Goal, :creator, other)
-    update_id(Goal, :player, other)
-    update_id(Goal, :assisting_player, other)
-    other.destroy!
   end
+
+  private
 
   def update_id(model, field, other)
     model.update_all("#{field}_id = #{id}", "#{field}_id = #{other.id}")
+  end
+
+  def update_mentions
+    Mention.rename(self, name_was, name)
   end
 end

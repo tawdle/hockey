@@ -43,7 +43,7 @@ class Team < ActiveRecord::Base
     # Whatevs
   end
 
-  def accepted_invitation_to_join(user)
+  def accepted_invitation_to_join(user, invitation=nil)
     ActivityFeedItem.create!(:message => "#{user.at_name} joined #{at_name}")
   end
 
