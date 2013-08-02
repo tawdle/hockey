@@ -14,6 +14,7 @@ class Game < ActiveRecord::Base
 
     after_transition any => :canceled, :do => :generate_cancel_feed_item
     after_transition any => :active, :do => :generate_game_started_feed_item
+    after_transition any => :active, :do => :start_game_clock!
     after_transition any => :finished, :do => :generate_game_over_feed_item
 
     state all - :scheduled do
@@ -32,6 +33,7 @@ class Game < ActiveRecord::Base
   belongs_to :location
   has_many :activity_feed_items
   has_many :goals
+  belongs_to :clock, :class_name => "Timer"
 
   validates_presence_of :home_team
   validates_presence_of :visiting_team
@@ -97,6 +99,20 @@ class Game < ActiveRecord::Base
     end
 
     Hash[results.map {|k,v| [k, v.append(v.sum)] }]
+  end
+
+  def start_game_clock!
+    if clock
+      clock.reset!
+    else
+      build_clock
+      save!
+    end
+    clock.start!
+  end
+
+  def stop_game_clock!
+    clock.pause!
   end
 
   private

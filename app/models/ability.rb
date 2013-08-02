@@ -18,6 +18,10 @@ class Ability
       user.manager_of?(game.home_team.try(:league)) || user.manager_of?(game.visiting_team.try(:league))
     end
 
+    can [:start, :stop], Game do |game|
+      user.recorder_of?(game.home_team.league) || user.recorder_of?(game.visiting_team.league)
+    end
+
     can :manage, Goal do |goal|
       goal && goal.game && (user.recorder_of?(goal.game.home_team.league) || user.recorder_of?(goal.game.visiting_team.league))
     end

@@ -6,6 +6,10 @@ Hockey::Application.routes.draw do
 
   resources :games, :only => [:show, :destroy] do
     resources :goals, :only => [:index, :new, :create, :destroy]
+    member do
+      post :start
+      post :stop
+    end
   end
 
   resources :locations, :except => [:destroy]

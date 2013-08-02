@@ -1,5 +1,5 @@
 class GamesController < ApplicationController
-  load_and_authorize_resource :league, :except => [:show, :destroy]
+  load_and_authorize_resource :league, :only => [:new, :create, :edit, :update]
   load_and_authorize_resource :except => [:new, :create]
 
   def show
@@ -49,6 +49,33 @@ class GamesController < ApplicationController
       else
         format.html { redirect_to :back, alert: 'Unable to cancel game.' }
         format.json { render json: @game.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def start
+    respond_to do |format|
+      if @game.scheduled? && @game.start!
+        format.html { redirect_to :back, notice: 'Game has been started.' }
+        format.json { head :no_content }
+      elsif @game.active? && @game.clock.paused? && @game.start_game_clock!# XXX: Ick. Put this in game's state machine.
+        format.html { redirect_to :back, notice: 'Game clock has been restarted.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_ to :back, alert: 'Something went wrong.' }
+        format.json { render json: ["Something went wrong."], status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def stop
+    respond_to do |format|
+      if @game.active? && @game.clock.running? && @game.clock.pause!
+        format.html { redirect_to :back, notice: 'Game clock has been stopped.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_ to :back, alert: 'Something went wrong.' }
+        format.json { render json: ["Something went wrong."], status: :unprocessable_entity }
       end
     end
   end

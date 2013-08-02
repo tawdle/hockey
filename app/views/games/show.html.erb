@@ -5,6 +5,9 @@
 <% elsif @game.active? %>
   <p>This game is currently being played.</p>
   <%= render :partial => "score_board", :locals => {:game => @game } %>
+  <div class="timer" data-elapsed-time=<%= @game.clock.elapsed_time.to_i %>>
+    <%= @game.clock.elapsed_time_hms %>
+  </div>
 <% elsif @game.finished? %>
   <p>This game ended.</p>
   <%= render :partial => "score_board", :locals => {:game => @game } %>
@@ -21,6 +24,20 @@
     <%= link_to "Record Goal", new_game_goal_path(@game), :class => "btn" %>
     <%= link_to "See all Goals for this game", game_goals_path(@game), :class => "btn" %>
   </div>
+<% end %>
+
+<% if can?(:start, @game) %>
+  <% if @game.scheduled? %>
+    <%= link_to "Start Game", start_game_path(@game), :method => :post, :class => "btn" %>
+  <% elsif @game.active? && @game.clock.paused? %>
+    <%= link_to "Start Game Clock", start_game_path(@game), :method => :post, :class => "btn" %>
+  <% end %>
+<% end %>
+
+<% if can? :stop, @game %>
+  <% if @game.active? && @game.clock.running? %>
+    <%= link_to "Stop game clock", stop_game_path(@game), :method => :post, :class => "btn" %>
+  <% end %>
 <% end %>
 
 <%= render :partial => "activity_feed", :locals => { :new_activity_feed_item => ActivityFeedItem.new(:game => @game), :activity_feed_items => @game.activity_feed_items, :in_game_context => true } %>

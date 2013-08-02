@@ -137,7 +137,8 @@ CREATE TABLE games (
     location_id integer,
     start_time timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    clock_id integer
 );
 
 
@@ -387,6 +388,39 @@ ALTER SEQUENCE teams_id_seq OWNED BY teams.id;
 
 
 --
+-- Name: timers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE timers (
+    id integer NOT NULL,
+    state character varying(255),
+    started_at timestamp without time zone,
+    paused_at timestamp without time zone,
+    seconds_paused double precision DEFAULT 0.0,
+    duration double precision
+);
+
+
+--
+-- Name: timers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE timers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: timers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE timers_id_seq OWNED BY timers.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -504,6 +538,13 @@ ALTER TABLE ONLY teams ALTER COLUMN id SET DEFAULT nextval('teams_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY timers ALTER COLUMN id SET DEFAULT nextval('timers_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
@@ -593,6 +634,14 @@ ALTER TABLE ONLY team_memberships
 
 ALTER TABLE ONLY teams
     ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: timers_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY timers
+    ADD CONSTRAINT timers_pkey PRIMARY KEY (id);
 
 
 --
@@ -825,3 +874,7 @@ INSERT INTO schema_migrations (version) VALUES ('20130725224612');
 INSERT INTO schema_migrations (version) VALUES ('20130729224238');
 
 INSERT INTO schema_migrations (version) VALUES ('20130730222758');
+
+INSERT INTO schema_migrations (version) VALUES ('20130802181624');
+
+INSERT INTO schema_migrations (version) VALUES ('20130802220247');
