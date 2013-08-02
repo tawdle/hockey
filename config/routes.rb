@@ -34,6 +34,9 @@ Hockey::Application.routes.draw do
 
   resources :users, :only => [:show, :edit, :update]
 
+  match 'typeahead/get_users' => 'typeahead#get_users'
+
+  #
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
