@@ -1,0 +1,12 @@
+---
+development:
+  uri: "http://localhost:8000/faye"
+  script: "http://localhost:8000/faye.js"
+  password: "this_is_a_SeCRet"
+production:
+  uri: "http://localhost:8000/faye"
+  script: "http://localhost:8000/faye.js"
+  password: "this_is_a_SeCRet"
+test:
+  disabled: true
+
