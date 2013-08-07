@@ -1,21 +1,29 @@
 class Game < ActiveRecord::Base
+  include AsyncMessaging
+
   state_machine :initial => :scheduled do
     event :start do
-      transition :scheduled => :active
+      transition [:scheduled, :paused] => :active
+    end
+
+    event :pause do
+      transition :active => :paused
     end
 
     event :finish do
-      transition :active => :finished
+      transition [:active, :paused] => :finished
     end
 
     event :cancel do
-      transition [:scheduled, :active] => :canceled
+      transition :scheduled => :canceled
     end
 
     after_transition any => :canceled, :do => :generate_cancel_feed_item
-    after_transition any => :active, :do => :generate_game_started_feed_item
+    after_transition :scheduled => :active, :do => :generate_game_started_feed_item
     after_transition any => :active, :do => :start_game_clock!
+    after_transition any => :paused, :do => :pause_game_clock!
     after_transition any => :finished, :do => :generate_game_over_feed_item
+    after_transition any => :finished, :do => :destroy_clock
 
     state all - :scheduled do
       validate {|game| game.send(:schedule_not_changed) }
@@ -26,14 +34,12 @@ class Game < ActiveRecord::Base
     end
   end
 
-  #symbolize :status, :in => [:scheduled, :active, :finished, :canceled]
-
   belongs_to :home_team, :class_name => 'Team'
   belongs_to :visiting_team, :class_name => 'Team'
   belongs_to :location
   has_many :activity_feed_items
   has_many :goals
-  belongs_to :clock, :class_name => "Timer"
+  belongs_to :clock, :class_name => "Timer", :dependent => :destroy
 
   validates_presence_of :home_team
   validates_presence_of :visiting_team
@@ -59,6 +65,7 @@ class Game < ActiveRecord::Base
 
   before_create :generate_create_feed_item
   before_update :generate_update_feed_item
+  after_update :broadcast_changes
 
   Periods = %w(1 2 3 OT)
 
@@ -102,16 +109,12 @@ class Game < ActiveRecord::Base
   end
 
   def start_game_clock!
-    if clock
-      clock.reset!
-    else
-      build_clock
-      save!
-    end
+    self.clock = Timer.new unless clock
     clock.start!
+    save!
   end
 
-  def stop_game_clock!
+  def pause_game_clock!
     clock.pause!
   end
 
@@ -139,7 +142,15 @@ class Game < ActiveRecord::Base
   end
 
   def generate_game_over_feed_item
-    activity_feed_items.create!(:message => "The between @#{home_team.name} and @#{visiting_team} ended.")
+    activity_feed_items.create!(:message => "The between @#{home_team.name} and @#{visiting_team.name} ended.")
+  end
+
+  def destroy_clock
+    if clock
+      clock.destroy
+      update_attribute(:clock_id, nil)
+      self.clock = nil
+    end
   end
 
   def home_and_visiting_teams_are_different
@@ -156,5 +167,16 @@ class Game < ActiveRecord::Base
 
   def location_not_changed
     errors.add(:location, "can't be changed after game starts") if location_id_changed? && persisted?
+  end
+
+  Uninteresting_attributes = [:updated_at, :clock_id]
+
+  def broadcast_changes
+    changes = Hash[self.changes.map {|k, vals| [k.to_sym, vals[1]]}]
+    changes.delete_if {|k, v| Uninteresting_attributes.include?(k) }
+    if changes.any?
+      changes.merge!(:elapsed_time => clock.try(:elapsed_time) || 0.0)  if active? || paused?
+      broadcast("/games/#{id}", changes)
+    end
   end
 end
