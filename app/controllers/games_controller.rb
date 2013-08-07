@@ -55,14 +55,11 @@ class GamesController < ApplicationController
 
   def start
     respond_to do |format|
-      if @game.scheduled? && @game.start!
+      if @game.can_start? && @game.start!
         format.html { redirect_to :back, notice: 'Game has been started.' }
         format.json { head :no_content }
-      elsif @game.active? && @game.clock.paused? && @game.start_game_clock!# XXX: Ick. Put this in game's state machine.
-        format.html { redirect_to :back, notice: 'Game clock has been restarted.' }
-        format.json { head :no_content }
       else
-        format.html { redirect_ to :back, alert: 'Something went wrong.' }
+        format.html { redirect_to :back, alert: 'Something went wrong.' }
         format.json { render json: ["Something went wrong."], status: :unprocessable_entity }
       end
     end
@@ -70,7 +67,7 @@ class GamesController < ApplicationController
 
   def stop
     respond_to do |format|
-      if @game.active? && @game.clock.running? && @game.clock.pause!
+      if @game.can_pause? && @game.pause!
         format.html { redirect_to :back, notice: 'Game clock has been stopped.' }
         format.json { head :no_content }
       else

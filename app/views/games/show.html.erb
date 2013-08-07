@@ -1,6 +1,7 @@
 <%= javascript_tag do %>
   $(function() {
     App.game = new App.Game(<%= @game.to_json.html_safe %>);
+    App.gameView = new App.GameView({ model: App.game });
     var el = $("#game-clock").first();
     App.gameClockView = new App.TimerView({el: el, model: App.game.get("clock") });
   });
@@ -12,7 +13,7 @@
   <p>This game is scheduled to start in <%= distance_of_time_in_words_to_now(@game.start_time) %>.</p>
 <% elsif @game.active? || @game.paused? %>
   <p>This game is currently being played.
-    <span id="game-clock" style="font:large; background-color: black; color: lightgreen; padding: 10px;">
+    <span id="game-clock" style="font-size:large; background-color: black; color: lightgreen; padding: 10px;">
       <%= @game.clock.elapsed_time_hms %>
     </span>
   </p>
@@ -36,17 +37,11 @@
 <% end %>
 
 <% if can?(:start, @game) %>
-  <% if @game.scheduled? %>
-    <%= link_to "Start Game", start_game_path(@game), :method => :post, :class => "btn" %>
-  <% elsif @game.active? && @game.clock.paused? %>
-    <%= link_to "Start Game Clock", start_game_path(@game), :method => :post, :class => "btn" %>
-  <% end %>
+  <%= link_to "Start Game", start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn", :style => displayStyle(@game.can_start?) %>
 <% end %>
 
 <% if can? :stop, @game %>
-  <% if @game.active? && @game.clock.running? %>
-    <%= link_to "Stop game clock", stop_game_path(@game), :method => :post, :class => "btn" %>
-  <% end %>
+  <%= link_to "Pause Game", stop_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-pause", :class => "btn", :style => displayStyle(@game.can_pause?) %>
 <% end %>
 
 <%= render :partial => "activity_feed", :locals => { :new_activity_feed_item => ActivityFeedItem.new(:game => @game), :activity_feed_items => @game.activity_feed_items, :in_game_context => true } %>
