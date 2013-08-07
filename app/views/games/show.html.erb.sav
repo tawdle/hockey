@@ -1,22 +1,11 @@
-<%= javascript_tag do %>
-  $(function() {
-    var el = $("#game-clock").first();
-    App.gameClockView = new App.TimerView({el: el });
-    App.faye = new Faye.Client("<%= AsyncMessaging::FAYE_CONFIG[:uri] %>");
-    App.faye.subscribe("<%= "/games/#{@game.id}" %>", function(message) {
-      console.log('Got a message:' , message);
-    });
-  });
-<% end %>
-
 <h2 class="page-header"><%= @game.home_team.name %> <i>vs</i> <%= @game.visiting_team.name %> <br /> <small><%= @game.start_time.to_s(:long) %> at <%= @game.location.name %></small></h2>
 
 <% if @game.scheduled? %>
   <p>This game is scheduled to start in <%= distance_of_time_in_words_to_now(@game.start_time) %>.
-<% elsif @game.active? || @game.paused? %>
+<% elsif @game.active? %>
   <p>This game is currently being played.</p>
   <%= render :partial => "score_board", :locals => {:game => @game } %>
-  <div id="game-clock" data-elapsed-time=<%= @game.clock.elapsed_time.to_i %> data-state=<%= @game.clock.state %>>
+  <div class="timer" data-elapsed-time=<%= @game.clock.elapsed_time.to_i %>>
     <%= @game.clock.elapsed_time_hms %>
   </div>
 <% elsif @game.finished? %>

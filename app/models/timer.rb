@@ -83,12 +83,8 @@ class Timer < ActiveRecord::Base
     minutes = (seconds / 60) % 60
     seconds = seconds % 60
 
-    if hours > 0
-      format("%02dh%02dm%02ds", hours, minutes, seconds)
-    elsif minutes > 0
-      format("%02dm%02ds", minutes, seconds)
-    else
-      format("%02ds", seconds)
-    end
+    hours > 0 ?
+      format("%d:%02d:%02d", hours, minutes, seconds) :
+      format("%02d:%02d", minutes, seconds)
   end
 end
