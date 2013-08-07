@@ -2,10 +2,6 @@ window.App = window.App || {};
 
 App.TimerView = Backbone.View.extend({
  initialize: function() {
-    this.model = this.model || new App.Timer({
-      state: this.$el.attr("data-state"),
-      elapsedTime: this.$el.attr("data-elapsed-time")
-    });
     this.listenTo(this.model, "change", this.render);
   },
 

@@ -24,6 +24,7 @@ class Game < ActiveRecord::Base
     after_transition any => :paused, :do => :pause_game_clock!
     after_transition any => :finished, :do => :generate_game_over_feed_item
     after_transition any => :finished, :do => :destroy_clock
+    after_transition any => any, :do => :broadcast_changes
 
     state all - :scheduled do
       validate {|game| game.send(:schedule_not_changed) }
@@ -65,7 +66,6 @@ class Game < ActiveRecord::Base
 
   before_create :generate_create_feed_item
   before_update :generate_update_feed_item
-  after_update :broadcast_changes
 
   Periods = %w(1 2 3 OT)
 
@@ -116,6 +116,10 @@ class Game < ActiveRecord::Base
 
   def pause_game_clock!
     clock.pause!
+  end
+
+  def as_json(options={})
+    super(options.merge(:only => [:id, :state])).merge({:clock => clock.as_json, :fayeURI => AsyncMessaging::FAYE_CONFIG[:uri] })
   end
 
   private
@@ -172,11 +176,6 @@ class Game < ActiveRecord::Base
   Uninteresting_attributes = [:updated_at, :clock_id]
 
   def broadcast_changes
-    changes = Hash[self.changes.map {|k, vals| [k.to_sym, vals[1]]}]
-    changes.delete_if {|k, v| Uninteresting_attributes.include?(k) }
-    if changes.any?
-      changes.merge!(:elapsed_time => clock.try(:elapsed_time) || 0.0)  if active? || paused?
-      broadcast("/games/#{id}", changes)
-    end
+    broadcast("/games/#{id}", as_json)
   end
 end

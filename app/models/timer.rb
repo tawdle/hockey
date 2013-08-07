@@ -54,6 +54,10 @@ class Timer < ActiveRecord::Base
     end
   end
 
+  def as_json(options={})
+    { :state => state, :elapsedTime => elapsed_time }
+  end
+
   private
 
   def set_started_at
