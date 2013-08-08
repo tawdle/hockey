@@ -16,12 +16,15 @@
     <%= f.text_field :full_name %>
   </div>
 
-  <div class="field">
-    <%= f.fields_for :user do |uf| %>
+  <%= f.fields_for :user do |uf| %>
+    <div class="field">
       <%= uf.label :name %>
-      <%= uf.text_field :name %>
-    <% end %>
-  </div>
+      <div class="input-prepend">
+        <span class="add-on">@</span>
+        <%= uf.text_field :name %>
+      </div>
+    </div>
+  <% end %>
 
   <%= f.hidden_field :logo_cache %>
 
