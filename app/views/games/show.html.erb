@@ -2,8 +2,6 @@
   $(function() {
     App.game = new App.Game(<%= @game.to_json.html_safe %>);
     App.gameView = new App.GameView({ model: App.game });
-    var el = $("#game-clock").first();
-    App.gameClockView = new App.TimerView({el: el, model: App.game.get("clock") });
   });
 <% end %>
 
