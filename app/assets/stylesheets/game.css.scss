@@ -1,0 +1,27 @@
+span#game-clock {
+  background-color: black;
+  color: lightgreen;
+  padding: 11px 19px;
+  font-size: 35px;
+  line-height: 36px;
+  border: 1px solid grey;
+  position: relative;
+  top: 9px;
+}
+
+#start-stop-clock {
+  text-align: center;
+  a {
+    width: 28px;
+  }
+  margin-bottom: 10px;
+}
+
+.team-box {
+  span.score {
+    float: right;
+  }
+  a.score {
+  }
+}
+
