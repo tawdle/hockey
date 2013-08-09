@@ -54,6 +54,17 @@ class Timer < ActiveRecord::Base
     end
   end
 
+  def elapsed_time=(val)
+    if val.is_a?(String)
+      val = val.split(":").map(&:to_i)
+      seconds = val.pop
+      seconds += val.pop * 60 if val.any?
+      seconds += val.pop * 3600 if val.any?
+    else
+      seconds = val.to_i
+    end
+    self.seconds_paused = diff_in_seconds(paused? ? paused_at : DateTime.now, started_at) - seconds
+  end
   def as_json(options={})
     { :state => state, :elapsedTime => elapsed_time }
   end
