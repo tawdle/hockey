@@ -1,5 +1,5 @@
 $(function() {
-  $("input#team_membership_username_or_email").typeahead(
+  $("input#player_username_or_email").typeahead(
     [
       {
         name: 'Users',

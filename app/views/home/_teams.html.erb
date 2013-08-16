@@ -1,7 +1,7 @@
-<% if TeamMembership.for_user(current_user).any? %>
-  <% TeamMembership.for_user(current_user).each do |team_membership| %>
+<% if Player.for_user(current_user).any? %>
+  <% Player.for_user(current_user).each do |player| %>
     <div class="page-header">
-      <h2><%= team_membership.team.name %> <small>You're a member of this team</small></h2>
+      <h2><%= player.team.name %> <small>You're a member of this team</small></h2>
     </div>
   <% end %>
 <% end %>

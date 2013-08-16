@@ -18,8 +18,8 @@ class User < ActiveRecord::Base
 
   has_many :authorizations, :dependent => :destroy
 
-  has_many :team_memberships, :dependent => :destroy
-  has_many :teams, :through => :team_memberships
+  has_many :players, :dependent => :destroy
+  has_many :teams, :through => :players
 
   belongs_to :nameable, :polymorphic => true
 
@@ -57,7 +57,7 @@ class User < ActiveRecord::Base
       update_id(Invitation, :creator, other)
       Mention.rename(other, other.at_name, at_name)
       update_id(Mention, :user, other)
-      update_id(TeamMembership, :member, other)
+      update_id(Player, :user, other)
       update_id(ActivityFeedItem, :creator, other)
       update_id(Goal, :creator, other)
       update_id(Goal, :player, other)

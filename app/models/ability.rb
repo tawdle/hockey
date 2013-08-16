@@ -41,7 +41,7 @@ class Ability
     end
 
     can :read, Team
-    can :read, TeamMembership
+    can :read, Player
 
     can :create, Team do |team|
       league = team.league || League.managed_by(user).first
@@ -56,8 +56,8 @@ class Ability
       user.admin?
     end
 
-    can :manage, TeamMembership do |team_membership|
-      user.manager_of?(team_membership.team)
+    can :manage, Player do |player|
+      user.manager_of?(player.team)
     end
 
     can :create, Invitation do |invitation|

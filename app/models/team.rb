@@ -2,16 +2,14 @@ class Team < ActiveRecord::Base
   after_create :set_manager
   belongs_to :league
   has_one :user, :as => :nameable # solely for team.name
-  has_many :team_memberships, :dependent => :destroy
-  has_many :members, :through => :team_memberships
+  has_many :players, :dependent => :destroy
+  has_many :users, :through => :players
   has_many :authorizations, :as => :authorizable
   delegate :name, :to => :user
 
   validates_presence_of :user
   validates_presence_of :full_name
   validates_presence_of :league
-
-  alias_method :players, :members
 
   def activity_feed_items
     ActivityFeedItem.for(user)

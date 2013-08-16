@@ -14,10 +14,10 @@ Hockey::Application.routes.draw do
 
   resources :locations, :except => [:destroy]
 
-  resources :team_memberships, :only => [:edit, :update, :destroy]
+  resources :players, :only => [:edit, :update, :destroy]
 
   resources :teams, :only => [:index, :show, :edit, :update, :destroy] do
-    resources :team_memberships, :only => [:new, :create]
+    resources :players, :only => [:new, :create]
   end
 
   resources :leagues do

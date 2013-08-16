@@ -1,12 +1,12 @@
 <h1>Edit team member</h1>
 
-<%= form_for(@team_membership) do |f| %>
-  <% if @team_membership.errors.any? %>
+<%= form_for(@player) do |f| %>
+  <% if @player.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@team_membership.errors.count, "error") %> prohibited this team membership from being saved:</h2>
+      <h2><%= pluralize(@player.errors.count, "error") %> prohibited this player from being saved:</h2>
 
       <ul>
-      <% @team_membership.errors.full_messages.each do |msg| %>
+      <% @player.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -23,6 +23,6 @@
   </div>
 <% end %>
 
-<%= link_to 'Back', team_path(@team_membership.team) %>
+<%= link_to 'Back', team_path(@player.team) %>
 
 

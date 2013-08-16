@@ -28,11 +28,11 @@ describe Goal do
       goal.should_not be_valid
     end
     it "requires that the player be on the team" do
-      goal.player = FactoryGirl.build(:user)
+      goal.player = FactoryGirl.build(:player)
       goal.should_not be_valid
     end
     it "requires that the assisting_player be on the team" do
-      goal.assisting_player = FactoryGirl.build(:user)
+      goal.assisting_player = FactoryGirl.build(:player)
       goal.should_not be_valid
     end
     it "requires that the assisting_player be a different player" do

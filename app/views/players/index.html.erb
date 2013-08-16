@@ -1,0 +1,20 @@
+<h1>Listing players from team <%= @team.name %></h1>
+
+<table>
+  <tr>
+    <th>Name</th>
+    <th></th>
+  </tr>
+
+<% @players.each do |player| %>
+  <tr>
+    <td><%= format_player_link(player) %></td>
+    <td><%= link_to 'Remove', team_player_path(@team, player), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Team Player', new_team_player_path(@team) if can? :create, Player.new(:team => @team) %>
+

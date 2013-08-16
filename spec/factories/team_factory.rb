@@ -10,7 +10,7 @@ FactoryGirl.define do
     association :user
 
     trait :with_players do
-      members { [ build(:user), build(:user) ] }
+      players { [ build(:player), build(:player) ] }
     end
   end
 end

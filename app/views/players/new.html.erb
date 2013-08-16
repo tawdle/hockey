@@ -1,12 +1,12 @@
-<h1>New team member</h1>
+<h1>New team player</h1>
 
-<%= form_for([@team, @team_membership]) do |f| %>
-  <% if @team_membership.errors.any? %>
+<%= form_for([@team, @player]) do |f| %>
+  <% if @player.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@team_membership.errors.count, "error") %> prohibited this team membership from being saved:</h2>
+      <h2><%= pluralize(@player.errors.count, "error") %> prohibited this player from being saved:</h2>
 
       <ul>
-      <% @team_membership.errors.full_messages.each do |msg| %>
+      <% @player.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
       <% end %>
       </ul>
@@ -15,10 +15,10 @@
 
   <div class="field">
     <%= f.label :username_or_email %>
-    <% if @team_membership.new_record? %>
+    <% if @player.new_record? %>
       <%= f.text_field :username_or_email  %>
     <% else %>
-      <%= f.text_field :ignore, :value => @team_membership.member.at_name, :disabled => true %>
+      <%= f.text_field :ignore, :value => @player.at_name, :disabled => true %>
     <% end %>
   </div>
 

@@ -3,6 +3,10 @@ module UsersHelper
     "<span class='username'>@#{link_to(user.name, user.nameable || user)}</span>".html_safe if user
   end
 
+  def format_player_link(player)
+    "<span class='username'>@#{link_to(player.name, player)}</span>".html_safe if player
+  end
+
   def format_message_with_usernames(msg)
     username_matches = msg.scan(/\@[a-zA-Z0-9_]*/)
     if username_matches

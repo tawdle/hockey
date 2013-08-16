@@ -2,8 +2,8 @@ class Goal < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :game
   belongs_to :team
-  belongs_to :player, :class_name => "User"
-  belongs_to :assisting_player, :class_name => "User"
+  belongs_to :player
+  belongs_to :assisting_player, :class_name => "Player"
 
   attr_accessor :updater
   attr_accessible :game, :game_id, :creator, :team_id, :player_id, :assisting_player_id, :period

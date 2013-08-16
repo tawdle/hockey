@@ -7,8 +7,8 @@ FactoryGirl.define do
     period "3"
     after(:build) do |goal|
       goal.game = build(:game, :home_team => goal.team)
-      goal.player = goal.team.members.first
-      goal.assisting_player = goal.team.members.last
+      goal.player = goal.team.players.first
+      goal.assisting_player = goal.team.players.last
     end
   end
 end
