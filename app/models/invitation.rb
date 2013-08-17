@@ -4,7 +4,7 @@ class Invitation < ActiveRecord::Base
   belongs_to :user
 
   symbolize :state, :in => [:pending, :accepted, :declined]
-  symbolize :predicate, :in => [:manage, :join]
+  symbolize :predicate, :in => [:manage, :join, :claim]
 
   attr_accessor :username_or_email
   attr_accessible :creator, :predicate, :target, :target_id, :target_type, :email, :username_or_email, :user
@@ -26,9 +26,6 @@ class Invitation < ActiveRecord::Base
 
   def accept!(accepting_user)
     Invitation.transaction do
-      if for_fake_user? && accepting_user != user
-        accepting_user.merge(user)
-      end
       target.send("accepted_invitation_to_#{predicate}", accepting_user, self)
       update_attribute(:state, :accepted)
     end
@@ -38,10 +35,6 @@ class Invitation < ActiveRecord::Base
     declining_user = user || User.find_by_email(email)
     target.send("declined_invitation_to_#{predicate}", declining_user, self)
     update_attribute(:state, :declined)
-  end
-
-  def for_fake_user?
-    state == :pending && user && !user.last_sign_in_at?
   end
 
   private

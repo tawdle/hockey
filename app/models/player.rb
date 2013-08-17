@@ -13,13 +13,22 @@ class Player < ActiveRecord::Base
 
   scope :for_user, lambda {|user| where(:user_id => user.id) }
 
-  before_save :send_invitation, :if => :user_was_fabricated?, :prepend => true
+  after_save :send_invitation, :if => :user_is_invited?
 
   def at_name
     user.try(:at_name) || "@#{team.name}##{jersey_number}"
   end
 
   private
+
+  def accepted_invitation_to_claim(user, invitation)
+    self.user = user
+    save!
+  end
+
+  def declined_invitation_to_claim(user, invitation)
+    # Whatevs
+  end
 
   def provided_username_or_email
     username_match = /^\@(.*)$/.match(username_or_email)
@@ -33,7 +42,7 @@ class Player < ActiveRecord::Base
       end
     else
       if username_or_email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-        self.user = User.find_by_email(username_or_email) || fabricate_user
+        self.user = User.find_by_email(username_or_email)
       else
         errors.add(:username_or_email, "isn't a valid @username or email address")
       end
@@ -44,16 +53,11 @@ class Player < ActiveRecord::Base
     username_or_email.present?
   end
 
-  def fabricate_user
-    name = ActiveSupport::Inflector.transliterate(username_or_email.split("@")[0], "") + (rand * 1000).to_i.to_s
-    User.new(:name => name, :email => username_or_email, :password => Digest::SHA1.hexdigest(Time.now.to_s))
-  end
-
-  def user_was_fabricated?
-    user && user.new_record?
+  def user_is_invited?
+    !user && username_or_email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
   end
 
   def send_invitation
-    Invitation.create!(:creator => creator, :user => user, :target => team, :predicate => :join, :email => user.email)
+    Invitation.create!(:creator => creator, :target => self, :predicate => :claim, :email => username_or_email)
   end
 end

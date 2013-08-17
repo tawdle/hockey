@@ -33,4 +33,20 @@ describe InvitationMailer do
     end
   end
 
+  describe "#claim_player" do
+    let(:player) { FactoryGirl.build(:player) }
+    let(:invitation) { FactoryGirl.build(:invitation, :target => player, :code => "foo") }
+    let(:mail) { InvitationMailer.claim_player(invitation) }
+
+    it "renders the headers" do
+      mail.subject.should eq("Invitation to Claim Player")
+      mail.to.should eq([invitation.email])
+      mail.from.should eq(["mailer@mygameshot.com"])
+    end
+
+    it "renders the body" do
+      mail.body.encoded.should match("Hello!")
+    end
+  end
+
 end

@@ -29,7 +29,6 @@ Hockey::Application.routes.draw do
     member do
       get :accept
       get :decline
-      put :update_fake_user
     end
   end
 

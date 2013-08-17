@@ -1,0 +1,8 @@
+Hello!
+
+<%= @invitation.creator.name %> has invited you to claim ownership of player #<%= @invitation.target.jersey_number %> of <%= @invitation.target.team.full_name %>.
+
+Cut and paste the link below to create an account and accept <%= @invitation.creator.name %>'s invitation.
+
+<%= accept_invitation_url(@invitation) %>
+

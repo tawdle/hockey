@@ -35,4 +35,10 @@ class InvitationMailer < ActionMailer::Base
     mail to: @invitation.email, subject: "Invitation to Join Team"
   end
 
+  def claim_player(invitation)
+    @invitation = invitation
+
+    mail to: @invitation.email, subject: "Invitation to Claim Player"
+  end
+
 end

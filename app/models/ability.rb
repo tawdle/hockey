@@ -65,8 +65,8 @@ class Ability
         (invitation.target.is_a?(Team) && user.manager_of?(invitation.target.league))
     end
 
-    can [:accept, :decline, :update_fake_user], Invitation do |invitation|
-      user.persisted? || invitation.for_fake_user?
+    can [:accept, :decline], Invitation do |invitation|
+      user.persisted?
     end
 
     # Define abilities for the passed in user here. For example:

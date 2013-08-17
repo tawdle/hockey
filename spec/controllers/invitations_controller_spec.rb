@@ -47,15 +47,6 @@ describe InvitationsController do
       }.to change { invitation.reload.state }.from(:pending).to(:accepted)
       response.should be_success
     end
-
-    context "with a fake user" do
-      let(:invitation) { FactoryGirl.create(:invitation, :with_fake_user) }
-
-      it "renders the edit_fake_user template" do
-        do_request
-        response.should render_template("edit_fake_user")
-      end
-    end
   end
 
   describe "#decline" do
@@ -68,21 +59,6 @@ describe InvitationsController do
         do_request
       }.to change { invitation.reload.state }.from(:pending).to(:declined)
       response.should be_redirect
-    end
-  end
-
-  describe "#update_fake_user" do
-    let(:invitation) { FactoryGirl.create(:invitation, :with_fake_user) }
-    let(:user) { invitation.user }
-
-    def do_request
-      put :update_fake_user, :id => invitation.to_param, :user => {:name => "NewName" }
-    end
-
-    it "works" do
-      expect {
-        do_request
-      }.to change { user.reload.name }.to("NewName")
     end
   end
 end

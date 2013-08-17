@@ -38,9 +38,6 @@ describe Player do
       end
     end
     describe "#username_or_email" do
-      before do
-        player.user = nil
-      end
       context "with an invalid @username" do
         before { player.username_or_email = "@foo" }
         it "rejects" do
@@ -58,15 +55,9 @@ describe Player do
         it "accepts" do
           player.should be_valid
         end
-        it "creates a new user" do
-          expect {
-            player.save!
-          }.to change { User.count }.by(1)
-        end
         it "sends an invitation" do
-          expect {
-            player.save!
-          }.to change { Invitation.count }.by(1)
+          Invitation.should_receive(:create!)
+          player.save!
         end
       end
       context "with a existing email address" do

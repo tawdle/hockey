@@ -67,6 +67,7 @@ describe Invitation do
     let(:invitation) { FactoryGirl.build(:invitation) }
     let(:other_invitation) { FactoryGirl.build(:invitation, :target => FactoryGirl.build(:team)) }
     let(:one_more_invitation) { FactoryGirl.build(:invitation, :predicate => :join) }
+    let(:and_another_invitation) { FactoryGirl.build(:invitation, :predicate => :claim, :target => FactoryGirl.build(:player)) }
 
     it "sets the code" do
       invitation.code.should be_nil
@@ -80,6 +81,8 @@ describe Invitation do
       other_invitation.save!
       InvitationMailer.should_receive(:join_league).with(one_more_invitation).and_return(mail)
       one_more_invitation.save!
+      InvitationMailer.should_receive(:claim_player).with(and_another_invitation).and_return(mail)
+      and_another_invitation.save!
     end
   end
 

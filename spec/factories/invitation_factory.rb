@@ -6,9 +6,5 @@ FactoryGirl.define do
     predicate :manage
     sequence(:email) { |n| "testmail+#{n}@example.com" }
     association :target, :factory => :league
-
-    trait :with_fake_user do
-      user
-    end
   end
 end
