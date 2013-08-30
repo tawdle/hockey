@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Goal do
-  let(:goal) { FactoryGirl.build(:goal) }
+  let(:goal) { FactoryGirl.build(:goal, :with_players) }
 
   describe "#validations" do
     it "creates a valid object" do
@@ -15,28 +15,12 @@ describe Goal do
       goal.game = nil
       goal.should_not be_valid
     end
-    it "requires a player" do
-      goal.player = nil
-      goal.should_not be_valid
-    end
     it "requires a valid period" do
       goal.period = "foo"
       goal.should_not be_valid
     end
     it "requires that the team be in the game" do
       goal.team = FactoryGirl.build(:team)
-      goal.should_not be_valid
-    end
-    it "requires that the player be on the team" do
-      goal.player = FactoryGirl.build(:player)
-      goal.should_not be_valid
-    end
-    it "requires that the assisting_player be on the team" do
-      goal.assisting_player = FactoryGirl.build(:player)
-      goal.should_not be_valid
-    end
-    it "requires that the assisting_player be a different player" do
-      goal.assisting_player = goal.player
       goal.should_not be_valid
     end
   end

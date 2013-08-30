@@ -2,27 +2,35 @@ class Goal < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :game
   belongs_to :team
-  belongs_to :player
-  belongs_to :assisting_player, :class_name => "Player"
+  has_many :goal_players, :order => "ordinal asc"
+  has_many :players, :through => :goal_players
 
   attr_accessor :updater
-  attr_accessible :game, :game_id, :creator, :team_id, :player_id, :assisting_player_id, :period
+  attr_accessible :game, :game_id, :creator, :team_id, :period
 
   validates_inclusion_of :period, :in => Game::Periods
 
   validates_presence_of :creator
   validates_presence_of :game
   validates_presence_of :team
-  validates_presence_of :player
   validate :team_is_in_game
-  validate :player_is_on_team
-  validate :assisting_player_is_on_team
-  validate :assisting_player_is_different
 
-  before_create :generate_create_feed_item
-  before_destroy :generate_destroy_feed_item
+  before_save :generate_save_feed_item, :unless => :players_empty?
+  before_destroy :generate_destroy_feed_item, :unless => :players_empty?
 
   scope :for_team, lambda {|team| where(:team_id => team.id) }
+
+  def player
+    players.first
+  end
+
+  def assisting_players
+    players[1..-1]
+  end
+
+  def players_empty?
+    players.empty?
+  end
 
   private
 
@@ -30,9 +38,12 @@ class Goal < ActiveRecord::Base
     updater.try(:at_name) || "The System"
   end
 
-  def generate_create_feed_item
+  def generate_save_feed_item
     message = "#{player.at_name} scored a goal for #{team.at_name} against #{game.opposing_team(team).at_name}"
-    message << ", assisted by #{assisting_player.at_name}" if assisting_player
+    if assisting_players.any?
+      message << ", assisted by "
+      message << assisting_players.collect(&:at_name).join(" and ")
+    end
     game.activity_feed_items.create!(:message => message)
   end
 
@@ -42,18 +53,10 @@ class Goal < ActiveRecord::Base
   end
 
   def team_is_in_game
-    errors.add(:team, "must be playing in game") unless team.nil? || game.nil? || team == game.home_team || game.visiting_team
+    errors.add(:team, "must be playing in game") unless team.nil? || game.nil? || team == game.home_team || team == game.visiting_team
   end
 
-  def player_is_on_team
-    errors.add(:player, "must be on team") unless player.nil? || team.nil? || team.players.include?(player)
-  end
-
-  def assisting_player_is_on_team
-    errors.add(:assisting_player, "must be on team") unless assisting_player.nil? || team.nil? || team.players.include?(assisting_player)
-  end
-
-  def assisting_player_is_different
-    errors.add(:assisting_player, "cannot be the same as player") unless assisting_player.nil? || player.nil? || assisting_player != player
+  def players_are_on_team
+    errors.add(:players, "must be on team") unless player.empty? || team.nil? || players.all? {|player| team.players.include?(player) }
   end
 end

@@ -162,6 +162,37 @@ ALTER SEQUENCE games_id_seq OWNED BY games.id;
 
 
 --
+-- Name: goal_players; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE goal_players (
+    id integer NOT NULL,
+    goal_id integer,
+    player_id integer,
+    ordinal integer
+);
+
+
+--
+-- Name: goal_players_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE goal_players_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: goal_players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE goal_players_id_seq OWNED BY goal_players.id;
+
+
+--
 -- Name: goals; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -170,8 +201,6 @@ CREATE TABLE goals (
     creator_id integer,
     game_id integer,
     team_id integer,
-    player_id integer,
-    assisting_player_id integer,
     period character varying(255),
     minutes_into_period integer,
     seconds_into_period integer,
@@ -496,6 +525,13 @@ ALTER TABLE ONLY games ALTER COLUMN id SET DEFAULT nextval('games_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY goal_players ALTER COLUMN id SET DEFAULT nextval('goal_players_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY goals ALTER COLUMN id SET DEFAULT nextval('goals_id_seq'::regclass);
 
 
@@ -578,6 +614,14 @@ ALTER TABLE ONLY followings
 
 ALTER TABLE ONLY games
     ADD CONSTRAINT games_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: goal_players_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY goal_players
+    ADD CONSTRAINT goal_players_pkey PRIMARY KEY (id);
 
 
 --
@@ -709,24 +753,10 @@ CREATE INDEX index_games_on_visiting_team_id ON games USING btree (visiting_team
 
 
 --
--- Name: index_goals_on_assisting_player_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_goals_on_assisting_player_id ON goals USING btree (assisting_player_id);
-
-
---
 -- Name: index_goals_on_game_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
 CREATE INDEX index_goals_on_game_id ON goals USING btree (game_id);
-
-
---
--- Name: index_goals_on_player_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_goals_on_player_id ON goals USING btree (player_id);
 
 
 --
@@ -882,3 +912,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130802220247');
 INSERT INTO schema_migrations (version) VALUES ('20130809233605');
 
 INSERT INTO schema_migrations (version) VALUES ('20130816203850');
+
+INSERT INTO schema_migrations (version) VALUES ('20130821195852');

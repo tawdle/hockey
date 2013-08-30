@@ -31,6 +31,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.0'
 end
 
+gem 'acts_as_list'
 gem 'bootstrap-sass'
 gem 'cancan'
 gem 'carrierwave'
