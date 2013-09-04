@@ -1,7 +1,7 @@
 window.App = window.App || {};
 
 App.Game = Backbone.Model.extend({
-  // The game subscribes the faye channel and holds on to references to all fo the subsidiary models.
+  // The game subscribes to the faye channel and holds a references to all of the subsidiary models.
   // When changes happen, it delegates to the relevant models to update them, and the views do their things.
 
   // We need to be supplied with the URI for the Faye server and the id of the game that we are.
@@ -11,7 +11,9 @@ App.Game = Backbone.Model.extend({
       id: null,
       state: "scheduled",
       clock: null,
-      fayeURI: null
+      fayeURI: null,
+      home_team_score: 0,
+      visiting_team_score: 0
     };
   },
 

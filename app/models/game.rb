@@ -116,12 +116,16 @@ class Game < ActiveRecord::Base
     save!
   end
 
+  def period
+    return "1"
+  end
+
   def pause_game_clock!
     clock.pause!
   end
 
   def as_json(options={})
-    super(options.merge(:only => [:id, :state])).merge({:clock => clock.as_json, :fayeURI => AsyncMessaging::FAYE_CONFIG[:uri] })
+    super(options.merge(:only => [:id, :state], :methods => [:home_team_score, :visiting_team_score])).merge({:clock => clock.as_json, :fayeURI => AsyncMessaging::FAYE_CONFIG[:uri] })
   end
 
   private

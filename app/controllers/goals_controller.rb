@@ -11,13 +11,13 @@ class GoalsController < ApplicationController
   end
 
   def create
-    @goal = Goal.new(params[:goal].merge(:creator => current_user, :game => @game))
+    @goal = Goal.new(params[:goal].merge(:creator => current_user, :game => @game, :period => @game.period))
     authorize! :create, @goal
 
     respond_to do |format|
       if @goal.save
         format.html { redirect_to @game, notice: 'Goal was successfully created.' }
-        format.json { render json: @goal, status: :created, location: @goal }
+        format.json { render json: @goal, status: :created, location: @game }
       else
         format.html { render action: "new" }
         format.json { render json: @goal.errors, status: :unprocessable_entity }

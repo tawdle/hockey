@@ -2,7 +2,10 @@
   <div class="well well-large">
     <h3>
       <span class="team-name"><%= @game.send("#{home_or_visiting}_team").name %></span>
-      <a href="#" class="score btn btn-large btn-primary">Score!</a>
+      <%= form_for([@game, Goal.new], :remote => true, :format => :json) do |f| %>
+        <%= f.hidden_field :team_id, :value => @game.send("#{home_or_visiting}_team_id") %>
+        <%= f.submit "Score!", :class => "btn btn-large btn-primary" %>
+      <% end %>
       <span class="score"><%= @game.send("#{home_or_visiting}_team_score") %></span>
     </h3>
     <%= link_to "Edit Team Roster", edit_game_roster_path(@game, :team => home_or_visiting) %>
