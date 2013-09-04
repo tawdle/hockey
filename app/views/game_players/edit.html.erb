@@ -15,4 +15,12 @@
 
   <%= hidden_field_tag "game[player_ids][]" %>
   <%= f.submit "Update Game Roster", :class => "btn btn-primary" %>
+
 <% end %>
+
+<div>
+  <%= link_to "Add new player", new_game_roster_path(@game, :team => @home_or_visiting) %>
+</div>
+<div>
+  <%= link_to "Back", @game %>
+</div>

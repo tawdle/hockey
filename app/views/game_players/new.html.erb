@@ -1,0 +1,28 @@
+<h2>Add player to <%= @team.name %></h2>
+
+<%= form_for @player, :url => game_roster_path(@game, :team => @home_or_visiting) do |f| %>
+  <% if @player.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@player.errors.count, "error") %> prohibited this player from being create:</h2>
+
+      <ul>
+      <% @player.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :jersey_number %>
+    <%= f.text_field :jersey_number, :class => "span1" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :username_or_email, "Username or email (optional)" %>
+    <%= f.text_field :username_or_email %>
+  </div>
+
+  <%= f.submit "Add Player", :class => "btn btn-primary" %>
+  <%= link_to "Back", edit_game_roster_path(@game, :team => @home_or_visiting) %>
+<% end %>

@@ -3,6 +3,28 @@ class GamePlayersController < ApplicationController
   before_filter :load_home_or_visiting
   before_filter :load_team
 
+  # There's probably a better pattern than what we're doing here.
+  # #new and #create support the creation of new players. #edit and #update manage
+  # the game roster.
+
+  def new
+    @player = Player.new
+  end
+
+  def create
+    @player = Player.new(params[:player].merge(:team => @team))
+
+    respond_to do |format|
+      if @player.save && @game.players << @player
+        format.html { redirect_to edit_game_roster_path(@game, :team => @home_or_visiting), notice: 'Player was successfully added.' }
+        format.json { render json: @game, status: :created, location: @game }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @player.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
   def edit
   end
 

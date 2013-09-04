@@ -20,7 +20,7 @@ describe PlayersController do
     end
     describe "#create" do
       def do_request(args = {})
-        post :create, :team_id => team.to_param, :player => { :username_or_email => "foo@foo.com" }.merge(args)
+        post :create, :team_id => team.to_param, :player => { :username_or_email => "foo@foo.com", :jersey_number => "12" }.merge(args)
       end
       it "works" do
         do_request
