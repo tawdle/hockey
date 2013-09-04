@@ -11,6 +11,12 @@ describe Player do
       player.team = nil
       player.should_not be_valid
     end
+    it "requires a jersey number" do
+      player.jersey_number = nil
+      player.should_not be_valid
+      player.jersey_number = ""
+      player.should_not be_valid
+    end
     context "with a user" do
       let(:player) { FactoryGirl.build(:player, :with_user) }
       it "requires team/user combo to be unique" do

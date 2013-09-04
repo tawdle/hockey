@@ -7,6 +7,7 @@ class Player < ActiveRecord::Base
   attr_accessible :team, :username_or_email, :creator, :jersey_number
 
   validates_presence_of :team
+  validates_presence_of :jersey_number
   validate :provided_username_or_email, :if => :username_or_email?
   validates_uniqueness_of :user_id, :scope => :team_id, :allow_nil => true
   validates_uniqueness_of :jersey_number, :scope => :team_id
