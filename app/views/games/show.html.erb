@@ -27,6 +27,7 @@
           <a href="#" class="score btn btn-large btn-primary">Score!</a>
           <span class="score"><%= @game.home_team_score %></span>
         </h3>
+        <%= link_to "Edit Team Roster", edit_game_roster_path(@game, :team => "home") %>
       </div>
     </div>
     <div id="visiting-team" class="team-box span6">
@@ -36,6 +37,7 @@
           <a href="#" class="score btn btn-large btn-primary">Score!</a>
           <span class="score"><%= @game.visiting_team_score %></span>
         </h3>
+        <%= link_to "Edit Team Roster", edit_game_roster_path(@game, :team => "visiting") %>
       </div>
     </div>
   </div>

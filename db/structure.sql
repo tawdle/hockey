@@ -126,6 +126,36 @@ ALTER SEQUENCE followings_id_seq OWNED BY followings.id;
 
 
 --
+-- Name: game_players; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE game_players (
+    id integer NOT NULL,
+    game_id integer,
+    player_id integer
+);
+
+
+--
+-- Name: game_players_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE game_players_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: game_players_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE game_players_id_seq OWNED BY game_players.id;
+
+
+--
 -- Name: games; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -518,6 +548,13 @@ ALTER TABLE ONLY followings ALTER COLUMN id SET DEFAULT nextval('followings_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY game_players ALTER COLUMN id SET DEFAULT nextval('game_players_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY games ALTER COLUMN id SET DEFAULT nextval('games_id_seq'::regclass);
 
 
@@ -606,6 +643,14 @@ ALTER TABLE ONLY authorizations
 
 ALTER TABLE ONLY followings
     ADD CONSTRAINT followings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: game_players_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY game_players
+    ADD CONSTRAINT game_players_pkey PRIMARY KEY (id);
 
 
 --
@@ -715,6 +760,27 @@ CREATE INDEX index_followings_on_user_id ON followings USING btree (user_id);
 --
 
 CREATE UNIQUE INDEX index_followings_on_user_id_and_target_id ON followings USING btree (user_id, target_id);
+
+
+--
+-- Name: index_game_players_on_game_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_game_players_on_game_id ON game_players USING btree (game_id);
+
+
+--
+-- Name: index_game_players_on_game_id_and_player_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_game_players_on_game_id_and_player_id ON game_players USING btree (game_id, player_id);
+
+
+--
+-- Name: index_game_players_on_player_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_game_players_on_player_id ON game_players USING btree (player_id);
 
 
 --
@@ -914,3 +980,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130809233605');
 INSERT INTO schema_migrations (version) VALUES ('20130816203850');
 
 INSERT INTO schema_migrations (version) VALUES ('20130821195852');
+
+INSERT INTO schema_migrations (version) VALUES ('20130831193545');

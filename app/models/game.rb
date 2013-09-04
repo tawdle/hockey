@@ -40,6 +40,8 @@ class Game < ActiveRecord::Base
   belongs_to :location
   has_many :activity_feed_items
   has_many :goals
+  has_many :game_players
+  has_many :players, :through => :game_players
   belongs_to :clock, :class_name => "Timer", :dependent => :destroy
 
   validates_presence_of :home_team
@@ -50,7 +52,7 @@ class Game < ActiveRecord::Base
   validate :start_time_is_in_future, :if => :start_time_changed?
 
   attr_accessor :updater
-  attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id, :start_time, :updater
+  attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id, :start_time, :updater, :player_ids
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
