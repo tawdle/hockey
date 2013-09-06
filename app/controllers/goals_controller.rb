@@ -1,6 +1,6 @@
 class GoalsController < ApplicationController
   load_and_authorize_resource :game
-  load_and_authorize_resource :only => [:index, :destroy]
+  load_and_authorize_resource :except => [:new, :create]
 
   def index
   end
@@ -20,6 +20,18 @@ class GoalsController < ApplicationController
         format.json { render json: @goal, status: :created, location: @game }
       else
         format.html { render action: "new" }
+        format.json { render json: @goal.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def update
+    respond_to do |format|
+      if @goal.update_attributes(params[:goal])
+        format.html { redirect_to @game, notice: 'Goal was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
         format.json { render json: @goal.errors, status: :unprocessable_entity }
       end
     end

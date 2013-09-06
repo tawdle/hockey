@@ -6,7 +6,7 @@ class Goal < ActiveRecord::Base
   has_many :players, :through => :goal_players
 
   attr_accessor :updater
-  attr_accessible :game, :game_id, :creator, :team_id, :period
+  attr_accessible :game, :game_id, :creator, :team_id, :period, :player_ids
 
   validates_inclusion_of :period, :in => Game::Periods
 
@@ -32,6 +32,10 @@ class Goal < ActiveRecord::Base
 
   def players_empty?
     players.empty?
+  end
+
+  def as_json(options={})
+    super(options.merge(:only => [:id, :team_id], :methods => [:player_ids]))
   end
 
   private
