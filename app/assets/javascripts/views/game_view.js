@@ -14,9 +14,7 @@ App.GameView = Backbone.View.extend({
   },
 
   render: function() {
-    console.log("in GameView render");
     var state = this.model.get("state");
-    console.log("state is " + state);
     this.gameStart.toggle(state == "scheduled" || state == "paused");
     this.gamePause.toggle(state == "active");
     this.homeTeamScore.text(this.model.get("home_team_score"));
