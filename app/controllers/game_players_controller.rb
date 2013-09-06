@@ -7,6 +7,13 @@ class GamePlayersController < ApplicationController
   # #new and #create support the creation of new players. #edit and #update manage
   # the game roster.
 
+  def show
+    respond_to do |format|
+      format.html # index.html.erb
+      format.json { render json: @players }
+    end
+  end
+
   def new
     @player = Player.new
   end
