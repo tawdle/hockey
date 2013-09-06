@@ -18,3 +18,8 @@
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree .
+
+_.templateSettings = {
+    interpolate: /\{\{\=(.+?)\}\}/gim,
+    evaluate: /\{\{(.+?)\}\}/gim
+};
