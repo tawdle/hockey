@@ -3,9 +3,21 @@ require 'spec_helper'
 describe Timer do
   let(:timer) { FactoryGirl.build(:timer) }
 
+  before do
+    Delayed::Job.stub(:enqueue)
+  end
+
   describe "#validations" do
     it "creates a valid object" do
       timer.should be_valid
+    end
+  end
+
+  describe "#start" do
+    it "enqueues a job to check for expiration" do
+      CheckTimerExpirationJob.should_receive(:new)
+      Delayed::Job.should_receive(:enqueue)
+      timer.start!
     end
   end
 
@@ -32,6 +44,10 @@ describe Timer do
     it "allows reset" do
       timer.reset!
       timer.state.should == "created"
+    end
+    it "allows expiration" do
+      timer.expire!
+      timer.state.should == "expired"
     end
   end
 

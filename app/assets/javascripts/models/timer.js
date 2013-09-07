@@ -2,7 +2,8 @@ window.App = window.App || {};
 
 App.Timer = Backbone.Model.extend({
   defaults: {
-    state: "created"
+    state: "created",
+    duration: 0.0
   },
 
   initialize: function() {
@@ -58,6 +59,9 @@ App.Timer = Backbone.Model.extend({
         break;
       case "paused":
         et = (this.pausedAt - this.secondsPaused - this.baseTime) / 1000.0;
+        break;
+      case "expired":
+        et = duration;
         break;
     }
     return et;

@@ -18,10 +18,16 @@ class Timer < ActiveRecord::Base
       transition any - :created => :created
     end
 
+    event :expire do
+      transition [:running, :paused] => :expired
+    end
+
+    after_transition :expired => any, :do => :reset_timer
     after_transition :created => :running, :do => :set_started_at
     after_transition :running => :paused, :do => :set_paused_at
     after_transition :paused => :running, :do => :clear_paused_at
     after_transition any => :created, :do => :reset_timer
+    after_transition any => :running, :do => :queue_expiration_check
 
     state :running do
       def elapsed_time
@@ -35,7 +41,13 @@ class Timer < ActiveRecord::Base
       end
     end
 
-    state :running, :paused do
+    state :expired do
+      def elapsed_time
+        duration
+      end
+    end
+
+    state :running, :paused, :expired do
       def time_remaining
         [duration - elapsed_time, 0.0].max
       end
@@ -66,7 +78,7 @@ class Timer < ActiveRecord::Base
     self.seconds_paused = diff_in_seconds(paused? ? paused_at : DateTime.now, started_at) - seconds
   end
   def as_json(options={})
-    { :state => state, :elapsedTime => elapsed_time }
+    { :state => state, :elapsedTime => elapsed_time, :duration => duration }
   end
 
   private
@@ -86,6 +98,18 @@ class Timer < ActiveRecord::Base
 
   def reset_timer
     update_attributes(:paused_at => nil, :seconds_paused => 0.0, :started_at => nil)
+  end
+
+  def queue_expiration_check
+    Delayed::Job.enqueue(CheckTimerExpirationJob.new(id), :run_at => estimated_expiration) if duration
+  end
+
+  def estimated_expiration
+    DateTime.now + time_remaining.seconds
+  end
+
+  def check_expiration
+    expire! if running? && duration && time_remaining <= 0
   end
 
   def diff_in_seconds(a, b)
