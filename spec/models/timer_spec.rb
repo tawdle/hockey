@@ -52,7 +52,22 @@ describe Timer do
       timer.reset!
       timer.state.should == "created"
     end
+    it "allows setting the elapsed time manually" do
+      timer.elapsed_time = 100
+      timer.elapsed_time.should == 100
+    end
+
+    it "allows setting the elapsed time with a string" do
+      timer.elapsed_time = "2:45"
+      timer.elapsed_time.should == 2 * 60 + 45
+    end
+
+    it "clamps the elapsed time at the duration" do
+      timer.elapsed_time = timer.duration * 2
+      timer.elapsed_time.should == timer.duration
+    end
   end
+
   context "with a restarted timer" do
     before do
       timer.start!

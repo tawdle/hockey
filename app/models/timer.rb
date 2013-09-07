@@ -25,19 +25,19 @@ class Timer < ActiveRecord::Base
 
     state :running do
       def elapsed_time
-        diff_in_seconds(DateTime.now, started_at) - seconds_paused
+        clamp_by_duration(diff_in_seconds(DateTime.now, started_at) - seconds_paused)
       end
     end
 
     state :paused do
       def elapsed_time
-        diff_in_seconds(paused_at, started_at) - seconds_paused
+        clamp_by_duration(diff_in_seconds(paused_at, started_at) - seconds_paused)
       end
     end
 
     state :running, :paused do
       def time_remaining
-        duration - elapsed_time
+        [duration - elapsed_time, 0.0].max
       end
       def elapsed_time_hms
         to_hms(elapsed_time)
@@ -90,6 +90,10 @@ class Timer < ActiveRecord::Base
 
   def diff_in_seconds(a, b)
     (a.to_datetime - b.to_datetime) * 1.day
+  end
+
+  def clamp_by_duration(val)
+    duration ? [val, duration].min : val
   end
 
   def to_hms(seconds)
