@@ -207,7 +207,9 @@ CREATE TABLE games (
     start_time timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    clock_id integer
+    clock_id integer,
+    period integer,
+    period_duration integer DEFAULT 900 NOT NULL
 );
 
 
@@ -270,11 +272,10 @@ CREATE TABLE goals (
     creator_id integer,
     game_id integer,
     team_id integer,
-    period character varying(255),
-    minutes_into_period integer,
     seconds_into_period integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    period integer DEFAULT 0 NOT NULL
 );
 
 
@@ -495,7 +496,9 @@ CREATE TABLE timers (
     started_at timestamp without time zone,
     paused_at timestamp without time zone,
     seconds_paused double precision DEFAULT 0.0,
-    duration double precision
+    duration double precision,
+    owner_type character varying(255),
+    owner_id integer
 );
 
 
@@ -1045,3 +1048,9 @@ INSERT INTO schema_migrations (version) VALUES ('20130821195852');
 INSERT INTO schema_migrations (version) VALUES ('20130831193545');
 
 INSERT INTO schema_migrations (version) VALUES ('20130907223728');
+
+INSERT INTO schema_migrations (version) VALUES ('20130907235929');
+
+INSERT INTO schema_migrations (version) VALUES ('20130909004427');
+
+INSERT INTO schema_migrations (version) VALUES ('20130911183704');

@@ -1,5 +1,7 @@
 class Timer < ActiveRecord::Base
-  attr_accessible :started_at, :paused_at, :seconds_paused, :duration
+  belongs_to :owner, :polymorphic => true
+
+  attr_accessible :started_at, :paused_at, :seconds_paused, :duration, :owner
 
   state_machine :initial => :created do
     event :start do
@@ -28,6 +30,7 @@ class Timer < ActiveRecord::Base
     after_transition :paused => :running, :do => :clear_paused_at
     after_transition any => :created, :do => :reset_timer
     after_transition any => :running, :do => :queue_expiration_check
+    after_transition any => :expired, :do => :notify_owner_of_expiration
 
     state :running do
       def elapsed_time
@@ -110,6 +113,10 @@ class Timer < ActiveRecord::Base
 
   def check_expiration
     expire! if running? && duration && time_remaining <= 0
+  end
+
+  def notify_owner_of_expiration
+    owner.timer_expired(id) if owner
   end
 
   def diff_in_seconds(a, b)

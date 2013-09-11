@@ -2,16 +2,28 @@ class Game < ActiveRecord::Base
   include AsyncMessaging
 
   state_machine :initial => :scheduled do
+    event :activate do
+      transition :scheduled => :active
+    end
+
     event :start do
-      transition [:scheduled, :paused] => :active
+      transition [:active, :paused] => :playing
     end
 
     event :pause do
-      transition :active => :paused
+      transition :playing => :paused
     end
 
-    event :finish do
-      transition [:active, :paused] => :finished
+    event :stop do
+      transition :playing => :active
+    end
+
+    event :end do
+      transition :active => :finished
+    end
+
+    event :complete do
+      transition :finished => :completed
     end
 
     event :cancel do
@@ -20,10 +32,11 @@ class Game < ActiveRecord::Base
 
     after_transition any => :canceled, :do => :generate_cancel_feed_item
     after_transition :scheduled => :active, :do => :generate_game_started_feed_item
-    after_transition any => :active, :do => :start_game_clock!
+    after_transition :active => :playing, :do => :set_next_period
+    after_transition any => :playing, :do => :start_game_clock!
     after_transition any => :paused, :do => :pause_game_clock!
-    after_transition any => :finished, :do => :generate_game_over_feed_item
     after_transition any => :finished, :do => :destroy_clock
+    after_transition any => :completed, :do => :generate_game_over_feed_item
     after_transition any => any, :do => :broadcast_changes
 
     state all - :scheduled do
@@ -52,7 +65,7 @@ class Game < ActiveRecord::Base
   validate :start_time_is_in_future, :if => :start_time_changed?
 
   attr_accessor :updater
-  attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id, :start_time, :updater, :player_ids
+  attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id, :start_time, :updater, :player_ids, :period_duration
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
@@ -70,6 +83,10 @@ class Game < ActiveRecord::Base
   before_update :generate_update_feed_item
 
   Periods = %w(1 2 3 OT)
+
+  def elapsed_time
+    clock ? clock.elapsed_time : nil
+  end
 
   def teams
     [home_team, visiting_team]
@@ -111,13 +128,9 @@ class Game < ActiveRecord::Base
   end
 
   def start_game_clock!
-    self.clock = Timer.new unless clock
+    self.clock = Timer.new(:owner => self, :duration => period_duration) unless clock
     clock.start!
     save!
-  end
-
-  def period
-    return "1"
   end
 
   def pause_game_clock!
@@ -126,6 +139,10 @@ class Game < ActiveRecord::Base
 
   def as_json(options={})
     super(options.merge(:only => [:id, :state], :methods => [:home_team_score, :visiting_team_score])).merge({:clock => clock.as_json, :fayeURI => AsyncMessaging::FAYE_CONFIG[:uri] })
+  end
+
+  def timer_expired(timer_id)
+    pause
   end
 
   private
@@ -153,6 +170,10 @@ class Game < ActiveRecord::Base
 
   def generate_game_over_feed_item
     activity_feed_items.create!(:message => "The between @#{home_team.name} and @#{visiting_team.name} ended.")
+  end
+
+  def set_next_period
+    self.period = period ? period + 1 : 0
   end
 
   def destroy_clock

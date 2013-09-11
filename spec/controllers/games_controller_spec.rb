@@ -51,7 +51,8 @@ describe GamesController do
           :home_team_id => home_team.to_param,
           :visiting_team_id => visiting_team.to_param,
           :location_id => location.to_param,
-          :start_time => 1.week.from_now }
+          :start_time => 1.week.from_now,
+          :period_duration => 20.minutes }
       end
       it "should create a game" do
         expect {

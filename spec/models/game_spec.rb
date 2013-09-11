@@ -44,7 +44,7 @@ describe Game do
     end
 
     context "with an active game" do
-      let(:game) { FactoryGirl.create(:active_game) }
+      let(:game) { FactoryGirl.create(:game, :active) }
 
       it "should prevent changing the start_time" do
         game.start_time = 3.weeks.from_now
@@ -56,8 +56,19 @@ describe Game do
         game.should_not be_valid
       end
     end
-    context "with a finished game" do
-      let(:game) { FactoryGirl.create(:finished_game) }
+  end
+
+  describe "#states" do
+    let(:game) { FactoryGirl.build(:game) }
+
+    it "goes through entire lifecycle" do
+      game.activate!
+      game.start!
+      game.pause!
+      game.start!
+      game.stop!
+      game.end!
+      game.complete!
     end
   end
 

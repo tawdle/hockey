@@ -8,13 +8,15 @@ class Goal < ActiveRecord::Base
   attr_accessor :updater
   attr_accessible :game, :game_id, :creator, :team_id, :period, :player_ids
 
-  validates_inclusion_of :period, :in => Game::Periods
 
   validates_presence_of :creator
   validates_presence_of :game
   validates_presence_of :team
   validate :team_is_in_game
+  validates_numericality_of :period, :integer => true, :less_than_or_equal_to => Game::Periods.length, :greater_than_or_equal_to => 0
+  validate :game_has_started
 
+  before_create :set_time_and_period_from_game
   before_save :generate_save_feed_item, :unless => :players_empty?
   before_destroy :generate_destroy_feed_item, :unless => :players_empty?
   after_create :broadcast_changes
@@ -64,6 +66,15 @@ class Goal < ActiveRecord::Base
 
   def players_are_on_team
     errors.add(:players, "must be on team") unless player.empty? || team.nil? || players.all? {|player| team.players.include?(player) }
+  end
+
+  def game_has_started
+    errors.add(:game, "must have started") unless game.nil? || !game.scheduled?
+  end
+
+  def set_time_and_period_from_game
+    self.period ||= game.period
+    self.seconds_into_period ||= game.elapsed_time
   end
 
   def broadcast_changes

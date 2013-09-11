@@ -7,18 +7,16 @@ FactoryGirl.define do
     location
     start_time { 1.week.from_now }
 
-    factory :active_game do
-      after(:create) do |game|
-        game.start!
+    trait :active do
+      after(:build) do |game|
+        game.activate!
       end
+    end
 
-      factory :finished_game do
-        after(:create) do |game|
-          game.home_team_score = 2
-          game.visiting_team_score = 1
-          game.save!
-          game.finish!
-        end
+    trait :playing do
+      after(:build) do |game|
+        game.activate!
+        game.start!
       end
     end
   end

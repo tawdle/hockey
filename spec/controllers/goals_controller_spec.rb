@@ -4,7 +4,7 @@ describe GoalsController do
   let(:league) { FactoryGirl.create(:league, :with_recorder) }
   let(:recorder) { league.recorders.first }
   let(:team) { FactoryGirl.create(:team, :with_players, :league => league) }
-  let(:game) { FactoryGirl.create(:game, :visiting_team => team) }
+  let(:game) { FactoryGirl.create(:game, :playing, :visiting_team => team) }
   let(:player) { team.players.first }
 
   context "with a signed in recorder" do

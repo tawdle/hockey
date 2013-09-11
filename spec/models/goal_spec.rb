@@ -26,12 +26,12 @@ describe Goal do
   end
   describe "#create" do
     let(:action) { goal.save! }
-    let(:count) { 2 }
+    let(:count) { 3 }
     it_behaves_like "an action that creates an activity feed item"
   end
   describe "#destroy" do
     let(:action) { goal.save!; goal.destroy }
-    let(:count) { 3 }
+    let(:count) { 4 }
     it_behaves_like "an action that creates an activity feed item"
   end
 end
