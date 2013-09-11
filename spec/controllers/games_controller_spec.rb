@@ -5,6 +5,10 @@ describe GamesController do
   let(:manager) { league.managers.first }
   let(:game) { FactoryGirl.create(:game, :home_team => league.teams.first) }
 
+  before do
+    request.env["HTTP_REFERER"] = "/"
+  end
+
   describe "#show" do
     def do_request
       get :show, :id => game.to_param
@@ -64,7 +68,6 @@ describe GamesController do
       let(:new_start) { 2.weeks.from_now.to_datetime }
 
       def do_request
-        request.env["HTTP_REFERER"] = "/"
         put :update, :league_id => league.to_param, :id => game.to_param, :game => { :start_time => new_start }
       end
 
@@ -75,9 +78,20 @@ describe GamesController do
       end
     end
 
+    describe "#activate" do
+      def do_request
+        post :activate, :id => game.to_param
+      end
+
+      it "changes the state to active" do
+        expect {
+          do_request
+        }.to change { game.reload.state }.to("active")
+      end
+    end
+
     describe "#destroy" do
       def do_request
-        request.env["HTTP_REFERER"] = "/"
         delete :destroy, :id => game.to_param
       end
 

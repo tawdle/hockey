@@ -76,4 +76,16 @@ class GamesController < ApplicationController
       end
     end
   end
+
+  def activate
+    respond_to do |format|
+      if @game.activate
+        format.html { redirect_to :back, notice: 'Game game has been activated.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_ to :back, alert: 'Something went wrong.' }
+        format.json { render json: ["Something went wrong."], status: :unprocessable_entity }
+      end
+    end
+  end
 end

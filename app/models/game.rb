@@ -31,6 +31,7 @@ class Game < ActiveRecord::Base
     end
 
     after_transition any => :canceled, :do => :generate_cancel_feed_item
+    before_transition :scheduled => :active, :do => :create_clock
     after_transition :scheduled => :active, :do => :generate_game_started_feed_item
     after_transition :active => :playing, :do => :set_next_period
     after_transition any => :playing, :do => :start_game_clock!
@@ -65,7 +66,8 @@ class Game < ActiveRecord::Base
   validate :start_time_is_in_future, :if => :start_time_changed?
 
   attr_accessor :updater
-  attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id, :start_time, :updater, :player_ids, :period_duration
+  attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id,
+    :start_time, :updater, :player_ids, :period_duration, :period_minutes
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
@@ -128,7 +130,6 @@ class Game < ActiveRecord::Base
   end
 
   def start_game_clock!
-    self.clock = Timer.new(:owner => self, :duration => period_duration) unless clock
     clock.start!
     save!
   end
@@ -143,6 +144,14 @@ class Game < ActiveRecord::Base
 
   def timer_expired(timer_id)
     pause
+  end
+
+  def period_minutes
+    period_duration / 60
+  end
+
+  def period_minutes=(val)
+    self.period_duration = val.to_i * 60
   end
 
   private
@@ -174,6 +183,10 @@ class Game < ActiveRecord::Base
 
   def set_next_period
     self.period = period ? period + 1 : 0
+  end
+
+  def create_clock
+    self.clock = Timer.new(:owner => self, :duration => period_duration) unless clock
   end
 
   def destroy_clock

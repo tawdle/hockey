@@ -32,6 +32,11 @@ class Timer < ActiveRecord::Base
     after_transition any => :running, :do => :queue_expiration_check
     after_transition any => :expired, :do => :notify_owner_of_expiration
 
+    state :created do
+      def elapsed_time
+        0
+      end
+    end
     state :running do
       def elapsed_time
         clamp_by_duration(diff_in_seconds(DateTime.now, started_at) - seconds_paused)
@@ -50,7 +55,7 @@ class Timer < ActiveRecord::Base
       end
     end
 
-    state :running, :paused, :expired do
+    state :created, :running, :paused, :expired do
       def time_remaining
         [duration - elapsed_time, 0.0].max
       end
@@ -80,6 +85,7 @@ class Timer < ActiveRecord::Base
     end
     self.seconds_paused = diff_in_seconds(paused? ? paused_at : DateTime.now, started_at) - seconds
   end
+
   def as_json(options={})
     { :state => state, :elapsedTime => elapsed_time, :duration => duration }
   end

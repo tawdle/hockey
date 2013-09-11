@@ -8,6 +8,7 @@ Hockey::Application.routes.draw do
     resources :goals, :only => [:index, :new, :create, :update, :destroy]
     resource :roster, :only => [:show, :new, :create, :edit, :update], :controller => "game_players"
     member do
+      post :activate
       post :start
       post :stop
     end

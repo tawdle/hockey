@@ -40,19 +40,21 @@
 </script>
 
 <div>
-  <div id="start-stop-clock">
-    <% if can?(:start, @game) %>
-      <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn btn-large btn-success", :style => displayStyle(@game.can_start?) %> 
-    <% end %>
+  <% if @game.clock %>
+    <div id="start-stop-clock">
+      <% if can?(:start, @game) %>
+        <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn btn-large btn-success", :style => displayStyle(@game.can_start?) %> 
+      <% end %>
 
-    <% if can? :stop, @game %>
-      <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, stop_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-pause", :class => "btn btn-large btn-danger", :style => displayStyle(@game.can_pause?) %>
-    <% end %>
+      <% if can? :stop, @game %>
+        <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, stop_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-pause", :class => "btn btn-large btn-danger", :style => displayStyle(@game.can_pause?) %>
+      <% end %>
 
-    <span id="game-clock" class="label">
-      <%= @game.clock.elapsed_time_hms %>
-    </span>
-  </div>
+      <span id="game-clock" class="label">
+        <%= @game.clock.elapsed_time_hms %>
+      </span>
+    </div>
+  <% end %>
   <div class="row-fluid">
     <%= render :partial => "team_box", :locals => {:home_or_visiting => "home" } %>
     <%= render :partial => "team_box", :locals => {:home_or_visiting => "visiting" } %>
@@ -64,6 +66,10 @@
 
 <% if @game.scheduled? %>
   <p>This game is scheduled to start in <%= distance_of_time_in_words_to_now(@game.start_time) %>.</p>
+  <div class="actions">
+    <%= link_to "Activate", activate_game_path(@game), :method => :post, :class => "btn" %>
+    <%= link_to "Cancel", @game, :method => :delete, :class => "btn" %>
+  </div>
 <% elsif @game.active? || @game.paused? %>
   <p>This game is currently being played.</p>
   <%= render :partial => "score_board", :locals => {:game => @game } %>
