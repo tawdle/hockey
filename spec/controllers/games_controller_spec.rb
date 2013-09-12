@@ -90,6 +90,18 @@ describe GamesController do
       end
     end
 
+    describe "#complete" do
+      def do_request
+        post :complete, :id => game.to_param
+      end
+
+      it "changes the state to completed" do
+        expect {
+          do_request
+        }.to change { game.reload.state }.to("completed")
+      end
+    end
+
     describe "#destroy" do
       def do_request
         delete :destroy, :id => game.to_param

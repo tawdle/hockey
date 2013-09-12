@@ -70,12 +70,17 @@
     <%= link_to "Activate", activate_game_path(@game), :method => :post, :class => "btn" %>
     <%= link_to "Cancel", @game, :method => :delete, :class => "btn" %>
   </div>
-<% elsif @game.active? || @game.paused? %>
-  <p>This game is currently being played.</p>
+<% elsif @game.active? %>
+  <p>This game is ready to start. Press <i class="icon-play"></i> to start the <%= (@game.period + 1).ordinalize %> period.</p>
+<% elsif @game.paused? %>
+  <p>This game is paused. Press <i class="icon-start"></i> to resume.</p>
   <%= render :partial => "score_board", :locals => {:game => @game } %>
 <% elsif @game.finished? %>
-  <p>This game ended.</p>
+  <p>This game has ended.</p>
+  <%= link_to "Complete Game", complete_game_path(@game), :class => "btn" %>
   <%= render :partial => "score_board", :locals => {:game => @game } %>
+<% elsif @game.completed? %>
+  <p>This game is completed.</p>
 <% elsif @game.canceled? %>
   <p>This game was canceled.</p>
 <% end %>

@@ -88,4 +88,16 @@ class GamesController < ApplicationController
       end
     end
   end
+
+  def complete
+    respond_to do |format|
+      if @game.complete
+        format.html { redirect_to :back, notice: 'Game game has been completed.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to :back, alert: 'Something went wrong.' }
+        format.json { render json: ["Something went wrong."], status: :unprocessable_entity }
+      end
+    end
+  end
 end
