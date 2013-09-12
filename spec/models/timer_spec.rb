@@ -22,10 +22,8 @@ describe Timer do
   end
 
   context "with an unstarted timer" do
-    it "raises when asked for elapsed time" do
-      expect {
-        timer.elapsed_time
-      }.to raise_error
+    it "returns 0 for elapsed time" do
+      timer.elapsed_time.should == 0
     end
     it "reports the time_remaining" do
       timer.time_remaining.should == timer.duration
