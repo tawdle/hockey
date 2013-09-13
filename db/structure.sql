@@ -412,6 +412,46 @@ ALTER SEQUENCE mentions_id_seq OWNED BY mentions.id;
 
 
 --
+-- Name: penalties; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE penalties (
+    id integer NOT NULL,
+    state character varying(255),
+    game_id integer,
+    player_id integer,
+    serving_player_id integer,
+    timer_id integer,
+    period integer,
+    elapsed_time double precision,
+    category character varying(255),
+    infraction character varying(255),
+    minutes integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: penalties_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE penalties_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: penalties_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE penalties_id_seq OWNED BY penalties.id;
+
+
+--
 -- Name: players; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -646,6 +686,13 @@ ALTER TABLE ONLY mentions ALTER COLUMN id SET DEFAULT nextval('mentions_id_seq':
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY penalties ALTER COLUMN id SET DEFAULT nextval('penalties_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY players ALTER COLUMN id SET DEFAULT nextval('players_id_seq'::regclass);
 
 
@@ -764,6 +811,14 @@ ALTER TABLE ONLY locations
 
 ALTER TABLE ONLY mentions
     ADD CONSTRAINT mentions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: penalties_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY penalties
+    ADD CONSTRAINT penalties_pkey PRIMARY KEY (id);
 
 
 --
@@ -911,6 +966,20 @@ CREATE INDEX index_mentions_on_user_id ON mentions USING btree (user_id);
 
 
 --
+-- Name: index_penalties_on_game_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_penalties_on_game_id ON penalties USING btree (game_id);
+
+
+--
+-- Name: index_penalties_on_player_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_penalties_on_player_id ON penalties USING btree (player_id);
+
+
+--
 -- Name: index_team_memberships_on_member_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1054,3 +1123,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130907235929');
 INSERT INTO schema_migrations (version) VALUES ('20130909004427');
 
 INSERT INTO schema_migrations (version) VALUES ('20130911183704');
+
+INSERT INTO schema_migrations (version) VALUES ('20130913210811');

@@ -10,7 +10,12 @@ FactoryGirl.define do
     association :user
 
     trait :with_players do
-      players { [ build(:player), build(:player) ] }
+      players { [ build(:player, :team => nil), build(:player, :team => nil) ] }
+      after(:build) do |team|
+        team.players.each do |player|
+          player.team = team
+        end
+      end
     end
   end
 end
