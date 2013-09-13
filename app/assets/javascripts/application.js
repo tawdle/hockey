@@ -18,8 +18,14 @@
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree .
+//= require jquery.timeago
 
 _.templateSettings = {
     interpolate: /\{\{\=(.+?)\}\}/gim,
     evaluate: /\{\{(.+?)\}\}/gim
 };
+
+$.timeago.settings.allowFuture = true;
+$(function() {
+  $("time.timeago").timeago();
+});

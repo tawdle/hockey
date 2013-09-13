@@ -65,7 +65,6 @@
 <h2 class="page-header"><%= @game.home_team.name %> <i>vs</i> <%= @game.visiting_team.name %> <br /> <small><%= @game.start_time.to_s(:long) %> at <%= @game.location.name %></small></h2>
 
 <% if @game.scheduled? %>
-  <p>This game is scheduled to start in <%= distance_of_time_in_words_to_now(@game.start_time) %>.</p>
   <div class="actions">
     <%= link_to "Activate", activate_game_path(@game), :method => :post, :class => "btn" %>
     <%= link_to "Cancel", @game, :method => :delete, :class => "btn" %>
@@ -94,6 +93,7 @@
     <%= link_to "Record Goal", new_game_goal_path(@game), :class => "btn" %>
     <%= link_to "See all Goals for this game", game_goals_path(@game), :class => "btn" %>
   </div>
+    <p>This game is scheduled to start <time class="timeago" datetime="<%= @game.start_time.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.start_time) %></time>.</p>
 <% end %>
 
 <%= render :partial => "activity_feed", :locals => { :new_activity_feed_item => ActivityFeedItem.new(:game => @game), :activity_feed_items => @game.activity_feed_items, :in_game_context => true } %>
