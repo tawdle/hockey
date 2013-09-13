@@ -40,6 +40,17 @@
 </script>
 
 <% if @game.live? %>
+  <% if @game.active? %>
+    <p>This game is ready to play. Press <i class="icon-play"></i> to start the <%= (@game.period + 1).ordinalize %> period.</p>
+  <% elsif @game.playing? %>
+    <p>This game is playing. Press <i class="icon-pause"></i> to pause the game clock.</p>
+  <% elsif @game.paused? %>
+    <p>This game is paused. Press <i class="icon-start"></i> to resume.</p>
+  <% elsif @game.finished? %>
+    <p>This game has ended. When you have completed recording all items, press: </p>
+    <%= link_to "Complete Game", complete_game_path(@game), :class => "btn" %>
+  <% end %>
+
   <div id="start-stop-clock">
     <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn btn-large btn-success", :style => displayStyle(@game.can_start?) %> 
     <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, stop_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-pause", :class => "btn btn-large btn-danger", :style => displayStyle(@game.can_pause?) %>
@@ -54,16 +65,6 @@
     <%= render :partial => "team_box", :locals => {:home_or_visiting => "visiting" } %>
   </div>
 
-  <% if @game.active? %>
-    <p>This game is ready to play. Press <i class="icon-play"></i> to start the <%= (@game.period + 1).ordinalize %> period.</p>
-  <% elsif @game.playing? %>
-    <p>This game is playing. Press <i class="icon-pause"></i> to pause the game clock.</p>
-  <% elsif @game.paused? %>
-    <p>This game is paused. Press <i class="icon-start"></i> to resume.</p>
-  <% elsif @game.finished? %>
-    <p>This game has ended. When you have completed recording all items, press: </p>
-    <%= link_to "Complete Game", complete_game_path(@game), :class => "btn" %>
-  <% end %>
 <% elsif %>
 
   <h2 class="page-header">
