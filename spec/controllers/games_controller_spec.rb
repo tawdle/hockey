@@ -95,6 +95,11 @@ describe GamesController do
         post :complete, :id => game.to_param
       end
 
+      before do
+        game.activate!
+        game.end!
+      end
+
       it "changes the state to completed" do
         expect {
           do_request
