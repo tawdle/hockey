@@ -55,7 +55,7 @@ class GamesController < ApplicationController
 
   def start
     respond_to do |format|
-      if @game.can_start? && @game.start!
+      if @game.start
         format.html { redirect_to :back, notice: 'Game has been started.' }
         format.json { head :no_content }
       else
@@ -67,7 +67,7 @@ class GamesController < ApplicationController
 
   def stop
     respond_to do |format|
-      if @game.can_pause? && @game.pause!
+      if @game.pause
         format.html { redirect_to :back, notice: 'Game clock has been stopped.' }
         format.json { head :no_content }
       else
@@ -80,7 +80,7 @@ class GamesController < ApplicationController
   def activate
     respond_to do |format|
       if @game.activate
-        format.html { redirect_to :back, notice: 'Game game has been activated.' }
+        format.html { redirect_to :back, notice: 'Game has been activated.' }
         format.json { head :no_content }
       else
         format.html { redirect_ to :back, alert: 'Something went wrong.' }
@@ -92,7 +92,7 @@ class GamesController < ApplicationController
   def complete
     respond_to do |format|
       if @game.complete
-        format.html { redirect_to :back, notice: 'Game game has been completed.' }
+        format.html { redirect_to :back, notice: 'Game has been completed.' }
         format.json { head :no_content }
       else
         format.html { redirect_to :back, alert: 'Something went wrong.' }
