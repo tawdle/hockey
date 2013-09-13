@@ -39,61 +39,54 @@
 {{ }); }}
 </script>
 
-<div>
-  <% if @game.clock %>
-    <div id="start-stop-clock">
-      <% if can?(:start, @game) %>
-        <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn btn-large btn-success", :style => displayStyle(@game.can_start?) %> 
-      <% end %>
+<% if @game.live? %>
+  <div id="start-stop-clock">
+    <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn btn-large btn-success", :style => displayStyle(@game.can_start?) %> 
+    <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, stop_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-pause", :class => "btn btn-large btn-danger", :style => displayStyle(@game.can_pause?) %>
 
-      <% if can? :stop, @game %>
-        <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, stop_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-pause", :class => "btn btn-large btn-danger", :style => displayStyle(@game.can_pause?) %>
-      <% end %>
+    <span id="game-clock" class="label">
+      <%= @game.clock.elapsed_time_hms %>
+    </span>
+  </div>
 
-      <span id="game-clock" class="label">
-        <%= @game.clock.elapsed_time_hms %>
-      </span>
-    </div>
-  <% end %>
   <div class="row-fluid">
     <%= render :partial => "team_box", :locals => {:home_or_visiting => "home" } %>
     <%= render :partial => "team_box", :locals => {:home_or_visiting => "visiting" } %>
   </div>
-</div>
 
+  <% if @game.active? %>
+    <p>This game is ready to play. Press <i class="icon-play"></i> to start the <%= (@game.period + 1).ordinalize %> period.</p>
+  <% elsif @game.playing? %>
+    <p>This game is playing. Press <i class="icon-pause"></i> to pause the game clock.</p>
+  <% elsif @game.paused? %>
+    <p>This game is paused. Press <i class="icon-start"></i> to resume.</p>
+  <% elsif @game.finished? %>
+    <p>This game has ended. When you have completed recording all items, press: </p>
+    <%= link_to "Complete Game", complete_game_path(@game), :class => "btn" %>
+  <% end %>
+<% elsif %>
 
-<h2 class="page-header"><%= @game.home_team.name %> <i>vs</i> <%= @game.visiting_team.name %> <br /> <small><%= @game.start_time.to_s(:long) %> at <%= @game.location.name %></small></h2>
+  <h2 class="page-header">
+    <%= @game.home_team.name %> <i>vs</i>
+    <%= @game.visiting_team.name %>
+    <br />
+    <small>
+      <%= @game.start_time.to_s(:long) %> at
+      <%= @game.location.name %>
+    </small>
+  </h2>
 
-<% if @game.scheduled? %>
-  <div class="actions">
-    <%= link_to "Activate", activate_game_path(@game), :method => :post, :class => "btn" %>
-    <%= link_to "Cancel", @game, :method => :delete, :class => "btn" %>
-  </div>
-<% elsif @game.active? %>
-  <p>This game is ready to start. Press <i class="icon-play"></i> to start the <%= (@game.period + 1).ordinalize %> period.</p>
-<% elsif @game.paused? %>
-  <p>This game is paused. Press <i class="icon-start"></i> to resume.</p>
-  <%= render :partial => "score_board", :locals => {:game => @game } %>
-<% elsif @game.finished? %>
-  <p>This game has ended.</p>
-  <%= link_to "Complete Game", complete_game_path(@game), :class => "btn" %>
-  <%= render :partial => "score_board", :locals => {:game => @game } %>
-<% elsif @game.completed? %>
-  <p>This game is completed.</p>
-<% elsif @game.canceled? %>
-  <p>This game was canceled.</p>
-<% end %>
-
-<div>
-  <%= image_tag("sample_frame.png") %>
-</div>
-
-<% if can? :create, Goal.new(:game => @game) %>
-  <div style="margin-top: 10px;">
-    <%= link_to "Record Goal", new_game_goal_path(@game), :class => "btn" %>
-    <%= link_to "See all Goals for this game", game_goals_path(@game), :class => "btn" %>
-  </div>
+  <% if @game.scheduled? %>
     <p>This game is scheduled to start <time class="timeago" datetime="<%= @game.start_time.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.start_time) %></time>.</p>
+    <div class="actions">
+      <%= link_to "Activate", activate_game_path(@game), :class => "btn btn-primary", :method => :post %>
+      <%= link_to "Cancel", game_path(@game), :class => "btn btn-warning", :method => :delete %>
+    </div>
+  <% elsif @game.canceled? %>
+    <p>This game has been canceled.</p>
+  <% elsif @game.completed? %>
+    <p>This game is over.</p>
+  <% end %>
 <% end %>
 
 <%= render :partial => "activity_feed", :locals => { :new_activity_feed_item => ActivityFeedItem.new(:game => @game), :activity_feed_items => @game.activity_feed_items, :in_game_context => true } %>

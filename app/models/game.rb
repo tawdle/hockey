@@ -86,6 +86,12 @@ class Game < ActiveRecord::Base
 
   Periods = %w(1 2 3 OT)
 
+  LiveStates = %w(active playing paused finished)
+
+  def live?
+    LiveStates.include?(state)
+  end
+
   def elapsed_time
     clock ? clock.elapsed_time : nil
   end
