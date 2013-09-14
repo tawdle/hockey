@@ -52,6 +52,7 @@ describe Penalty do
       let(:penalty) { FactoryGirl.create(:penalty) }
 
       it "should create a timer" do
+        penalty.game # reference to create game's timer
         expect {
           penalty.start!
         }.to change { Timer.count }.by(1)

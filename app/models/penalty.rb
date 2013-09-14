@@ -32,6 +32,8 @@ class Penalty < ActiveRecord::Base
   belongs_to :serving_player, :class_name => "Player"
   belongs_to :timer
 
+  attr_accessible :state, :player_id, :serving_player_id, :period, :category, :game, :elapsed_time, :infraction, :minutes
+
   Infractions = {
     :minor => [
       :boarding,
@@ -61,6 +63,23 @@ class Penalty < ActiveRecord::Base
       :throwing_stick,
       :tripping,
       :unsportsmanlike_conduct
+    ],
+    :major => [
+      :boarding,
+      :butt_ending,
+      :charging,
+      :checking_from_behind,
+      :clipping,
+      :cross_checking,
+      :elbowing,
+      :fighting,
+      :head_butting,
+      :hooking,
+      :illegal_check_to_the_head,
+      :interference,
+      :kneeing,
+      :slashing,
+      :spearing
     ]
   }
 

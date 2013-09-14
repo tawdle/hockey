@@ -3,9 +3,13 @@
     App.game = new App.Game(<%= @game.to_json.html_safe %>);
     App.gameView = new App.GameView({ model: App.game });
     App.goals = new App.Goals(<%= @game.goals.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
+    App.penalties = new App.Penalties(<%= @game.penalties.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.homeGoalsView = new App.GoalsView({ collection: App.goals, el: "#home-team" });
     App.visitingGoalsView = new App.GoalsView({ collection: App.goals, el: "#visiting-team" });
+    App.homePenaltiesView = new App.PenaltiesView({ collection: App.penalties, el: "#home-team" });
+    App.visitingPenaltiesView = new App.PenaltiesView({ collection: App.penalties, el: "#visiting-team" });
     App.players = new App.Players(<%= @game.players.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
+    App.infractions = <%= Penalty::Infractions.to_json.html_safe %>;
   });
 <% end %>
 
@@ -38,6 +42,38 @@
    <option value="{{= player.id }}" {{= player.id == selectedId ? "selected" : ""}}>{{= player.get("jersey_number") }}</option> 
 {{ }); }}
 </script>
+
+<script type="text/html" id="penalty-form">
+  <form>
+    <div class="penalty-player">
+      <select name="player"></select>
+    </div>
+    <div class="penalty-serving-player">
+      <select name="player-serving"></select>
+    </div>
+    <div class="penalty-category">
+      <select>
+        <option value="" selected disabled>Type of penalty</option>
+        <% Penalty::Infractions.keys.each do |category| %>
+          <option value="<%= category %>"><%= category.to_s.humanize %></option>
+        <% end %>
+      </select>
+    </div>
+    <div class="penalty-infraction">
+      <select></select>
+    </div>
+    <div class="penalty-minutes">
+      <input type="number" placeholder="Penalty minutes" min="0" max="60" step="1"></input>
+    </div>
+
+    <div class="pull-right">
+      <%= link_to "Cancel", "#", :class => "cancel" %>
+      <input type="submit" class="btn btn-primary" value="Save"></input>
+    </div>
+  </form>
+</script>
+
+
 
 <% if @game.live? %>
   <% if @game.active? %>

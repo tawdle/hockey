@@ -26,6 +26,10 @@ class Ability
       goal && goal.game && (user.recorder_of?(goal.game.home_team.league) || user.recorder_of?(goal.game.visiting_team.league))
     end
 
+    can :manage, Penalty do |penalty|
+      penalty && penalty.game && (user.recorder_of?(penalty.game.home_team.league) || user.recorder_of?(penalty.game.visiting_team.league))
+    end
+
     can [:edit, :update], User do |user_object|
       user_object == user
     end

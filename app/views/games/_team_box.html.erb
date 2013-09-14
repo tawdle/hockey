@@ -1,14 +1,16 @@
-<div id=<%= "#{home_or_visiting}-team" %> class="team-box span6">
+<div id=<%= "#{home_or_visiting}-team" %> class="team-box span6" data-team-id="<%= @game.send("#{home_or_visiting}_team_id") %>">
   <div class="well well-large">
     <h3>
       <span class="team-name"><%= @game.send("#{home_or_visiting}_team").name %></span>
-      <a href="#" class="btn add-goal" data-team-id="<%= @game.send("#{home_or_visiting}_team_id") %>">
+      <a href="#" class="btn add-goal" >
         <span class="score"><%= @game.send("#{home_or_visiting}_team_score") %></span>
         <i class="icon-caret-down"></i>
       </a>
+      <a href="#" title="Add Penalty" class="btn add-penalty"><i class="icon-flag"></i></a>
+      <a class="btn" title="Edit Team Roster" href="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>"><i class="icon-male"></i></a>
     </h3>
     <div class="goal-editor"></div>
-    <%= link_to "Edit Team Roster", edit_game_roster_path(@game, :team => home_or_visiting) %>
+    <div class="penalty-editor"></div>
   </div>
 </div>
 
