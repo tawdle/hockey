@@ -6,7 +6,6 @@ App.Goals = Backbone.Collection.extend({
 
   initialize: function(models, options) {
     this.gameId = options.gameId;
-    this.teamId = options.teamId;
   },
 
   url: function() {
