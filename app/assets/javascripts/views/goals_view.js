@@ -10,7 +10,7 @@ App.GoalsView = Backbone.View.extend({
 
   addGoal: function(e) {
     e.preventDefault();
-    var team_id = $(e.currentTarget).attr("data-team-id");
+    var team_id = $(e.currentTarget).parents(".team-box").attr("data-team-id");
     var goal = this.collection.create({team_id: team_id});
     var view = new App.GoalView({ model: goal });
     this.$(".goal-editor").hide().html(view.render().el).slideDown();
