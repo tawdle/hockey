@@ -3,7 +3,7 @@ class PenaltiesController < ApplicationController
   load_and_authorize_resource :except => [:create]
 
   def create
-    @penalty = Penalty.new(params[:penalty].merge(:game => @game, :period => @game.period, :elapsed_time => @game.elapsed_time))
+    @penalty = Penalty.new(params[:penalty].merge(:game => @game, :period => @game.period))
     authorize! :create, @penalty
 
     respond_to do |format|

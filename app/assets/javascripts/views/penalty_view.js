@@ -53,6 +53,7 @@ App.PenaltyView = Backbone.View.extend({
     var values = {
       player_id: this.playerSelect.val(),
       serving_player_id: this.servingPlayerSelect.val(),
+      category: this.categorySelect.val(),
       infraction: this.infractionSelect.val(),
       minutes: this.penaltyMinutes.val()
     };

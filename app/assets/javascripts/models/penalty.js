@@ -8,10 +8,13 @@ App.Penalty = Backbone.Model.extend({
   defaults: function() {
     return {
       state: "created",
+      period: App.game.period,
+      elapsed_time: App.game.get("clock").get("elapsedTime"),
       player_id: null,
       serving_player_id: null,
-      period: null,
-      category: "minor"
+      category: "minor",
+      infraction: "boarding",
+      minutes: 2
     };
   }
 });
