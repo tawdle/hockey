@@ -29,3 +29,20 @@ $.timeago.settings.allowFuture = true;
 $(function() {
   $("time.timeago").timeago();
 });
+
+window.App = window.App || {};
+App.humanize = function(property) {
+  return property.replace(/_/g, ' ').replace(/(\w+)/g, function(match) {
+    return match.charAt(0).toUpperCase() + match.slice(1);
+  });
+};
+App.displaySeconds = function(seconds) {
+  var hours = Math.floor(seconds / 3600);
+  var minutes = Math.floor(seconds / 60) % 60;
+  var secs = Math.floor(seconds) % 60;
+
+  var s = (hours > 0 ? hours + ":" : "") + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + secs;
+  return s;
+};
+
+

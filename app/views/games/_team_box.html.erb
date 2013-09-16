@@ -10,7 +10,38 @@
       <a class="btn" title="Edit Team Roster" href="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>"><i class="icon-male"></i></a>
     </h3>
     <div class="goal-editor"></div>
-    <div class="penalty-editor"></div>
+
+    <div class="penalty-editor" style="display:none;">
+      <form>
+        <div class="penalty-player">
+          <select name="player"></select>
+        </div>
+        <div class="penalty-serving-player">
+          <select name="player-serving"></select>
+        </div>
+        <div class="penalty-category">
+          <select>
+            <option value="" selected disabled>Type of penalty</option>
+            <% Penalty::Infractions.keys.each do |category| %>
+              <option value="<%= category %>"><%= category.to_s.humanize %></option>
+            <% end %>
+          </select>
+        </div>
+        <div class="penalty-infraction">
+          <select></select>
+        </div>
+        <div class="penalty-minutes">
+          <input type="number" placeholder="Penalty minutes" min="0" max="60" step="1"></input>
+        </div>
+
+        <div class="pull-right">
+          <%= link_to "Cancel", "#", :class => "cancel" %>
+          <input type="submit" class="btn btn-primary" value="Save"></input>
+        </div>
+      </form>
+    </div>
+    <table class="penalties table">
+    </table>
   </div>
 </div>
 
