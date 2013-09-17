@@ -19,7 +19,7 @@ class PenaltiesController < ApplicationController
 
   def update
     respond_to do |format|
-      if @penalty.update_attributes(params[:penalty])
+      if @penalty.update_attributes(params[:penalty].slice(*Penalty.accessible_attributes))
         format.html { redirect_to @game, notice: 'Penalty was successfully updated.' }
         format.json { head :no_content }
       else
