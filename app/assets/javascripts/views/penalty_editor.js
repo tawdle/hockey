@@ -7,6 +7,8 @@ App.PenaltyEditor = Backbone.View.extend({
     this.categorySelect = this.$(".penalty-category select");
     this.infractionSelect = this.$(".penalty-infraction select");
     this.penaltyMinutes = this.$("input[type=number]");
+    this.teamId = this.options.teamId;
+    App.dispatcher.on("penalty:edit", this.editIf, this);
   },
 
   tagName: "div",
@@ -41,7 +43,7 @@ App.PenaltyEditor = Backbone.View.extend({
 
   setPlayerOptions: function() {
     var self = this;
-    var options = App.players.where({team_id: this.options.teamId}).map(function(player) { return self.optionString(player.id, player.get("jersey_number")); }).join("");
+    var options = App.players.where({team_id: this.teamId}).map(function(player) { return self.optionString(player.id, player.get("jersey_number")); }).join("");
     this.playerSelect.html(self.optionPrompt("Player who committed penalty") + options);
     this.servingPlayerSelect.html(self.optionPrompt("Player who will serve penalty") + options);
   },
@@ -90,8 +92,15 @@ App.PenaltyEditor = Backbone.View.extend({
     this.$el.slideUp();
   },
 
-  edit: function(model) {
-    this.model = model;
+  editIf: function(penalty) {
+    if (penalty.teamId() == this.teamId) {
+      this.edit(penalty);
+    }
+    return this;
+  },
+
+  edit: function(penalty) {
+    this.model = penalty;
     this.initializeForm();
     this.$el.slideDown();
     return this;

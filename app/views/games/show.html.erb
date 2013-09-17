@@ -1,5 +1,6 @@
 <%= javascript_tag do %>
   $(function() {
+    App.dispatcher = _.clone(Backbone.Events);
     App.game = new App.Game(<%= @game.to_json.html_safe %>);
     App.gameView = new App.GameView({ model: App.game });
     App.players = new App.Players(<%= @game.players.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
@@ -52,6 +53,7 @@
 <td>{{= App.humanize(category) }}</td>
 <td>{{= App.humanize(infraction) }}</td>
 <td>{{= state }}</td>
+<td><%= link_to "Edit", "#", :class => "edit btn btn-small" %></td>
 </script>
 
 
