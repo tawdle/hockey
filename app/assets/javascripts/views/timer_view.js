@@ -2,7 +2,7 @@ window.App = window.App || {};
 
 App.TimerView = Backbone.View.extend({
   initialize: function() {
-    this.listenTo(this.options.parent, "clockTick", this.render);
+    this.listenTo(App.dispatcher, "clockTick", this.render);
   },
 
   render: function() {
