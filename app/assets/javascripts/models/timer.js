@@ -67,6 +67,10 @@ App.Timer = Backbone.Model.extend({
     return et;
   },
 
+  getTimeRemaining: function() {
+    return Math.max(0, this.get("duration") - this.getElapsedTime());
+  },
+
   stateChanged: function() {
     switch(this.get("state")) {
       case "created":
