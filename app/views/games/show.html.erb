@@ -53,7 +53,10 @@
 <td>{{= App.humanize(category) }}</td>
 <td>{{= App.humanize(infraction) }}</td>
 <td>{{= state }}</td>
-<td><%= link_to "Edit", "#", :class => "edit btn btn-small" %></td>
+<td style="white-space: nowrap">
+  <%= link_to "Edit", "#", :class => "edit btn btn-small" %>
+  <%= link_to "Delete", "#", :class => "delete btn btn-small btn-danger" %>
+</td>
 </script>
 
 
