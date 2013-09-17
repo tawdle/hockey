@@ -6,6 +6,7 @@
     App.goals = new App.Goals(<%= @game.goals.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.penalties = new App.Penalties(<%= @game.penalties.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.infractions = <%= Penalty::Infractions.to_json.html_safe %>;
+    App.periods = <%= Game::Periods.to_json.html_safe %>;
     App.homeGoalsView = new App.GoalsView({ collection: App.goals, el: "#home-team" });
     App.visitingGoalsView = new App.GoalsView({ collection: App.goals, el: "#visiting-team" });
     App.homeView = new App.TeamBoxView({ el: "#home-team" });
@@ -44,7 +45,7 @@
 </script>
 
 <script type="text/html" id="penalty-view">
-<td>{{= period }}</td>
+<td>{{= App.periods[period] }}</td>
 <td>{{= App.displaySeconds(elapsed_time) }}</td>
 <td>{{= App.players.get(player_id).get("jersey_number") }}</td>
 <td>{{= App.players.get(serving_player_id).get("jersey_number") }}</td>
