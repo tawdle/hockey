@@ -7,10 +7,10 @@ App.Penalty = Backbone.Model.extend({
 
   teamId: function() {
     var player_id = this.get("player_id");
-    if (!player_id) return nil;
+    if (!player_id) return null;
 
     var player = App.players.get(player_id);
-    if (!player) return nil;
+    if (!player) return null;
 
     return player.get("team_id");
   },
