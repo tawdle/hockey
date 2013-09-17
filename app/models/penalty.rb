@@ -23,7 +23,7 @@ class Penalty < ActiveRecord::Base
     after_transition :created => :running, :do => :init_timer
     after_transition any => :running, :do => :start_timer
     after_transition any => :paused, :do => :pause_timer
-    after_transition any => :expired, :do => :destroy_timer
+    after_transition any => :completed, :do => :destroy_timer
     after_transition any - :created => :canceled, :do => :destroy_timer
   end
 
@@ -32,7 +32,7 @@ class Penalty < ActiveRecord::Base
   belongs_to :serving_player, :class_name => "Player"
   belongs_to :timer
 
-  attr_accessible :state, :player_id, :serving_player_id, :period, :category, :game, :elapsed_time, :infraction, :minutes
+  attr_accessible :state, :player_id, :serving_player_id, :period, :category, :game, :elapsed_time, :infraction, :minutes, :action
 
   Infractions = {
     :minor => [
@@ -98,6 +98,14 @@ class Penalty < ActiveRecord::Base
 
   def timer_expired(timer_id)
     expire!
+  end
+
+  def as_json(options={})
+    timer ? super.merge({:timer => timer.as_json}) : super
+  end
+
+  def action=(value)
+    self.send("#{value}") if state_transitions.collect(&:event).map(&:to_s).include?(value)
   end
 
   private

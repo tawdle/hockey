@@ -7,10 +7,13 @@ App.TimerView = Backbone.View.extend({
 
   render: function() {
     var timer = this.model;
-    var hms = timer.elapsedTimeHMS();
-    var h = hms.hours > 0 ? (String(hms.hours) + ":") : "";
-    var m = (hms.minutes < 10 ? "0" : "") + String(hms.minutes) + ":";
-    var s = (hms.seconds < 10 ? "0" : "") + String(hms.seconds);
+    var secs = this.options.showTimeRemaining ? timer.getTimeRemaining() : timer.getElapsedTime();
+    var hours = Math.floor(secs / 3600);
+    var minutes = Math.floor(secs / 60) % 60;
+    var seconds = Math.floor(secs % 60);
+    var h = hours > 0 ? (String(hours) + ":") : "";
+    var m = (minutes < 10 ? "0" : "") + String(minutes) + ":";
+    var s = (seconds < 10 ? "0" : "") + String(seconds);
     var result = h + m + s;
     if (timer.get("state") == "running" && Math.floor(timer.get("elapsedTime") * 2.0) % 2)
       result = result.replace(/:/g, " " );

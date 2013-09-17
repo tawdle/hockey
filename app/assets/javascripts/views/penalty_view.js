@@ -10,6 +10,7 @@ App.PenaltyView = Backbone.View.extend({
   events: {
     "click a.edit" : "edit",
     "click a.delete" : "deletePenalty",
+    "click a.start" : "start"
   },
 
   edit: function(e) {
@@ -24,8 +25,19 @@ App.PenaltyView = Backbone.View.extend({
     }
   },
 
+  start: function(e) {
+    e.preventDefault();
+    this.model.save({action: "start"});
+  },
+
   render: function() {
     this.$el.html(this.template(this.model.toJSON().penalty));
+    this.$el.addClass(this.model.get("state"));
+
+    var timer = this.model.get("timer");
+    if (timer) {
+      this.timerView = new App.TimerView({el: this.$(".timer"), model: timer, showTimeRemaining: true});
+    }
     return this;
   }
 });

@@ -17,10 +17,16 @@ span#game-clock {
   margin-bottom: 10px;
 }
 
-.team-box {
-  span.score {
+table.penalties {
+  tr.completed {
+    display: none;
   }
-  a.score {
+  tr.running {
+    a.start {
+      display: none;
+    }
+    a.edit {
+      display: none;
+    }
   }
 }
-
