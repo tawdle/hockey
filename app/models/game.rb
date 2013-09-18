@@ -18,7 +18,7 @@ class Game < ActiveRecord::Base
       transition :playing => :active
     end
 
-    event :end do
+    event :finish do
       transition :active => :finished
     end
 
