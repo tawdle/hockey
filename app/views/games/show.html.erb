@@ -71,7 +71,7 @@
     <p>This game is paused. Press <i class="icon-start"></i> to resume.</p>
   <% elsif @game.finished? %>
     <p>This game has ended. When you have completed recording all items, press: </p>
-    <%= link_to "Complete Game", complete_game_path(@game), :class => "btn" %>
+    <%= link_to "Complete Game", complete_game_path(@game), :class => "btn", :method => :post %>
   <% end %>
 
   <div id="start-stop-clock">
