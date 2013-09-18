@@ -61,7 +61,7 @@ App.Timer = Backbone.Model.extend({
         et = (this.pausedAt - this.secondsPaused - this.baseTime) / 1000.0;
         break;
       case "expired":
-        et = duration;
+        et = this.get("duration");
         break;
     }
     return et;
