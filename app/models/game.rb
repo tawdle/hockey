@@ -36,7 +36,7 @@ class Game < ActiveRecord::Base
     after_transition :active => :playing, :do => :set_next_period
     after_transition any => :playing, :do => :start_game_clock!
     after_transition any => :paused, :do => :pause_game_clock!
-    after_transition any => :finished, :do => :destroy_clock
+    after_transition any => :completed, :do => :destroy_clock
     after_transition any => :completed, :do => :generate_game_over_feed_item
     after_transition any => any, :do => :broadcast_changes_from_state_machine
     after_transition any => :playing, :do => :start_paused_penalties
