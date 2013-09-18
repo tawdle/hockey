@@ -52,7 +52,7 @@
 <td>{{= App.players.get(serving_player_id).get("jersey_number") }}</td>
 <td>{{= App.humanize(category) }}</td>
 <td>{{= App.humanize(infraction) }}</td>
-<td>{{= state }}</td>
+<td>{{= App.humanize(state) }}</td>
 <td class="timer" style="white-space: nowrap"></td>
 <td style="white-space: nowrap">
   <%= link_to "Start", "#", :class => "start btn btn-small btn-primary" %>
