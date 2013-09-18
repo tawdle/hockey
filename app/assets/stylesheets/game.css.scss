@@ -28,5 +28,16 @@ table.penalties {
     a.edit {
       display: none;
     }
+    a.delete {
+      display: none;
+    }
+  }
+  tr.paused {
+    a.edit {
+      display: none;
+    }
+    a.delete {
+      display: none;
+    }
   }
 }

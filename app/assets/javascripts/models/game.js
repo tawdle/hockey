@@ -1,6 +1,6 @@
 window.App = window.App || {};
 
-App.Game = Backbone.Model.extend({
+App.Game = App.EmbeddedModel.extend({
   // The game subscribes to the faye channel and holds a references to all of the subsidiary models.
   // When changes happen, it delegates to the relevant models to update them, and the views do their things.
 
@@ -19,7 +19,10 @@ App.Game = Backbone.Model.extend({
 
   models: function() {
     return {
-      clock: App.Timer
+      clock: App.Timer,
+      penalties: App.penalties,
+      goals: App.goals,
+      players: App.players
     };
   },
 
@@ -28,37 +31,5 @@ App.Game = Backbone.Model.extend({
     this.faye.subscribe("/games/" + this.get("id"), function(message) {
       this.set(message);
     }.bind(this));
-  },
-
-  set: function(key, val, options) {
-    var o, a, attrs;
-
-    if (key === null) return this;
-    if (typeof key === 'object') {
-      attrs = key;
-      options = val;
-    } else {
-      (attrs = {})[key] = val;
-    }
-
-    options = options || {};
-
-    models = this.models();
-    for (model in models) {
-      a = attrs[model];
-      if (a) {
-        o = this.get(model);
-        if (o) {
-          o.set(a, options);
-          delete attrs[model];
-        } else {
-          if (!(a instanceof Backbone.Model)) {
-            this.set(model, new models[model](a));
-            delete attrs[model];
-          }
-        }
-      }
-    }
-    return Backbone.Model.prototype.set.apply(this, arguments);
   }
 });

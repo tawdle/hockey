@@ -2,6 +2,7 @@ App.PenaltiesView = Backbone.View.extend({
   initialize: function(options, other) {
     this.teamId = options.teamId;
     this.listenTo(App.penalties, 'add', this.addOne);
+    this.listenTo(App.penalties, 'reset', this.reset);
     this.addAll();
   },
 
@@ -18,6 +19,11 @@ App.PenaltiesView = Backbone.View.extend({
 
   addAll: function() {
     App.penalties.each(this.addOne, this);
+  },
+
+  reset: function() {
+    this.$el.empty();
+    this.addAll();
   },
 
   render: function() {

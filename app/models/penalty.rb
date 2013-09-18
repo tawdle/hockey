@@ -25,12 +25,16 @@ class Penalty < ActiveRecord::Base
     after_transition any => :paused, :do => :pause_timer
     after_transition any => :completed, :do => :destroy_timer
     after_transition any - :created => :canceled, :do => :destroy_timer
+    after_transition any => :running, :do => :pause!, :unless => :game_playing?
   end
 
   belongs_to :game
   belongs_to :player
   belongs_to :serving_player, :class_name => "Player"
   belongs_to :timer
+
+  after_commit :broadcast_changes
+  after_destroy :broadcast_changes
 
   attr_accessible :state, :player_id, :serving_player_id, :period, :category, :game, :elapsed_time, :infraction, :minutes, :action
 
@@ -96,6 +100,9 @@ class Penalty < ActiveRecord::Base
   validates_numericality_of :elapsed_time, :greater_than_or_equal_to => 0
   validates_numericality_of :minutes, :integer => true, :greater_than => 0
 
+  scope :running, where(:state => :running)
+  scope :paused, where(:state => :paused)
+
   def timer_expired(timer_id)
     expire!
   end
@@ -109,6 +116,10 @@ class Penalty < ActiveRecord::Base
   end
 
   private
+
+  def game_playing?
+    game.playing?
+  end
 
   def player_in_game
     errors.add(:player, "must be in game") unless game.nil? || player.nil? || game.players.include?(player)
@@ -127,7 +138,7 @@ class Penalty < ActiveRecord::Base
   end
 
   def init_timer
-    create_timer(:duration => minutes.minutes, :owner => self)
+    self.timer = Timer.create(:duration => minutes.minutes, :owner => self)
   end
 
   def start_timer
@@ -140,5 +151,9 @@ class Penalty < ActiveRecord::Base
 
   def destroy_timer
     timer.destroy
+  end
+
+  def broadcast_changes
+    game.send(:broadcast_changes, :include => :penalties)
   end
 end

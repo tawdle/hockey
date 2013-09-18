@@ -38,7 +38,9 @@ class Game < ActiveRecord::Base
     after_transition any => :paused, :do => :pause_game_clock!
     after_transition any => :finished, :do => :destroy_clock
     after_transition any => :completed, :do => :generate_game_over_feed_item
-    after_transition any => any, :do => :broadcast_changes
+    after_transition any => any, :do => :broadcast_changes_from_state_machine
+    after_transition any => :playing, :do => :start_paused_penalties
+    after_transition any => [:paused, :active, :finished], :do => :pause_running_penalties
 
     state all - :scheduled do
       validate {|game| game.send(:schedule_not_changed) }
@@ -188,6 +190,18 @@ class Game < ActiveRecord::Base
     activity_feed_items.create!(:message => "The between @#{home_team.name} and @#{visiting_team.name} ended.")
   end
 
+  def pause_running_penalties
+    penalties.running.each do |penalty|
+      penalty.pause!
+    end
+  end
+
+  def start_paused_penalties
+    penalties.paused.each do |penalty|
+      penalty.start!
+    end
+  end
+
   def set_next_period
     self.period = period ? period + 1 : 0
   end
@@ -220,9 +234,18 @@ class Game < ActiveRecord::Base
     errors.add(:location, "can't be changed after game starts") if location_id_changed? && persisted?
   end
 
-  Uninteresting_attributes = [:updated_at, :clock_id]
+  def broadcast_changes_from_state_machine(transition)
+    broadcast_changes
+  end
 
-  def broadcast_changes
-    broadcast("/games/#{id}", as_json)
+  def broadcast_changes(options={})
+    json = as_json
+    if Array(options[:include]).include?(:penalties)
+      json[:penalties] = penalties.map do |penalty|
+        penalty.as_json
+      end
+    end
+
+    broadcast("/games/#{id}", json)
   end
 end

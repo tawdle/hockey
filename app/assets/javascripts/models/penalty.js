@@ -1,8 +1,14 @@
 window.App = window.App || {};
 
-App.Penalty = Backbone.Model.extend({
+App.Penalty = App.EmbeddedModel.extend({
   toJSON: function() {
     return { penalty: _.clone(this.attributes) };
+  },
+
+  models: function() {
+    return {
+      timer: App.Timer
+    };
   },
 
   teamId: function() {

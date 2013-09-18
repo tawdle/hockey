@@ -82,7 +82,6 @@ App.PenaltyEditor = Backbone.View.extend({
     this.model.save(values, { 
       success: function() {
         self.$el.slideUp();
-        App.penalties.add(self.model); // XXX: until broadcast works
       }
     });
   },

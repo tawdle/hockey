@@ -1,13 +1,13 @@
 <%= javascript_tag do %>
   $(function() {
     App.dispatcher = _.clone(Backbone.Events);
-    App.game = new App.Game(<%= @game.to_json.html_safe %>);
-    App.gameView = new App.GameView({ model: App.game });
     App.players = new App.Players(<%= @game.players.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.goals = new App.Goals(<%= @game.goals.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
-    App.penalties = new App.Penalties(<%= @game.penalties.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.infractions = <%= Penalty::Infractions.to_json.html_safe %>;
     App.periods = <%= Game::Periods.to_json.html_safe %>;
+    App.game = new App.Game(<%= @game.to_json.html_safe %>);
+    App.penalties = new App.Penalties(<%= @game.penalties.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
+    App.gameView = new App.GameView({ model: App.game });
     App.homeGoalsView = new App.GoalsView({ collection: App.goals, el: "#home-team" });
     App.visitingGoalsView = new App.GoalsView({ collection: App.goals, el: "#visiting-team" });
     App.homeView = new App.TeamBoxView({ el: "#home-team" });
@@ -53,7 +53,7 @@
 <td>{{= App.humanize(category) }}</td>
 <td>{{= App.humanize(infraction) }}</td>
 <td>{{= state }}</td>
-<td class="timer"></td>
+<td class="timer" style="white-space: nowrap"></td>
 <td style="white-space: nowrap">
   <%= link_to "Start", "#", :class => "start btn btn-small btn-primary" %>
   <%= link_to "Edit", "#", :class => "edit btn btn-small" %>
