@@ -152,7 +152,12 @@ class Game < ActiveRecord::Base
   end
 
   def timer_expired(timer_id)
-    pause
+    stop
+    finish if Periods[period] == 'OT' || (Periods[period] == '3' && !tied?)
+  end
+
+  def tied?
+    home_team_score == visiting_team_score
   end
 
   def period_minutes
