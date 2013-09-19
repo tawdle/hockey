@@ -9,7 +9,26 @@
       <a href="#" title="Add Penalty" class="btn add-penalty"><i class="icon-flag"></i></a>
       <a class="btn" title="Edit Team Roster" href="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>"><i class="icon-male"></i></a>
     </h3>
-    <div class="goal-editor"></div>
+
+    <div class="goal-editor" style="display:none;">
+      <form>
+        <div class="goal-player">
+          <select></select>
+        </div>
+
+        <div class="goal-assist">
+          <select></select>
+        </div>
+
+        <div class="goal-secondary-assist">
+          <select></select>
+        </div>
+
+        <%= link_to "Cancel", "#", :class => "goal-cancel" %>
+        <%= submit_tag "Save", :class => "btn btn-small btn-primary" %>
+
+      </form>
+    </div>
 
     <div class="penalty-editor" style="display:none;">
       <form>
@@ -34,7 +53,7 @@
           <input type="number" placeholder="Penalty minutes" min="0" max="60" step="1"></input>
         </div>
 
-        <div class="pull-right">
+        <div>
           <%= link_to "Cancel", "#", :class => "cancel" %>
           <input type="submit" class="btn btn-primary" value="Save"></input>
         </div>

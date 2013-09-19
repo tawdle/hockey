@@ -15,36 +15,6 @@
   });
 <% end %>
 
-<script type="text/html" id="goal-form">
-  <form>
-    <div id="goal-primary">
-      <label for="player0">Player who scored...</label>
-      <select id="player0" name="player[0]" class="span3">{{= _.template($("#player-options").html(), { players: players, selectedId: ids[0] }) }}</select>
-    </div>
-
-    <div id="goal-assist">
-      <label for="player1">Player who assisted...</label>
-      <select id="player1" name="player[1]" class="span3">{{= _.template($("#player-options").html(), { players: players, selectedId: ids[1] }) }}</select>
-    </div>
-
-    <div id="goal-secondary-assist">
-      <label for="player2">And also...</label>
-      <select id="player2" name="player[2]" class="span3">{{= _.template($("#player-options").html(), { players: players, selectedId: ids[2] }) }}</select>
-    </div>
-
-    <%= link_to "Cancel", "#", :id => "goal-cancel" %>
-    <%= submit_tag "Save", :class => "btn btn-small btn-primary" %>
-
-  </form>
-</script>
-
-<script type="text/html" id="player-options">
-<option></option>
-{{ _.each(players, function(player) { }}
-   <option value="{{= player.id }}" {{= player.id == selectedId ? "selected" : ""}}>{{= player.get("jersey_number") }}</option> 
-{{ }); }}
-</script>
-
 <script type="text/html" id="penalty-view">
 <td>{{= App.periods[period] }}</td>
 <td>{{= App.displaySeconds(elapsed_time) }}</td>

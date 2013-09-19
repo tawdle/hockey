@@ -5,19 +5,6 @@ App.GoalsView = Backbone.View.extend({
   },
 
   events: {
-    "click a.add-goal" : "addGoal"
-  },
-
-  addGoal: function(e) {
-    e.preventDefault();
-    var team_id = $(e.currentTarget).parents(".team-box").attr("data-team-id");
-    var goal = this.collection.create({team_id: team_id});
-    var view = new App.GoalView({ model: goal });
-    this.$(".goal-editor").hide().html(view.render().el).slideDown();
-  },
-
-  render: function() {
-    this.$(".goal-editor").toggle(false);
   }
 });
 
