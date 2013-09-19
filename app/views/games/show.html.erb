@@ -10,8 +10,8 @@
     App.gameView = new App.GameView({ model: App.game });
     App.homeGoalsView = new App.GoalsView({ collection: App.goals, el: "#home-team" });
     App.visitingGoalsView = new App.GoalsView({ collection: App.goals, el: "#visiting-team" });
-    App.homeView = new App.TeamBoxView({ el: "#home-team" });
-    App.visitingView = new App.TeamBoxView({ el: "#visiting-team" });
+    App.homeView = new App.TeamBoxView({ el: "#home-team", teamId: <%= @game.home_team_id %> });
+    App.visitingView = new App.TeamBoxView({ el: "#visiting-team", teamId: <%= @game.visiting_team_id %> });
   });
 <% end %>
 
