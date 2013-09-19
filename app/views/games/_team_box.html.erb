@@ -1,9 +1,9 @@
 <div id=<%= "#{home_or_visiting}-team" %> class="team-box span6">
   <div class="well well-large">
     <h3>
-      <span class="team-name"><%= @game.send("#{home_or_visiting}_team").name %></span>
+      <span class="team-name"><%= team.name %></span>
       <a href="#" class="btn add-goal" >
-        <span class="score"><%= @game.send("#{home_or_visiting}_team_score") %></span>
+        <span class="score"><%= @game.score_for(team) %></span>
         <i class="icon-caret-down"></i>
       </a>
       <a href="#" title="Add Penalty" class="btn add-penalty"><i class="icon-flag"></i></a>
@@ -52,15 +52,16 @@
         <div class="penalty-minutes">
           <input type="number" placeholder="Penalty minutes" min="0" max="60" step="1"></input>
         </div>
-
         <div>
           <%= link_to "Cancel", "#", :class => "cancel" %>
           <input type="submit" class="btn btn-primary" value="Save"></input>
         </div>
       </form>
     </div>
+
     <table class="penalties table">
     </table>
+
   </div>
 </div>
 

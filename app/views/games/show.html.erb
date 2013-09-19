@@ -52,8 +52,8 @@
   </div>
 
   <div class="row-fluid">
-    <%= render :partial => "team_box", :locals => {:home_or_visiting => "home" } %>
-    <%= render :partial => "team_box", :locals => {:home_or_visiting => "visiting" } %>
+    <%= render :partial => "team_box", :locals => {:team => @game.home_team, :home_or_visiting => :home } %>
+    <%= render :partial => "team_box", :locals => {:team => @game.visiting_team, :home_or_visiting => :visiting } %>
   </div>
 
 <% elsif %>
