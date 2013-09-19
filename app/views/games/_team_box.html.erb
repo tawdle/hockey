@@ -10,8 +10,9 @@
       <a class="btn" title="Edit Team Roster" href="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>"><i class="icon-male"></i></a>
     </h3>
 
-    <div class="goal-editor" style="display:none;">
-      <form>
+    <div class="goal-editor modal hide fade">
+      <div class="modal-header"><h3>Goal for <%= team.name %></h3></div>
+      <div class="modal-body">
         <div class="goal-player">
           <select></select>
         </div>
@@ -23,15 +24,18 @@
         <div class="goal-secondary-assist">
           <select></select>
         </div>
+      </div>
 
-        <%= link_to "Cancel", "#", :class => "goal-cancel" %>
-        <%= submit_tag "Save", :class => "btn btn-small btn-primary" %>
+      <div class="modal-footer">
+        <%= link_to "Cancel", "#", :class => "cancel" %>
+        <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+      </div>
 
-      </form>
     </div>
 
-    <div class="penalty-editor" style="display:none;">
-      <form>
+    <div class="penalty-editor modal hide fade">
+      <div class="modal-header"><h3>Penalty for <%= team.name %></h3></div>
+      <div class="modal-body">
         <div class="penalty-player">
           <select name="player"></select>
         </div>
@@ -52,11 +56,11 @@
         <div class="penalty-minutes">
           <input type="number" placeholder="Penalty minutes" min="0" max="60" step="1"></input>
         </div>
-        <div>
-          <%= link_to "Cancel", "#", :class => "cancel" %>
-          <input type="submit" class="btn btn-primary" value="Save"></input>
-        </div>
-      </form>
+      </div>
+      <div class="modal-footer">
+        <%= link_to "Cancel", "#", :class => "cancel" %>
+        <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+      </div>
     </div>
 
     <table class="penalties table">

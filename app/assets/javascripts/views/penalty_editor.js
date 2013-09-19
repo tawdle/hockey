@@ -16,7 +16,7 @@ App.PenaltyEditor = Backbone.View.extend({
   events: {
     "change .penalty-player select" : "selectServingPlayer",
     "change .penalty-category select" : "setInfractionOptions",
-    "submit form" : "saveAndClose",
+    "click a.save" : "saveAndClose",
     "click a.cancel" : "cancel"
   },
 
@@ -81,14 +81,18 @@ App.PenaltyEditor = Backbone.View.extend({
 
     this.model.save(values, { 
       success: function() {
-        self.$el.slideUp();
+        self.close();
       }
     });
   },
 
   cancel: function(e) {
     e.preventDefault();
-    this.$el.slideUp();
+    this.close();
+  },
+
+  close: function() {
+    this.$el.modal('hide');
   },
 
   editIf: function(penalty) {
@@ -101,7 +105,7 @@ App.PenaltyEditor = Backbone.View.extend({
   edit: function(penalty) {
     this.model = penalty;
     this.initializeForm();
-    this.$el.slideDown();
+    this.$el.modal();
     return this;
   }
 });

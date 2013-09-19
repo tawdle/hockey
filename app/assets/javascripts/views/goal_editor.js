@@ -14,8 +14,8 @@ App.GoalEditor = Backbone.View.extend({
   events: {
     "change .goal-player select": "playerChanged",
     "change .goal-assist select": "assistChanged",
-    "click input[type=submit]" : "saveAndClose",
-    "click .goal-cancel" : "destroyAndClose"
+    "click a.save" : "saveAndClose",
+    "click a.cancel" : "destroyAndClose"
   },
 
   playerChanged: function() {
@@ -52,11 +52,16 @@ App.GoalEditor = Backbone.View.extend({
     this.$(".goal-secondary-assist").toggle(ids.length > 1);
   },
 
+  close: function() {
+    this.$el.modal('hide');
+    return this;
+  },
+
   saveAndClose: function(event) {
     event.preventDefault();
     var player_ids = _.uniq(_.compact(_.map(this.$("select"), function(select) { return Number($(select).val()); } )));
     var self = this;
-    this.model.save({player_ids: player_ids}, { success: function(model, response, options) { self.$el.slideUp(); }});
+    this.model.save({player_ids: player_ids}, { success: function(model, response, options) { self.close(); }});
     return false;
   },
 
@@ -64,9 +69,9 @@ App.GoalEditor = Backbone.View.extend({
     event.preventDefault();
     if (!this.model.get("player_ids").length) {
       var self = this;
-      this.model.destroy({success: function() { self.$el.slideUp(); }});
+      this.model.destroy({success: function() { self.close(); }});
     } else {
-      this.$el.slideUp();
+      this.close();
     }
   },
 
@@ -79,7 +84,7 @@ App.GoalEditor = Backbone.View.extend({
   edit: function(goal) {
     this.model = goal;
     this.initializeForm();
-    this.$el.slideDown();
+    this.$el.modal();
     return this;
   }
 });
