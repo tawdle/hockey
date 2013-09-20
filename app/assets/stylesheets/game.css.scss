@@ -21,22 +21,8 @@ table.penalties {
   tr.completed {
     display: none;
   }
-  tr.running {
-    a.start {
-      display: none;
-    }
-    a.edit {
-      display: none;
-    }
-    a.delete {
-      display: none;
-    }
-  }
-  tr.paused {
-    a.edit {
-      display: none;
-    }
-    a.delete {
+  tr.running, tr.paused {
+    a {
       display: none;
     }
   }
