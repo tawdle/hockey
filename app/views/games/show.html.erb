@@ -15,34 +15,13 @@
   });
 <% end %>
 
-<script type="text/html" id="penalty-view">
-<td>{{= App.periods[period] }}</td>
-<td>{{= App.displaySeconds(elapsed_time) }}</td>
-<td>{{= App.players.get(player_id).get("jersey_number") }}</td>
-<td>{{= App.players.get(serving_player_id).get("jersey_number") }}</td>
-<td>{{= App.humanize(category) }}</td>
-<td>{{= App.humanize(infraction) }}</td>
-<td>{{= App.humanize(state) }}</td>
-<td class="timer" style="white-space: nowrap"></td>
-<td style="white-space: nowrap">
-  <%= link_to "Start", "#", :class => "start btn btn-small btn-primary" %>
-  <%= link_to "Edit", "#", :class => "edit btn btn-small" %>
-  <%= link_to "Delete", "#", :class => "delete btn btn-small btn-danger" %>
-</td>
-</script>
-
-
 <% if @game.live? %>
-  <% if @game.active? %>
-    <p>This game is ready to play. Press <i class="icon-play"></i> to start the <%= (@game.period + 1).ordinalize %> period.</p>
-  <% elsif @game.playing? %>
-    <p>This game is playing. Press <i class="icon-pause"></i> to pause the game clock.</p>
-  <% elsif @game.paused? %>
-    <p>This game is paused. Press <i class="icon-start"></i> to resume.</p>
-  <% elsif @game.finished? %>
-    <p>This game has ended. When you have completed recording all items, press: </p>
-    <%= link_to "Complete Game", complete_game_path(@game), :class => "btn", :method => :post %>
-  <% end %>
+  <div id="game-status" style="text-align: center;">
+    <p class="active">This game is ready to play. Press <i class="icon-play"></i> to start the next period.</p>
+    <p class="playing">This game is playing. Press <i class="icon-pause"></i> to pause the game clock.</p>
+    <p class="paused">This game is paused. Press <i class="icon-play"></i> to resume.</p>
+    <p class="finished">This game has ended. When you have completed recording all items, press: <%= link_to "Complete Game", complete_game_path(@game), :class => "btn", :method => :post %> </p>
+  </div>
 
   <div id="start-stop-clock">
     <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn btn-large btn-success", :style => displayStyle(@game.can_start?) %> 
@@ -82,6 +61,23 @@
 <% end %>
 
 <%= render :partial => "activity_feed", :locals => { :new_activity_feed_item => ActivityFeedItem.new(:game => @game), :activity_feed_items => @game.activity_feed_items, :in_game_context => true } %>
+
+<script type="text/html" id="penalty-view">
+<td>{{= App.periods[period] }}</td>
+<td>{{= App.displaySeconds(elapsed_time) }}</td>
+<td>{{= App.players.get(player_id).get("jersey_number") }}</td>
+<td>{{= App.players.get(serving_player_id).get("jersey_number") }}</td>
+<td>{{= App.humanize(category) }}</td>
+<td>{{= App.humanize(infraction) }}</td>
+<td>{{= App.humanize(state) }}</td>
+<td class="timer" style="white-space: nowrap"></td>
+<td style="white-space: nowrap">
+  <%= link_to "Start", "#", :class => "start btn btn-small btn-primary" %>
+  <%= link_to "Edit", "#", :class => "edit btn btn-small" %>
+  <%= link_to "Delete", "#", :class => "delete btn btn-small btn-danger" %>
+</td>
+</script>
+
 
 <% content_for(:head) do %>
   <%= javascript_include_tag "http://localhost:8000/faye/client.js" %>
