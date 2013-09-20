@@ -26,7 +26,12 @@ class LogoUploader < CarrierWave::Uploader::Base
 
   version :thumbnail do
     resize_to_fit(50, 50)
-    cloudinary_transformation :radius => 10
+    cloudinary_transformation :radius => 5
+  end
+
+  version :medium do
+    resize_to_fit(100, 100)
+    cloudinary_transformation :radius => 5
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
@@ -36,6 +41,10 @@ class LogoUploader < CarrierWave::Uploader::Base
   #
   #   "/images/fallback/" + [version_name, "default.png"].compact.join('_')
   # end
+
+  def default_url
+    ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+  end
 
   # Process files as they are uploaded:
   # process :scale => [200, 300]
