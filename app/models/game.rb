@@ -55,9 +55,9 @@ class Game < ActiveRecord::Base
   belongs_to :visiting_team, :class_name => 'Team'
   belongs_to :location
   has_many :activity_feed_items
-  has_many :goals
-  has_many :penalties
-  has_many :game_players
+  has_many :goals, :inverse_of => :game
+  has_many :penalties, :inverse_of => :game
+  has_many :game_players, :inverse_of => :game
   has_many :players, :through => :game_players
   belongs_to :clock, :class_name => "Timer", :dependent => :destroy
 

@@ -1,5 +1,5 @@
 class GamePlayer < ActiveRecord::Base
-  belongs_to :game
+  belongs_to :game, :inverse_of => :game_players
   belongs_to :player
 
   validates_presence_of :game

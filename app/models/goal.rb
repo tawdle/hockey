@@ -1,6 +1,6 @@
 class Goal < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
-  belongs_to :game
+  belongs_to :game, :inverse_of => :goals
   belongs_to :team
   has_many :goal_players, :order => "ordinal asc"
   has_many :players, :through => :goal_players

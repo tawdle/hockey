@@ -28,7 +28,7 @@ class Penalty < ActiveRecord::Base
     after_transition any => :running, :do => :pause!, :unless => :game_playing?
   end
 
-  belongs_to :game
+  belongs_to :game, :inverse_of => :penalties
   belongs_to :player
   belongs_to :serving_player, :class_name => "Player"
   belongs_to :timer
