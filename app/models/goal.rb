@@ -19,8 +19,7 @@ class Goal < ActiveRecord::Base
   before_create :set_time_and_period_from_game
   before_save :generate_save_feed_item, :unless => :players_empty?
   before_destroy :generate_destroy_feed_item, :unless => :players_empty?
-  after_create :broadcast_changes
-  after_destroy :broadcast_changes
+  after_commit :broadcast_changes
 
   scope :for_team, lambda {|team| where(:team_id => team.id) }
 
@@ -78,6 +77,6 @@ class Goal < ActiveRecord::Base
   end
 
   def broadcast_changes
-    game.reload.send("broadcast_changes")
+    game.send(:broadcast_changes, :include => :goals)
   end
 end

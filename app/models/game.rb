@@ -250,6 +250,11 @@ class Game < ActiveRecord::Base
         penalty.as_json
       end
     end
+    if Array(options[:include]).include?(:goals)
+      json[:goals] = goals.map do |goal|
+        goal.as_json
+      end
+    end
 
     broadcast("/games/#{id}", json)
   end
