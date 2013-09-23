@@ -41,7 +41,7 @@ App.displaySeconds = function(seconds) {
   var minutes = Math.floor(seconds / 60) % 60;
   var secs = Math.floor(seconds) % 60;
 
-  var s = (hours > 0 ? hours + ":" : "") + (minutes < 10 ? "0" : "") + minutes + ":" + (seconds < 10 ? "0" : "") + secs;
+  var s = (hours > 0 ? hours + ":" : "") + (minutes < 10 ? "0" : "") + minutes + ":" + (secs < 10 ? "0" : "") + secs;
   return s;
 };
 
