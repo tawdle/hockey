@@ -6,7 +6,7 @@ class Goal < ActiveRecord::Base
   has_many :players, :through => :goal_players
 
   attr_accessor :updater
-  attr_accessible :game, :game_id, :creator, :team_id, :period, :player_ids
+  attr_accessible :game, :game_id, :creator, :team_id, :period, :player_ids, :elapsed_time
 
 
   validates_presence_of :creator
@@ -37,7 +37,7 @@ class Goal < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.merge(:only => [:id, :team_id], :methods => [:player_ids]))
+    super(options.merge(:except => [:created_at, :updated_at, :creator_id], :methods => [:player_ids]))
   end
 
   private
@@ -74,7 +74,7 @@ class Goal < ActiveRecord::Base
 
   def set_time_and_period_from_game
     self.period ||= game.period
-    self.seconds_into_period ||= game.elapsed_time
+    self.elapsed_time ||= game.elapsed_time
   end
 
   def broadcast_changes

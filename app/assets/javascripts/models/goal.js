@@ -8,7 +8,9 @@ App.Goal = Backbone.Model.extend({
   defaults: function() {
     return {
       team_id: null,
-      player_ids: []
+      player_ids: [],
+      elapsed_time: null,
+      period: null
     };
   }
 });

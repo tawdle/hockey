@@ -76,7 +76,7 @@ App.GoalEditor = Backbone.View.extend({
   },
 
   editIf: function(goal) {
-    if (goal.team_id == this.teamId) {
+    if (goal.get("team_id") == this.teamId) {
       this.edit(goal);
     }
   },

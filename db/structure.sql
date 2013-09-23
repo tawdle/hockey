@@ -272,7 +272,7 @@ CREATE TABLE goals (
     creator_id integer,
     game_id integer,
     team_id integer,
-    seconds_into_period integer,
+    elapsed_time integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     period integer DEFAULT 0 NOT NULL
@@ -1125,3 +1125,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130909004427');
 INSERT INTO schema_migrations (version) VALUES ('20130911183704');
 
 INSERT INTO schema_migrations (version) VALUES ('20130913210811');
+
+INSERT INTO schema_migrations (version) VALUES ('20130923004713');

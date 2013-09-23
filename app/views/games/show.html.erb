@@ -8,8 +8,6 @@
     App.game = new App.Game(<%= @game.to_json.html_safe %>);
     App.penalties = new App.Penalties(<%= @game.penalties.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.gameView = new App.GameView({ model: App.game });
-    App.homeGoalsView = new App.GoalsView({ collection: App.goals, el: "#home-team" });
-    App.visitingGoalsView = new App.GoalsView({ collection: App.goals, el: "#visiting-team" });
     App.homeView = new App.TeamBoxView({ el: "#home-team", teamId: <%= @game.home_team_id %> });
     App.visitingView = new App.TeamBoxView({ el: "#visiting-team", teamId: <%= @game.visiting_team_id %> });
   });
@@ -84,6 +82,21 @@
 </td>
 </script>
 
+<script type="text/html" id="goal-view">
+<td>{{= App.periods[period] }}</td>
+<td>{{= App.displaySeconds(elapsed_time) }}</td>
+<td>{{= jersey_numbers[0] }}</td>
+<td>{{= jersey_numbers[1] }}</td>
+<td>{{= jersey_numbers[2] }}</td>
+<td>
+  <%= link_to "#", :class => "edit btn btn-small" do %>
+    <i class="icon-edit"></i>
+  <% end %>
+  <%= link_to "#", :class => "delete btn btn-small btn-danger" do %>
+    <i class="icon-remove"></i>
+  <% end %>
+</td>
+</script>
 
 <% content_for(:head) do %>
   <%= javascript_include_tag "http://localhost:8000/faye/client.js" %>
