@@ -22,7 +22,8 @@ App.Game = App.EmbeddedModel.extend({
       clock: App.Timer,
       penalties: App.penalties,
       goals: App.goals,
-      players: App.players
+      players: App.players,
+      activity_feed_items: App.feedItems
     };
   },
 

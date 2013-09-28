@@ -8,6 +8,7 @@ class ActivityFeedItem < ActiveRecord::Base
   validates_presence_of :message
 
   before_create :find_mentions
+  after_create :broadcast_changes
 
   default_scope order("created_at desc")
 
@@ -24,6 +25,14 @@ class ActivityFeedItem < ActiveRecord::Base
       ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
   end
 
+  def avatar_url_thumbnail
+    avatar.url(:thumbnail)
+  end
+
+  def as_json(options={})
+    {:id => id, :avatar_thumbnail_url => avatar_url(:thumbnail), :creator => creator.try(:name), :message => message, :created_at_iso8061 => created_at.iso8601}
+  end
+
   private
 
   def find_mentions
@@ -34,5 +43,9 @@ class ActivityFeedItem < ActiveRecord::Base
         mentions << Mention.new(:user => user)
       end
     end
+  end
+
+  def broadcast_changes
+    game.send(:broadcast_changes, :include => :activity_feed_items) if game
   end
 end

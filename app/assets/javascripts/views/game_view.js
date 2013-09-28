@@ -15,6 +15,14 @@ App.GameView = Backbone.View.extend({
     this.render();
   },
 
+  events: {
+    "ajax:success #new_activity_feed_item" : "clearMessageText"
+  },
+
+  clearMessageText: function() {
+    this.$("#activity_feed_item_message").val("");
+  },
+
   render: function() {
     var state = this.model.get("state");
     this.gameStart.toggle(state != "playing");

@@ -5,11 +5,13 @@
     App.goals = new App.Goals(<%= @game.goals.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.infractions = <%= Penalty::Infractions.to_json.html_safe %>;
     App.periods = <%= Game::Periods.to_json.html_safe %>;
+    App.feedItems = new App.FeedItems(<%= @game.activity_feed_items.to_json.html_safe %>, {gameId: <%= @game.id %>});
     App.game = new App.Game(<%= @game.to_json.html_safe %>);
     App.penalties = new App.Penalties(<%= @game.penalties.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.gameView = new App.GameView({ model: App.game });
     App.homeView = new App.TeamBoxView({ el: "#home-team", teamId: <%= @game.home_team_id %> });
     App.visitingView = new App.TeamBoxView({ el: "#visiting-team", teamId: <%= @game.visiting_team_id %> });
+    App.feedItemsView = new App.FeedItemsView({ el: "#feed-items" });
   });
 <% end %>
 
@@ -58,9 +60,35 @@
   <% end %>
 <% end %>
 
-<%= render :partial => "activity_feed", :locals => { :new_activity_feed_item => ActivityFeedItem.new(:game => @game), :activity_feed_items => @game.activity_feed_items, :in_game_context => true } %>
+<%= form_for(ActivityFeedItem.new(:game => @game), :remote => true) do |f| %>
+  <div class="field pull-left" style="margin-right: 10px;" >
+    <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
+  </div>
 
+  <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
 
+  <div class="actions">
+    <%= f.submit "Post", :class => "btn btn-primary" %>
+  </div>
+<% end %>
+
+<table id="feed-items" class="table">
+  <thead>
+    <tr>
+      <th>Avatar</th>
+      <th>Name</th>
+      <th>Message</th>
+      <th>When</th>
+    </tr>
+  </thead>
+  <tbody></tbody>
+</table>
+
+<script type="text/html" id="feed-item">
+<td><img src="{{= avatar_thumbnail_url }}" height="50" width="50"></td>
+<td>{{= creator }}</td>
+<td>{{= message }}</td>
+<td><time class="timeago" datetime="{{= created_at_iso8061 }}"></time></td>
 </script>
 
 <% content_for(:head) do %>

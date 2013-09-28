@@ -255,6 +255,11 @@ class Game < ActiveRecord::Base
         goal.as_json
       end
     end
+    if Array(options[:include]).include?(:activity_feed_items)
+      json[:activity_feed_items] = activity_feed_items.map do |item|
+        item.as_json
+      end
+    end
 
     broadcast("/games/#{id}", json)
   end
