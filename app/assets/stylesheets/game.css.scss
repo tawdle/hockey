@@ -9,6 +9,7 @@ span#game-clock {
   top: 9px;
 }
 
+
 #start-stop-clock {
   text-align: center;
   a {
@@ -19,6 +20,20 @@ span#game-clock {
 
 .team-name {
   font-variant: small-caps;
+}
+
+@mixin border-radius($radius: 1px) {
+      -webkit-border-radius: $radius;
+         -moz-border-radius: $radius;
+              border-radius: $radius;
+}
+
+.score {
+  background-color: black;
+  color: white;
+  padding-left: 10px;
+  padding-right: 10px;
+  @include border-radius(5px);
 }
 
 table.penalties {
