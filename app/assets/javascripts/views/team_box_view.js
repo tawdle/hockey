@@ -5,7 +5,8 @@ App.TeamBoxView = Backbone.View.extend({
     this.penaltiesView = new App.PenaltiesView({teamId: this.teamId, el: this.$(".penalties tbody")});
     this.goalEditor = new App.GoalEditor({teamId: this.teamId, el: this.$(".goal-editor")});
     this.goalsView = new App.GoalsView({teamId: this.teamId, el: this.$(".goals tbody")});
-    this.rosterEditor = new App.RosterEditor({teamId: this.teamId, el: this.$(".roster")});
+    this.playerEditor = new App.PlayerEditor({teamId: this.teamId, el: this.$(".player")});
+    this.rosterEditor = new App.RosterEditor({teamId: this.teamId, el: this.$(".roster"), playerEditor: this.playerEditor});
   },
 
   events: {

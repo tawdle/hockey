@@ -1,6 +1,8 @@
-<h1>New team player</h1>
+<% unless request.xhr? %>
+  <h1>New team player</h1>
+<% end %>
 
-<%= form_for([@team, @player]) do |f| %>
+<%= form_for([@team, @player], :remote => request.xhr?, :format => request.xhr? ? :json : :html) do |f| %>
   <% if @player.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@player.errors.count, "error") %> prohibited this player from being saved:</h2>
@@ -27,11 +29,14 @@
     <%= f.text_field :jersey_number, :class => "span1" %>
   </div>
 
-  <div class="actions">
-    <%= f.submit :class => "btn btn-primary" %>
-  </div>
+  <% unless request.xhr? %>
+    <div class="actions">
+      <%= f.submit :class => "btn btn-primary" %>
+    </div>
+  <% end %>
 <% end %>
 
-
-<%= link_to 'Back', team_path(@team) %>
+<% unless request.xhr? %>
+  <%= link_to 'Back', team_path(@team) %>
+<% end %>
 

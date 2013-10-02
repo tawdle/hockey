@@ -95,4 +95,48 @@
   <%= javascript_include_tag "http://localhost:8000/faye/client.js" %>
 <% end %>
 
+<script type="text/html" id="penalty-view">
+<td>{{= App.periods[period] }}</td>
+<td>{{= App.displaySeconds(elapsed_time) }}</td>
+<td>{{= App.players.get(player_id).get("jersey_number") }}</td>
+<td>{{= App.players.get(serving_player_id).get("jersey_number") }}</td>
+<td>{{= App.humanize(category) }}</td>
+<td>{{= App.humanize(infraction) }}</td>
+<td>{{= App.humanize(state) }}</td>
+<td class="timer" style="white-space: nowrap"></td>
+<td style="white-space: nowrap">
+  <%= link_to "#", :class => "start btn btn-small btn-success" do %>
+    <i class="icon-play"></i>
+  <% end %>
+  <%= link_to "#", :class => "edit btn btn-small" do %>
+    <i class="icon-edit"></i>
+  <% end %>
+  <%= link_to "#", :class => "delete btn btn-small btn-danger" do %>
+    <i class="icon-remove"></i>
+  <% end %>
+</td>
+</script>
+
+<script type="text/html" id="goal-view">
+<td>{{= App.periods[period] }}</td>
+<td>{{= App.displaySeconds(elapsed_time) }}</td>
+<td>{{= jersey_numbers[0] }}</td>
+<td>{{= jersey_numbers[1] }}</td>
+<td>{{= jersey_numbers[2] }}</td>
+<td>
+  <%= link_to "#", :class => "edit btn btn-small" do %>
+    <i class="icon-edit"></i>
+  <% end %>
+  <%= link_to "#", :class => "delete btn btn-small btn-danger" do %>
+    <i class="icon-remove"></i>
+  <% end %>
+</td>
+</script>
+
+<script type="text/html" id="player-checkbox">
+  <label class="checkbox" for="player_{{= id }}">
+    <input id="player_{{= id }}" name="game[player_ids][]" type="checkbox" checked="checked" value="{{= id }}" />
+    {{= at_name }}
+  </label>
+</script>
 

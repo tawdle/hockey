@@ -4,12 +4,14 @@
 
 <%= form_for(@game, :url => game_roster_path(@game, :team => @home_or_visiting), :remote => request.xhr?) do |f| %>
 
-  <% @team.players.each do |player| %>
-    <%= label_tag "player_#{player.id}", :class => "checkbox" do %>
-      <%= check_box_tag "game[player_ids][]", player.id, @game.player_ids.include?(player.id), :id => "player_#{player.id}" %>
-      <%= player.at_name %>
+  <div class="players">
+    <% @team.players.each do |player| %>
+      <%= label_tag "player_#{player.id}", :class => "checkbox" do %>
+        <%= check_box_tag "game[player_ids][]", player.id, @game.player_ids.include?(player.id), :id => "player_#{player.id}" %>
+        <%= player.at_name %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 
   <% @other_team.players.each do |player| %>
     <%= hidden_field_tag("game[player_ids][]", player.id) if @game.player_ids.include?(player.id) %>

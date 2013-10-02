@@ -20,6 +20,10 @@ class Player < ActiveRecord::Base
     user.try(:at_name) || "@#{team.name}##{jersey_number}"
   end
 
+  def as_json(options={})
+    super(options.merge(:methods => [:at_name]))
+  end
+
   private
 
   def accepted_invitation_to_claim(user, invitation)

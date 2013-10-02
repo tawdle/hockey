@@ -9,6 +9,7 @@ class PlayersController < ApplicationController
   def new
     @player = Player.new(:team => @team)
     authorize! :create, @player
+    render :layout => false if request.xhr?
   end
 
   def create

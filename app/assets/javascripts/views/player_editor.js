@@ -1,15 +1,11 @@
-App.RosterEditor = Backbone.View.extend({
+App.PlayerEditor = Backbone.View.extend({
   initialize: function() {
     this.dialog = this.$el;
-    this.playerEditor = this.options.playerEditor;
-    this.listenTo(this.playerEditor, "player:created", this.playerCreated);
-    this.template = _.template($("#player-checkbox").html());
   },
 
   events: {
     "click a.cancel" : "close",
-    "click a.save" : "saveAndClose",
-    "click a.create" : "newPlayer",
+    "click a.create" : "saveAndClose",
     "ajax:success" : "ajaxSuccess",
     "ajax:error" : "ajaxError"
   },
@@ -18,6 +14,7 @@ App.RosterEditor = Backbone.View.extend({
     this.dialog.modal({
       remote: this.dialog.attr("data-remote")
     });
+    if (this.$("form")[0]) this.$("form")[0].reset();
   },
 
   close: function() {
@@ -28,20 +25,13 @@ App.RosterEditor = Backbone.View.extend({
     this.$("form").submit();
   },
 
-  newPlayer: function() {
-    this.playerEditor.edit();
-  },
-
-  ajaxSuccess: function() {
+  ajaxSuccess: function(event, data, status, xhr) {
+    this.trigger("player:created", data);
     this.close();
   },
 
   ajaxError: function() {
     alert("ajaxError!");
-  },
-
-  playerCreated: function(player) {
-    this.$(".players").append(this.template(player));
   }
 });
 
