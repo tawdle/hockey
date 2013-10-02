@@ -4,6 +4,7 @@ FactoryGirl.define do
   factory :player do
     association :creator, :factory => :user
     team
+    sequence(:name) { |n| "Player #{n}" }
     sequence(:jersey_number) {|n| n }
 
     trait :with_user do

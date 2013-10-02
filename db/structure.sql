@@ -461,7 +461,8 @@ CREATE TABLE players (
     user_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    jersey_number character varying(255)
+    jersey_number character varying(255),
+    name character varying(255)
 );
 
 
@@ -1127,3 +1128,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130911183704');
 INSERT INTO schema_migrations (version) VALUES ('20130913210811');
 
 INSERT INTO schema_migrations (version) VALUES ('20130923004713');
+
+INSERT INTO schema_migrations (version) VALUES ('20131002231320');

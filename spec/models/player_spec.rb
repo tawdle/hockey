@@ -11,10 +11,18 @@ describe Player do
       player.team = nil
       player.should_not be_valid
     end
+    it "requires a name" do
+      player.name = nil
+      player.should_not be_valid
+    end
     it "requires a jersey number" do
       player.jersey_number = nil
       player.should_not be_valid
       player.jersey_number = ""
+      player.should_not be_valid
+    end
+    it "requires unique jersey number/name/team" do
+      other_player = FactoryGirl.create(:player, :jersey_number => player.jersey_number, :name => player.name, :team => player.team)
       player.should_not be_valid
     end
     context "with a user" do
