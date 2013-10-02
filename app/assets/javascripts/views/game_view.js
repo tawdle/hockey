@@ -2,11 +2,11 @@ window.App = window.App || {};
 
 App.GameView = Backbone.View.extend({
   initialize: function() {
-    this.gameStart = $("#game-start");
-    this.gamePause = $("#game-pause");
-    this.homeTeamScore = $("#home-team .score");
-    this.visitingTeamScore = $("#visiting-team .score");
-    this.gameStatus = $("#game-status");
+    this.gameStart = this.$("#game-start");
+    this.gamePause = this.$("#game-pause");
+    this.homeTeamScore = this.$("#home-team .score");
+    this.visitingTeamScore = this.$("#visiting-team .score");
+    this.gameStatus = this.$("#game-status");
 
     this.listenTo(this.model, "change", this.render);
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);
