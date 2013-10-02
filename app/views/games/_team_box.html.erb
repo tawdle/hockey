@@ -3,13 +3,12 @@
     <h3>
       <%= image_tag team.logo_url(:medium), :height => 100, :width => 100, :style => "float: left; margin-right: 10px; margin-bottom: 10px;" %>
       <span class="team-name"><%= team.name %></span>
-      <a href="#" class="btn add-goal" >
-        <span class="score"></span>
-        <i class="icon-caret-down"></i>
-      </a>
-      <a href="#" title="Add Penalty" class="btn add-penalty"><i class="icon-flag"></i></a>
-      <a class="btn" title="Edit Team Roster" href="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>"><i class="icon-male"></i></a>
+      <span class="score pull-right"></span>
     </h3>
+
+    <a href="#" class="btn add-goal" title-"Add Goal"><i class="icon-plus"></i></a>
+    <a href="#" class="btn add-penalty" title="Add Penalty"><i class="icon-flag"></i></a>
+    <a href="#" class="btn edit-roster" title="Edit Team Roster" ><i class="icon-male"></i></a>
 
     <div class="goal-editor modal hide fade">
       <div class="modal-header"><h3>Goal for <%= team.name %></h3></div>
@@ -93,6 +92,14 @@
       <tbody></tbody>
     </table>
 
+    <div id="<%= home_or_visiting %>-team-roster-editor" data-remote="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>" class="roster modal hide fade">
+      <div class="modal-header"><h3>Select players for <%= team.name %></h3></div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <%= link_to "Cancel", "#", :class => "cancel" %>
+        <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+      </div>
+    </div>
   </div>
 </div>
 
