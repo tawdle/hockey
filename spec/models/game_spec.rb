@@ -67,7 +67,7 @@ describe Game do
       game.pause!
       game.start!
       game.stop!
-      game.end!
+      game.finish!
       game.complete!
     end
   end

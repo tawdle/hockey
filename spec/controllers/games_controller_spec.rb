@@ -97,7 +97,7 @@ describe GamesController do
 
       before do
         game.activate!
-        game.end!
+        game.finish!
       end
 
       it "changes the state to completed" do
