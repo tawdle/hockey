@@ -28,7 +28,7 @@ App.GoalsView = Backbone.View.extend({
   },
 
   showHideTable: function() {
-    this.$el.parent().toggle(App.goals.where({team_id: this.teamId}).length > 0);
+    //this.$el.parent().toggle(App.goals.where({team_id: this.teamId}).length > 0);
   },
 
   events: {

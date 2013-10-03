@@ -36,6 +36,15 @@ span#game-clock {
   @include border-radius(5px);
 }
 
+.disclosure {
+  cursor: pointer;
+  i {
+    min-width: 14px;
+    display: inline-block;
+    text-align: center;
+  }
+}
+
 table.penalties {
   tr.completed {
     display: none;

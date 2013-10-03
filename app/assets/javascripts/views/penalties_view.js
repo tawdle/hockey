@@ -30,9 +30,9 @@ App.PenaltiesView = Backbone.View.extend({
   },
 
   showHideTable: function() {
-    var penalties = App.penalties.filter(function(penalty) { return (penalty.teamId() == this.teamId); }, this);
-    var show = _.any(penalties, function(penalty) { return penalty.get("state") != "completed"; })
-    this.$el.parent().toggle(show);
+    //var penalties = App.penalties.filter(function(penalty) { return (penalty.teamId() == this.teamId); }, this);
+    //var show = _.any(penalties, function(penalty) { return penalty.get("state") != "completed"; });
+    //this.$el.parent().toggle(show);
   },
 
   render: function() {

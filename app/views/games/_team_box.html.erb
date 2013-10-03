@@ -63,34 +63,38 @@
       </div>
     </div>
 
-    <table class="penalties table">
-      <thead>
-        <tr>
-          <th>Per</th>
-          <th>Time</th>
-          <th>Plyr</th>
-          <th>Srv</th>
-          <th>Cat</th>
-          <th>Infraction</th>
-          <th>State</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <div style="clear: both;">
+      <h3 class="disclosure"><i></i> Penalties</h3>
+      <div class="hide">
+        <table class="penalties table">
+          <thead>
+            <tr>
+              <th>Per</th>
+              <th>Time</th>
+              <th>Plyr</th>
+              <th>Infraction</th>
+              <th>State</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
 
-    <table class="goals table">
-      <thead>
-        <tr>
-          <th>Period</th>
-          <th>Time</th>
-          <th>Player</th>
-          <th>Assist</th>
-          <th>Assist</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+      <h3 class="disclosure"><i></i> Goals</h3>
+      <div class="hide">
+        <table class="goals table">
+          <thead>
+            <tr>
+              <th>Period</th>
+              <th>Time</th>
+              <th>Players</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
 
     <div data-remote="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>" class="roster modal hide fade">
       <div class="modal-header"><h3>Select players for <%= team.name %></h3></div>
