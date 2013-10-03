@@ -7,9 +7,15 @@ class GamePlayer < ActiveRecord::Base
   validates_uniqueness_of :player_id, :scope => :game_id
   validate :player_on_team
 
+  after_commit :broadcast_changes
+
   private
 
   def player_on_team
     errors.add(:player, "must be on home team or visiting team") unless game.nil? || player.nil? || player.team_id == game.home_team_id || player.team_id == game.visiting_team_id
+  end
+
+  def broadcast_changes
+    game.send(:broadcast_changes, :include => :players)
   end
 end

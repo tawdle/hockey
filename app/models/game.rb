@@ -245,22 +245,13 @@ class Game < ActiveRecord::Base
 
   def broadcast_changes(options={})
     json = as_json
-    if Array(options[:include]).include?(:penalties)
-      json[:penalties] = penalties.map do |penalty|
-        penalty.as_json
+    [:penalties, :goals, :activity_feed_items, :players].each do |attr|
+      if Array(options[:include]).include?(attr)
+        json[attr] = send(attr).map do |item|
+          item.as_json
+        end
       end
     end
-    if Array(options[:include]).include?(:goals)
-      json[:goals] = goals.map do |goal|
-        goal.as_json
-      end
-    end
-    if Array(options[:include]).include?(:activity_feed_items)
-      json[:activity_feed_items] = activity_feed_items.map do |item|
-        item.as_json
-      end
-    end
-
     broadcast("/games/#{id}", json)
   end
 end
