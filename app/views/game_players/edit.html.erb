@@ -8,7 +8,7 @@
     <% @team.players.each do |player| %>
       <%= label_tag "player_#{player.id}", :class => "checkbox" do %>
         <%= check_box_tag "game[player_ids][]", player.id, @game.player_ids.include?(player.id), :id => "player_#{player.id}" %>
-        <%= player.at_name %>
+        <%= player.name_and_number %>
       <% end %>
     <% end %>
   </div>

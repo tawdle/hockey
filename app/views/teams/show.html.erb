@@ -21,13 +21,15 @@
 
 <table class="table table-hover">
   <tr>
-    <th style="width: 20px;">#</th>
     <th>Name</th>
+    <th style="width: 20px;">#</th>
+    <th>Profile</th>
     <th></th>
   </tr>
 
   <% @team.players.each do |player| %>
     <tr>
+      <td><%= player.name %>
       <td><%= player.jersey_number %></td>
       <td><%= format_player_link(player) %></td>
       <td>

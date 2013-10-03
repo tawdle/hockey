@@ -36,7 +36,7 @@ App.GoalEditor = Backbone.View.extend({
 
   setPlayerOptions: function() {
     var self = this;
-    var options = App.players.where({team_id: this.teamId}).map(function(player) { return self.optionString(player.id, player.get("jersey_number")); }).join("");
+    var options = App.players.where({team_id: this.teamId}).map(function(player) { return self.optionString(player.id, player.get("name_and_number")); }).join("");
     this.playerSelect.html(self.optionPrompt("Player who scored goal") + options);
     this.assistSelect.html(self.optionPrompt("Player who assisted") + options);
     this.secondaryAssistSelect.html(self.optionPrompt("Other player who assisted") + options);

@@ -4,7 +4,7 @@ class Player < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
   attr_accessor :username_or_email, :creator
-  attr_accessible :team, :username_or_email, :creator, :jersey_number
+  attr_accessible :team, :username_or_email, :creator, :jersey_number, :name
 
   validates_presence_of :team
   validates_presence_of :name
@@ -17,12 +17,16 @@ class Player < ActiveRecord::Base
 
   after_save :send_invitation, :if => :user_is_invited?
 
+  def name_and_number
+    "#{name} (#{jersey_number})"
+  end
+
   def at_name
     user.try(:at_name) || "@#{team.name}##{jersey_number}"
   end
 
   def as_json(options={})
-    super(options.merge(:methods => [:at_name]))
+    super(options.merge(:methods => [:at_name, :name_and_number]))
   end
 
   private

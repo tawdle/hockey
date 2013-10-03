@@ -1,7 +1,7 @@
 <ul>
   <% @game.players.each do |player| %>
     <li>
-      <%= player.at_name %>
+      <%= player.name_and_number %>
     </li>
   <% end %>
 </ul>
