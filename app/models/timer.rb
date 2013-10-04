@@ -17,7 +17,7 @@ class Timer < ActiveRecord::Base
     end
 
     event :reset do
-      transition any - :created => :created
+      transition any => :created
     end
 
     event :expire do

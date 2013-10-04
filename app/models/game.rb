@@ -32,6 +32,7 @@ class Game < ActiveRecord::Base
 
     after_transition any => :canceled, :do => :generate_cancel_feed_item
     before_transition :scheduled => :active, :do => :create_clock
+    after_transition :active => :playing, :do => :reset_game_clock
     after_transition :scheduled => :active, :do => :generate_game_started_feed_item
     after_transition :active => :playing, :do => :set_next_period
     after_transition any => :playing, :do => :start_game_clock!
@@ -138,9 +139,12 @@ class Game < ActiveRecord::Base
     Hash[results.map {|k,v| [k, v.append(v.sum)] }]
   end
 
+  def reset_game_clock
+    clock.reset!
+  end
+
   def start_game_clock!
     clock.start!
-    save!
   end
 
   def pause_game_clock!
