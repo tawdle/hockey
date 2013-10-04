@@ -21,6 +21,10 @@ class Player < ActiveRecord::Base
     team.league
   end
 
+  def feed_name
+    "#{name} ##{jersey_number} (#{at_name})"
+  end
+
   def name_and_number
     "#{name} (#{jersey_number})"
   end

@@ -46,16 +46,16 @@ class Goal < ActiveRecord::Base
   end
 
   def generate_save_feed_item
-    message = "#{player.at_name} scored a goal for #{team.at_name} against #{game.opposing_team(team).at_name}"
+    message = "#{player.feed_name} scored a goal for #{team.at_name} against #{game.opposing_team(team).at_name}"
     if assisting_players.any?
       message << ", assisted by "
-      message << assisting_players.collect(&:at_name).join(" and ")
+      message << assisting_players.collect(&:feed_name).join(" and ")
     end
     game.activity_feed_items.create!(:message => message)
   end
 
   def generate_destroy_feed_item
-    message = "#{updater_name} revoked #{player.at_name}'s goal against #{game.opposing_team(team).at_name}"
+    message = "#{updater_name} revoked #{player.feed_name}'s goal against #{game.opposing_team(team).at_name}"
     game.activity_feed_items.create!(:message => message)
   end
 
