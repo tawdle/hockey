@@ -65,7 +65,7 @@ class Ability
     end
 
     can :manage, Player do |player|
-      user.manager_of?(player.team)
+      user.manager_of?(player.team) || user.recorder_of?(player.league)
     end
 
     can :create, Invitation do |invitation|

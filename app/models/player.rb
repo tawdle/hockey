@@ -17,6 +17,10 @@ class Player < ActiveRecord::Base
 
   after_save :send_invitation, :if => :user_is_invited?
 
+  def league
+    team.league
+  end
+
   def name_and_number
     "#{name} (#{jersey_number})"
   end
