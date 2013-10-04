@@ -64,7 +64,7 @@ App.Timer = Backbone.Model.extend({
         et = this.get("duration");
         break;
     }
-    return et;
+    return this.get("duration") ? Math.min(et, this.get("duration")) : et;
   },
 
   getTimeRemaining: function() {
