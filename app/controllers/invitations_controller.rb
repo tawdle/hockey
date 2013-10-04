@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_filter :authenticate_user!, :except => [:accept]
+  before_filter :authenticate_user!
   load_and_authorize_resource :except => [:new, :create]
 
   Target_classes = [League, Team]
@@ -26,8 +26,6 @@ class InvitationsController < ApplicationController
   end
 
   def accept
-    authenticate_user!
-
     if @invitation.state == :accepted
       render :already_accepted
     elsif current_user.email != @invitation.email && params[:confirm].nil?
