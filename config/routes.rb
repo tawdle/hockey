@@ -39,7 +39,11 @@ Hockey::Application.routes.draw do
   devise_for :users
 
 
-  resources :users, :only => [:show, :edit, :update]
+  resources :users, :only => [:show, :edit, :update] do
+    member do
+      get :impersonate
+    end
+  end
 
   match 'typeahead/get_users' => 'typeahead#get_users'
 

@@ -26,4 +26,13 @@ class UsersController < ApplicationController
       end
     end
   end
+
+  def impersonate
+    sign_in(@user)
+
+    respond_to do |format|
+      format.html { redirect_to @user, notice: "You are now impersonating #{@user.at_name}" }
+      format.json { head :no_content }
+    end
+  end
 end

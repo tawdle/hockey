@@ -34,6 +34,10 @@ class Ability
       user_object == user
     end
 
+    can [:impersonate], User do |user_object|
+      user.admin?
+    end
+
     can :read, League
 
     can [:create, :update, :destroy], League do |league|
