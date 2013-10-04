@@ -29,7 +29,7 @@ App.GameView = Backbone.View.extend({
     this.gamePause.toggle(state == "playing");
     $("p[class=" + state + "]", this.gameStatus).toggle(true).siblings().toggle(false);
 
-    this.gameStatus.removeClass("active playing paused finished").addClass("state");
+    this.gameStatus.removeClass("active playing paused finished").addClass(state);
     this.homeTeamScore.text(this.model.get("home_team_score"));
     this.visitingTeamScore.text(this.model.get("visiting_team_score"));
   }
