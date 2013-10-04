@@ -11,7 +11,13 @@
     App.gameView = new App.GameView({ model: App.game, el: ".content" });
     App.homeView = new App.TeamBoxView({ el: "#home-team", teamId: <%= @game.home_team_id %> });
     App.visitingView = new App.TeamBoxView({ el: "#visiting-team", teamId: <%= @game.visiting_team_id %> });
-    App.feedItemsView = new App.FeedItemsView({ el: "#feed-items" });
+    App.feedItemsView = new Backbone.CollectionView({
+      el: "#feed-items",
+      collection: App.feedItems,
+      modelView: App.FeedItemView,
+      emptyListCaption: "There are no activity feed items yet for this game."
+    });
+    App.feedItemsView.render();
   });
 <% end %>
 
