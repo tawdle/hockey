@@ -6,6 +6,9 @@ class PlayersController < ApplicationController
     @players = @team.players
   end
 
+  def show
+  end
+
   def new
     @player = Player.new(:team => @team)
     authorize! :create, @player

@@ -22,6 +22,11 @@ class Team < ActiveRecord::Base
 
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
 
+  def self.find_by_name(name)
+    user = User.find_by_name(name)
+    user && user.nameable_type == "Team" && user.nameable
+  end
+
   def at_name
     "@#{name}"
   end
