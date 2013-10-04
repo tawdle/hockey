@@ -1,6 +1,10 @@
 window.App = window.App || {};
 
 App.Goal = Backbone.Model.extend({
+  initialize: function() {
+    this.listenTo(this, 'remove', this.destroy);
+  },
+
   toJSON: function() {
     return { goal: _.clone(this.attributes) };
   },

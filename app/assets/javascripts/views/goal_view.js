@@ -2,7 +2,7 @@ App.GoalView = Backbone.View.extend({
   initialize: function() {
     this.template = _.template($("#goal-view").html());
     this.listenTo(this.model, "change", this.render);
-    this.listenTo(this.model, "destroy", this.remove, this);
+    this.listenTo(this.model, "destroy", this.remove);
   },
 
   tagName: "tr",

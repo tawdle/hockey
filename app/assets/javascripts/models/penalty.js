@@ -1,6 +1,10 @@
 window.App = window.App || {};
 
 App.Penalty = App.EmbeddedModel.extend({
+  initialize: function() {
+    this.listenTo(this, 'remove', this.destroy);
+  },
+
   toJSON: function() {
     return { penalty: _.clone(this.attributes) };
   },
