@@ -9,6 +9,11 @@ class GamePlayer < ActiveRecord::Base
 
   after_commit :broadcast_changes
 
+  Roles = [:player, :goalie, :captain, :assistant_captain]
+  symbolize :role, :in => Roles, :allow_nil => true
+
+  attr_accessible :player_id, :role
+
   private
 
   def player_on_team

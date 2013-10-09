@@ -171,7 +171,8 @@ ALTER SEQUENCE followings_id_seq OWNED BY followings.id;
 CREATE TABLE game_players (
     id integer NOT NULL,
     game_id integer,
-    player_id integer
+    player_id integer,
+    role character varying(255)
 );
 
 
@@ -1130,3 +1131,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130913210811');
 INSERT INTO schema_migrations (version) VALUES ('20130923004713');
 
 INSERT INTO schema_migrations (version) VALUES ('20131002231320');
+
+INSERT INTO schema_migrations (version) VALUES ('20131004215837');

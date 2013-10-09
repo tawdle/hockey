@@ -22,5 +22,9 @@ describe GamePlayer do
       game_player.player = FactoryGirl.build(:player)
       game_player.should_not be_valid
     end
+    it "requires a valid role (or nil)" do
+      game_player.role = :foo
+      game_player.should_not be_valid
+    end
   end
 end

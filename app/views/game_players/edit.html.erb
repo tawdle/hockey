@@ -4,20 +4,29 @@
 
 <%= form_for(@game, :url => game_roster_path(@game, :team => @home_or_visiting), :remote => request.xhr?) do |f| %>
 
-  <div class="players">
+  <table class="players">
     <% @team.players.each do |player| %>
-      <%= label_tag "player_#{player.id}", :class => "checkbox" do %>
-        <%= check_box_tag "game[player_ids][]", player.id, @game.player_ids.include?(player.id), :id => "player_#{player.id}" %>
-        <%= player.name_and_number %>
-      <% end %>
+      <tr>
+        <% game_player = @game.game_players.where(:player_id => player.id).first %>
+        <% if game_player %>
+          <input name="game[game_players_attributes][<%= player.id %>][id]" value="<%= game_player.id %>" type="hidden" />
+        <% end %>
+        <input name="game[game_players_attributes][<%= player.id %>][player_id]" value="<%= player.id %>" type="hidden" />
+        <td>
+          <%= label_tag "player_#{player.id}", :class => "checkbox inline" do %>
+            <%= check_box_tag "game[game_players_attributes[#{player.id}][selected]", true, game_player.present?, :id => "player_#{player.id}" %>
+            <%= player.name_and_number %>
+          <% end %>
+        </td>
+        <td>
+          <%= select_tag "game[game_players_attributes][#{player.id}][role]",
+            options_for_select(GamePlayer::Roles.map {|r| [r.to_s.humanize, r]}),
+            :value => game_player.try(:role),
+            :style => "visibility: #{game_player ? 'visible' : 'hidden'}" %>
+        </td>
+      </tr>
     <% end %>
-  </div>
-
-  <% @other_team.players.each do |player| %>
-    <%= hidden_field_tag("game[player_ids][]", player.id) if @game.player_ids.include?(player.id) %>
-  <% end %>
-
-  <%= hidden_field_tag "game[player_ids][]" %>
+  </table>
 
   <% unless request.xhr? %>
     <%= f.submit "Update Game Roster", :class => "btn btn-primary" %>
@@ -33,3 +42,4 @@
     <%= link_to "Back", @game %>
   </div>
 <% end %>
+

@@ -11,7 +11,8 @@ App.RosterEditor = Backbone.View.extend({
     "click a.save" : "saveAndClose",
     "click a.create" : "newPlayer",
     "ajax:success" : "ajaxSuccess",
-    "ajax:error" : "ajaxError"
+    "ajax:error" : "ajaxError",
+    "shown" : "attachHandlers"
   },
 
   edit: function() {
@@ -42,6 +43,18 @@ App.RosterEditor = Backbone.View.extend({
 
   playerCreated: function(player) {
     this.$(".players").append(this.template(player));
+    this.attachHandlers();
+  },
+
+  toggleSelectVisibility: function(e) {
+    var checked = $(this).is(":checked");
+    console.log("check is " + checked);
+    $("select", $(e.target).parents("tr")).css({visibility: (checked ? "visible" : "hidden")});
+  },
+
+  attachHandlers: function() {
+    this.$(".players input[type=checkbox]").off("click", this.toggleSelectVisibility);
+    this.$(".players input[type=checkbox]").on("click", this.toggleSelectVisibility);
   }
 });
 

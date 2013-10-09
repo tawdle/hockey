@@ -69,9 +69,11 @@ class Game < ActiveRecord::Base
   validates_presence_of :start_time
   validate :start_time_is_in_future, :if => :start_time_changed?
 
+  accepts_nested_attributes_for :game_players, :allow_destroy => true
+
   attr_accessor :updater
   attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id,
-    :start_time, :updater, :player_ids, :period_duration, :period_minutes
+    :start_time, :updater, :player_ids, :period_duration, :period_minutes, :game_players_attributes
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }

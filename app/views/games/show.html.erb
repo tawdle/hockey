@@ -136,9 +136,21 @@
 </script>
 
 <script type="text/html" id="player-checkbox">
-  <label class="checkbox" for="player_{{= id }}">
-    <input id="player_{{= id }}" name="game[player_ids][]" type="checkbox" checked="checked" value="{{= id }}" />
-    {{= name_and_number }}
-  </label>
+  <tr>
+    <input name="game[game_players_attributes][{{= id }}][player_id]" value="{{= id }}" type="hidden" />
+    <td>
+      <label class="checkbox inline" for="player_{{= id }}">
+        <input id="player_{{= id }}" name="game[game_players_attributes][{{= id }}][selected]" type="checkbox" checked="checked" value="true" />
+        {{= name_and_number }}
+      </label>
+    </td>
+    <td>
+      <select name="game[game_players_attributes][{{= id }}][role]" value="player">
+        <% GamePlayer::Roles.each do |role| %>
+          <option value="<%= role %>"><%= role.to_s.humanize %></options>
+        <% end %>
+      </select>
+    </td>
+  </tr>
 </script>
 
