@@ -141,6 +141,10 @@ class Game < ActiveRecord::Base
     Hash[results.map {|k,v| [k, v.append(v.sum)] }]
   end
 
+  def period_text
+    Periods[period || 0]
+  end
+
   def reset_game_clock
     clock.reset!
   end
@@ -154,7 +158,7 @@ class Game < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.merge(:only => [:id, :state, :period], :methods => [:home_team_score, :visiting_team_score])).merge({:clock => clock.as_json, :fayeURI => AsyncMessaging::FAYE_CONFIG[:uri] })
+    super(options.merge(:only => [:id, :state], :methods => [:home_team_score, :visiting_team_score, :period_text])).merge({:clock => clock.as_json, :fayeURI => AsyncMessaging::FAYE_CONFIG[:uri] })
   end
 
   def timer_expired(timer_id)
@@ -214,7 +218,7 @@ class Game < ActiveRecord::Base
   end
 
   def set_next_period
-    self.period = period ? period + 1 : 0
+    update_attribute(:period, period ? period + 1 : 0);
   end
 
   def create_clock

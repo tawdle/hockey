@@ -33,6 +33,7 @@
     <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn btn-large btn-success", :style => displayStyle(@game.can_start?) %> 
     <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, stop_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-pause", :class => "btn btn-large btn-danger", :style => displayStyle(@game.can_pause?) %>
 
+    <span id="game-period" class="label"></span>
     <span id="game-clock" class="label"></span>
   </div>
 

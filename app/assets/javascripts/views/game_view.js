@@ -7,6 +7,7 @@ App.GameView = Backbone.View.extend({
     this.homeTeamScore = this.$("#home-team .score");
     this.visitingTeamScore = this.$("#visiting-team .score");
     this.gameStatus = this.$("#game-status");
+    this.period = this.$("#game-period");
 
     this.listenTo(this.model, "change", this.render);
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);
@@ -29,6 +30,7 @@ App.GameView = Backbone.View.extend({
     this.gamePause.toggle(state == "playing");
     $("p[class=" + state + "]", this.gameStatus).toggle(true).siblings().toggle(false);
 
+    this.period.text(this.model.get("period_text"));
     this.gameStatus.removeClass("active playing paused finished").addClass(state);
     this.homeTeamScore.text(this.model.get("home_team_score"));
     this.visitingTeamScore.text(this.model.get("visiting_team_score"));
