@@ -19,11 +19,30 @@ App.GameView = Backbone.View.extend({
   },
 
   events: {
-    "ajax:success #new_activity_feed_item" : "clearMessageText"
+    "ajax:success #new_activity_feed_item" : "clearMessageText",
+    "click .swap" : "swapTeamBoxes"
   },
 
   clearMessageText: function() {
     this.$("#activity_feed_item_message").val("");
+  },
+
+  swapElements: function(elements) {
+    var parent1, next1,
+    parent2, next2;
+
+    parent1 = elements[0].parentNode;
+    next1   = elements[0].nextSibling;
+    parent2 = elements[1].parentNode;
+    next2   = elements[1].nextSibling;
+
+    parent1.insertBefore(elements[1], next1);
+    parent2.insertBefore(elements[0], next2);
+  },
+
+  swapTeamBoxes: function(e) {
+    e.preventDefault();
+    this.swapElements(this.$(".team-box"));
   },
 
   render: function() {
