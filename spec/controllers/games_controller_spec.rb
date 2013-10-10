@@ -90,6 +90,56 @@ describe GamesController do
       end
     end
 
+    describe "#start" do
+      def do_request
+        post :start, :id => game.to_param
+      end
+
+      before do
+        game.activate!
+      end
+
+      it "changes the state to playing" do
+        expect {
+          do_request
+        }.to change { game.reload.state }.to("playing")
+      end
+    end
+
+    describe "#pause" do
+      def do_request
+        post :pause, :id => game.to_param
+      end
+
+      before do
+        game.activate!
+        game.start!
+      end
+
+      it "changes the state to paused" do
+        expect {
+          do_request
+        }.to change { game.reload.state }.to("paused")
+      end
+    end
+
+    describe "#stop" do
+      def do_request
+        post :stop, :id => game.to_param
+      end
+
+      before do
+        game.activate!
+        game.start!
+      end
+
+      it "changes the state to active" do
+        expect {
+          do_request
+        }.to change { game.reload.state }.to("active")
+      end
+    end
+
     describe "#complete" do
       def do_request
         post :complete, :id => game.to_param

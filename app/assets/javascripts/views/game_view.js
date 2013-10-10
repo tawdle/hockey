@@ -4,6 +4,7 @@ App.GameView = Backbone.View.extend({
   initialize: function() {
     this.gameStart = this.$("#game-start");
     this.gamePause = this.$("#game-pause");
+    this.gameStop = this.$("#game-stop");
     this.homeTeamScore = this.$("#home-team .score");
     this.visitingTeamScore = this.$("#visiting-team .score");
     this.gameStatus = this.$("#game-status");
@@ -47,8 +48,9 @@ App.GameView = Backbone.View.extend({
 
   render: function() {
     var state = this.model.get("state");
-    this.gameStart.toggle(state != "playing");
+    this.gameStart.toggle(state == "active" || state == "paused");
     this.gamePause.toggle(state == "playing");
+    this.gameStop.toggle(state== "playing");
     $("p[class=" + state + "]", this.gameStatus).toggle(true).siblings().toggle(false);
 
     this.period.text(this.model.get("period_text"));

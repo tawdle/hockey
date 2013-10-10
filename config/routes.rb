@@ -11,6 +11,7 @@ Hockey::Application.routes.draw do
     member do
       post :activate
       post :start
+      post :pause
       post :stop
       post :complete
     end

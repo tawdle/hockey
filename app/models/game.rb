@@ -32,11 +32,8 @@ class Game < ActiveRecord::Base
 
     after_transition any => :canceled, :do => :generate_cancel_feed_item
     before_transition :scheduled => :active, :do => :create_clock
-    after_transition :active => :playing, :do => :reset_game_clock
     after_transition :scheduled => :active, :do => :generate_game_started_feed_item
     after_transition :active => :playing, :do => :set_next_period
-    after_transition any => :playing, :do => :start_game_clock!
-    after_transition any => :paused, :do => :pause_game_clock!
     after_transition any => :completed, :do => :destroy_clock
     after_transition any => :completed, :do => :generate_game_over_feed_item
     after_transition any => any, :do => :broadcast_changes_from_state_machine
@@ -90,9 +87,32 @@ class Game < ActiveRecord::Base
   before_create :generate_create_feed_item
   before_update :generate_update_feed_item
 
-  Periods = %w(1 2 3 OT)
+  Periods = %w(1 2 3 OT OT2 OT3)
 
   LiveStates = %w(active playing paused finished)
+
+  def start
+    clock.reset unless paused?
+    clock.start
+    super
+  end
+
+  def stop
+    # Beware the return value here; returning false kills the state transition.
+    clock.pause
+    if super
+      if game_over?
+        finish
+      else
+        true
+      end
+    end
+  end
+
+  def pause
+    clock.pause
+    super
+  end
 
   def live?
     LiveStates.include?(state)
@@ -149,25 +169,24 @@ class Game < ActiveRecord::Base
     clock.reset!
   end
 
-  def start_game_clock!
-    clock.start!
-  end
-
-  def pause_game_clock!
-    clock.pause!
-  end
-
   def as_json(options={})
     super(options.merge(:only => [:id, :state, :home_team_id, :visiting_team_id], :methods => [:home_team_score, :visiting_team_score, :period_text])).merge({:clock => clock.as_json, :fayeURI => AsyncMessaging::FAYE_CONFIG[:uri] })
   end
 
   def timer_expired(timer_id)
     stop
-    finish if Periods[period] == 'OT' || (Periods[period] == '3' && !tied?)
   end
 
   def tied?
     home_team_score == visiting_team_score
+  end
+
+  def overtime?
+    period_text.starts_with?("OT")
+  end
+
+  def game_over?
+    period >= 2 && !tied?
   end
 
   def period_minutes
