@@ -158,7 +158,7 @@ class Game < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(options.merge(:only => [:id, :state], :methods => [:home_team_score, :visiting_team_score, :period_text])).merge({:clock => clock.as_json, :fayeURI => AsyncMessaging::FAYE_CONFIG[:uri] })
+    super(options.merge(:only => [:id, :state, :home_team_id, :visiting_team_id], :methods => [:home_team_score, :visiting_team_score, :period_text])).merge({:clock => clock.as_json, :fayeURI => AsyncMessaging::FAYE_CONFIG[:uri] })
   end
 
   def timer_expired(timer_id)

@@ -9,8 +9,6 @@
     App.game = new App.Game(<%= @game.to_json.html_safe %>);
     App.penalties = new App.Penalties(<%= @game.penalties.to_json.html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.gameView = new App.GameView({ model: App.game, el: ".content" });
-    App.homeView = new App.TeamBoxView({ el: "#home-team", teamId: <%= @game.home_team_id %> });
-    App.visitingView = new App.TeamBoxView({ el: "#visiting-team", teamId: <%= @game.visiting_team_id %> });
     App.feedItemsView = new Backbone.CollectionView({
       el: "#feed-items",
       collection: App.feedItems,

@@ -8,6 +8,8 @@ App.GameView = Backbone.View.extend({
     this.visitingTeamScore = this.$("#visiting-team .score");
     this.gameStatus = this.$("#game-status");
     this.period = this.$("#game-period");
+    this.homeView = new App.TeamBoxView({ el: "#home-team", teamId: this.model.get("home_team_id") });
+    this.visitingView = new App.TeamBoxView({ el: "#visiting-team", teamId: this.model.get("visiting_team_id") });
 
     this.listenTo(this.model, "change", this.render);
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);
