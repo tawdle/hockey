@@ -12,7 +12,7 @@ App.GameView = Backbone.View.extend({
     this.listenTo(this.model, "change", this.render);
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);
     var el = $("#game-clock").first();
-    this.gameClockView = new App.TimerView({el: el, model: App.game.get("clock")});
+    this.gameClockView = new App.TimerView({el: el, model: App.game.get("clock"), showTimeRemaining: true});
     this.render();
   },
 
