@@ -9,7 +9,7 @@ describe InvitationMailer do
     it "renders the headers" do
       mail.subject.should eq("Invitation to Manage League")
       mail.to.should eq([invitation.email])
-      mail.from.should eq(["mailer@mygameshot.com"])
+      mail.from.should eq(["mailer@powerplay.io"])
     end
 
     it "renders the body" do
@@ -25,7 +25,7 @@ describe InvitationMailer do
     it "renders the headers" do
       mail.subject.should eq("Invitation to Manage Team")
       mail.to.should eq([invitation.email])
-      mail.from.should eq(["mailer@mygameshot.com"])
+      mail.from.should eq(["mailer@powerplay.io"])
     end
 
     it "renders the body" do
@@ -41,7 +41,7 @@ describe InvitationMailer do
     it "renders the headers" do
       mail.subject.should eq("Invitation to Claim Player")
       mail.to.should eq([invitation.email])
-      mail.from.should eq(["mailer@mygameshot.com"])
+      mail.from.should eq(["mailer@powerplay.io"])
     end
 
     it "renders the body" do

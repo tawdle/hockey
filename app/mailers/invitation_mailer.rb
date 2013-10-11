@@ -5,7 +5,7 @@ class InvitationMailer < ActionMailer::Base
     address.format
   end
 
-  default from: format_address("mailer@mygameshot.com", "MyGameShot.com")
+  default from: format_address("mailer@powerplay.io", "PowerPlay.io")
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:

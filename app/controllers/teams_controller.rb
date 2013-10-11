@@ -45,7 +45,7 @@ class TeamsController < ApplicationController
     username = params[:team][:user_attributes][:name]
     params[:team][:user_attributes] =  {
       :name => username,
-      :email => "#{username}_fake@mygameshot.com",
+      :email => "#{username}_fake@powerplay.io",
       :password => Digest::SHA1.hexdigest(Time.now.to_s) }
 
     @team = Team.new(params[:team].merge(:manager => current_user, :league => @league))
