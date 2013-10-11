@@ -29,6 +29,7 @@ group :development, :test do
   gem 'debugger'
   gem "factory_girl_rails", "~> 3.0"
   gem 'rspec-rails', '~> 2.0'
+  gem 'jasmine'
 end
 
 gem 'acts_as_list'
