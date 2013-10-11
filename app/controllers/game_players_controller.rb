@@ -51,7 +51,7 @@ class GamePlayersController < ApplicationController
   private
 
   def fix_params
-    return unless params[:game] && params[:game][:game_players_attributes]
+    return params unless params[:game] && params[:game][:game_players_attributes]
     # First, get rid of entries for which we haven't persisted anything and which haven't been selected
     params[:game][:game_players_attributes].delete_if { |k, v| !v[:id] && !v[:selected] }
 
