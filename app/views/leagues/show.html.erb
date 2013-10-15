@@ -95,4 +95,26 @@
 
 <%= link_to "New Team", new_league_team_path(@league), :class => "btn" %>
 
+<h3>Officials</h3>
+
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @league.officials.each do |official| %>
+      <tr>
+        <td><%= link_to official.name, league_official_path(@league, official) %>
+        <td><%= link_to "Edit", edit_league_official_path(@league, official) if can? :edit, official %></td>
+        <td><%= link_to "Remove", league_official_path(@league, official), :method => :delete, :data => { confirm: 'Remove this official?' } if can? :destroy, official %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<%= link_to "New Official", new_league_official_path(@league), :class => "btn" %>
+
 <%= link_to 'Back', leagues_path %>

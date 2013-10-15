@@ -52,12 +52,15 @@ class Game < ActiveRecord::Base
   belongs_to :home_team, :class_name => 'Team'
   belongs_to :visiting_team, :class_name => 'Team'
   belongs_to :location
+  belongs_to :clock, :class_name => "Timer", :dependent => :destroy
+
   has_many :activity_feed_items
   has_many :goals, :inverse_of => :game
   has_many :penalties, :inverse_of => :game
   has_many :game_players, :inverse_of => :game
   has_many :players, :through => :game_players
-  belongs_to :clock, :class_name => "Timer", :dependent => :destroy
+  has_many :game_officials, :inverse_of => :game
+  has_many :officials, :through => :game_officials
 
   validates_presence_of :home_team
   validates_presence_of :visiting_team

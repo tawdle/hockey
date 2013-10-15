@@ -44,6 +44,12 @@ class Ability
       user.admin?
     end
 
+    can :read, Official
+
+    can :manage, Official do |official|
+      official.leagues.any? {|league| user.manager_of?(league) }
+    end
+
     can [:read, :create, :edit, :update], Location do
       user.admin?
     end

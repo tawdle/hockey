@@ -1,6 +1,8 @@
 class League < ActiveRecord::Base
   has_many :teams, :dependent => :destroy
   has_many :authorizations, :as => :authorizable
+  has_many :league_officials
+  has_many :officials, :through => :league_officials
   attr_accessible :name, :logo, :logo_cache
 
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }

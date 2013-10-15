@@ -165,6 +165,37 @@ ALTER SEQUENCE followings_id_seq OWNED BY followings.id;
 
 
 --
+-- Name: game_officials; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE game_officials (
+    id integer NOT NULL,
+    game_id integer,
+    official_id integer,
+    role character varying(255)
+);
+
+
+--
+-- Name: game_officials_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE game_officials_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: game_officials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE game_officials_id_seq OWNED BY game_officials.id;
+
+
+--
 -- Name: game_players; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -318,6 +349,36 @@ CREATE TABLE invitations (
 
 
 --
+-- Name: league_officials; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE league_officials (
+    id integer NOT NULL,
+    league_id integer,
+    official_id integer
+);
+
+
+--
+-- Name: league_officials_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE league_officials_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: league_officials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE league_officials_id_seq OWNED BY league_officials.id;
+
+
+--
 -- Name: leagues; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -410,6 +471,35 @@ CREATE SEQUENCE mentions_id_seq
 --
 
 ALTER SEQUENCE mentions_id_seq OWNED BY mentions.id;
+
+
+--
+-- Name: officials; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE officials (
+    id integer NOT NULL,
+    name character varying(255)
+);
+
+
+--
+-- Name: officials_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE officials_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: officials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE officials_id_seq OWNED BY officials.id;
 
 
 --
@@ -639,6 +729,13 @@ ALTER TABLE ONLY followings ALTER COLUMN id SET DEFAULT nextval('followings_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY game_officials ALTER COLUMN id SET DEFAULT nextval('game_officials_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY game_players ALTER COLUMN id SET DEFAULT nextval('game_players_id_seq'::regclass);
 
 
@@ -667,6 +764,13 @@ ALTER TABLE ONLY goals ALTER COLUMN id SET DEFAULT nextval('goals_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY league_officials ALTER COLUMN id SET DEFAULT nextval('league_officials_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY leagues ALTER COLUMN id SET DEFAULT nextval('leagues_id_seq'::regclass);
 
 
@@ -682,6 +786,13 @@ ALTER TABLE ONLY locations ALTER COLUMN id SET DEFAULT nextval('locations_id_seq
 --
 
 ALTER TABLE ONLY mentions ALTER COLUMN id SET DEFAULT nextval('mentions_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY officials ALTER COLUMN id SET DEFAULT nextval('officials_id_seq'::regclass);
 
 
 --
@@ -752,6 +863,14 @@ ALTER TABLE ONLY followings
 
 
 --
+-- Name: game_officials_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY game_officials
+    ADD CONSTRAINT game_officials_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: game_players_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -792,6 +911,14 @@ ALTER TABLE ONLY invitations
 
 
 --
+-- Name: league_officials_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY league_officials
+    ADD CONSTRAINT league_officials_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: leagues_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -813,6 +940,14 @@ ALTER TABLE ONLY locations
 
 ALTER TABLE ONLY mentions
     ADD CONSTRAINT mentions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: officials_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY officials
+    ADD CONSTRAINT officials_pkey PRIMARY KEY (id);
 
 
 --
@@ -884,6 +1019,27 @@ CREATE UNIQUE INDEX index_followings_on_user_id_and_target_id ON followings USIN
 
 
 --
+-- Name: index_game_officials_on_game_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_game_officials_on_game_id ON game_officials USING btree (game_id);
+
+
+--
+-- Name: index_game_officials_on_game_id_and_official_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_game_officials_on_game_id_and_official_id ON game_officials USING btree (game_id, official_id);
+
+
+--
+-- Name: index_game_officials_on_official_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_game_officials_on_official_id ON game_officials USING btree (official_id);
+
+
+--
 -- Name: index_game_players_on_game_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -944,6 +1100,27 @@ CREATE INDEX index_games_on_visiting_team_id ON games USING btree (visiting_team
 --
 
 CREATE INDEX index_goals_on_game_id ON goals USING btree (game_id);
+
+
+--
+-- Name: index_league_officials_on_league_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_league_officials_on_league_id ON league_officials USING btree (league_id);
+
+
+--
+-- Name: index_league_officials_on_league_id_and_official_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_league_officials_on_league_id_and_official_id ON league_officials USING btree (league_id, official_id);
+
+
+--
+-- Name: index_league_officials_on_official_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_league_officials_on_official_id ON league_officials USING btree (official_id);
 
 
 --
@@ -1133,3 +1310,5 @@ INSERT INTO schema_migrations (version) VALUES ('20130923004713');
 INSERT INTO schema_migrations (version) VALUES ('20131002231320');
 
 INSERT INTO schema_migrations (version) VALUES ('20131004215837');
+
+INSERT INTO schema_migrations (version) VALUES ('20131015203934');

@@ -1,0 +1,5 @@
+<h1>Official: <%= @official.name %></h1>
+
+<p><%= @official.name %> is associated with the following leagues:</p>
+
+<%= raw @official.leagues.map { |league| link_to league.name, league }.join(", ") %>
