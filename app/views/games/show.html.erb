@@ -57,14 +57,17 @@
     <p>This game is scheduled to start <time class="timeago" datetime="<%= @game.start_time.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.start_time) %></time>.</p>
     <div class="actions">
       <%= link_to "Activate", activate_game_path(@game), :class => "btn btn-primary", :method => :post %>
-      <%= link_to "Cancel", game_path(@game), :class => "btn btn-warning", :method => :delete %>
+      <%= link_to "Cancel", game_path(@game), :class => "btn btn-danger", :method => :delete, :confirm => "Cancel game?" %>
     </div>
+    <%= render :partial => "game_officials" %>
   <% elsif @game.canceled? %>
     <p>This game has been canceled.</p>
   <% elsif @game.completed? %>
     <p>This game is over.</p>
   <% end %>
 <% end %>
+
+<h2>Activity Feed</h2>
 
 <%= form_for(ActivityFeedItem.new(:game => @game), :remote => true) do |f| %>
   <div class="field pull-left" style="margin-right: 10px;" >

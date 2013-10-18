@@ -61,6 +61,10 @@ class Game < ActiveRecord::Base
   has_many :players, :through => :game_players
   has_many :game_officials, :inverse_of => :game
   has_many :officials, :through => :game_officials
+  has_many :referee_game_officials, :class_name => "GameOfficial", :conditions => {:role => :referee  }
+  has_many :referees, :through => :referee_game_officials, :source => :official
+  has_many :linesman_game_officials, :class_name => "GameOfficial", :conditions => {:role => :linesman }, :autosave => false
+  has_many :linesmen, :through => :linesman_game_officials, :source => :official, :autosave => false
 
   validates_presence_of :home_team
   validates_presence_of :visiting_team
@@ -73,7 +77,8 @@ class Game < ActiveRecord::Base
 
   attr_accessor :updater
   attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id,
-    :start_time, :updater, :player_ids, :period_duration, :period_minutes, :game_players_attributes
+    :start_time, :updater, :player_ids, :period_duration, :period_minutes, :game_players_attributes,
+    :referee_ids, :linesman_ids
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
@@ -198,6 +203,10 @@ class Game < ActiveRecord::Base
 
   def period_minutes=(val)
     self.period_duration = val.to_i * 60
+  end
+
+  def possible_officials
+    (home_team.league.officials + visiting_team.league.officials).sort_by(&:name).uniq
   end
 
   private

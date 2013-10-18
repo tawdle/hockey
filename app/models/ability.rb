@@ -22,6 +22,11 @@ class Ability
       user.recorder_of?(game.home_team.league) || user.recorder_of?(game.visiting_team.league)
     end
 
+    can :edit, GameOfficial do |game_official|
+      game = game_official.try(:game)
+      game && (user.recorder_of?(game.home_team.league) || user.recorder_of?(game.visiting_team.league))
+    end
+
     can :manage, Goal do |goal|
       goal && goal.game && (user.recorder_of?(goal.game.home_team.league) || user.recorder_of?(goal.game.visiting_team.league))
     end

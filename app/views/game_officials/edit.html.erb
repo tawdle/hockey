@@ -1,0 +1,31 @@
+<h1>Select Game Officials</h1>
+
+<%= form_for @game, :url => game_game_officials_path(@game) do |f| %>
+  <% if @game.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@game.errors.count, "error") %> prohibited your change from being saved:</h2>
+
+      <ul>
+      <% @game.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <label for="referee">Referee</label>
+    <%= select_tag "game[referee_ids][]", options_for_select(@game_officials, @game.referee_ids[0]), :include_blank => true %>
+  </div>
+  <div>
+    <label for "linesman1">Linesman</label>
+    <%= select_tag "game[linesman_ids][]", options_for_select(@game_officials, @game.linesman_ids[0]), :include_blank => true %>
+  </div>
+  <div>
+    <label for "linesman2">Linesman</label>
+    <%= select_tag "game[linesman_ids][]", options_for_select(@game_officials, @game.linesman_ids[1]), :include_blank => true %>
+  </div>
+  <div class="action">
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>

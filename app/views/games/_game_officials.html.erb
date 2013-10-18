@@ -1,0 +1,14 @@
+<h2>Game Officials <%= link_to "Change", edit_game_game_officials_path(@game), :class => "btn btn-small" %></h2>
+
+<% if @game.game_officials.any? %>
+  <dl class="dl-horizontal">
+    <% @game.game_officials.each do |game_official| %>
+      <dt><%= game_official.role.to_s.humanize %></dt>
+      <dd><%= game_official.official.name %></dd>
+    <% end %>
+  </dl>
+<% else %>
+  <p><em>No officials have been selected. Click <b>Change</b> above to select.</em></p>
+<% end %>
+
+

@@ -1,6 +1,8 @@
 class GameOfficial < ActiveRecord::Base
   Roles = [:referee, :linesman]
 
+  attr_accessible :game
+
   belongs_to :game
   belongs_to :official
   symbolize :role, :in => Roles
