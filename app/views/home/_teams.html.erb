@@ -1,8 +1,7 @@
 <% if Player.for_user(current_user).any? %>
-  <% Player.for_user(current_user).each do |player| %>
-    <div class="page-header">
-      <h2><%= player.team.name %> <small>You're a member of this team</small></h2>
-    </div>
+  <% Player.for_user(current_user).map(&:team).each do |team| %>
+    <h2 class="page-header"><%= link_to team.name, team %> <small>You're a member of this team</small></h2>
+    <%= render :partial => "games", :locals => {:games => Game.for_team(team) } %>
   <% end %>
 <% end %>
 

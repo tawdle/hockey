@@ -1,6 +1,6 @@
 <% if League.managed_by(current_user).any? %>
   <% League.managed_by(current_user).each do |league| %>
-    <h2 class="page-header"><%= league.name %> <small>You manage this league</small></h2>
+    <h2 class="page-header"><%= link_to league.name, league %> <small>You manage this league</small></h2>
     <%= render :partial => "games", :locals => {:games => Game.for_league(league) } %>
   <% end %>
 <% end %>
