@@ -2,7 +2,7 @@ App.PenaltyView = Backbone.View.extend({
   initialize: function() {
     this.template = _.template($("#penalty-view").html());
     this.listenTo(this.model, "change", this.render);
-    this.listenTo(this.model, "destroy", this.remove);
+    this.listenTo(this.model, "remove", this.remove);
   },
 
   tagName: "tr",
