@@ -28,7 +28,7 @@ App.Penalty = App.EmbeddedModel.extend({
     return {
       state: "created",
       period: App.game.period,
-      elapsed_time: App.game.get("clock").get("elapsedTime"),
+      elapsed_time: App.game.get("clock").get("elapsed_time"),
       player_id: null,
       serving_player_id: null,
       category: null,

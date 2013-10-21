@@ -14,7 +14,7 @@ App.Timer = Backbone.Model.extend({
   },
 
   get: function(key) {
-    return  key == "elapsedTime" ?
+    return  key == "elapsed_time" ?
       this.getElapsedTime() :
       Backbone.Model.prototype.get.apply(this, arguments);
   },
@@ -32,9 +32,9 @@ App.Timer = Backbone.Model.extend({
 
     options = options || {};
 
-    if (attrs.elapsedTime !== undefined) {
-      this.setElapsedTime(attrs.elapsedTime);
-      delete attrs.elapsedTime;
+    if (attrs.elapsed_time !== undefined) {
+      this.setElapsedTime(attrs.elapsed_time);
+      delete attrs.elapsed_time;
     }
 
     return Backbone.Model.prototype.set.apply(this, arguments);

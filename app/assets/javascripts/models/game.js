@@ -28,7 +28,7 @@ App.Game = App.EmbeddedModel.extend({
   },
 
   initialize: function() {
-    this.faye = new Faye.Client(this.get("fayeURI"));
+    this.faye = new Faye.Client(this.get("faye_uri"));
     this.faye.subscribe("/games/" + this.get("id"), function(message) {
       this.set(message);
     }.bind(this));

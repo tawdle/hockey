@@ -29,17 +29,6 @@ class ActivityFeedItem < ActiveRecord::Base
     avatar.url(:thumbnail)
   end
 
-  def rendered_message
-    ActionView::Base.new(Rails.configuration.paths["app/views"].first + "/application").render(
-      :partial => 'activity_feed_item', :format => :html,
-      :locals => { :item => self}
-    )
-  end
-
-  def as_json(options={})
-    {:id => id, :avatar_thumbnail_url => avatar_url(:thumbnail), :creator => creator.try(:name), :message => rendered_message, :created_at_iso8061 => created_at.iso8601}
-  end
-
   private
 
   def find_mentions
@@ -53,6 +42,6 @@ class ActivityFeedItem < ActiveRecord::Base
   end
 
   def broadcast_changes
-    game.send(:broadcast_changes, :include => :activity_feed_items) if game
+    game.send(:broadcast_changes, :with => :activity_feed_items) if game
   end
 end

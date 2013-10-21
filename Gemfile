@@ -32,6 +32,7 @@ group :development, :test do
   gem 'jasmine'
 end
 
+gem 'active_model_serializers'
 gem 'acts_as_list'
 gem 'bootstrap-sass'
 gem 'cancan'

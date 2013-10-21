@@ -122,6 +122,10 @@ class Game < ActiveRecord::Base
     super
   end
 
+  def faye_uri
+    AsyncMessaging::FAYE_CONFIG[:uri]
+  end
+
   def live?
     LiveStates.include?(state)
   end
@@ -175,10 +179,6 @@ class Game < ActiveRecord::Base
 
   def reset_game_clock
     clock.reset!
-  end
-
-  def as_json(options={})
-    super(options.merge(:only => [:id, :state, :home_team_id, :visiting_team_id], :methods => [:home_team_score, :visiting_team_score, :period_text])).merge({:clock => clock.as_json, :fayeURI => AsyncMessaging::FAYE_CONFIG[:uri] })
   end
 
   def timer_expired(timer_id)
@@ -285,14 +285,7 @@ class Game < ActiveRecord::Base
   end
 
   def broadcast_changes(options={})
-    json = as_json
-    [:penalties, :goals, :activity_feed_items, :players].each do |attr|
-      if Array(options[:include]).include?(attr)
-        json[attr] = send(attr).map do |item|
-          item.as_json
-        end
-      end
-    end
+    json = active_model_serializer.new(self, options).as_json
     broadcast("/games/#{id}", json)
   end
 end

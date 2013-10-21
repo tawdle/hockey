@@ -107,10 +107,6 @@ class Penalty < ActiveRecord::Base
     expire!
   end
 
-  def as_json(options={})
-    timer ? super.merge({:timer => timer.as_json}) : super
-  end
-
   def action=(value)
     self.send("#{value}") if state_transitions.collect(&:event).map(&:to_s).include?(value)
   end
@@ -154,6 +150,6 @@ class Penalty < ActiveRecord::Base
   end
 
   def broadcast_changes
-    game.send(:broadcast_changes, :include => :penalties)
+    game.send(:broadcast_changes, :with => :penalties)
   end
 end

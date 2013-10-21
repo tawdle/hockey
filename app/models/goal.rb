@@ -35,10 +35,6 @@ class Goal < ActiveRecord::Base
     players.empty?
   end
 
-  def as_json(options={})
-    super(options.merge(:except => [:created_at, :updated_at, :creator_id], :methods => [:player_ids]))
-  end
-
   private
 
   def updater_name
@@ -77,6 +73,6 @@ class Goal < ActiveRecord::Base
   end
 
   def broadcast_changes
-    game.send(:broadcast_changes, :include => :goals)
+    game.send(:broadcast_changes, :with => :goals)
   end
 end

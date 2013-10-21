@@ -86,10 +86,6 @@ class Timer < ActiveRecord::Base
     self.seconds_paused = diff_in_seconds(paused? ? paused_at : DateTime.now, started_at) - seconds
   end
 
-  def as_json(options={})
-    { :state => state, :elapsedTime => elapsed_time, :duration => duration }
-  end
-
   private
 
   def set_started_at
