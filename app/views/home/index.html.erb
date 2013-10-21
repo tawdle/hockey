@@ -6,5 +6,5 @@
   <%= render :partial => "teams_managed" %>
 <% else %>
   <%= render :partial => "welcome" %>
-  <%= render :partial => "games" %>
+  <%= render :partial => "games", :locals => {:games => Game } %>
 <% end %>

@@ -1,5 +1,5 @@
-<% if Game.active.any? %>
-  <h2 class="page-header">Current Games <small>these games are being played right now</small></h2>
+<% if games.active.any? %>
+  <h3 class="page-header">Current Games <small>these games are being played right now</small></h3>
   <table class="table table-hover">
     <tr>
       <th>Started</th>
@@ -9,7 +9,7 @@
       <th></th>
     </tr>
 
-    <% Game.active.desc.each do |game| %>
+    <% games.active.desc.each do |game| %>
       <tr>
         <td><%= distance_of_time_in_words_to_now(game.start_time) %> ago</td>
         <td>@<%= link_to game.home_team.name, game.home_team %> <i>vs</i> @<%= link_to game.visiting_team.name, game.visiting_team %></td>
@@ -21,8 +21,8 @@
   </table>
 <% end %>
 
-<% if Game.upcoming.any? %>
-  <h2 class="page-header">Coming Games <small>these games are scheduled to start soon</small></h2>
+<% if games.upcoming.any? %>
+  <h3 class="page-header">Coming Games <small>these games are scheduled to start soon</small></h3>
   <table class="table table-hover">
     <tr>
       <th>Started</th>
@@ -32,7 +32,7 @@
       <th></th>
     </tr>
 
-    <% Game.scheduled.asc.each do |game| %>
+    <% games.scheduled.asc.each do |game| %>
       <tr>
         <td>in <%= distance_of_time_in_words_to_now(game.start_time) %></td>
         <td>@<%= link_to game.home_team.name, game.home_team %> <i>vs</i> @<%= link_to game.visiting_team.name, game.visiting_team %></td>

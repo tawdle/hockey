@@ -85,7 +85,7 @@ class Game < ActiveRecord::Base
   scope :for_league, lambda {|league| joins("INNER JOIN teams h on home_team_id = h.id").joins("INNER JOIN teams v on visiting_team_id = v.id").where("h.league_id = ? or v.league_id = ?", league.id, league.id) }
   scope :scheduled, where(:state => :scheduled)
   scope :due, lambda { where("start_time < ?", DateTime.now) }
-  scope :active, where(:state => :active)
+  scope :active, where(:state => [:active, :paused, :playing])
   scope :upcoming, lambda { where("start_time > ?", DateTime.now) }
   scope :scheduled_or_active, where(:state => [:scheduled, :active])
   scope :finished, where(:state => :finished)
