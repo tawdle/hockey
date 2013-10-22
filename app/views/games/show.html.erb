@@ -20,17 +20,21 @@
 <% end %>
 
 <% if @game.live? %>
-  <div id="game-status" style="text-align: center;">
-    <p class="active">This game is ready to play. Press <i class="icon-play"></i> to start the next period.</p>
-    <p class="playing">This game is playing. Press <i class="icon-pause"></i> to pause the game clock.</p>
-    <p class="paused">This game is paused. Press <i class="icon-play"></i> to resume.</p>
-    <p class="finished">This game has ended. When you have completed recording all items, press: <%= link_to "Complete Game", complete_game_path(@game), :class => "btn", :method => :post %> </p>
-  </div>
+  <% if can? :mark, @game %>
+    <div id="game-status" style="text-align: center;">
+      <p class="active">This game is ready to play. Press <i class="icon-play"></i> to start the next period.</p>
+      <p class="playing">This game is playing. Press <i class="icon-pause"></i> to pause the game clock.</p>
+      <p class="paused">This game is paused. Press <i class="icon-play"></i> to resume.</p>
+      <p class="finished">This game has ended. When you have completed recording all items, press: <%= link_to "Complete Game", complete_game_path(@game), :class => "btn", :method => :post %> </p>
+    </div>
+  <% end %>
 
   <div id="start-stop-clock">
-    <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn btn-large btn-success" %> 
-    <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, pause_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-pause", :class => "btn btn-large btn-warning" %>
-    <%= link_to "<i class='icon-stop icon-2x'></i>".html_safe, stop_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-stop", :class => "btn btn-large btn-danger", :confirm => "End this period now?" %>
+    <% if can? :mark, @game %>
+      <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn btn-large btn-success" %> 
+      <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, pause_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-pause", :class => "btn btn-large btn-warning" %>
+      <%= link_to "<i class='icon-stop icon-2x'></i>".html_safe, stop_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-stop", :class => "btn btn-large btn-danger", :confirm => "End this period now?" %>
+    <% end %>
 
     <span id="game-period" class="label"></span>
     <span id="game-clock" class="label"></span>
@@ -55,11 +59,13 @@
 
   <% if @game.scheduled? %>
     <p>This game is scheduled to start <time class="timeago" datetime="<%= @game.start_time.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.start_time) %></time>.</p>
-    <div class="actions">
-      <%= link_to "Activate", activate_game_path(@game), :class => "btn btn-primary", :method => :post %>
-      <%= link_to "Cancel", game_path(@game), :class => "btn btn-danger", :method => :delete, :confirm => "Cancel game?" %>
-    </div>
-    <%= render :partial => "game_officials" %>
+    <% if can? :mark, @game %>
+      <div class="actions">
+        <%= link_to "Activate", activate_game_path(@game), :class => "btn btn-primary", :method => :post %>
+        <%= link_to "Cancel", game_path(@game), :class => "btn btn-danger", :method => :delete, :confirm => "Cancel game?" %>
+      </div>
+      <%= render :partial => "game_officials" %>
+    <% end %>
   <% elsif @game.canceled? %>
     <p>This game has been canceled.</p>
   <% elsif @game.completed? %>
@@ -69,16 +75,18 @@
 
 <h2>Activity Feed</h2>
 
-<%= form_for(ActivityFeedItem.new(:game => @game), :remote => true) do |f| %>
-  <div class="field pull-left" style="margin-right: 10px;" >
-    <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
-  </div>
+<% if current_user %>
+  <%= form_for(ActivityFeedItem.new(:game => @game), :remote => true) do |f| %>
+    <div class="field pull-left" style="margin-right: 10px;" >
+      <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
+    </div>
 
-  <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
+    <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
 
-  <div class="actions">
-    <%= f.submit "Post", :class => "btn btn-primary" %>
-  </div>
+    <div class="actions">
+      <%= f.submit "Post", :class => "btn btn-primary" %>
+    </div>
+  <% end %>
 <% end %>
 
 <table id="feed-items" class="table">
