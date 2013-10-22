@@ -6,4 +6,20 @@
 
 <%= render :partial => "follow_button", :locals => {:target => @user } %>
 
+<div class="clearfix"></div>
+
+<% if @user.authorizations.any? && (@user == current_user || current_user.admin?)  %>
+  <h2>Your authorizations</h2>
+  <ul>
+    <% @user.authorizations.each do |auth| %>
+      <li>
+        You are a <%= auth.role %>
+        <% if auth.authorizable %>
+          of <%= link_to auth.authorizable.name, auth.authorizable %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= link_to("Edit", edit_user_path(@user), :class => "btn") if can? :edit, @user %>
