@@ -121,7 +121,7 @@ describe Invitation do
   end
 
   describe ".find" do
-    let (:invitation) { FactoryGirl.create(:invitation) }
+    let(:invitation) { FactoryGirl.create(:invitation) }
 
     it "should find an invitation by code" do
       described_class.find(invitation.code).should == invitation

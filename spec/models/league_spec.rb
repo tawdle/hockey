@@ -23,10 +23,11 @@ describe League do
   describe "#accepted_invitation_to_manage" do
     let(:league) { FactoryGirl.build(:league) }
     let(:user) { FactoryGirl.build(:user) }
+    let(:invitation) { FactoryGirl.build(:invitation, :user => user, :target => league) }
 
     it "should add the provided user to the list of managers" do
       expect {
-        league.accepted_invitation_to_manage(user)
+        league.accepted_invitation_to_manage(user, invitation)
       }.to change { league.managers.count }.by(1)
     end
   end

@@ -35,22 +35,22 @@ class Team < ActiveRecord::Base
     User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class, :authorizable_id => self.id})
   end
 
-  def accepted_invitation_to_manage(user)
+  def accepted_invitation_to_manage(user, invitation)
     Team.transaction do
       Authorization.create!(:user => user, :role => :manager, :authorizable => self)
       ActivityFeedItem.create!(:creator => self.user, :message => "@#{user.name} became a manager of #{name}")
     end
   end
 
-  def declined_invitation_to_manage(user)
+  def declined_invitation_to_manage(user, invitation)
     # Whatevs
   end
 
-  def accepted_invitation_to_join(user, invitation=nil)
+  def accepted_invitation_to_join(user, invitation)
     ActivityFeedItem.create!(:message => "#{user.at_name} joined #{at_name}")
   end
 
-  def declined_invitation_to_join(user)
+  def declined_invitation_to_join(user, invitation)
     # Whatevs
   end
 
