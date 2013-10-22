@@ -7,7 +7,8 @@ App.PlayerEditor = Backbone.View.extend({
     "click a.cancel" : "close",
     "click a.create" : "saveAndClose",
     "ajax:success" : "ajaxSuccess",
-    "ajax:error" : "ajaxError"
+    "ajax:error" : "ajaxError",
+    "shown" : "attachTypeahead"
   },
 
   edit: function() {
@@ -32,6 +33,17 @@ App.PlayerEditor = Backbone.View.extend({
 
   ajaxError: function() {
     alert("ajaxError!");
+  },
+
+  attachTypeahead: function() {
+    $("input#player_username_or_email").typeahead(
+      [
+        {
+          name: 'Users',
+          remote: '/typeahead/get_users.json?q=%QUERY'
+        }
+      ]
+    );
   }
 });
 

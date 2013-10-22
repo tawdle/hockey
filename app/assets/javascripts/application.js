@@ -20,6 +20,7 @@
 //= require_tree ./collections
 //= require_tree .
 //= require jquery.timeago
+//= require typeahead
 
 _.templateSettings = {
     interpolate: /\{\{\=(.+?)\}\}/gim,

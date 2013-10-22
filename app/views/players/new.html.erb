@@ -16,15 +16,6 @@
   <% end %>
 
   <div class="field">
-    <%= f.label :username_or_email %>
-    <% if @player.new_record? %>
-      <%= f.text_field :username_or_email  %>
-    <% else %>
-      <%= f.text_field :ignore, :value => @player.at_name, :disabled => true %>
-    <% end %>
-  </div>
-
-  <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
@@ -32,6 +23,15 @@
   <div class="field">
     <%= f.label :jersey_number %>
     <%= f.text_field :jersey_number, :class => "span1" %>
+  </div>
+
+  <div class="field">
+    <%= f.label :username_or_email %>
+    <% if @player.new_record? %>
+      <%= f.text_field :username_or_email, :placeholder => "Optional: enter email address to invite"  %>
+    <% else %>
+      <%= f.text_field :ignore, :value => @player.at_name, :disabled => true %>
+    <% end %>
   </div>
 
   <% unless request.xhr? %>
