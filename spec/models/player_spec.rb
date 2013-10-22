@@ -64,6 +64,12 @@ describe Player do
           player.should be_valid
         end
       end
+      context "with an invalid email address" do
+        before { player.username_or_email = "blah" }
+        it "rejects" do
+          player.should_not be_valid
+        end
+      end
       context "with a new email address" do
         before { player.username_or_email = "foo@foo.com" }
         it "accepts" do
@@ -74,15 +80,23 @@ describe Player do
           player.save!
         end
       end
-      context "with a existing email address" do
+      context "with an existing email address" do
         before { player.username_or_email = FactoryGirl.create(:user).email }
         it "accepts" do
           player.should be_valid
         end
-        it "doesn't create a new user" do
-          expect {
-            player.save!
-          }.not_to change { User.count }
+        it "sends an invitation" do
+          Invitation.should_receive(:create!)
+          player.save!
+        end
+      end
+      context "with no input" do
+        before { player.username_or_email = nil }
+        it "accepts" do
+          player.should be_valid
+        end
+        it "doesn't send an invitation" do
+          Invitation.should_not_receive(:create!)
         end
       end
     end

@@ -3,7 +3,7 @@ require 'active_support/inflector'
 class Player < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
-  attr_accessor :username_or_email, :creator
+  attr_accessor :username_or_email, :creator, :email
   attr_accessible :team, :username_or_email, :creator, :jersey_number, :name
 
   validates_presence_of :team
@@ -54,13 +54,13 @@ class Player < ActiveRecord::Base
       username = username_match[1].strip
       user = User.find_by_name(username)
       if user
-        self.user = user
+        self.email = user.email
       else
         errors.add(:username_or_email, "there is no user @#{username}")
       end
     else
       if username_or_email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
-        self.user = User.find_by_email(username_or_email)
+        self.email = username_or_email
       else
         errors.add(:username_or_email, "isn't a valid @username or email address")
       end
@@ -72,10 +72,10 @@ class Player < ActiveRecord::Base
   end
 
   def user_is_invited?
-    !user && username_or_email =~ /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\z/i
+    email.present?
   end
 
   def send_invitation
-    Invitation.create!(:creator => creator, :target => self, :predicate => :claim, :email => username_or_email)
+    Invitation.create!(:creator => creator, :target => self, :predicate => :claim, :email => email)
   end
 end
