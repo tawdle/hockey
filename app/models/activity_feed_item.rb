@@ -32,7 +32,7 @@ class ActivityFeedItem < ActiveRecord::Base
   private
 
   def find_mentions
-    username_matches = message.scan(/\@[a-zA-Z0-9_]*/)
+    username_matches = message.scan(/\@#{User::NameFormat}/)
     if username_matches
       usernames = username_matches.uniq.map {|s| s[1..-1] }
       User.where(:name => usernames).each do |user|

@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe User do
@@ -28,6 +30,18 @@ describe User do
       it "should require fewer than 20 chars" do
         user.name = "x" * 21
         user.should_not be_valid
+      end
+      it "should allow accented characters" do
+        user.name = "éric"
+        user.should be_valid
+      end
+      it "should allow numbers" do
+        user.name = "foo4u"
+        user.should be_valid
+      end
+      it "should allow _ and -" do
+        user.name = "_-_"
+        user.should be_valid
       end
     end
     it "should prevent duplicate nameable references" do

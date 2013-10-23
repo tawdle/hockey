@@ -10,7 +10,7 @@ module UsersHelper
   end
 
   def format_message_with_usernames(msg)
-    username_matches = msg.scan(/\@([a-zA-Z0-9_]*(?:#[0-9]+)?)/)
+    username_matches = msg.scan(/\@(#{User::NameFormat}(?:#[\d]+)?)/)
       if username_matches
         username_matches = username_matches.flatten
         msg = msg.clone
