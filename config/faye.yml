@@ -9,4 +9,8 @@ production:
   password: "this_is_a_SeCRet"
 test:
   disabled: true
+staging:
+  password: "this_is_a_SeCRet"
+  uri: "http://salty-bayou-1265-647.herokuapp.com/faye"
+  script: "http://salty-bayou-1265-647.herokuapp.com/faye.js"
 
