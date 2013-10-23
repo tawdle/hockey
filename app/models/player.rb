@@ -6,9 +6,11 @@ class Player < ActiveRecord::Base
   attr_accessor :username_or_email, :creator, :email
   attr_accessible :team, :username_or_email, :creator, :jersey_number, :name
 
+  MaxJerseyNumberLength = 4
+
   validates_presence_of :team
   validates_presence_of :name
-  validates_presence_of :jersey_number
+  validates_length_of :jersey_number, :minimum => 1, :maximum => MaxJerseyNumberLength
   validate :provided_username_or_email, :if => :username_or_email?
   validates_uniqueness_of :user_id, :scope => :team_id, :allow_nil => true
   validates_uniqueness_of :jersey_number, :scope => [:team_id, :name]
@@ -26,7 +28,7 @@ class Player < ActiveRecord::Base
   end
 
   def name_and_number
-    "#{name} (#{jersey_number})"
+    "#{jersey_number} - #{name} "
   end
 
   def at_name

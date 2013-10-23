@@ -21,6 +21,10 @@ describe Player do
       player.jersey_number = ""
       player.should_not be_valid
     end
+    it "requires a jersey number to be fewer than MaxJerseyNumberLength characters" do
+      player.jersey_number = "6" * (Player::MaxJerseyNumberLength + 1)
+      player.should_not be_valid
+    end
     it "requires unique jersey number/name/team" do
       other_player = FactoryGirl.create(:player, :jersey_number => player.jersey_number, :name => player.name, :team => player.team)
       player.should_not be_valid

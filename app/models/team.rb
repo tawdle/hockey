@@ -2,7 +2,7 @@ class Team < ActiveRecord::Base
   after_create :set_manager
   belongs_to :league
   has_one :user, :as => :nameable # solely for team.name
-  has_many :players, :dependent => :destroy
+  has_many :players, :dependent => :destroy, :order => "lpad(jersey_number, #{Player::MaxJerseyNumberLength}, '0'), name"
   has_many :users, :through => :players
   has_many :authorizations, :as => :authorizable
   delegate :name, :to => :user
