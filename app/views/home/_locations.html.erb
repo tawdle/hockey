@@ -1,0 +1,9 @@
+<h2 class="page-header">Arena Locations</h2>
+
+<ul>
+  <% Location.all.each do |location| %>
+    <li><%= location.name %></li>
+  <% end %>
+</ul>
+
+<%= link_to "Manage locations", locations_path, :class => "btn" %>

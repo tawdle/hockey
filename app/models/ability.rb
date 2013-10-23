@@ -59,7 +59,7 @@ class Ability
       official.leagues.any? {|league| user.manager_of?(league) }
     end
 
-    can [:read, :create, :edit, :update], Location do
+    can :manage, Location do
       user.admin?
     end
 
