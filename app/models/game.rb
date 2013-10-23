@@ -54,12 +54,12 @@ class Game < ActiveRecord::Base
   belongs_to :location
   belongs_to :clock, :class_name => "Timer", :dependent => :destroy
 
-  has_many :activity_feed_items
-  has_many :goals, :inverse_of => :game
-  has_many :penalties, :inverse_of => :game
-  has_many :game_players, :inverse_of => :game
+  has_many :activity_feed_items, :dependent => :destroy
+  has_many :goals, :inverse_of => :game, :dependent => :destroy
+  has_many :penalties, :inverse_of => :game, :dependent => :destroy
+  has_many :game_players, :inverse_of => :game, :dependent => :destroy
   has_many :players, :through => :game_players
-  has_many :game_officials, :inverse_of => :game
+  has_many :game_officials, :inverse_of => :game, :dependent => :destroy
   has_many :officials, :through => :game_officials
   has_many :referee_game_officials, :class_name => "GameOfficial", :conditions => {:role => :referee  }
   has_many :referees, :through => :referee_game_officials, :source => :official
