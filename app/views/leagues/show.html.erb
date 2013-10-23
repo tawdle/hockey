@@ -14,13 +14,13 @@
 
 <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
 
-<h3>Recorders
+<h3>Markers
 <small>
-  (<%= link_to 'invite', new_invitation_path(:predicate => :record, :target_id => @league.to_param, :target_type => "League") %>)
+  (<%= link_to 'invite', new_invitation_path(:predicate => :mark, :target_id => @league.to_param, :target_type => "League") %>)
 </small>
 </h3>
 
-<%= @league.recorders.collect {|recorder| format_user_link(recorder) }.join(", ").html_safe || "(none)" %>
+<%= @league.markers.collect {|marker| format_user_link(marker) }.join(", ").html_safe || "(none)" %>
 
 <h3 class="page-header">Current Games</h3>
 
