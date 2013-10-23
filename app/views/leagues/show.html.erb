@@ -14,6 +14,14 @@
 
 <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
 
+<h3>Recorders
+<small>
+  (<%= link_to 'invite', new_invitation_path(:predicate => :record, :target_id => @league.to_param, :target_type => "League") %>)
+</small>
+</h3>
+
+<%= @league.recorders.collect {|recorder| format_user_link(recorder) }.join(", ").html_safe || "(none)" %>
+
 <h3 class="page-header">Current Games</h3>
 
 <table class="table table-hover">
