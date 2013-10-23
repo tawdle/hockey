@@ -4,12 +4,12 @@ describe PenaltiesController do
   let(:penalty) { FactoryGirl.create(:penalty) }
   let(:game) { penalty.game }
 
-  context "with a logged in recorder" do
+  context "with a logged in marker" do
     let(:league) { game.home_team.league }
-    let(:authorization) { FactoryGirl.create(:authorization, :authorizable => league, :role => :recorder) }
-    let(:recorder) { authorization.user }
+    let(:authorization) { FactoryGirl.create(:authorization, :authorizable => league, :role => :marker) }
+    let(:marker) { authorization.user }
 
-    before { sign_in(recorder) }
+    before { sign_in(marker) }
 
     describe "#create" do
       def do_request

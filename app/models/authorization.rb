@@ -1,6 +1,6 @@
 class Authorization < ActiveRecord::Base
   GlobalRoles = [:admin]
-  ScopedRoles = [:manager, :recorder]
+  ScopedRoles = [:manager, :marker]
 
   belongs_to :user
   belongs_to :authorizable, :polymorphic => true

@@ -16,8 +16,8 @@ class League < ActiveRecord::Base
     User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class, :authorizable_id => self.id})
   end
 
-  def recorders
-    User.joins(:authorizations).where(:authorizations => {:role => :recorder, :authorizable_type => self.class, :authorizable_id => self.id})
+  def markers
+    User.joins(:authorizations).where(:authorizations => {:role => :marker, :authorizable_type => self.class, :authorizable_id => self.id})
   end
 
   def accepted_invitation_to_manage(user, invitation)

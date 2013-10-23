@@ -6,10 +6,10 @@ describe GameOfficialsController do
   let(:officials) { FactoryGirl.create_list(:official, 3, :leagues => [league]) }
   let(:referee) { officials[0] }
   let(:linesmen) { officials[1..-1] }
-  let(:recorder) { FactoryGirl.create(:authorization, :role => :recorder, :authorizable => league).user }
+  let(:marker) { FactoryGirl.create(:authorization, :role => :marker, :authorizable => league).user }
 
-  context "with a signed in recorder" do
-    before { sign_in(recorder) }
+  context "with a signed in marker" do
+    before { sign_in(marker) }
 
     describe "#edit" do
       def do_request

@@ -1,14 +1,14 @@
 require 'spec_helper'
 
 describe GoalsController do
-  let(:league) { FactoryGirl.create(:league, :with_recorder) }
-  let(:recorder) { league.recorders.first }
+  let(:league) { FactoryGirl.create(:league, :with_marker) }
+  let(:marker) { league.markers.first }
   let(:team) { FactoryGirl.create(:team, :with_players, :league => league) }
   let(:game) { FactoryGirl.create(:game, :playing, :visiting_team => team) }
   let(:player) { team.players.first }
 
-  context "with a signed in recorder" do
-    before { sign_in(recorder) }
+  context "with a signed in marker" do
+    before { sign_in(marker) }
 
     describe "#index" do
       def do_request

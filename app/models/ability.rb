@@ -19,24 +19,24 @@ class Ability
     end
 
     can :mark, Game do |game|
-      user.recorder_of?(game.home_team.league) || user.recorder_of?(game.visiting_team.league)
+      user.marker_of?(game.home_team.league) || user.marker_of?(game.visiting_team.league)
     end
 
     can [:start, :stop], Game do |game|
-      user.recorder_of?(game.home_team.league) || user.recorder_of?(game.visiting_team.league)
+      user.marker_of?(game.home_team.league) || user.marker_of?(game.visiting_team.league)
     end
 
     can :edit, GameOfficial do |game_official|
       game = game_official.try(:game)
-      game && (user.recorder_of?(game.home_team.league) || user.recorder_of?(game.visiting_team.league))
+      game && (user.marker_of?(game.home_team.league) || user.marker_of?(game.visiting_team.league))
     end
 
     can :manage, Goal do |goal|
-      goal && goal.game && (user.recorder_of?(goal.game.home_team.league) || user.recorder_of?(goal.game.visiting_team.league))
+      goal && goal.game && (user.marker_of?(goal.game.home_team.league) || user.marker_of?(goal.game.visiting_team.league))
     end
 
     can :manage, Penalty do |penalty|
-      penalty && penalty.game && (user.recorder_of?(penalty.game.home_team.league) || user.recorder_of?(penalty.game.visiting_team.league))
+      penalty && penalty.game && (user.marker_of?(penalty.game.home_team.league) || user.marker_of?(penalty.game.visiting_team.league))
     end
 
     can [:edit, :update], User do |user_object|
@@ -80,7 +80,7 @@ class Ability
     end
 
     can :manage, Player do |player|
-      user.manager_of?(player.team) || user.recorder_of?(player.league)
+      user.manager_of?(player.team) || user.marker_of?(player.league)
     end
 
     can :create, Invitation do |invitation|

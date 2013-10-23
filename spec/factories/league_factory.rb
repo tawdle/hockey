@@ -12,9 +12,9 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_recorder do
+    trait :with_marker do
       after :create do |league|
-        create(:authorization, :authorizable => league, :role => :recorder)
+        create(:authorization, :authorizable => league, :role => :marker)
       end
     end
 
