@@ -53,3 +53,11 @@ production:
   pool: 5
   username: hockey
   password:
+
+staging:
+  adapter: postgresql
+  encoding: unicode
+  database: hockey_production
+  pool: 5
+  username: hockey
+  password:
