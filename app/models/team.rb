@@ -38,7 +38,7 @@ class Team < ActiveRecord::Base
   def accepted_invitation_to_manage(user, invitation)
     Team.transaction do
       Authorization.create!(:user => user, :role => :manager, :authorizable => self)
-      ActivityFeedItem.create!(:creator => self.user, :message => "@#{user.name} became a manager of #{name}")
+      ActivityFeedItem.create!(:message => "@#{user.name} became a manager of #{at_name}")
     end
   end
 
