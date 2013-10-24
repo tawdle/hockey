@@ -17,6 +17,22 @@ describe InvitationMailer do
     end
   end
 
+  describe "mark_league" do
+    let(:league) { FactoryGirl.build(:league) }
+    let(:invitation) { FactoryGirl.build(:invitation, :target => league, :code => "foo") }
+    let(:mail) { InvitationMailer.mark_league(invitation) }
+
+    it "renders the headers" do
+      mail.subject.should eq("Invitation to become Marker for League")
+      mail.to.should eq([invitation.email])
+      mail.from.should eq(["mailer@powerplay.io"])
+    end
+
+    it "renders the body" do
+      mail.body.encoded.should match("Hello!")
+    end
+  end
+
   describe "manage_team" do
     let(:team) { FactoryGirl.build(:team) }
     let(:invitation) { FactoryGirl.build(:invitation, :target => team, :code => "foo") }
@@ -48,5 +64,4 @@ describe InvitationMailer do
       mail.body.encoded.should match("Hello!")
     end
   end
-
 end

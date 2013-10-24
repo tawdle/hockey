@@ -4,7 +4,7 @@ class Invitation < ActiveRecord::Base
   belongs_to :user
 
   symbolize :state, :in => [:pending, :accepted, :declined]
-  symbolize :predicate, :in => [:manage, :join, :claim]
+  symbolize :predicate, :in => [:manage, :join, :claim, :mark]
 
   attr_accessor :username_or_email
   attr_accessible :creator, :predicate, :target, :target_id, :target_type, :email, :username_or_email, :user

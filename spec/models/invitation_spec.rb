@@ -65,24 +65,26 @@ describe Invitation do
 
   describe "#on_create" do
     let(:invitation) { FactoryGirl.build(:invitation) }
-    let(:other_invitation) { FactoryGirl.build(:invitation, :target => FactoryGirl.build(:team)) }
-    let(:one_more_invitation) { FactoryGirl.build(:invitation, :predicate => :join) }
-    let(:and_another_invitation) { FactoryGirl.build(:invitation, :predicate => :claim, :target => FactoryGirl.build(:player)) }
+    let(:invitations) { {
+      :manage_league => invitation,
+      :manage_team => FactoryGirl.build(:invitation, :target => FactoryGirl.build(:team)),
+      :join_league => FactoryGirl.build(:invitation, :predicate => :join),
+      :claim_player => FactoryGirl.build(:invitation, :predicate => :claim, :target => FactoryGirl.build(:player)),
+      :mark_league => FactoryGirl.build(:invitation, :predicate => :mark, :target => FactoryGirl.build(:league))
+    } }
+    let(:messages) { [:manage_league, :manage_team, :join_league, :claim_player, :mark_league] }
 
     it "sets the code" do
       invitation.code.should be_nil
       invitation.save!
       invitation.code.should_not be_nil
     end
-    it "emails the invitation" do
-      InvitationMailer.should_receive(:manage_league).with(invitation).and_return(mail)
-      invitation.save!
-      InvitationMailer.should_receive(:manage_team).with(other_invitation).and_return(mail)
-      other_invitation.save!
-      InvitationMailer.should_receive(:join_league).with(one_more_invitation).and_return(mail)
-      one_more_invitation.save!
-      InvitationMailer.should_receive(:claim_player).with(and_another_invitation).and_return(mail)
-      and_another_invitation.save!
+
+    it "emails the invitations" do
+      invitations.each do |message, invitation|
+        InvitationMailer.should_receive(message).with(invitation).and_return(mail)
+        invitation.save!
+      end
     end
   end
 

@@ -18,6 +18,12 @@ class InvitationMailer < ActionMailer::Base
     mail to: @invitation.email, subject: "Invitation to Manage League"
   end
 
+  def mark_league(invitation)
+    @invitation = invitation
+
+    mail to: @invitation.email, subject: "Invitation to become Marker for League"
+  end
+
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
   #
