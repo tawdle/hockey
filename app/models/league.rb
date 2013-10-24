@@ -21,7 +21,10 @@ class League < ActiveRecord::Base
   end
 
   def accepted_invitation_to_manage(user, invitation)
-    Authorization.create!(:user => user, :role => :manager, :authorizable => self)
+    League.transaction do
+      Authorization.create!(:user => user, :role => :manager, :authorizable => self)
+      ActivityFeedItem.create!(:message => "#{user.at_name} became a manager of #{name}")
+    end
   end
 
   def declined_invitation_to_manage(user, invitation)
@@ -29,7 +32,10 @@ class League < ActiveRecord::Base
   end
 
   def accepted_invitation_to_mark(user, invitation)
-    Authorization.create!(:user => user, :role => :marker, :authorizable => self)
+    League.transaction do
+      Authorization.create!(:user => user, :role => :marker, :authorizable => self)
+      ActivityFeedItem.create!(:message => "#{user.at_name} became a marker of #{name}")
+    end
   end
 
   def declined_invitation_to_manage(user, invitation)
