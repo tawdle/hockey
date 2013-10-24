@@ -2,7 +2,7 @@
   <% if @team.logo.present? %>
     <%= image_tag @team.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
   <% end %>
-  <%= @team.name %>
+  <%= @team.full_name %>
   <small>(<%= link_to 'edit', edit_team_path(@team) %>)</small>
   <%= render :partial => "follow_button", :locals => {:target => @team } %>
 </h2>
@@ -16,6 +16,11 @@
 </h3>
 
 <%= @team.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
+
+<h3>Staff Members</h3>
+<p> <%= @team.staff_members.collect(&:name).join(", ") || "<em>none</em>".html_safe %> </p>
+<%= link_to "Manage staff members", team_staff_members_path(@team), :class => "btn clearfix" if can? :update, @team.staff_members.build %>
+
 
 <h3 class="page-header">Players</h3>
 

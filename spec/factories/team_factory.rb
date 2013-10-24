@@ -17,6 +17,9 @@ FactoryGirl.define do
         end
       end
     end
+    trait :with_staff do
+      staff_members { [ build(:staff_member), build(:staff_member) ] }
+    end
   end
 end
 

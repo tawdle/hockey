@@ -5,6 +5,7 @@ class Team < ActiveRecord::Base
   has_many :players, :dependent => :destroy, :order => "lpad(jersey_number, #{Player::MaxJerseyNumberLength}, '0'), name"
   has_many :users, :through => :players
   has_many :authorizations, :as => :authorizable
+  has_many :staff_members, :inverse_of => :team
   delegate :name, :to => :user
 
   validates_presence_of :user

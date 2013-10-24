@@ -63,6 +63,10 @@ class Ability
       user.admin?
     end
 
+    can :manage, StaffMember do |staff_member|
+      user.manager_of?(staff_member.team)
+    end
+
     can :read, Team
     can :read, Player
 

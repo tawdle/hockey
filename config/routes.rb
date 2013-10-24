@@ -24,6 +24,7 @@ Hockey::Application.routes.draw do
 
   resources :teams, :only => [:index, :show, :edit, :update, :destroy] do
     resources :players, :only => [:new, :create]
+    resources :staff_members
   end
 
   resources :leagues do

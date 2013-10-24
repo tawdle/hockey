@@ -1,0 +1,10 @@
+<h2><%= @team.full_name %> - Staff Members</h2>
+
+<ul>
+  <% @team.staff_members.each do |staff| %>
+    <li><%= link_to staff.name, edit_team_staff_member_path(@team, staff) %></li>
+  <% end %>
+</ul>
+
+<%= link_to "Add new staff member", new_team_staff_member_path(@team), :class => "btn" %>
+<%= link_to "Back", @team %>

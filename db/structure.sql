@@ -586,6 +586,38 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: staff_members; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE staff_members (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    team_id integer NOT NULL,
+    role character varying(255) DEFAULT 'assistant_coach'::character varying,
+    user_id integer
+);
+
+
+--
+-- Name: staff_members_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE staff_members_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: staff_members_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE staff_members_id_seq OWNED BY staff_members.id;
+
+
+--
 -- Name: teams; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -813,6 +845,13 @@ ALTER TABLE ONLY players ALTER COLUMN id SET DEFAULT nextval('players_id_seq'::r
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY staff_members ALTER COLUMN id SET DEFAULT nextval('staff_members_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY teams ALTER COLUMN id SET DEFAULT nextval('teams_id_seq'::regclass);
 
 
@@ -956,6 +995,14 @@ ALTER TABLE ONLY officials
 
 ALTER TABLE ONLY penalties
     ADD CONSTRAINT penalties_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: staff_members_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY staff_members
+    ADD CONSTRAINT staff_members_pkey PRIMARY KEY (id);
 
 
 --
@@ -1159,6 +1206,20 @@ CREATE INDEX index_penalties_on_player_id ON penalties USING btree (player_id);
 
 
 --
+-- Name: index_staff_members_on_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_staff_members_on_team_id ON staff_members USING btree (team_id);
+
+
+--
+-- Name: index_staff_members_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_staff_members_on_user_id ON staff_members USING btree (user_id);
+
+
+--
 -- Name: index_team_memberships_on_member_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1314,3 +1375,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131004215837');
 INSERT INTO schema_migrations (version) VALUES ('20131015203934');
 
 INSERT INTO schema_migrations (version) VALUES ('20131023001812');
+
+INSERT INTO schema_migrations (version) VALUES ('20131024200911');
