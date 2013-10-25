@@ -2,7 +2,7 @@
 
 <ul>
   <% @team.staff_members.each do |staff| %>
-    <li><%= link_to staff.name, edit_team_staff_member_path(@team, staff) %></li>
+    <li><%= link_to staff.name, edit_team_staff_member_path(@team, staff) %> - <em><%= staff.role.to_s.humanize %></em></li>
   <% end %>
 </ul>
 

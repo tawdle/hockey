@@ -16,6 +16,11 @@
     <%= f.text_field :name %>
   </div>
 
+  <div class="field">
+    <%= f.label :role %>
+    <%= f.select :role, StaffMember::Roles.map {|r| [r.to_s.humanize, r]} %>
+  </div>
+
   <div class="actions">
     <%= f.submit :class => "btn btn-primary" %>
   </div>

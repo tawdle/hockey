@@ -22,5 +22,10 @@ describe StaffMember do
       staff_member.role = nil
       staff_member.should_not be_valid
     end
+
+    it "requires a valid role" do
+      staff_member.role = "foo"
+      staff_member.should_not be_valid
+    end
   end
 end
