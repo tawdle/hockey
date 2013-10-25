@@ -65,6 +65,8 @@ class Game < ActiveRecord::Base
   has_many :referees, :through => :referee_game_officials, :source => :official
   has_many :linesman_game_officials, :class_name => "GameOfficial", :conditions => {:role => :linesman }, :autosave => false
   has_many :linesmen, :through => :linesman_game_officials, :source => :official, :autosave => false
+  has_many :game_staff_members, :dependent => :destroy
+  has_many :staff_members, :through => :game_staff_members
 
   validates_presence_of :home_team
   validates_presence_of :visiting_team
@@ -74,11 +76,12 @@ class Game < ActiveRecord::Base
   validate :start_time_is_in_future, :if => :start_time_changed?
 
   accepts_nested_attributes_for :game_players, :allow_destroy => true
+  accepts_nested_attributes_for :game_staff_members, :allow_destroy => true
 
   attr_accessor :updater
   attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id,
     :start_time, :updater, :player_ids, :period_duration, :period_minutes, :game_players_attributes,
-    :referee_ids, :linesman_ids
+    :referee_ids, :linesman_ids, :game_staff_members_attributes
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }

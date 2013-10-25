@@ -48,7 +48,6 @@ App.RosterEditor = Backbone.View.extend({
 
   toggleSelectVisibility: function(e) {
     var checked = $(this).is(":checked");
-    console.log("check is " + checked);
     $("select", $(e.target).parents("tr")).css({visibility: (checked ? "visible" : "hidden")});
   },
 

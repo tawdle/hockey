@@ -1,0 +1,18 @@
+<% team = @game.send("#{home_or_visiting}_team") %>
+<h3>Checked in for <%= team.name %></h3>
+
+<% game_staff_members = @game.game_staff_members.for_team(team) %>
+
+<% if game_staff_members.any? %>
+  <dl class="dl-horizontal">
+    <% game_staff_members.each do |game_staff| %>
+      <dt><%= game_staff.role.to_s.humanize %></dt>
+      <dd><%= game_staff.staff_member.name %></dd>
+    <% end %>
+  </dl>
+<% else %>
+  <p><em>None</em></p>
+<% end %>
+
+<%= link_to "Edit", edit_game_game_staff_members_path(@game, :team => home_or_visiting),
+  :class => "btn" %>

@@ -65,6 +65,10 @@
         <%= link_to "Cancel", game_path(@game), :class => "btn btn-danger", :method => :delete, :confirm => "Cancel game?" %>
       </div>
       <%= render :partial => "game_officials" %>
+
+      <h2>Game Staff</h2>
+      <%= render :partial => "game_staff", :locals => { :home_or_visiting => :home } %>
+      <%= render :partial => "game_staff", :locals => { :home_or_visiting => :visiting } %>
     <% end %>
   <% elsif @game.canceled? %>
     <p>This game has been canceled.</p>
