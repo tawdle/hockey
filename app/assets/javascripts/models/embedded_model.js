@@ -31,7 +31,6 @@ App.EmbeddedModel = Backbone.Model.extend({
           if (!(a instanceof Backbone.Model)) {
             o = this.get(model);
             if (o) {
-              console.log("EM: updating attrs with ", a);
               o.set(a, options);
               delete attrs[model];
             } else {
