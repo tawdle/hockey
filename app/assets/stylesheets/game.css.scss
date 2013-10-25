@@ -56,10 +56,12 @@ table.penalties {
   }
 }
 
-table.players {
+table.players, table.staff-members {
+  margin-bottom: 10px;
   select {
     width: 150px;
     position: relative;
     top: 7px;
+    margin-left: 10px;
   }
 }

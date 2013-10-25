@@ -1,0 +1,57 @@
+<%= javascript_tag do %>
+  $(function() {
+    $(".staff-members input[type=checkbox]").on("click", function(e) {
+      var checked = $(this).is(":checked");
+      $("select", $(e.target).parents("tr")).css({visibility: (checked ? "visible" : "hidden")});
+    });
+  });
+<% end %>
+
+<% unless request.xhr? %>
+  <h3>Which staff members from <%= @team.name %> are present at this game?</h3>
+<% end %>
+
+<%= form_for(@game, :url => game_game_staff_members_path(@game, :team => @home_or_visiting), :remote => request.xhr?) do |f| %>
+
+  <table class="staff-members">
+    <% @team.staff_members.each do |staff| %>
+      <tr>
+        <% game_staff = @game.game_staff_members.where(:staff_member_id => staff.id).first %>
+        <% if game_staff %>
+          <input name="game[game_staff_members_attributes][<%= staff.id %>][id]" value="<%= game_staff.id %>" type="hidden" />
+        <% end %>
+        <input name="game[game_staff_members_attributes][<%= staff.id %>][staff_member_id]" value="<%= staff.id %>" type="hidden" />
+        <td>
+          <%= label_tag "staff_#{staff.id}", :class => "checkbox inline" do %>
+            <%= check_box_tag "game[game_staff_members_attributes[#{staff.id}][selected]", true, game_staff.present?, :id => "staff_#{staff.id}" %>
+            <%= staff.name %>
+          <% end %>
+        </td>
+        <td>
+          <%= select_tag "game[game_staff_members_attributes][#{staff.id}][role]",
+            options_for_select(
+              StaffMember::Roles.map {|r| [r.to_s.humanize, r]},
+              game_staff.try(:role) || staff.role
+            ),
+            :style => "visibility: #{game_staff ? 'visible' : 'hidden'}" %>
+        </td>
+      </tr>
+    <% end %>
+  </table>
+
+  <% unless request.xhr? %>
+    <%= f.submit "Update Game Staff List", :class => "btn btn-primary" %>
+  <% end %>
+
+<% end %>
+
+<% unless request.xhr? %>
+  <div>
+    <%= link_to "Add new player", new_game_game_staff_members_path(@game, :team => @home_or_visiting) %>
+  </div>
+  <div>
+    <%= link_to "Back", @game %>
+  </div>
+<% end %>
+
+
