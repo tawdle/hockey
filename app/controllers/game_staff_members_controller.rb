@@ -2,6 +2,24 @@ class GameStaffMembersController < ApplicationController
   load_and_authorize_resource :game
   before_filter :load_home_or_visiting
   before_filter :load_team
+  before_filter :load_and_authorize_staff_member, :only => [:new, :create]
+  before_filter :authorize_game_staff_member, :only => [:edit, :update]
+
+  def new
+  end
+
+  def create
+    game_staff_member = @game.game_staff_members.build(:role => @staff_member.role, :staff_member => @staff_member)
+    respond_to do |format|
+      if game_staff_member.save
+        format.html { redirect_to @game, notice: 'Staff member was successfully created.' }
+        format.json { render json: @staff_member, status: :created, location: @game }
+      else
+        format.html { render action: "new" }
+        format.json { render json: @staff_member.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 
   def edit
   end
@@ -19,6 +37,15 @@ class GameStaffMembersController < ApplicationController
   end
 
   private
+
+  def authorize_game_staff_member
+    authorize! :create, GameStaffMember.new(:game => @game)
+  end
+
+  def load_and_authorize_staff_member
+    @staff_member = @team.staff_members.build(params[:staff_member])
+    authorize! :create, @staff_member
+  end
 
   def fix_params
     return params unless params[:game] && params[:game][:game_staff_members_attributes]

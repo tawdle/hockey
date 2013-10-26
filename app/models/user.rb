@@ -40,6 +40,10 @@ class User < ActiveRecord::Base
       :authorizable_id => authorizable.id).count > 0 }
   end
 
+  def marker_of_game?(game)
+    game && (marker_of?(game.home_team.league) || marker_of?(game.visiting_team.league))
+  end
+
   def following?(target)
     target = target.user unless target.is_a? User
     Following.where(:user_id => id, :target_id => target.id).any?

@@ -18,25 +18,24 @@ class Ability
       user.manager_of?(game.home_team.try(:league)) || user.manager_of?(game.visiting_team.try(:league))
     end
 
-    can :mark, Game do |game|
-      user.marker_of?(game.home_team.league) || user.marker_of?(game.visiting_team.league)
-    end
-
-    can [:start, :stop], Game do |game|
-      user.marker_of?(game.home_team.league) || user.marker_of?(game.visiting_team.league)
+    can [:mark, :start, :stop], Game do |game|
+      user.marker_of_game?(game)
     end
 
     can :edit, GameOfficial do |game_official|
-      game = game_official.try(:game)
-      game && (user.marker_of?(game.home_team.league) || user.marker_of?(game.visiting_team.league))
+      user.marker_of_game?(game_official.try(:game))
+    end
+
+    can :manage, GameStaffMember do |gsm|
+      user.marker_of_game?(gsm.try(:game))
     end
 
     can :manage, Goal do |goal|
-      goal && goal.game && (user.marker_of?(goal.game.home_team.league) || user.marker_of?(goal.game.visiting_team.league))
+      user.marker_of_game?(goal.try(:game))
     end
 
     can :manage, Penalty do |penalty|
-      penalty && penalty.game && (user.marker_of?(penalty.game.home_team.league) || user.marker_of?(penalty.game.visiting_team.league))
+      user.marker_of_game?(penalty.try(:game))
     end
 
     can [:edit, :update], User do |user_object|
@@ -64,7 +63,7 @@ class Ability
     end
 
     can :manage, StaffMember do |staff_member|
-      user.manager_of?(staff_member.team)
+      user.manager_of?(staff_member.team) || user.marker_of?(staff_member.team.league)
     end
 
     can :read, Team

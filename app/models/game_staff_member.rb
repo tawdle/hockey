@@ -7,7 +7,7 @@ class GameStaffMember < ActiveRecord::Base
   validates_presence_of :staff_member
   validate :staff_member_is_on_team
 
-  attr_accessible :staff_member_id, :role
+  attr_accessible :game, :staff_member_id, :staff_member, :role
 
   scope :for_team, lambda {|team| joins(:staff_member).where(:staff_members => {:team_id => team.id }) }
 

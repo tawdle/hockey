@@ -1,7 +1,7 @@
 <% team = @game.send("#{home_or_visiting}_team") %>
 <h3>Checked in for <%= team.name %></h3>
 
-<% game_staff_members = @game.game_staff_members.for_team(team) %>
+<% game_staff_members = @game.game_staff_members.for_team(team).sort_by {|gsm| StaffMember::Roles.index(gsm.role) } %>
 
 <% if game_staff_members.any? %>
   <dl class="dl-horizontal">

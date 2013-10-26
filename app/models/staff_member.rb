@@ -3,7 +3,7 @@ class StaffMember < ActiveRecord::Base
   belongs_to :team
   belongs_to :user # option, after being claimed
 
-  Roles = [:coach, :assistant_coach, :manager, :safety_attendant]
+  Roles = [:head_coach, :assistant_coach, :manager, :safety_attendant]
 
   validates_presence_of :name
   validates_presence_of :team
