@@ -22,8 +22,13 @@ class League < ActiveRecord::Base
 
   def accepted_invitation_to_manage(user, invitation)
     League.transaction do
-      Authorization.create!(:user => user, :role => :manager, :authorizable => self)
-      ActivityFeedItem.create!(:message => "#{user.at_name} became a manager of #{name}")
+      begin
+        Authorization.create!(:user => user, :role => :manager, :authorizable => self)
+        ActivityFeedItem.create!(:message => "#{user.at_name} became a manager of #{name}")
+      rescue ActiveRecord::RecordInvalid => e
+        # If the authorization already exists, fail silently
+        raise unless e.message == "Validation failed: User has already been taken"
+      end
     end
   end
 
@@ -33,8 +38,13 @@ class League < ActiveRecord::Base
 
   def accepted_invitation_to_mark(user, invitation)
     League.transaction do
-      Authorization.create!(:user => user, :role => :marker, :authorizable => self)
-      ActivityFeedItem.create!(:message => "#{user.at_name} became a marker of #{name}")
+      begin
+        Authorization.create!(:user => user, :role => :marker, :authorizable => self)
+        ActivityFeedItem.create!(:message => "#{user.at_name} became a marker of #{name}")
+      rescue ActiveRecord::RecordInvalid => e
+        # If the authorization already exists, fail silently
+        raise unless e.message == "Validation failed: User has already been taken"
+      end
     end
   end
 

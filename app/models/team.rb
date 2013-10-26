@@ -38,20 +38,17 @@ class Team < ActiveRecord::Base
 
   def accepted_invitation_to_manage(user, invitation)
     Team.transaction do
-      Authorization.create!(:user => user, :role => :manager, :authorizable => self)
-      ActivityFeedItem.create!(:message => "@#{user.name} became a manager of #{at_name}")
+      begin
+        Authorization.create!(:user => user, :role => :manager, :authorizable => self)
+        ActivityFeedItem.create!(:message => "@#{user.name} became a manager of #{at_name}")
+      rescue ActiveRecord::RecordInvalid => e
+        # If the authorization already exists, fail silently
+        raise unless e.message == "Validation failed: User has already been taken"
+      end
     end
   end
 
   def declined_invitation_to_manage(user, invitation)
-    # Whatevs
-  end
-
-  def accepted_invitation_to_join(user, invitation)
-    ActivityFeedItem.create!(:message => "#{user.at_name} joined #{at_name}")
-  end
-
-  def declined_invitation_to_join(user, invitation)
     # Whatevs
   end
 

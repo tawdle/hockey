@@ -32,6 +32,15 @@ describe League do
     end
     let(:action) { league.accepted_invitation_to_manage(user, invitation) }
     it_behaves_like "an action that creates an activity feed item"
+    context "with an already-existing authorization" do
+      let!(:authorization) { FactoryGirl.create(:authorization, :user => user, :role => :manager, :authorizable => league) }
+
+      it "should not fail" do
+        expect {
+          league.accepted_invitation_to_manage(user, invitation)
+        }.not_to raise_exception
+      end
+    end
   end
   describe "#accepted_invitation_to_mark" do
     let(:league) { FactoryGirl.build(:league) }
@@ -44,6 +53,15 @@ describe League do
       }.to change { league.markers.count }.by(1)
     end
 
+    context "with an already-existing authorization" do
+      let!(:authorization) { FactoryGirl.create(:authorization, :user => user, :role => :marker, :authorizable => league) }
+
+      it "should not fail" do
+        expect {
+          league.accepted_invitation_to_mark(user, invitation)
+        }.not_to raise_exception
+      end
+    end
     let(:action) { league.accepted_invitation_to_mark(user, invitation) }
     it_behaves_like "an action that creates an activity feed item"
   end
