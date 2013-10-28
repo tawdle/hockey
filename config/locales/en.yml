@@ -6,6 +6,10 @@ en:
     attributes:
       league:
         classification: "Class"
+      location:
+        address_1: "Address"
+        state: "State/Province/Region"
+        zip: "ZIP/Postal Code"
 
   league:
     classifications:

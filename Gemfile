@@ -41,6 +41,7 @@ gem 'cloudinary'
 gem 'devise'
 gem 'delayed_job_active_record'
 gem 'figaro'
+gem 'i18n_country_select'
 gem 'state_machine'
 gem 'symbolize'
 

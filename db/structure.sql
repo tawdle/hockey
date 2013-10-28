@@ -451,7 +451,16 @@ CREATE TABLE locations (
     id integer NOT NULL,
     name character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    address_1 character varying(255),
+    address_2 character varying(255),
+    city character varying(255),
+    state character varying(255),
+    zip character varying(255),
+    country character varying(255),
+    telephone character varying(255),
+    email character varying(255),
+    website character varying(255)
 );
 
 
@@ -1443,3 +1452,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131024200911');
 INSERT INTO schema_migrations (version) VALUES ('20131025204631');
 
 INSERT INTO schema_migrations (version) VALUES ('20131028170218');
+
+INSERT INTO schema_migrations (version) VALUES ('20131028213050');
