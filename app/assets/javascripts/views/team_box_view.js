@@ -20,7 +20,10 @@ App.TeamBoxView = Backbone.View.extend({
 
   addGoal: function(e) {
     e.preventDefault();
-    var goal = new App.Goal({team_id: this.teamId}, {collection: App.goals});
+    // We wait here because we need the server's id for this new goal.
+    // Otherwise, when the update comes in asynchronsously, it removes our model
+    // from the collection as it doesn't recognize it as the same object.
+    var goal = App.goals.create({ team_id: this.teamId }, { wait: true });
     this.goalEditor.edit(goal);
   },
 
