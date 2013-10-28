@@ -2,4 +2,37 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    attributes:
+      league:
+        classification: "Class"
+
+  league:
+    classifications:
+      a: "A"
+      b: "B"
+      c: "C"
+      aa: "AA"
+      bb: "BB"
+      cc: "CC"
+      aaa: "AAA"
+    divisions:
+      prenovice: "Pre-Novice"
+      initiation: "Initiation"
+      novice: "Novice"
+      atom: "Atom"
+      pee_wee: "Peewee"
+      bantam: "Bantam"
+      midget: "Midget"
+      intermediate: "Intermediate"
+      juvenile: "Juvenile"
+      secondary: "High School"
+      junior: "Junior"
+      major_junion: "Major Junior"
+      other_junior: "Other Junior"
+      adult_recreational: "Adult Recreational"
+      senior: "Senior"
+      college: "College"
+      university: "University"
+      house: "House"
+

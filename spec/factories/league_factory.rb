@@ -5,6 +5,8 @@ FactoryGirl.define do
     sequence :name do |n|
       "league #{n}"
     end
+    classification :aa
+    division :bantam
 
     trait :with_manager do
       after :create do |league|

@@ -1,9 +1,14 @@
 class League < ActiveRecord::Base
+  Divisions = %w(prenovice initiation novice atom pee_wee bantam midget intermediate juvenile secondary junior major_junior other_junior adult_recreational senior college university house).map(&:to_sym)
+  Classifications = %w(a b c aa bb cc aaa).map(&:to_sym)
+
   has_many :teams, :dependent => :destroy
   has_many :authorizations, :as => :authorizable
   has_many :league_officials
   has_many :officials, :through => :league_officials
-  attr_accessible :name, :logo, :logo_cache
+  attr_accessible :name, :logo, :logo_cache, :division, :classification
+  symbolize :classification, :in => Classifications, :allow_nil => true
+  symbolize :division, :in => Divisions
 
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
 

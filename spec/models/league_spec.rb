@@ -2,22 +2,33 @@ require 'spec_helper'
 
 describe League do
   describe "#validations" do
-    before do
-      @league = FactoryGirl.build(:league)
-    end
+    let(:league) { FactoryGirl.build(:league) }
+
     it "generates a valid object" do
-      FactoryGirl.build(:league).should be_valid
+      league.should be_valid
     end
     it "requires a name" do
-      @league.name = ""
-      @league.should_not be_valid
-      @league.name = nil
-      @league.should_not be_valid
+      league.name = ""
+      league.should_not be_valid
+      league.name = nil
+      league.should_not be_valid
     end
     it "requires league's name be unique" do
       other_league = FactoryGirl.create(:league)
-      @league.name = other_league.name
-      @league.should_not be_valid
+      league.name = other_league.name
+      league.should_not be_valid
+    end
+    it "allows an empty classification" do
+      league.classification = nil
+      league.should be_valid
+    end
+    it "requires a classification to be valid" do
+      league.classification = :foo
+      league.should_not be_valid
+    end
+    it "requires a valid division" do
+      league.division = :foo
+      league.should_not be_valid
     end
   end
   describe "#accepted_invitation_to_manage" do

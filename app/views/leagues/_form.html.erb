@@ -16,6 +16,16 @@
     <%= f.text_field :name %>
   </div>
 
+  <div class="field">
+    <%= f.label :division %>
+    <%= f.select :division, League::Divisions.map {|d| [t("league.divisions.#{d}"), d]} %>
+  </div>
+
+  <div class="field">
+    <%= f.label :classification %>
+    <%= f.select :classification, League::Classifications.map {|c| [t("league.classifications.#{c}"), c]}, :include_blank => true %>
+  </div>
+
   <%= f.hidden_field :logo_cache %>
 
   <div class="field">

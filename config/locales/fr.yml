@@ -1,0 +1,40 @@
+fr:
+  activerecord:
+    attributes:
+      league:
+        classification: "Class"
+
+  league:
+    classifications:
+      a: "A"
+      b: "B"
+      c: "C"
+      aa: "AA"
+      bb: "BB"
+      cc: "CC"
+      AAA: "AAA"
+    divisions:
+      prenovice: "Pré-Novice"
+      initiation: "Initiation"
+      novice: "Novice"
+      atom: "Atome"
+      pee_wee: "Pee-Wee"
+      bantam: "Bantam"
+      midget: "midget"
+      intermediate: "Intermédiaire"
+      juvenile: "Juvénile"
+      secondary: "Secondaire"
+      junior: "Junior"
+      major_junion: "Junior Majeur"
+      other_junior: "Junior Autre"
+      adult_recreational: "Adulte Récréatif"
+      senior: "Sénior"
+      college: "Collégial"
+      university: "Universitaire"
+      house: "Maison"
+
+  
+
+
+
+
