@@ -14,11 +14,11 @@ class Ability
 
     can :read, Game
 
-    can :manage, Game do |game|
+    can [:create, :update, :destroy], Game do |game|
       user.manager_of?(game.home_team.try(:league)) || user.manager_of?(game.visiting_team.try(:league))
     end
 
-    can [:mark, :start, :stop], Game do |game|
+    can [:mark, :activate, :complete, :pause, :start, :stop], Game do |game|
       user.marker_of_game?(game)
     end
 

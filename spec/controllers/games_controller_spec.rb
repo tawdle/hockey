@@ -1,9 +1,10 @@
 require 'spec_helper'
 
 describe GamesController do
-  let(:league) { FactoryGirl.create(:league, :with_manager, :with_team) }
+  let(:league) { FactoryGirl.create(:league, :with_manager, :with_marker, :with_team) }
   let(:manager) { league.managers.first }
   let(:game) { FactoryGirl.create(:game, :home_team => league.teams.first) }
+  let(:marker) { league.markers.first }
 
   before do
     request.env["HTTP_REFERER"] = "/"
@@ -77,6 +78,21 @@ describe GamesController do
         }.to change { game.reload.start_time.to_i }.to(new_start.to_i)
       end
     end
+    describe "#destroy" do
+      def do_request
+        delete :destroy, :id => game.to_param
+      end
+
+      it "should change the game's state to canceled" do
+        expect {
+          do_request
+        }.to change { game.reload.canceled? }.to(true)
+      end
+    end
+  end
+
+  context "with a logged in marker" do
+    before { sign_in(marker) }
 
     describe "#activate" do
       def do_request
@@ -157,16 +173,5 @@ describe GamesController do
       end
     end
 
-    describe "#destroy" do
-      def do_request
-        delete :destroy, :id => game.to_param
-      end
-
-      it "should change the game's state to canceled" do
-        expect {
-          do_request
-        }.to change { game.reload.canceled? }.to(true)
-      end
-    end
   end
 end
