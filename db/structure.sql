@@ -272,7 +272,8 @@ CREATE TABLE games (
     updated_at timestamp without time zone NOT NULL,
     clock_id integer,
     period integer,
-    period_duration integer DEFAULT 900 NOT NULL
+    period_duration integer DEFAULT 900 NOT NULL,
+    number character varying(255)
 );
 
 
@@ -1454,3 +1455,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131025204631');
 INSERT INTO schema_migrations (version) VALUES ('20131028170218');
 
 INSERT INTO schema_migrations (version) VALUES ('20131028213050');
+
+INSERT INTO schema_migrations (version) VALUES ('20131029001256');

@@ -81,7 +81,7 @@ class Game < ActiveRecord::Base
   attr_accessor :updater
   attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id,
     :start_time, :updater, :player_ids, :period_duration, :period_minutes, :game_players_attributes,
-    :referee_ids, :linesman_ids, :game_staff_members_attributes
+    :referee_ids, :linesman_ids, :game_staff_members_attributes, :number
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
