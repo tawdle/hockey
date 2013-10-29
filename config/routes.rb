@@ -41,6 +41,8 @@ Hockey::Application.routes.draw do
     end
   end
 
+  resources :system_names, :only => [:show]
+
   devise_for :users
 
 

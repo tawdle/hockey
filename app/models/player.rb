@@ -31,8 +31,12 @@ class Player < ActiveRecord::Base
     "#{jersey_number} - #{name} "
   end
 
+  def team_and_jersey
+    "#{team.name}##{jersey_number}"
+  end
+
   def at_name
-    user.try(:at_name) || "@#{team.name}##{jersey_number}"
+    user.try(:at_name) || "@#{team_and_jersey}"
   end
 
   def as_json(options={})

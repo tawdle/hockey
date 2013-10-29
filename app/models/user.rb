@@ -7,27 +7,20 @@ class User < ActiveRecord::Base
 
   # Setup accessible (or protected) attributes for your model
   attr_accessor :avatar_cache
-  attr_accessible :email, :password, :password_confirmation, :remember_me, :name
+  attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :avatar, :avatar_cache
-
-  NameFormat = "[[:alpha:]\\d\\-_]+"
-
-  validates_presence_of :name
-  validates_uniqueness_of :name, :case_sensitive => false
-  validates_format_of :name, :with => /\A#{NameFormat}\Z/, :message => 'can contain only alphanumeric characters'
-  validates_length_of :name, :within => 3..20
-  validates_uniqueness_of :nameable_id, :scope => :nameable_type, :allow_nil => true
+  attr_readonly :name
 
   has_many :authorizations, :dependent => :destroy
-
   has_many :players, :dependent => :destroy
   has_many :teams, :through => :players
-
-  belongs_to :nameable, :polymorphic => true
+  has_one :system_name, :as => :nameable
 
   mount_uploader :avatar, AvatarUploader
 
+  before_validation :set_nameable
   before_update :update_mentions, :if => :name_changed?
+  before_create :cache_name
 
   # Add helpers for authorizations
   Authorization::GlobalRoles.each do |role|
@@ -45,8 +38,8 @@ class User < ActiveRecord::Base
   end
 
   def following?(target)
-    target = target.user unless target.is_a? User
-    Following.where(:user_id => id, :target_id => target.id).any?
+    system_name = target.system_name
+    Following.where(:user_id => id, :system_name_id => system_name.id).any?
   end
 
   def at_name
@@ -80,5 +73,15 @@ class User < ActiveRecord::Base
 
   def update_mentions
     Mention.rename(self, name_was, name)
+  end
+
+  def cache_name
+    self.name = system_name.name
+  end
+
+  def set_nameable
+    # Not sure why ActiveRecord doesn't do this for us
+    system_name || build_system_name
+    system_name.nameable = self
   end
 end

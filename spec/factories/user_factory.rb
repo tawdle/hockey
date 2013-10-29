@@ -9,7 +9,12 @@ FactoryGirl.define do
       "user#{n}@example.com"
     end
     password "abcd1234"
+
+    after(:build) do |user|
+      user.system_name ||= build(:system_name, :nameable => user)
+    end
   end
+
   factory :admin, :parent => :user do
     after(:create) do |u|
       create(:authorization, :user => u, :role => :admin)

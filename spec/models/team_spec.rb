@@ -16,8 +16,8 @@ describe Team do
       team.league = nil
       team.should_not be_valid
     end
-    it "should require a user" do
-      team.user = nil
+    it "should require a system name" do
+      team.system_name = nil
       team.should_not be_valid
     end
   end
@@ -25,8 +25,8 @@ describe Team do
   describe "#name" do
     let(:team) { FactoryGirl.build(:team) }
 
-    it "should delegate to the user object" do
-      team.name.should == team.user.name
+    it "should delegate to the system name" do
+      team.name.should == team.system_name.name
     end
   end
 

@@ -54,7 +54,7 @@ describe TeamsController do
 
     describe "#create" do
       def do_request
-        post :create, :team => {:full_name => "My New Team", :user_attributes => {:name => "MyNewTeam" } }, :league_id => league.to_param
+        post :create, :team => {:full_name => "My New Team", :system_name_attributes => {:name => "MyNewTeam" } }, :league_id => league.to_param
       end
 
       it "should work" do

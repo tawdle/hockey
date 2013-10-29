@@ -10,11 +10,11 @@ describe FollowingsController do
     describe "#create" do
       def do_request
         request.env["HTTP_REFERER"] = "/"
-        post :create, :following => { :user_id => user.to_param, :target_id => other_user.to_param }
+        post :create, :following => { :user_id => user.to_param, :system_name_id => other_user.system_name.to_param }
       end
 
       it "should create the following" do
-        expect { 
+        expect {
           do_request
         }.to change { Following.count }.by(1)
       end

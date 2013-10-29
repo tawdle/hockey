@@ -139,9 +139,9 @@ ALTER SEQUENCE delayed_jobs_id_seq OWNED BY delayed_jobs.id;
 CREATE TABLE followings (
     id integer NOT NULL,
     user_id integer,
-    target_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    system_name_id integer
 );
 
 
@@ -491,9 +491,9 @@ ALTER SEQUENCE locations_id_seq OWNED BY locations.id;
 CREATE TABLE mentions (
     id integer NOT NULL,
     activity_feed_item_id integer,
-    user_id integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    system_name_id integer
 );
 
 
@@ -661,6 +661,37 @@ ALTER SEQUENCE staff_members_id_seq OWNED BY staff_members.id;
 
 
 --
+-- Name: system_names; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE system_names (
+    id integer NOT NULL,
+    name character varying(255) NOT NULL,
+    nameable_id integer NOT NULL,
+    nameable_type character varying(255) NOT NULL
+);
+
+
+--
+-- Name: system_names_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE system_names_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: system_names_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE system_names_id_seq OWNED BY system_names.id;
+
+
+--
 -- Name: teams; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -747,9 +778,7 @@ CREATE TABLE users (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     name character varying(255),
-    avatar character varying(255),
-    nameable_type character varying(255),
-    nameable_id integer
+    avatar character varying(255)
 );
 
 
@@ -896,6 +925,13 @@ ALTER TABLE ONLY players ALTER COLUMN id SET DEFAULT nextval('players_id_seq'::r
 --
 
 ALTER TABLE ONLY staff_members ALTER COLUMN id SET DEFAULT nextval('staff_members_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY system_names ALTER COLUMN id SET DEFAULT nextval('system_names_id_seq'::regclass);
 
 
 --
@@ -1064,6 +1100,14 @@ ALTER TABLE ONLY staff_members
 
 
 --
+-- Name: system_names_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY system_names
+    ADD CONSTRAINT system_names_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: team_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1103,10 +1147,10 @@ CREATE INDEX delayed_jobs_priority ON delayed_jobs USING btree (priority, run_at
 
 
 --
--- Name: index_followings_on_target_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_followings_on_system_name_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_followings_on_target_id ON followings USING btree (target_id);
+CREATE INDEX index_followings_on_system_name_id ON followings USING btree (system_name_id);
 
 
 --
@@ -1114,13 +1158,6 @@ CREATE INDEX index_followings_on_target_id ON followings USING btree (target_id)
 --
 
 CREATE INDEX index_followings_on_user_id ON followings USING btree (user_id);
-
-
---
--- Name: index_followings_on_user_id_and_target_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_followings_on_user_id_and_target_id ON followings USING btree (user_id, target_id);
 
 
 --
@@ -1257,10 +1294,10 @@ CREATE INDEX index_mentions_on_activity_feed_item_id ON mentions USING btree (ac
 
 
 --
--- Name: index_mentions_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_mentions_on_system_name_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_mentions_on_user_id ON mentions USING btree (user_id);
+CREATE INDEX index_mentions_on_system_name_id ON mentions USING btree (system_name_id);
 
 
 --
@@ -1289,6 +1326,20 @@ CREATE INDEX index_staff_members_on_team_id ON staff_members USING btree (team_i
 --
 
 CREATE INDEX index_staff_members_on_user_id ON staff_members USING btree (user_id);
+
+
+--
+-- Name: index_system_names_on_lowercase_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_system_names_on_lowercase_name ON system_names USING btree (lower((name)::text));
+
+
+--
+-- Name: index_system_names_on_nameable_id_and_nameable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_system_names_on_nameable_id_and_nameable_type ON system_names USING btree (nameable_id, nameable_type);
 
 
 --
@@ -1457,3 +1508,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131028170218');
 INSERT INTO schema_migrations (version) VALUES ('20131028213050');
 
 INSERT INTO schema_migrations (version) VALUES ('20131029001256');
+
+INSERT INTO schema_migrations (version) VALUES ('20131029140247');

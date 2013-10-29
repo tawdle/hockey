@@ -6,7 +6,7 @@
   <% if following %>
     <%= form_for following do |f| %>
       <%= f.hidden_field :user_id %>
-      <%= f.hidden_field :target_id %>
+      <%= f.hidden_field :system_name_id %>
       <%= f.submit "Follow", :class => "btn btn-mini btn-primary" %>
     <% end %>
   <% elsif unfollowing %>

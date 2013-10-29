@@ -51,7 +51,7 @@ describe LocationsController do
 
     describe "#create" do
       def do_request
-        post :create, :location => {:name => "My New Location" }
+        post :create, :location => {:name => "My New Location", :address_1 => "87 Truman Road", :city => "Newton Centre", :state => "MA", :zip => "02159", :country => "US" }
       end
 
       it "should create a new location" do

@@ -7,7 +7,10 @@ FactoryGirl.define do
     end
     league
     manager { build(:user) }
-    association :user
+
+    after(:build) do |team|
+      team.system_name ||= build(:system_name, :nameable => team)
+    end
 
     trait :with_players do
       players { [ build(:player, :team => nil), build(:player, :team => nil) ] }
