@@ -1,15 +1,35 @@
+<div class="pull-left">
+  <a href="<%= @location.map_url %>" target="_blank">
+    <%= image_tag(@location.map_image_url, :style => "width: 200px; height: 200px; border: 1px solid grey; margin-right: 10px;") %>
+  </a>
+</div>
+
 <address>
-  <strong style="font-variant: small-caps;"><%= @location.name %></strong><br>
-  <%= @location.address_1 %>
-  <%= link_to "Map", @location.map_url, :target => "_blank", :class => "btn btn-mini" %><br>
+  <strong style="font-variant: small-caps; font-size: 120%;"><%= @location.name %></strong><br>
+  <%= @location.address_1 %><br>
   <% if @location.address_2.present? %>
     <%= @location.address_2 %><br>
   <% end %>
   <%= @location.city %>, <%= @location.state %> &nbsp; <%= @location.zip %><br>
   <%= t(@location.country, :scope => :countries) %><br>
+  <br>
+
+  <% if @location.telephone %>
+    <%= link_to @location.telephone, "tel:#{@location.telephone}" %><br>
+  <% end %>
+
+  <% if @location.email %>
+    <%= link_to @location.email, "mailto:#{@location.email}", :target => "_blank" %><br>
+  <% end %>
+
+  <% if @location.website %>
+    <%= link_to @location.website, @location.website, :target => "_blank" %><br>
+  <% end %>
+
 </address>
 
-<div>
-</div>
+<div class="clearfix"></div>
 
-<%= link_to "Back", :back %>
+<div style="margin-top: 10px;">
+  <%= link_to "Back", :back %>
+</div>

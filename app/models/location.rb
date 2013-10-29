@@ -10,7 +10,17 @@ class Location < ActiveRecord::Base
   validates_presence_of :country
 
   def map_url
-    query = {:q => [address_1, address_2, city, state, zip, country].compact.join(",") }.to_query
-    "https://www.google.com/maps/?#{query}"
+    "https://www.google.com/maps/?#{url_encoded_address(:q)}"
   end
+
+  def map_image_url
+    "https://maps.googleapis.com/maps/api/staticmap?zoom=13&size=200x200&scale=2&#{url_encoded_address(:markers)}&sensor=false"
+  end
+
+  private
+
+  def url_encoded_address(param_name)
+    { param_name => [address_1, address_2, city, state, zip, country].compact.join(",") }.to_query
+  end
+
 end
