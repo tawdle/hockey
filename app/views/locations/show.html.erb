@@ -1,3 +1,15 @@
-<h2 class="page-header">Location: <%= @location.name %></h2>
+<address>
+  <strong style="font-variant: small-caps;"><%= @location.name %></strong><br>
+  <%= @location.address_1 %>
+  <%= link_to "Map", @location.map_url, :target => "_blank", :class => "btn btn-mini" %><br>
+  <% if @location.address_2.present? %>
+    <%= @location.address_2 %><br>
+  <% end %>
+  <%= @location.city %>, <%= @location.state %> &nbsp; <%= @location.zip %><br>
+  <%= t(@location.country, :scope => :countries) %><br>
+</address>
+
+<div>
+</div>
 
 <%= link_to "Back", :back %>

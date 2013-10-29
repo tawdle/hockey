@@ -8,4 +8,9 @@ class Location < ActiveRecord::Base
   validates_presence_of :state
   validates_presence_of :zip
   validates_presence_of :country
+
+  def map_url
+    query = {:q => [address_1, address_2, city, state, zip, country].compact.join(",") }.to_query
+    "https://www.google.com/maps/?#{query}"
+  end
 end
