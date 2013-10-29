@@ -17,6 +17,25 @@ class Location < ActiveRecord::Base
     "https://maps.googleapis.com/maps/api/staticmap?zoom=13&size=200x200&scale=2&#{url_encoded_address(:markers)}&sensor=false"
   end
 
+  def managers
+    User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class, :authorizable_id => self.id})
+  end
+
+  def accepted_invitation_to_manage(user, invitation)
+    Location.transaction do
+      begin
+        Authorization.create!(:user => user, :role => :manager, :authorizable => self)
+        ActivityFeedItem.create!(:message => "#{user.at_name} became a manager of #{name}")
+      rescue ActiveRecord::RecordInvalid => e
+        # If the authorization already exists, fail silently
+        raise unless e.message == "Validation failed: User has already been taken"
+      end
+    end
+  end
+
+  def declined_invitation_to_manage(user, invitation)
+  end
+
   private
 
   def url_encoded_address(param_name)

@@ -1,32 +1,45 @@
-<div class="pull-left">
-  <a href="<%= @location.map_url %>" target="_blank">
-    <%= image_tag(@location.map_image_url, :style => "width: 200px; height: 200px; border: 1px solid grey; margin-right: 10px;") %>
-  </a>
+<div class="row">
+  <div class="span9">
+    <div class="pull-left">
+      <a href="<%= @location.map_url %>" target="_blank">
+        <%= image_tag(@location.map_image_url, :style => "width: 200px; height: 200px; border: 1px solid grey; margin-right: 10px;") %>
+      </a>
+    </div>
+
+    <address>
+      <strong style="font-variant: small-caps; font-size: 120%;"><%= @location.name %></strong><br>
+      <%= @location.address_1 %><br>
+      <% if @location.address_2.present? %>
+        <%= @location.address_2 %><br>
+      <% end %>
+      <%= @location.city %>, <%= @location.state %> &nbsp; <%= @location.zip %><br>
+      <%= t(@location.country, :scope => :countries) %><br>
+      <br>
+
+      <% if @location.telephone %>
+        <%= link_to @location.telephone, "tel:#{@location.telephone}" %><br>
+      <% end %>
+
+      <% if @location.email %>
+        <%= link_to @location.email, "mailto:#{@location.email}", :target => "_blank" %><br>
+      <% end %>
+
+      <% if @location.website %>
+        <%= link_to @location.website, @location.website, :target => "_blank" %><br>
+      <% end %>
+
+    </address>
+  </div>
+
+
+  <div class="span3">
+    <div class="well" style="margin-top: 10px;">
+      <h3 class="page-header">Managers <%= link_to("+", new_invitation_path(:predicate => :manage, :target_id => @location.to_param, :target_type => "Location"), :class => "btn") if can?(:manage, @location) %></h3>
+      <%= @location.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
+    </div>
+  </div>
+
 </div>
-
-<address>
-  <strong style="font-variant: small-caps; font-size: 120%;"><%= @location.name %></strong><br>
-  <%= @location.address_1 %><br>
-  <% if @location.address_2.present? %>
-    <%= @location.address_2 %><br>
-  <% end %>
-  <%= @location.city %>, <%= @location.state %> &nbsp; <%= @location.zip %><br>
-  <%= t(@location.country, :scope => :countries) %><br>
-  <br>
-
-  <% if @location.telephone %>
-    <%= link_to @location.telephone, "tel:#{@location.telephone}" %><br>
-  <% end %>
-
-  <% if @location.email %>
-    <%= link_to @location.email, "mailto:#{@location.email}", :target => "_blank" %><br>
-  <% end %>
-
-  <% if @location.website %>
-    <%= link_to @location.website, @location.website, :target => "_blank" %><br>
-  <% end %>
-
-</address>
 
 <div class="clearfix"></div>
 

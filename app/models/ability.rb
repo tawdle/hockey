@@ -58,8 +58,8 @@ class Ability
       official.leagues.any? {|league| user.manager_of?(league) }
     end
 
-    can :manage, Location do
-      user.admin?
+    can :manage, Location do |location|
+      user.admin? || user.manager_of?(location)
     end
 
     can :manage, StaffMember do |staff_member|
@@ -87,9 +87,9 @@ class Ability
     end
 
     can :create, Invitation do |invitation|
+      user.admin? ||
       user.manager_of?(invitation.target) ||
-        (invitation.target.is_a?(Team) && user.manager_of?(invitation.target.league)) ||
-        (invitation.target.is_a?(League) && user.admin?)
+      (invitation.target.is_a?(Team) && user.manager_of?(invitation.target.league))
     end
 
     can [:accept, :decline], Invitation do |invitation|

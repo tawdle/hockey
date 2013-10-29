@@ -1,0 +1,27 @@
+<p>Bonjour!</p>
+
+<p><%= @invitation.creator.name %> vous a identifié comme responsable de 
+  <%= @invitation.target.name %>.</p>
+
+<p>Cliquez sur le lien ci-dessous pour accepter l'invitation de <%= @invitation.creator.name %>
+  et créer un compte PowerPlay gratuit pour votre établissement récréatif. </p>
+
+<p><%= link_to "J'accepte!", accept_invitation_url(@invitation) %></p>
+
+<p>Si ce lien ne fonctionne pas, copiez-collez ce lien dans votre fureteur.</p>
+
+<p><%= accept_invitation_url(@invitation) %></p>
+
+<p>Hello!</p>
+
+<p><%= @invitation.creator.name %> has identified you as being responsible for
+  <%= @invitation.target.name %>. </p>
+
+<p>Click the link below accept <%= @invitation.creator.name %>'s invitation and create a free account
+  to manage your facility at PowerPlay.<p>
+
+<p><%= link_to "I accept!", accept_invitation_url(@invitation) %></p>
+
+<p>If the link above doesn't work, please copy and paste the following line into your browser:</p>
+
+<p><%= accept_invitation_url(@invitation) %>

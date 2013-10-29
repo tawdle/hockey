@@ -33,6 +33,22 @@ describe InvitationMailer do
     end
   end
 
+  describe "manage_location" do
+    let(:location) { FactoryGirl.build(:league) }
+    let(:invitation) { FactoryGirl.build(:invitation, :target => location, :code => "foo") }
+    let(:mail) { InvitationMailer.manage_location(invitation) }
+
+    it "renders the headers" do
+      mail.subject.should eq("Invitation to Manage Location")
+      mail.to.should eq([invitation.email])
+      mail.from.should eq(["mailer@powerplay.io"])
+    end
+
+    it "renders the body" do
+      mail.body.encoded.should match("Hello!")
+    end
+  end
+
   describe "manage_team" do
     let(:team) { FactoryGirl.build(:team) }
     let(:invitation) { FactoryGirl.build(:invitation, :target => team, :code => "foo") }

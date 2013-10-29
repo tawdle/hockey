@@ -47,4 +47,10 @@ class InvitationMailer < ActionMailer::Base
     mail to: @invitation.email, subject: "Invitation to Claim Player"
   end
 
+  def manage_location(invitation)
+    @invitation = invitation
+
+    mail to: @invitation.email, subject: "Invitation to Manage Location"
+  end
+
 end

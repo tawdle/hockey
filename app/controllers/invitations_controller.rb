@@ -2,7 +2,7 @@ class InvitationsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource :except => [:new, :create]
 
-  Target_classes = [League, Team]
+  Target_classes = [League, Team, Location]
 
   def new
     target_class = params[:target_type] && params[:target_type].constantize
