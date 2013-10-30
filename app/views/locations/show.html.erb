@@ -16,19 +16,21 @@
       <%= t(@location.country, :scope => :countries) %><br>
       <br>
 
-      <% if @location.telephone %>
+      <% if @location.telephone.present? %>
         <%= link_to @location.telephone, "tel:#{@location.telephone}" %><br>
       <% end %>
 
-      <% if @location.email %>
+      <% if @location.email.present? %>
         <%= link_to @location.email, "mailto:#{@location.email}", :target => "_blank" %><br>
       <% end %>
 
-      <% if @location.website %>
+      <% if @location.website.present? %>
         <%= link_to @location.website, @location.website, :target => "_blank" %><br>
       <% end %>
 
     </address>
+
+    <%= link_to "Edit", edit_location_path(@location), :class => "btn" if can? :edit, @location %>
   </div>
 
 

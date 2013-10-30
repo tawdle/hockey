@@ -1,4 +1,6 @@
 class Location < ActiveRecord::Base
+  has_many :authorizations, :as => :authorizable
+
   attr_accessible :name, :address_1, :address_2, :city, :state, :zip, :country, :telephone, :email, :website
 
   validates_uniqueness_of :name
@@ -8,6 +10,8 @@ class Location < ActiveRecord::Base
   validates_presence_of :state
   validates_presence_of :zip
   validates_presence_of :country
+
+  scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
 
   def map_url
     "https://www.google.com/maps/?#{url_encoded_address(:q)}"
