@@ -34,16 +34,14 @@ class Ability
       user.marker_of_game?(goal.try(:game))
     end
 
-    can :manage, Penalty do |penalty|
-      user.marker_of_game?(penalty.try(:game))
+    can :create, Invitation do |invitation|
+      user.admin? ||
+      user.manager_of?(invitation.target) ||
+      (invitation.target.is_a?(Team) && user.manager_of?(invitation.target.league))
     end
 
-    can [:edit, :update], User do |user_object|
-      user_object == user
-    end
-
-    can [:impersonate], User do |user_object|
-      user.admin?
+    can [:accept, :decline], Invitation do |invitation|
+      user.persisted?
     end
 
     can :read, League
@@ -52,22 +50,32 @@ class Ability
       user.admin?
     end
 
+    can :manage, Location do |location|
+      user.admin? || user.manager_of?(location)
+    end
+
     can :read, Official
 
     can :manage, Official do |official|
       official.leagues.any? {|league| user.manager_of?(league) }
     end
 
-    can :manage, Location do |location|
-      user.admin? || user.manager_of?(location)
+    can :manage, Penalty do |penalty|
+      user.marker_of_game?(penalty.try(:game))
     end
 
     can :manage, StaffMember do |staff_member|
       user.manager_of?(staff_member.team) || user.marker_of?(staff_member.team.league)
     end
 
-    can :read, Team
     can :read, Player
+
+    can :manage, Player do |player|
+      user.manager_of?(player.team) || user.marker_of?(player.league)
+    end
+
+
+    can :read, Team
 
     can :create, Team do |team|
       league = team.league || League.managed_by(user).first
@@ -82,18 +90,12 @@ class Ability
       user.admin?
     end
 
-    can :manage, Player do |player|
-      user.manager_of?(player.team) || user.marker_of?(player.league)
+    can [:edit, :update], User do |user_object|
+      user_object == user
     end
 
-    can :create, Invitation do |invitation|
-      user.admin? ||
-      user.manager_of?(invitation.target) ||
-      (invitation.target.is_a?(Team) && user.manager_of?(invitation.target.league))
-    end
-
-    can [:accept, :decline], Invitation do |invitation|
-      user.persisted?
+    can [:impersonate], User do |user_object|
+      user.admin?
     end
 
     # Define abilities for the passed in user here. For example:
