@@ -29,7 +29,7 @@ class User < ActiveRecord::Base
 
   Authorization::ScopedRoles.each do |role|
     define_method("#{role}_of?") { |authorizable| authorizable && authorizations.where(
-      :role => role, :authorizable_type => authorizable.class.name,
+      :role => role, :authorizable_type => authorizable.class.base_class.name,
       :authorizable_id => authorizable.id).count > 0 }
   end
 
