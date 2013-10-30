@@ -1,6 +1,7 @@
 <% if current_user %>
   <%= render :partial => "invitations" %>
   <%= render :partial => "admin" if current_user.admin? %>
+  <%= render :partial => "locations" %>
   <%= render :partial => "teams" %>
   <%= render :partial => "leagues_managed" %>
   <%= render :partial => "teams_managed" %>
