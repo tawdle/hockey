@@ -3,7 +3,7 @@ class Game < ActiveRecord::Base
 
   state_machine :initial => :scheduled do
     event :activate do
-      transition :scheduled => :active
+      transition :scheduled => :active, :if => :ready_to_activate?
     end
 
     event :start do
@@ -54,7 +54,7 @@ class Game < ActiveRecord::Base
   belongs_to :location
   belongs_to :clock, :class_name => "Timer", :dependent => :destroy
 
-  has_many :activity_feed_items, :dependent => :destroy
+  has_many :activity_feed_items, :dependent => :destroy, :order => :created_at, :limit => 5
   has_many :goals, :inverse_of => :game, :dependent => :destroy
   has_many :penalties, :inverse_of => :game, :dependent => :destroy
   has_many :game_players, :inverse_of => :game, :dependent => :destroy
@@ -210,6 +210,38 @@ class Game < ActiveRecord::Base
 
   def possible_officials
     (home_team.league.officials + visiting_team.league.officials).sort_by(&:name).uniq
+  end
+
+
+  def ready_to_activate?
+    officials_checked_in? &&
+      home_team_players_checked_in? &&
+      home_team_staff_checked_in? &&
+      visiting_team_players_checked_in? &&
+      visiting_team_staff_checked_in?
+  end
+
+  MinPlayers = 6
+  MinStaff = 1
+
+  def officials_checked_in?
+    game_officials.any?
+  end
+
+  def home_team_players_checked_in?
+    players.where(:team_id => home_team_id).count >= MinPlayers
+  end
+
+  def home_team_staff_checked_in?
+    staff_members.where(:team_id => home_team_id).count >= MinStaff
+  end
+
+  def visiting_team_players_checked_in?
+    players.where(:team_id => visiting_team_id).count >= MinPlayers
+  end
+
+  def visiting_team_staff_checked_in?
+    staff_members.where(:team_id => visiting_team_id).count >= MinStaff
   end
 
   private

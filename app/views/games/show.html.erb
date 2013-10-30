@@ -60,15 +60,7 @@
   <% if @game.scheduled? %>
     <p>This game is scheduled to start <time class="timeago" datetime="<%= @game.start_time.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.start_time) %></time>.</p>
     <% if can? :mark, @game %>
-      <div class="actions">
-        <%= link_to "Activate", activate_game_path(@game), :class => "btn btn-primary", :method => :post %>
-        <%= link_to "Cancel", game_path(@game), :class => "btn btn-danger", :method => :delete, :confirm => "Cancel game?" %>
-      </div>
-      <%= render :partial => "game_officials" %>
-
-      <h2>Game Staff</h2>
-      <%= render :partial => "game_staff", :locals => { :home_or_visiting => :home } %>
-      <%= render :partial => "game_staff", :locals => { :home_or_visiting => :visiting } %>
+      <%= render :partial => "marker_checklist" %>
     <% end %>
   <% elsif @game.canceled? %>
     <p>This game has been canceled.</p>
@@ -77,33 +69,35 @@
   <% end %>
 <% end %>
 
-<h2>Activity Feed</h2>
+<div class="well">
+  <h2>Activity Feed</h2>
 
-<% if current_user %>
-  <%= form_for(ActivityFeedItem.new(:game => @game), :remote => true) do |f| %>
-    <div class="field pull-left" style="margin-right: 10px;" >
-      <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
-    </div>
+  <% if current_user %>
+    <%= form_for(ActivityFeedItem.new(:game => @game), :remote => true) do |f| %>
+      <div class="field pull-left" style="margin-right: 10px;" >
+        <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
+      </div>
 
-    <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
+      <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
 
-    <div class="actions">
-      <%= f.submit "Post", :class => "btn btn-primary" %>
-    </div>
+      <div class="actions">
+        <%= f.submit "Post", :class => "btn btn-primary" %>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
 
-<table id="feed-items" class="table">
-  <thead>
-    <tr>
-      <th>Avatar</th>
-      <th>Name</th>
-      <th>Message</th>
-      <th>When</th>
-    </tr>
-  </thead>
-  <tbody></tbody>
-</table>
+  <table id="feed-items" class="table">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Name</th>
+        <th>Message</th>
+        <th>When</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
 
 <script type="text/html" id="feed-item">
 <td><img src="{{= avatar_thumbnail_url }}" height="50" width="50"></td>

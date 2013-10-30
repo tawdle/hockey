@@ -17,14 +17,23 @@ FactoryGirl.define do
 
     trait :active do
       after(:build) do |game|
-        game.activate!
+        game.state = "active"
+        game.period = 0
+        game.build_clock
       end
     end
 
     trait :playing do
       after(:build) do |game|
-        game.activate!
-        game.start!
+        game.state = "playing"
+        game.period = 0
+        game.build_clock
+      end
+    end
+
+    trait :finished do
+      after(:build) do |game|
+        game.state = "finished"
       end
     end
   end

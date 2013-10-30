@@ -61,6 +61,10 @@ describe Game do
   describe "#states" do
     let(:game) { FactoryGirl.build(:game) }
 
+    before do
+      game.should_receive(:ready_to_activate?).and_return(true)
+    end
+
     it "goes through entire lifecycle" do
       game.activate!
       game.start!
