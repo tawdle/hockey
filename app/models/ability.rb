@@ -90,6 +90,10 @@ class Ability
       user.admin?
     end
 
+    can :manage, Tournament do |tournament|
+      user.admin? || user.manager_of?(tournament)
+    end
+
     can [:edit, :update], User do |user_object|
       user_object == user
     end

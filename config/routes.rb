@@ -43,6 +43,8 @@ Hockey::Application.routes.draw do
 
   resources :system_names, :only => [:show]
 
+  resources :tournaments
+
   devise_for :users
 
 

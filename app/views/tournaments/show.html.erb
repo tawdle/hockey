@@ -1,0 +1,29 @@
+<div class="row">
+  <div class="span9">
+    <h3>Tournament: <%= @tournament.name %></h3>
+    <dl class="dl-horizontal">
+      <dt>Division</dt>
+      <dd><%= t("league.divisions.#{@tournament.division}") %></dd>
+      <dt>Class</dt>
+      <dd><%= t("league.classifications.#{@tournament.classification}") %></dd>
+    </dl>
+
+    <%= link_to "Edit", edit_tournament_path(@tournament), :class => "btn" if can? :edit, @tournament %>
+  </div>
+
+
+  <div class="span3">
+    <div class="well" style="margin-top: 10px;">
+      <h3 class="page-header">Managers <%= link_to("+", new_invitation_path(:predicate => :manage, :target_id => @tournament.to_param, :target_type => "Tournament"), :class => "btn") if can?(:manage, @tournament) %></h3>
+      <%= @tournament.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
+    </div>
+  </div>
+
+</div>
+
+<div class="clearfix"></div>
+
+<div style="margin-top: 10px;">
+  <%= link_to "Back", :back %>
+</div>
+

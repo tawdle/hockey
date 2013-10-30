@@ -1,0 +1,26 @@
+<h1>Tournaments</h1>
+
+<br />
+
+<table class="table table-hover">
+  <tr>
+    <th style="width: 50px;">Logo</th>
+    <th>Name</th>
+    <th>Division</td>
+    <th>Class</td>
+    <th></th>
+  </tr>
+
+<% @tournaments.each do |tournament| %>
+  <tr>
+    <td><%= image_tag(tournament.logo_url(:thumbnail)) if tournament.logo.present? %></td>
+    <td><%= link_to tournament.name, tournament %></td>
+    <td><%= t("league.divisions.#{tournament.division}") %>
+    <td><%= t("league.classifications.#{tournament.classification}") %>
+    <td><%= link_to 'Edit', edit_league_path(tournament) if can? :edit, tournament %></td>
+  </tr>
+<% end %>
+</table>
+
+<%= link_to 'New Tournament', new_tournament_path, :class => "btn" %>
+
