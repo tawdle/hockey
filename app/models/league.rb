@@ -18,7 +18,7 @@ class League < ActiveRecord::Base
   mount_uploader :logo, LogoUploader
 
   def managers
-    User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class, :authorizable_id => self.id})
+    User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class.base_class, :authorizable_id => self.id})
   end
 
   def markers

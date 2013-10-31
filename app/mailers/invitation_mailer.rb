@@ -53,4 +53,11 @@ class InvitationMailer < ActionMailer::Base
     mail to: @invitation.email, subject: "Invitation to Manage Location"
   end
 
+  def manage_tournament(invitation)
+    @invitation = invitation
+
+    mail to: @invitation.email, subject: "Invitation to Manage Tournament"
+  end
+
+
 end
