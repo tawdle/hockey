@@ -31,7 +31,7 @@ Hockey::Application.routes.draw do
   resources :leagues do
     resources :teams, :only => [:new, :create]
     resources :games, :only => [:new, :create, :edit, :update]
-    resources :officials
+    resources :officials, :controller => "leagues/officials"
   end
 
   resources :invitations, :only => [:new, :create] do

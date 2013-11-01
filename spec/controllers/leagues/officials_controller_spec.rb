@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe OfficialsController do
+describe Leagues::OfficialsController do
   let(:official) { FactoryGirl.create(:official) }
   let(:league) { official.leagues.first }
   let(:manager) { FactoryGirl.create(:authorization, :authorizable => league, :role => :manager).user }

@@ -1,4 +1,4 @@
-class OfficialsController < ApplicationController
+class Leagues::OfficialsController < ApplicationController
   load_and_authorize_resource :league
   load_and_authorize_resource :except => [:new, :create]
 
