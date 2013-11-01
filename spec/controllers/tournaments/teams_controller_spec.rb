@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TournamentTeamsController do
+describe Tournaments::TeamsController do
   let(:tournament) { FactoryGirl.create(:tournament) }
   let(:manager) { FactoryGirl.create(:authorization, :role => :manager, :authorizable => tournament).user }
   let(:teams) { FactoryGirl.create_list(:team, 2) }

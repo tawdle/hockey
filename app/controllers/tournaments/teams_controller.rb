@@ -1,4 +1,4 @@
-class TournamentTeamsController < ApplicationController
+class Tournaments::TeamsController < ApplicationController
   load_and_authorize_resource :tournament
 
   def edit
