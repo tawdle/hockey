@@ -1,18 +1,33 @@
 <div class="row">
-  <div class="span9">
-    <h3>Tournament: <%= @tournament.name %></h3>
+  <div class="span8">
+    <h3>
+      Tournament
+      <%= link_to "<span class='icon-edit'>".html_safe, edit_tournament_path(@tournament), :class => "btn" if can? :edit, @tournament %>
+    </h3>
+
     <dl class="dl-horizontal">
+      <dt>Name</dt>
+      <dd><%= @tournament.name %></dd>
       <dt>Division</dt>
       <dd><%= t("league.divisions.#{@tournament.division}") %></dd>
       <dt>Class</dt>
       <dd><%= t("league.classifications.#{@tournament.classification}") %></dd>
     </dl>
 
-    <%= link_to "Edit", edit_tournament_path(@tournament), :class => "btn" if can? :edit, @tournament %>
-  </div>
+
+    <h3>
+      Teams
+      <%= link_to("<span class='icon-edit'>".html_safe, edit_tournament_teams_path(@tournament), :class => "btn") if can? :edit, @tournament %>
+      </h3>
+      <ul>
+        <% @tournament.teams.each do |team| %>
+          <li><%= team.full_name %></li>
+      <% end %>
+      </ul>
+    </div>
 
 
-  <div class="span3">
+  <div class="span4">
     <div class="well" style="margin-top: 10px;">
       <h3 class="page-header">Managers <%= link_to("+", new_invitation_path(:predicate => :manage, :target_id => @tournament.to_param, :target_type => "Tournament"), :class => "btn") if can?(:manage, @tournament) %></h3>
       <%= @tournament.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>

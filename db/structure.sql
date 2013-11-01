@@ -758,6 +758,36 @@ ALTER SEQUENCE teams_id_seq OWNED BY teams.id;
 
 
 --
+-- Name: teams_tournaments; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE teams_tournaments (
+    id integer NOT NULL,
+    team_id integer NOT NULL,
+    tournament_id integer NOT NULL
+);
+
+
+--
+-- Name: teams_tournaments_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE teams_tournaments_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: teams_tournaments_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE teams_tournaments_id_seq OWNED BY teams_tournaments.id;
+
+
+--
 -- Name: timers; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -985,6 +1015,13 @@ ALTER TABLE ONLY teams ALTER COLUMN id SET DEFAULT nextval('teams_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY teams_tournaments ALTER COLUMN id SET DEFAULT nextval('teams_tournaments_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY timers ALTER COLUMN id SET DEFAULT nextval('timers_id_seq'::regclass);
 
 
@@ -1169,6 +1206,14 @@ ALTER TABLE ONLY players
 
 ALTER TABLE ONLY teams
     ADD CONSTRAINT teams_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: teams_tournaments_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY teams_tournaments
+    ADD CONSTRAINT teams_tournaments_pkey PRIMARY KEY (id);
 
 
 --
@@ -1433,6 +1478,27 @@ CREATE INDEX index_teams_on_league_id_and_name ON teams USING btree (league_id, 
 
 
 --
+-- Name: index_teams_tournaments_on_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_teams_tournaments_on_team_id ON teams_tournaments USING btree (team_id);
+
+
+--
+-- Name: index_teams_tournaments_on_team_id_and_tournament_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_teams_tournaments_on_team_id_and_tournament_id ON teams_tournaments USING btree (team_id, tournament_id);
+
+
+--
+-- Name: index_teams_tournaments_on_tournament_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_teams_tournaments_on_tournament_id ON teams_tournaments USING btree (tournament_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1574,3 +1640,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131029001256');
 INSERT INTO schema_migrations (version) VALUES ('20131029140247');
 
 INSERT INTO schema_migrations (version) VALUES ('20131030224029');
+
+INSERT INTO schema_migrations (version) VALUES ('20131101172132');

@@ -1,0 +1,16 @@
+<h2>Select teams to participate in <%= @tournament.name %></h2>
+
+<%= form_for(@tournament, :url => tournament_teams_path(@tournament)) do |f| %>
+  <% @tournament.eligible_leagues.each do |league| %>
+    <legend><%= league.name %></legend>
+    <% league.teams.each do |team| %>
+      <%= label_tag dom_id(team), :class => "checkbox" do %>
+        <%= check_box_tag "[tournament][team_ids][]", team.id, @tournament.teams.include?(team), :id => dom_id(team) %>
+        <%= team.full_name %>
+      <% end %>
+    <% end %>
+  <% end %>
+  <div class="form-actions">
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>
