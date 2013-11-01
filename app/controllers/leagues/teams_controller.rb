@@ -1,4 +1,4 @@
-class TeamsController < ApplicationController
+class Leagues::TeamsController < ApplicationController
   before_filter :authenticate_user!, :except => [:index, :show]
   load_and_authorize_resource :league, :only => [:new, :create]
   load_and_authorize_resource

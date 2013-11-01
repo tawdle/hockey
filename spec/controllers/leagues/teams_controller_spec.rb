@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe TeamsController do
+describe Leagues::TeamsController do
   let(:league) { FactoryGirl.create(:league, :with_manager) }
   let(:team) { FactoryGirl.create(:team, :league => league) }
   let(:manager) { league.managers.first }

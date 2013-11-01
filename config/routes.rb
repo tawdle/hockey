@@ -23,13 +23,13 @@ Hockey::Application.routes.draw do
 
   resources :players, :only => [:show, :edit, :update, :destroy]
 
-  resources :teams, :only => [:index, :show, :edit, :update, :destroy] do
+  resources :teams, :only => [:index, :show, :edit, :update, :destroy], :controller => "leagues/teams" do
     resources :players, :only => [:new, :create]
     resources :staff_members
   end
 
   resources :leagues do
-    resources :teams, :only => [:new, :create]
+    resources :teams, :only => [:new, :create], :controller => "leagues/teams"
     resources :games, :only => [:new, :create, :edit, :update]
     resources :officials, :controller => "leagues/officials"
   end
