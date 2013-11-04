@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Leagues::OfficialsController do
   let(:official) { FactoryGirl.create(:official) }
-  let(:league) { official.leagues.first }
+  let(:league) { official.league }
   let(:manager) { FactoryGirl.create(:authorization, :authorizable => league, :role => :manager).user }
 
   describe "#show" do

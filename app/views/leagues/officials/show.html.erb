@@ -2,4 +2,4 @@
 
 <p><%= @official.name %> is associated with the following leagues:</p>
 
-<%= raw @official.leagues.map { |league| link_to league.name, league }.join(", ") %>
+<%= link_to @official.league.name, @official.league %>

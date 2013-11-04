@@ -57,7 +57,7 @@ class Ability
     can :read, Official
 
     can :manage, Official do |official|
-      official.leagues.any? {|league| user.manager_of?(league) }
+      user.manager_of?(official.league)
     end
 
     can :manage, Penalty do |penalty|

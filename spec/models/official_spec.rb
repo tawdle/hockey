@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Official do
   describe "#validations" do
-    let(:official) { FactoryGirl.create(:official) }
+    let(:official) { FactoryGirl.build(:official) }
 
     it "creates a valid object" do
       official.should be_valid
@@ -13,8 +13,13 @@ describe Official do
       official.should_not be_valid
     end
 
-    it "requires at least one league" do
-      official.leagues = []
+    it "prohibits duplicate names within a league" do
+      other_official = FactoryGirl.create(:official, :name => official.name, :league => official.league)
+      official.should_not be_valid
+    end
+
+    it "requires a league" do
+      official.league = nil
       official.should_not be_valid
     end
   end

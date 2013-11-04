@@ -11,7 +11,6 @@ class Leagues::OfficialsController < ApplicationController
 
   def create
     @official = @league.officials.build(params[:official])
-    @official.leagues = [@league]
 
     respond_to do |wants|
       if @official.save
@@ -43,7 +42,7 @@ class Leagues::OfficialsController < ApplicationController
   end
 
   def destroy
-    @league.officials.destroy(@official)
+    @official.destroy
 
     respond_to do |wants|
       flash[:notice] = 'Official was successfully removed.'

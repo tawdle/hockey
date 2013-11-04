@@ -4,8 +4,7 @@ class League < ActiveRecord::Base
 
   has_many :teams, :dependent => :destroy
   has_many :authorizations, :as => :authorizable
-  has_many :league_officials
-  has_many :officials, :through => :league_officials
+  has_many :officials
   attr_accessible :name, :logo, :logo_cache, :division, :classification
   symbolize :classification, :in => Classifications, :allow_nil => true
   symbolize :division, :in => Divisions

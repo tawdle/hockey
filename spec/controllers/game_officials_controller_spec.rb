@@ -3,7 +3,7 @@ require 'spec_helper'
 describe GameOfficialsController do
   let(:game) { FactoryGirl.create(:game) }
   let(:league) { game.home_team.league }
-  let(:officials) { FactoryGirl.create_list(:official, 3, :leagues => [league]) }
+  let(:officials) { FactoryGirl.create_list(:official, 3, :league => league) }
   let(:referee) { officials[0] }
   let(:linesmen) { officials[1..-1] }
   let(:marker) { FactoryGirl.create(:authorization, :role => :marker, :authorizable => league).user }

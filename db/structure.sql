@@ -381,36 +381,6 @@ CREATE TABLE invitations (
 
 
 --
--- Name: league_officials; Type: TABLE; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE TABLE league_officials (
-    id integer NOT NULL,
-    league_id integer,
-    official_id integer
-);
-
-
---
--- Name: league_officials_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE league_officials_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: league_officials_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE league_officials_id_seq OWNED BY league_officials.id;
-
-
---
 -- Name: league_tournaments; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -555,7 +525,8 @@ ALTER SEQUENCE mentions_id_seq OWNED BY mentions.id;
 
 CREATE TABLE officials (
     id integer NOT NULL,
-    name character varying(255)
+    name character varying(255),
+    league_id integer
 );
 
 
@@ -938,13 +909,6 @@ ALTER TABLE ONLY goals ALTER COLUMN id SET DEFAULT nextval('goals_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY league_officials ALTER COLUMN id SET DEFAULT nextval('league_officials_id_seq'::regclass);
-
-
---
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
---
-
 ALTER TABLE ONLY league_tournaments ALTER COLUMN id SET DEFAULT nextval('league_tournaments_id_seq'::regclass);
 
 
@@ -1118,14 +1082,6 @@ ALTER TABLE ONLY goals
 
 ALTER TABLE ONLY invitations
     ADD CONSTRAINT invitations_pkey PRIMARY KEY (code);
-
-
---
--- Name: league_officials_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
---
-
-ALTER TABLE ONLY league_officials
-    ADD CONSTRAINT league_officials_pkey PRIMARY KEY (id);
 
 
 --
@@ -1352,27 +1308,6 @@ CREATE INDEX index_goals_on_game_id ON goals USING btree (game_id);
 
 
 --
--- Name: index_league_officials_on_league_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_league_officials_on_league_id ON league_officials USING btree (league_id);
-
-
---
--- Name: index_league_officials_on_league_id_and_official_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE UNIQUE INDEX index_league_officials_on_league_id_and_official_id ON league_officials USING btree (league_id, official_id);
-
-
---
--- Name: index_league_officials_on_official_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
---
-
-CREATE INDEX index_league_officials_on_official_id ON league_officials USING btree (official_id);
-
-
---
 -- Name: index_league_tournaments_on_league_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1405,6 +1340,13 @@ CREATE INDEX index_mentions_on_activity_feed_item_id ON mentions USING btree (ac
 --
 
 CREATE INDEX index_mentions_on_system_name_id ON mentions USING btree (system_name_id);
+
+
+--
+-- Name: index_officials_on_league_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_officials_on_league_id ON officials USING btree (league_id);
 
 
 --
@@ -1642,3 +1584,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131029140247');
 INSERT INTO schema_migrations (version) VALUES ('20131030224029');
 
 INSERT INTO schema_migrations (version) VALUES ('20131101172132');
+
+INSERT INTO schema_migrations (version) VALUES ('20131102224059');
