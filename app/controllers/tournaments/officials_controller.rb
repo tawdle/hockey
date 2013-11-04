@@ -18,7 +18,6 @@ class Tournaments::OfficialsController < ApplicationController
         wants.html { redirect_to(@tournament) }
         wants.xml  { render :xml => @official, :status => :created, :location => @tournament }
       else
-        debugger
         wants.html { render :action => "new" }
         wants.xml  { render :xml => @official.errors, :status => :unprocessable_entity }
       end

@@ -18,7 +18,6 @@ class Leagues::OfficialsController < ApplicationController
         wants.html { redirect_to(@league) }
         wants.xml  { render :xml => @official, :status => :created, :location => @league }
       else
-        debugger
         wants.html { render :action => "new" }
         wants.xml  { render :xml => @official.errors, :status => :unprocessable_entity }
       end
