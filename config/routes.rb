@@ -45,6 +45,7 @@ Hockey::Application.routes.draw do
 
   resources :tournaments do
     resource :teams, :only => [:edit, :update], :controller => "tournaments/teams"
+    resources :officials, :controller => "tournaments/officials"
   end
 
   devise_for :users

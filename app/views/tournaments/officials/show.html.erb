@@ -1,0 +1,5 @@
+<h1>Official: <%= @official.name %></h1>
+
+<p><%= @official.name %> is associated with the following tournament:</p>
+
+<%= link_to @official.tournament.name, @official.tournament %>

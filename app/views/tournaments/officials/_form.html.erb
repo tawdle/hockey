@@ -1,0 +1,9 @@
+<%= form_for([@tournament, @official]) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>
