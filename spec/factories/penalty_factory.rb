@@ -9,7 +9,7 @@ FactoryGirl.define do
     infraction "boarding"
     minutes 2
     after(:build) do |penalty|
-      penalty.player ||= penalty.game.players.first
+      penalty.player ||= penalty.game.game_players.first.player
     end
   end
 end
