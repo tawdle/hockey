@@ -165,6 +165,42 @@ ALTER SEQUENCE followings_id_seq OWNED BY followings.id;
 
 
 --
+-- Name: game_goalies; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE game_goalies (
+    id integer NOT NULL,
+    game_id integer,
+    goalie_id integer,
+    start_time integer,
+    start_period integer,
+    end_time integer,
+    end_period integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: game_goalies_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE game_goalies_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: game_goalies_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE game_goalies_id_seq OWNED BY game_goalies.id;
+
+
+--
 -- Name: game_officials; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -868,6 +904,13 @@ ALTER TABLE ONLY followings ALTER COLUMN id SET DEFAULT nextval('followings_id_s
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY game_goalies ALTER COLUMN id SET DEFAULT nextval('game_goalies_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY game_officials ALTER COLUMN id SET DEFAULT nextval('game_officials_id_seq'::regclass);
 
 
@@ -1027,6 +1070,14 @@ ALTER TABLE ONLY delayed_jobs
 
 ALTER TABLE ONLY followings
     ADD CONSTRAINT followings_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: game_goalies_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY game_goalies
+    ADD CONSTRAINT game_goalies_pkey PRIMARY KEY (id);
 
 
 --
@@ -1208,6 +1259,20 @@ CREATE INDEX index_followings_on_system_name_id ON followings USING btree (syste
 --
 
 CREATE INDEX index_followings_on_user_id ON followings USING btree (user_id);
+
+
+--
+-- Name: index_game_goalies_on_game_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_game_goalies_on_game_id ON game_goalies USING btree (game_id);
+
+
+--
+-- Name: index_game_goalies_on_goalie_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_game_goalies_on_goalie_id ON game_goalies USING btree (goalie_id);
 
 
 --
@@ -1596,3 +1661,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131101172132');
 INSERT INTO schema_migrations (version) VALUES ('20131102224059');
 
 INSERT INTO schema_migrations (version) VALUES ('20131104044516');
+
+INSERT INTO schema_migrations (version) VALUES ('20131104182952');

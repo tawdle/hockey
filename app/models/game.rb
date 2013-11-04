@@ -60,6 +60,7 @@ class Game < ActiveRecord::Base
   has_many :penalties, :inverse_of => :game, :dependent => :destroy
   has_many :game_players, :inverse_of => :game, :dependent => :destroy
   has_many :players, :through => :game_players
+  has_many :game_goalies, :class_name => "GameGoalie", :inverse_of => :game, :dependent => :destroy
   has_many :game_officials, :inverse_of => :game, :dependent => :destroy
   has_many :officials, :through => :game_officials
   has_many :referee_game_officials, :class_name => "GameOfficial", :conditions => {:role => :referee  }

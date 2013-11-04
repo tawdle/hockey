@@ -15,7 +15,8 @@ FactoryGirl.define do
       home_team { build(:team, :with_players) }
       visiting_team { build(:team, :with_players) }
       after(:build) do |game|
-        game.players = game.home_team.players + game.visiting_team.players
+        game.game_players = (game.home_team.players + game.visiting_team.players).
+          map {|player| build(:game_player, :game => game, :player => player) }
       end
     end
 
@@ -38,6 +39,13 @@ FactoryGirl.define do
     trait :finished do
       after(:build) do |game|
         game.state = "finished"
+      end
+    end
+
+    trait :with_goalie do
+      with_players
+      after(:build) do |game|
+        game.game_players.first.role = :goalie
       end
     end
   end
