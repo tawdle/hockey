@@ -59,5 +59,10 @@ class InvitationMailer < ActionMailer::Base
     mail to: @invitation.email, subject: "Invitation to Manage Tournament"
   end
 
+  def mark_tournament(invitation)
+    @invitation = invitation
+
+    mail to: @invitation.email, subject: "Invitation to become Marker for Tournament"
+  end
 
 end
