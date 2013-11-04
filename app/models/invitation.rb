@@ -46,6 +46,7 @@ class Invitation < ActiveRecord::Base
       user = User.find_by_name(username)
       if user
         self.email = user.email
+        self.user = user
       else
         errors.add(:username_or_email, "there is no user @#{username}")
       end

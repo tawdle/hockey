@@ -18,7 +18,7 @@ class InvitationsController < ApplicationController
 
     respond_to do |format|
       if @invitation.save
-        format.html { redirect_to @invitation.target, notice: "Your invitation to #{@invitation.email} has been sent." }
+        format.html { redirect_to @invitation.target, notice: "Your invitation to #{@invitation.try(:user).try(:at_name) || @invitation.email} has been sent." }
       else
         format.html { render action: "new" }
       end
