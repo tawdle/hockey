@@ -12,8 +12,8 @@ App.Game = App.EmbeddedModel.extend({
       state: "scheduled",
       clock: null,
       fayeURI: null,
-      home_team_score: 0,
-      visiting_team_score: 0
+      home_team: { score: 0 },
+      visiting_team: { score: 0 }
     };
   },
 

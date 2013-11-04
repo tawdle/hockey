@@ -1,10 +1,18 @@
 class GameSerializer < ActiveModel::Serializer
-  attributes :id, :state, :home_team_score, :visiting_team_score, :period_text, :home_team_id, :visiting_team_id
+  attributes :id, :state, :home_team, :visiting_team, :period_text
   has_one :clock
   has_many :players
   has_many :goals
   has_many :penalties
   has_many :activity_feed_items
+
+  def home_team
+    { :score => object.home_team_score, :id => object.home_team_id }
+  end
+
+  def visiting_team
+    { :score => object.visiting_team_score, :id => object.visiting_team_id }
+  end
 
   def include_clock?
     true
