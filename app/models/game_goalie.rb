@@ -11,11 +11,15 @@ class GameGoalie < ActiveRecord::Base
   scope :for_team, lambda {|team| joins(:goalie).where(:players => {:team_id => team.id }) }
   scope :current, where(:end_time => nil, :end_period => nil )
 
-  attr_accessible :end_time, :end_period
+  attr_accessible :end_time, :end_period, :goalie_id
 
   def finish!
     set_end_time_and_period
     save!
+  end
+
+  def current?
+    persisted? && end_time.nil? && end_period.nil?
   end
 
   private

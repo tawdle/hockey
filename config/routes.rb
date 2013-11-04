@@ -8,8 +8,9 @@ Hockey::Application.routes.draw do
     resources :goals, :only => [:index, :new, :create, :update, :destroy]
     resources :penalties, :only => [:create, :update, :destroy]
     resource :roster, :only => [:show, :new, :create, :edit, :update], :controller => "game_players"
-    resource :game_staff_members, :only => [:new, :create, :edit, :update]
+    resources :game_goalies, :only => [:new, :create]
     resource :game_officials, :only => [:edit, :update]
+    resource :game_staff_members, :only => [:new, :create, :edit, :update]
     member do
       post :activate
       post :start

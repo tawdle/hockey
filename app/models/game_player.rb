@@ -12,6 +12,9 @@ class GamePlayer < ActiveRecord::Base
   Roles = [:player, :goalie, :captain, :assistant_captain]
   symbolize :role, :in => Roles, :allow_nil => true
 
+  scope :for_team, lambda {|team| joins(:player).where(:players => {:team_id => team.id}) }
+  scope :goalies, where(:role => :goalie)
+
   attr_accessible :player_id, :role
 
   private

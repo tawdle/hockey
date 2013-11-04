@@ -1,0 +1,13 @@
+<%= form_for([@game, @game_goalie], :remote => request.xhr?) do |f| %>
+  <% selected = false %>
+  <% @game.game_players.goalies.for_team(@team).each do |game_player| %>
+    <% goalie = game_player.player %>
+    <% current = @game.game_goalies.current.for_team(@team).map(&:goalie).include?(goalie) %>
+    <label class="radio">
+      <input type="radio" <%= "disabled" if current %> <%= "checked" unless selected || current %> value="<%= goalie.id %>" name="game[game_goalie][goalie_id]">
+      </input>
+      <%= goalie.name_and_number %> <%= "(currently in goal)" if current %>
+      <% selected ||= !current %>
+    </label>
+  <% end %>
+<% end %>

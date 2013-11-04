@@ -22,6 +22,10 @@ class Ability
       user.marker_of?(game.league)
     end
 
+    can :manage, GameGoalie do |game_goalie|
+      user.marker_of?(game_goalie.game.league)
+    end
+
     can :edit, GameOfficial do |game_official|
       user.marker_of?(game_official.game.league)
     end

@@ -48,5 +48,11 @@ FactoryGirl.define do
         game.game_players.first.role = :goalie
       end
     end
+
+    trait :with_marker do
+      after(:create) do |game|
+        create(:authorization, :role => :marker, :authorizable => game.league)
+      end
+    end
   end
 end

@@ -7,6 +7,7 @@ App.TeamBoxView = Backbone.View.extend({
     this.goalsView = new App.GoalsView({teamId: this.teamId, el: this.$(".goals tbody")});
     this.playerEditor = new App.PlayerEditor({teamId: this.teamId, el: this.$(".player")});
     this.rosterEditor = new App.RosterEditor({teamId: this.teamId, el: this.$(".roster"), playerEditor: this.playerEditor});
+    this.goalieChooser = new App.GoalieChooser({teamId: this.teamId, el: this.$(".goalie-chooser") });
     this.$(".disclosure i").addClass("icon-caret-right");
   },
 
@@ -15,6 +16,7 @@ App.TeamBoxView = Backbone.View.extend({
     "click a.add-penalty" : "addPenalty",
     "click a.add-goal" : "addGoal",
     "click a.edit-roster" : "editRoster",
+    "click a.choose-goalie" : "chooseGoalie",
     "click h3.disclosure" : "toggleDisclosure"
   },
 
@@ -36,6 +38,11 @@ App.TeamBoxView = Backbone.View.extend({
   editRoster: function(e) {
     e.preventDefault();
     this.rosterEditor.edit();
+  },
+
+  chooseGoalie: function(e) {
+    e.preventDefault();
+    this.goalieChooser.choose();
   },
 
   toggleDisclosure: function(e) {
