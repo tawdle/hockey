@@ -20,8 +20,7 @@
         </td>
         <td>
           <%= select_tag "game[game_players_attributes][#{player.id}][role]",
-            options_for_select(GamePlayer::Roles.map {|r| [r.to_s.humanize, r]}),
-            :value => game_player.try(:role),
+            options_for_select(GamePlayer::Roles.map {|r| [r.to_s.humanize, r]}, game_player.try(:role)),
             :style => "visibility: #{game_player ? 'visible' : 'hidden'}" %>
         </td>
       </tr>
