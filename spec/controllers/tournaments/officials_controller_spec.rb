@@ -22,6 +22,18 @@ describe Tournaments::OfficialsController do
       sign_in(manager)
     end
 
+    describe "#index" do
+      def do_request
+        get :index, :tournament_id => tournament.to_param
+      end
+
+      it "renders the index template" do
+        do_request
+        response.should be_success
+        response.should render_template("index")
+      end
+    end
+
     describe "#new" do
       def do_request
         get :new, :tournament_id => tournament.to_param
@@ -41,7 +53,7 @@ describe Tournaments::OfficialsController do
       it "creates the official" do
         expect {
           do_request
-          response.should redirect_to(tournament)
+          response.should redirect_to(tournament_officials_path(tournament))
         }.to change { tournament.reload.officials.count }.by(1)
       end
     end
@@ -64,7 +76,7 @@ describe Tournaments::OfficialsController do
       it "updates the official" do
         expect {
           do_request
-          response.should redirect_to(tournament)
+          response.should redirect_to(tournament_officials_path(tournament))
         }.to change { official.reload.name }.to("New Name")
       end
     end
@@ -76,7 +88,7 @@ describe Tournaments::OfficialsController do
         official.reload # Make sure it exists
         expect {
           do_request
-          response.should redirect_to(tournament)
+          response.should redirect_to(tournament_officials_path(tournament))
         }.to change { tournament.officials.count }.by(-1)
       end
     end

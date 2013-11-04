@@ -2,6 +2,9 @@ class Tournaments::OfficialsController < ApplicationController
   load_and_authorize_resource :tournament
   load_and_authorize_resource :except => [:new, :create]
 
+  def index
+  end
+
   def show
   end
 
@@ -15,7 +18,7 @@ class Tournaments::OfficialsController < ApplicationController
     respond_to do |wants|
       if @official.save
         flash[:notice] = 'Official was successfully created.'
-        wants.html { redirect_to(@tournament) }
+        wants.html { redirect_to(tournament_officials_path(@tournament)) }
         wants.xml  { render :xml => @official, :status => :created, :location => @tournament }
       else
         wants.html { render :action => "new" }
@@ -31,7 +34,7 @@ class Tournaments::OfficialsController < ApplicationController
     respond_to do |wants|
       if @official.update_attributes(params[:official])
         flash[:notice] = 'Official was successfully updated.'
-        wants.html { redirect_to(@tournament) }
+        wants.html { redirect_to(tournament_officials_path(@tournament)) }
         wants.xml  { head :ok }
       else
         wants.html { render :action => "edit" }
@@ -45,7 +48,7 @@ class Tournaments::OfficialsController < ApplicationController
 
     respond_to do |wants|
       flash[:notice] = 'Official was successfully removed.'
-      wants.html { redirect_to(@tournament) }
+      wants.html { redirect_to(tournament_officials_path(@tournament)) }
       wants.xml  { head :ok }
     end
   end

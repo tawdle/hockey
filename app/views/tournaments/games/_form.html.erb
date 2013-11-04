@@ -1,0 +1,47 @@
+<%= form_for([@tournament, @game]) do |f| %>
+  <% if @game.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being saved:</h2>
+
+      <ul>
+      <% @game.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :home_team %>
+    <%= f.collection_select :home_team_id, @tournament.teams, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :visiting_team %>
+    <%= f.collection_select :visiting_team_id, @tournament.teams, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :location %>
+    <%= f.collection_select :location_id, Location.all, :id, :name %>
+  </div>
+
+  <div class="field">
+    <%= f.label :start_time %>
+    <%= f.datetime_select :start_time, { :default => DateTime.now.at_beginning_of_hour + 7.days, :start_year => DateTime.now.year}, { :class => "span1" } %>
+  </div>
+
+  <div class="field">
+    <%= f.label :period_minutes %>
+    <%= f.text_field :period_minutes %>
+  </div>
+
+  <div class="field">
+    <%= f.label :number %>
+    <%= f.text_field :number %>
+  </div>
+
+  <div class="actions">
+    <%= f.submit :class => "btn btn-primary" %>
+  </div>
+<% end %>
