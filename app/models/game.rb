@@ -49,6 +49,7 @@ class Game < ActiveRecord::Base
     end
   end
 
+  belongs_to :league
   belongs_to :home_team, :class_name => 'Team'
   belongs_to :visiting_team, :class_name => 'Team'
   belongs_to :location
@@ -70,6 +71,7 @@ class Game < ActiveRecord::Base
 
   validates_presence_of :home_team
   validates_presence_of :visiting_team
+  validates_presence_of :league
   validate :home_and_visiting_teams_are_different
   validates_presence_of :location
   validates_presence_of :start_time

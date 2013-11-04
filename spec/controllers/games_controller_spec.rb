@@ -4,7 +4,7 @@ describe GamesController do
   let(:league) { FactoryGirl.create(:league, :with_manager, :with_marker, :with_team) }
   let(:manager) { league.managers.first }
   let(:team) { league.teams.first }
-  let(:game) { FactoryGirl.create(:game, :home_team => team) }
+  let(:game) { FactoryGirl.create(:game, :league => league, :home_team => team) }
   let(:marker) { league.markers.first }
 
   before do
@@ -112,7 +112,7 @@ describe GamesController do
         post :start, :id => game.to_param
       end
 
-      let(:game) { FactoryGirl.create(:game, :active, :home_team => team) }
+      let(:game) { FactoryGirl.create(:game, :active, :league => league) }
 
       it "changes the state to playing" do
         expect {
@@ -126,7 +126,7 @@ describe GamesController do
         post :pause, :id => game.to_param
       end
 
-      let(:game) { FactoryGirl.create(:game, :playing, :home_team => team) }
+      let(:game) { FactoryGirl.create(:game, :playing, :league => league) }
 
       it "changes the state to paused" do
         expect {
@@ -140,7 +140,7 @@ describe GamesController do
         post :stop, :id => game.to_param
       end
 
-      let(:game) { FactoryGirl.create(:game, :playing, :home_team => team) }
+      let(:game) { FactoryGirl.create(:game, :playing, :league => league) }
 
       it "changes the state to active" do
         expect {
@@ -154,7 +154,7 @@ describe GamesController do
         post :complete, :id => game.to_param
       end
 
-      let(:game) { FactoryGirl.create(:game, :finished, :home_team => team) }
+      let(:game) { FactoryGirl.create(:game, :finished, :league => league) }
 
       it "changes the state to completed" do
         expect {

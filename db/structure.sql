@@ -273,7 +273,8 @@ CREATE TABLE games (
     clock_id integer,
     period integer,
     period_duration integer DEFAULT 900 NOT NULL,
-    number character varying(255)
+    number character varying(255),
+    league_id integer
 );
 
 
@@ -1273,6 +1274,13 @@ CREATE INDEX index_games_on_home_team_id ON games USING btree (home_team_id);
 
 
 --
+-- Name: index_games_on_league_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_games_on_league_id ON games USING btree (league_id);
+
+
+--
 -- Name: index_games_on_location_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1586,3 +1594,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131030224029');
 INSERT INTO schema_migrations (version) VALUES ('20131101172132');
 
 INSERT INTO schema_migrations (version) VALUES ('20131102224059');
+
+INSERT INTO schema_migrations (version) VALUES ('20131104044516');

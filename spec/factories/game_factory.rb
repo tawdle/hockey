@@ -2,8 +2,12 @@ require 'factory_girl'
 
 FactoryGirl.define do
   factory :game do
-    association :home_team, :factory => :team
-    association :visiting_team, :factory => :team
+    ignore do
+      our_league { FactoryGirl.build(:league) }
+    end
+    home_team { FactoryGirl.build(:team, :league => our_league) }
+    visiting_team { FactoryGirl.build(:team, :league => our_league) }
+    league { our_league }
     location
     start_time { 1.week.from_now }
 

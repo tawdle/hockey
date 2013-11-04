@@ -6,7 +6,7 @@ FactoryGirl.define do
     team { build(:team, :with_players) }
     period 2
     after(:build) do |goal|
-      goal.game = build(:game, :active, :home_team => goal.team)
+      goal.game ||= build(:game, :active, :home_team => goal.team)
     end
     trait :with_players do
       after(:build) do |goal|

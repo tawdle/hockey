@@ -6,12 +6,12 @@ class GoalsController < ApplicationController
   end
 
   def new
-    @goal = Goal.new(:game => @game)
+    @goal = @game.goals.build
     authorize! :new, @goal
   end
 
   def create
-    @goal = Goal.new(params[:goal].merge(:creator => current_user, :game => @game, :period => @game.period))
+    @goal = @game.goals.build(params[:goal].merge(:creator => current_user))
     authorize! :create, @goal
 
     respond_to do |format|

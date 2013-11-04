@@ -4,41 +4,45 @@ describe Game do
   describe "#validations" do
     let(:game) { FactoryGirl.build(:game) }
 
-    it "should create a valid object" do
+    it "creates a valid object" do
       game.should be_valid
     end
 
-    it "should require a valid state" do
+    it "requires a valid state" do
       game.state = :foo
       game.should_not be_valid
     end
 
-    it "should require a home team" do
+    it "requires a home team" do
       game.home_team = nil
       game.should_not be_valid
     end
 
-    it "should require a visiting team" do
+    it "requires a visiting team" do
       game.visiting_team = nil
       game.should_not be_valid
     end
 
-    it "should require different home and visiting teams" do
+    it "requires different home and visiting teams" do
       game.visiting_team = game.home_team
       game.should_not be_valid
     end
 
-    it "should require a location" do
+    it "requires a league" do
+      game.league = nil
+      game.should_not be_valid
+    end
+    it "requires a location" do
       game.location = nil
       game.should_not be_valid
     end
 
-    it "should require a start_time" do
+    it "requires a start_time" do
       game.start_time = nil
       game.should_not be_valid
     end
 
-    it "should require the start_time be in the future" do
+    it "requires the start_time be in the future" do
       game.start_time = 1.week.ago
       game.should_not be_valid
     end
@@ -46,12 +50,12 @@ describe Game do
     context "with an active game" do
       let(:game) { FactoryGirl.create(:game, :active) }
 
-      it "should prevent changing the start_time" do
+      it "prevents changing the start_time" do
         game.start_time = 3.weeks.from_now
         game.should_not be_valid
       end
 
-      it "should prevent changing the location" do
+      it "prevents changing the location" do
         game.location = FactoryGirl.build(:location)
         game.should_not be_valid
       end
@@ -115,7 +119,7 @@ describe Game do
   describe "#readonly attributes" do
     let(:game) { FactoryGirl.build(:game) }
     let(:new_team) { FactoryGirl.build(:team) }
-    it "should not update home_team" do
+    it "does not update home_team" do
       game.save!
       expect {
         game.update_attributes!(:home_team => new_team)

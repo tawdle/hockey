@@ -5,7 +5,7 @@ describe PenaltiesController do
   let(:game) { penalty.game }
 
   context "with a logged in marker" do
-    let(:league) { game.home_team.league }
+    let(:league) { game.league }
     let(:authorization) { FactoryGirl.create(:authorization, :authorizable => league, :role => :marker) }
     let(:marker) { authorization.user }
 

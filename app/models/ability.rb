@@ -15,23 +15,23 @@ class Ability
     can :read, Game
 
     can [:create, :update, :destroy], Game do |game|
-      user.manager_of?(game.home_team.try(:league)) || user.manager_of?(game.visiting_team.try(:league))
+      user.manager_of?(game.league)
     end
 
     can [:mark, :activate, :complete, :pause, :start, :stop], Game do |game|
-      user.marker_of_game?(game)
+      user.marker_of?(game.league)
     end
 
     can :edit, GameOfficial do |game_official|
-      user.marker_of_game?(game_official.try(:game))
+      user.marker_of?(game_official.game.league)
     end
 
     can :manage, GameStaffMember do |gsm|
-      user.marker_of_game?(gsm.try(:game))
+      user.marker_of?(gsm.game.league)
     end
 
     can :manage, Goal do |goal|
-      user.marker_of_game?(goal.try(:game))
+      user.marker_of?(goal.game.league)
     end
 
     can :create, Invitation do |invitation|
@@ -61,7 +61,7 @@ class Ability
     end
 
     can :manage, Penalty do |penalty|
-      user.marker_of_game?(penalty.try(:game))
+      user.marker_of?(penalty.game.league)
     end
 
     can :manage, StaffMember do |staff_member|

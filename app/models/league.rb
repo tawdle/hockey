@@ -2,6 +2,7 @@ class League < ActiveRecord::Base
   Divisions = %w(prenovice initiation novice atom pee_wee bantam midget intermediate juvenile secondary junior major_junior other_junior adult_recreational senior college university house).map(&:to_sym)
   Classifications = %w(a b c aa bb cc aaa).map(&:to_sym)
 
+  has_many :games, :dependent => :destroy
   has_many :teams, :dependent => :destroy
   has_many :authorizations, :as => :authorizable
   has_many :officials

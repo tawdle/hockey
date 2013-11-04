@@ -6,12 +6,12 @@ class GamesController < ApplicationController
   end
 
   def new
-    @game = Game.new(:home_team => @league.teams.first, :visiting_team => @league.teams.second)
+    @game = @league.games.build
     authorize! :new, @game
   end
 
   def create
-    @game = Game.new(params[:game].merge(:updater => current_user))
+    @game = @league.games.build(params[:game].merge(:updater => current_user))
     authorize! :create, @game
 
     respond_to do |format|
