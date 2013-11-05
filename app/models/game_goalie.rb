@@ -13,6 +13,8 @@ class GameGoalie < ActiveRecord::Base
 
   attr_accessible :end_time, :end_period, :goalie_id
 
+  after_create :create_feed_item
+
   def finish!
     set_end_time_and_period
     save!
@@ -42,5 +44,9 @@ class GameGoalie < ActiveRecord::Base
     game.game_goalies.for_team(goalie.team).current.readonly(false).each do |game_goalie|
       game_goalie.finish!
     end
+  end
+
+  def create_feed_item
+    game.activity_feed_items.create!(:message => "#{goalie.feed_name} is now the goalie for #{goalie.team.at_name}")
   end
 end
