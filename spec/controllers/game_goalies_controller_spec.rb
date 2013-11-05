@@ -22,7 +22,7 @@ describe GameGoaliesController do
 
     describe "#create" do
       def do_request
-        post :create, :game_id => game.to_param, :game => {:game_goalie => {:goalie_id => goalie.to_param } }
+        post :create, :game_id => game.to_param, :game_goalie => {:goalie_id => goalie.to_param }
       end
 
       it "should create the game goalie" do

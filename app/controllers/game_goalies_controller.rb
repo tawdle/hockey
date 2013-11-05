@@ -9,7 +9,7 @@ class GameGoaliesController < ApplicationController
   end
 
   def create
-    @game_goalie = @game.game_goalies.build(params[:game].try(:[], :game_goalie))
+    @game_goalie = @game.game_goalies.build(params[:game_goalie])
     authorize! :create, @game_goalie
 
     respond_to do |format|
@@ -17,7 +17,6 @@ class GameGoaliesController < ApplicationController
         format.html { redirect_to @game, notice: 'Goalie was successfully changed.' }
         format.json { render json: @game, status: :created, location: @game }
       else
-        debugger
         format.html { render action: "new" }
         format.json { render json: @game_goalie.errors, status: :unprocessable_entity }
       end

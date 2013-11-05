@@ -4,7 +4,7 @@
     <% goalie = game_player.player %>
     <% current = @game.game_goalies.current.for_team(@team).map(&:goalie).include?(goalie) %>
     <label class="radio">
-      <input type="radio" <%= "disabled" if current %> <%= "checked" unless selected || current %> value="<%= goalie.id %>" name="game[game_goalie][goalie_id]">
+      <input type="radio" <%= "disabled" if current %> <%= "checked" unless selected || current %> value="<%= goalie.id %>" name="game_goalie[goalie_id]">
       </input>
       <%= goalie.name_and_number %> <%= "(currently in goal)" if current %>
       <% selected ||= !current %>
