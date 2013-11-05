@@ -13,3 +13,8 @@
 # ActiveSupport::Inflector.inflections do |inflect|
 #   inflect.acronym 'RESTful'
 # end
+#
+ActiveSupport::Inflector.inflections do |inflect|
+  inflect.irregular 'goalie', 'goalies'
+  inflect.irregular 'game_goalie', 'game_goalies'
+end
