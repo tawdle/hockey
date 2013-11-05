@@ -16,7 +16,7 @@ class Goal < ActiveRecord::Base
   validates_numericality_of :period, :integer => true, :less_than_or_equal_to => Game::Periods.length, :greater_than_or_equal_to => 0
   validate :game_has_started
 
-  before_create :set_time_and_period_from_game
+  before_validation :set_time_and_period_from_game
   before_save :generate_save_feed_item, :unless => :players_empty?
   before_destroy :generate_destroy_feed_item, :unless => :players_empty?
   after_commit :broadcast_changes
