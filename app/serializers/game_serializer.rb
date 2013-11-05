@@ -7,11 +7,11 @@ class GameSerializer < ActiveModel::Serializer
   has_many :activity_feed_items
 
   def home_team
-    { :score => object.home_team_score, :id => object.home_team_id }
+    { :score => object.home_team_score, :id => object.home_team_id, :goalie_id => object.current_goalie_id_for(object.home_team) }
   end
 
   def visiting_team
-    { :score => object.visiting_team_score, :id => object.visiting_team_id }
+    { :score => object.visiting_team_score, :id => object.visiting_team_id, :goalie_id => object.current_goalie_id_for(object.visiting_team) }
   end
 
   def include_clock?

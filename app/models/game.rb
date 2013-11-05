@@ -246,6 +246,10 @@ class Game < ActiveRecord::Base
     staff_members.where(:team_id => visiting_team_id).count >= MinStaff
   end
 
+  def current_goalie_id_for(team)
+    game_goalies.current.for_team(team).select(:goalie_id).first.try(:[], "goalie_id")
+  end
+
   private
 
   def updater_name

@@ -5,12 +5,10 @@ App.GameView = Backbone.View.extend({
     this.gameStart = this.$("#game-start");
     this.gamePause = this.$("#game-pause");
     this.gameStop = this.$("#game-stop");
-    this.homeTeamScore = this.$("#home-team .score");
-    this.visitingTeamScore = this.$("#visiting-team .score");
     this.gameStatus = this.$("#game-status");
     this.period = this.$("#game-period");
-    this.homeView = new App.TeamBoxView({ el: "#home-team", teamId: this.model.get("home_team").id });
-    this.visitingView = new App.TeamBoxView({ el: "#visiting-team", teamId: this.model.get("visiting_team").id });
+    this.homeView = new App.TeamBoxView({ el: "#home-team", teamId: this.model.get("home_team").id, side: "home_team" });
+    this.visitingView = new App.TeamBoxView({ el: "#visiting-team", teamId: this.model.get("visiting_team").id, side: "visiting_team" });
 
     this.listenTo(this.model, "change", this.render);
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);
@@ -55,7 +53,5 @@ App.GameView = Backbone.View.extend({
 
     this.period.text(this.model.get("period_text"));
     this.gameStatus.removeClass("active playing paused finished").addClass(state);
-    this.homeTeamScore.text(this.model.get("home_team").score);
-    this.visitingTeamScore.text(this.model.get("visiting_team").score);
   }
 });

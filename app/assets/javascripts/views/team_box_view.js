@@ -1,6 +1,7 @@
 App.TeamBoxView = Backbone.View.extend({
   initialize: function(options, other) {
-    this.teamId = this.options.teamId;
+    this.side = options.side;
+    this.teamId = options.teamId;
     this.penaltyEditor = new App.PenaltyEditor({teamId: this.teamId, el: this.$(".penalty-editor")});
     this.penaltiesView = new App.PenaltiesView({teamId: this.teamId, el: this.$(".penalties tbody")});
     this.goalEditor = new App.GoalEditor({teamId: this.teamId, el: this.$(".goal-editor")});
@@ -8,7 +9,11 @@ App.TeamBoxView = Backbone.View.extend({
     this.playerEditor = new App.PlayerEditor({teamId: this.teamId, el: this.$(".player")});
     this.rosterEditor = new App.RosterEditor({teamId: this.teamId, el: this.$(".roster"), playerEditor: this.playerEditor});
     this.goalieChooser = new App.GoalieChooser({teamId: this.teamId, el: this.$(".goalie-chooser") });
+    this.goalie = this.$(".goalie");
     this.$(".disclosure i").addClass("icon-caret-right");
+    this.score = this.$(".score");
+    this.listenTo(App.game, "change:" + this.side, this.render);
+    this.render();
   },
 
 
@@ -51,6 +56,10 @@ App.TeamBoxView = Backbone.View.extend({
   },
 
   render: function() {
+    var attrs = App.game.get(this.side);
+    var goalie = attrs.goalie_id && App.players.get(attrs.goalie_id);
+    this.score.text(attrs.score);
+    this.goalie.text(goalie ? goalie.get("name_and_number") : "none");
   }
 
 });

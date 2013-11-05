@@ -13,6 +13,8 @@
       <a href="#" class="btn choose-goalie" title="Choose Goalie"><%= image_tag("goalie.svg", :style => "width: 16px; height: 18px;") %></a>
       <a href="#" class="btn swap" title="Switch Home/Visiting Positions"><i class="icon-refresh"></i></a>
 
+      <span class="goalie pull-right"></span>
+
       <div data-remote="<%= new_game_game_goalie_path(@game, :team => home_or_visiting) %>" class="goalie-chooser modal hide fade">
         <div class="modal-header"><h3>Choose goalie for <%= team.name %></h3></div>
         <div class="modal-body"></div>
