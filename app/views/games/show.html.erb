@@ -19,6 +19,14 @@
   });
 <% end %>
 
+<% if @game.started_at %>
+  <p>This game started <time class="timeago" datetime="<%= @game.started_at.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.started_at) %></time>.</p>
+<% end %>
+<% if @game.ended_at %>
+  <p>This game ended <time class="timeago" datetime="<%= @game.started_at.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.ended_at_time) %></time>.</p>
+<% end %>
+
+
 <% if @game.live? %>
   <% if can? :mark, @game %>
     <div id="game-status" style="text-align: center;">

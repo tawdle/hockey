@@ -259,7 +259,7 @@ class Game < ActiveRecord::Base
   end
 
   def set_ended_at
-    self.ended_at = Time.now
+    update_attribute(:ended_at, Time.now)
   end
 
   def updater_name
