@@ -2,7 +2,6 @@ class TournamentsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @tournaments = Tournament.all
   end
 
   def show
@@ -37,6 +36,15 @@ class TournamentsController < ApplicationController
         format.html { render action: "edit" }
         format.json { render json: @tournament.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def destroy
+    @tournament.destroy
+
+    respond_to do |format|
+      format.html { redirect_to tournaments_url, notice: 'Tournament was successfully deleted.' }
+      format.json { head :no_content }
     end
   end
 end

@@ -94,8 +94,14 @@ class Ability
       user.admin?
     end
 
+    can :read, Tournament
+
+    can :update, Tournament do |tournament|
+      user.manager_of?(tournament)
+    end
+
     can :manage, Tournament do |tournament|
-      user.admin? || user.manager_of?(tournament)
+      user.admin?
     end
 
     can [:edit, :update], User do |user_object|

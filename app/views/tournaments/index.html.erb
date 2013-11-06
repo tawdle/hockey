@@ -9,15 +9,17 @@
     <th>Division</td>
     <th>Class</td>
     <th></th>
+    <th></th>
   </tr>
 
-<% @tournaments.each do |tournament| %>
+<% Tournament.without_deleted.each do |tournament| %>
   <tr>
     <td><%= image_tag(tournament.logo_url(:thumbnail)) if tournament.logo.present? %></td>
     <td><%= link_to tournament.name, tournament %></td>
     <td><%= t("league.divisions.#{tournament.division}") %>
     <td><%= t("league.classifications.#{tournament.classification}") %>
     <td><%= link_to 'Edit', edit_league_path(tournament) if can? :edit, tournament %></td>
+    <td><%= link_to 'Delete', tournament, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, tournament %></td>
   </tr>
 <% end %>
 </table>

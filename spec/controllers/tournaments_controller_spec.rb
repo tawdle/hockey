@@ -38,6 +38,17 @@ describe TournamentsController do
         }.to change { Tournament.count }.by(1)
       end
     end
+    describe "#destroy" do
+      def do_request
+        delete :destroy, :id => tournament.to_param
+      end
+      it "works" do
+        tournament # reference it to create it
+        expect {
+          do_request
+        }.to change { Tournament.without_deleted.count }.by(-1)
+      end
+    end
   end
 
   context "with a logged in manager" do

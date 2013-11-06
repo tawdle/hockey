@@ -68,7 +68,7 @@ class LeaguesController < ApplicationController
     @league.destroy
 
     respond_to do |format|
-      format.html { redirect_to leagues_url }
+      format.html { redirect_to leagues_url, notice: 'League was successfully deleted.' }
       format.json { head :no_content }
     end
   end
