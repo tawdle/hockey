@@ -91,7 +91,7 @@ class Ability
     end
 
     can :destroy, Team do |team|
-      user.admin?
+      user.admin? || user.manager_of?(team.league)
     end
 
     can :read, Tournament

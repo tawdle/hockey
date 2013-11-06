@@ -11,13 +11,13 @@
     <th></th>
   </tr>
 
-<% @teams.each do |team| %>
+<% @teams.without_deleted.each do |team| %>
   <tr>
     <td><%= image_tag(team.logo_url(:thumbnail), :width => 50, :height => 50) if team.logo.present? %>
     <td><%= team.full_name %></td>
     <td>
       <span class="pull-left" style="margin-right: 10px;">
-        <%= format_user_link(team.user) %>
+        <%= format_user_link(team) %>
       </span>
       <%= render :partial => 'follow_button', :locals => {:target => team } %>
     </td>

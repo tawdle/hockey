@@ -4,6 +4,8 @@ class LeaguesController < ApplicationController
   # GET /leagues
   # GET /leagues.json
   def index
+    @leagues = League.where(:type => "League")
+
     respond_to do |format|
       format.html # index.html.erb
       format.json { render json: @leagues }
