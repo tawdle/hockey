@@ -72,6 +72,6 @@ class Invitation < ActiveRecord::Base
   end
 
   def send_invitation
-    InvitationMailer.send("#{predicate}_#{target.class.name.downcase}", self).deliver
+    InvitationMailer.delay.send("#{predicate}_#{target.class.name.downcase}", self)
   end
 end
