@@ -80,6 +80,49 @@ describe Game do
     end
   end
 
+  describe "#start" do
+    context "with an activated game" do
+      let(:game) { FactoryGirl.build(:game) }
+
+      before do
+        game.should_receive(:ready_to_activate?).and_return(true)
+        game.activate!
+      end
+
+      it "sets the start time when the game is first started" do
+        expect {
+          game.start!
+        }.to change { game.started_at }.from(nil)
+      end
+
+      it "doesn't change started_at on subsequent starts" do
+        game.start!
+        game.pause!
+
+        expect {
+          game.start!
+        }.not_to change { game.started_at }
+      end
+    end
+  end
+
+  describe "#finish" do
+    context "with a stopped game" do
+      let(:game) { FactoryGirl.build(:game) }
+
+      before do
+        game.should_receive(:ready_to_activate?).and_return(true)
+        game.activate!
+        game.start!
+        game.stop!
+      end
+
+      it "should set ended_at" do
+        expect { game.finish! }.to change { game.ended_at }.from(nil)
+      end
+    end
+  end
+
   describe "actions that create an activity feed item" do
     let(:game) { FactoryGirl.build(:game) }
     let(:saved_game) { FactoryGirl.create(:game) }

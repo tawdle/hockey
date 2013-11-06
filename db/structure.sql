@@ -310,7 +310,9 @@ CREATE TABLE games (
     period integer,
     period_duration integer DEFAULT 900 NOT NULL,
     number character varying(255),
-    league_id integer
+    league_id integer,
+    started_at timestamp without time zone,
+    ended_at timestamp without time zone
 );
 
 
@@ -1663,3 +1665,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131102224059');
 INSERT INTO schema_migrations (version) VALUES ('20131104044516');
 
 INSERT INTO schema_migrations (version) VALUES ('20131104182952');
+
+INSERT INTO schema_migrations (version) VALUES ('20131106003740');

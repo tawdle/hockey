@@ -15,7 +15,7 @@ class Game < ActiveRecord::Base
     end
 
     event :stop do
-      transition :playing => :active
+      transition [:playing, :paused] => :active
     end
 
     event :finish do
@@ -30,6 +30,8 @@ class Game < ActiveRecord::Base
       transition :scheduled => :canceled
     end
 
+    after_transition :active => :playing, :do => :set_started_at
+    after_transition any => :finished, :do => :set_ended_at
     after_transition any => :canceled, :do => :generate_cancel_feed_item
     before_transition :scheduled => :active, :do => :create_clock
     after_transition :scheduled => :active, :do => :generate_game_started_feed_item
@@ -251,6 +253,14 @@ class Game < ActiveRecord::Base
   end
 
   private
+
+  def set_started_at
+    self.started_at = Time.now
+  end
+
+  def set_ended_at
+    self.ended_at = Time.now
+  end
 
   def updater_name
     updater.try(:at_name) || "The System"
