@@ -68,8 +68,10 @@ class Goal < ActiveRecord::Base
   end
 
   def set_time_and_period_from_game
-    self.period ||= game.period
-    self.elapsed_time ||= game.elapsed_time
+    if game
+      self.period ||= game.period
+      self.elapsed_time ||= game.elapsed_time
+    end
   end
 
   def broadcast_changes
