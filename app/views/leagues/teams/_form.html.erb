@@ -16,12 +16,12 @@
     <%= f.text_field :full_name %>
   </div>
 
-  <%= f.fields_for :user do |uf| %>
+  <%= f.fields_for :system_name do |snf| %>
     <div class="field">
-      <%= uf.label :name %>
+      <%= snf.label :name %>
       <div class="input-prepend">
         <span class="add-on">@</span>
-        <%= uf.text_field :name %>
+        <%= snf.text_field :name %>
       </div>
     </div>
   <% end %>
