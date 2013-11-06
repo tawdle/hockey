@@ -157,6 +157,16 @@ describe Game do
       let(:count) { 2 }
       it_behaves_like "an action that creates an activity feed item"
     end
+
+    describe "#start" do
+      before do
+        game.should_receive(:ready_to_activate?).and_return(true)
+        game.activate!
+      end
+
+      let(:action) { game.start! }
+      it_behaves_like "an action that creates an activity feed item"
+    end
   end
 
   describe "#readonly attributes" do

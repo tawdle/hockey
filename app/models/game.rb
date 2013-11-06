@@ -30,14 +30,13 @@ class Game < ActiveRecord::Base
       transition :scheduled => :canceled
     end
 
-    after_transition :active => :playing, :do => :set_started_at
+    after_transition :active => :playing, :do => [:generate_game_started_feed_item, :set_started_at]
     after_transition any => :finished, :do => :set_ended_at
     after_transition any => :canceled, :do => :generate_cancel_feed_item
     before_transition :scheduled => :active, :do => :create_clock
-    after_transition :scheduled => :active, :do => :generate_game_started_feed_item
     after_transition :active => :playing, :do => :set_next_period
     after_transition any => :completed, :do => :destroy_clock
-    after_transition any => :completed, :do => :generate_game_over_feed_item
+    after_transition any => :finished, :do => :generate_game_over_feed_item
     after_transition any => any, :do => :broadcast_changes_from_state_machine
     after_transition any => :playing, :do => :start_paused_penalties
     after_transition any => [:paused, :active, :finished], :do => :pause_running_penalties
@@ -280,7 +279,7 @@ class Game < ActiveRecord::Base
   end
 
   def generate_game_started_feed_item
-    activity_feed_items.create!(:message => "The game between @#{home_team.name} and @#{visiting_team.name} started.")
+    activity_feed_items.create!(:message => "The game between @#{home_team.name} and @#{visiting_team.name} has started.") unless started_at
   end
 
   def generate_game_over_feed_item
