@@ -5,9 +5,13 @@ class StaffMember < ActiveRecord::Base
   belongs_to :team
   belongs_to :user # option, after being claimed
 
-  Roles = [:head_coach, :assistant_coach, :manager, :safety_attendant]
+  Roles = [:manager, :head_coach, :assistant_coach, :safety_attendant]
 
   validates_presence_of :name
   validates_presence_of :team
   symbolize :role, :in => Roles
+
+  def name_and_role
+    "#{name} (#{role.to_s.humanize})"
+  end
 end
