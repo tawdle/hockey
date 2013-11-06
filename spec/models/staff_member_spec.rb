@@ -28,4 +28,5 @@ describe StaffMember do
       staff_member.should_not be_valid
     end
   end
+  it_behaves_like "a model that implements soft delete"
 end

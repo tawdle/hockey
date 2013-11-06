@@ -12,7 +12,7 @@ class User < ActiveRecord::Base
   attr_readonly :name
 
   has_many :authorizations, :dependent => :destroy
-  has_many :players, :dependent => :destroy
+  has_many :players, :dependent => :destroy, :conditions => { deleted_at: nil }
   has_many :teams, :through => :players
   has_one :system_name, :as => :nameable
 

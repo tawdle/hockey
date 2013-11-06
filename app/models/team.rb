@@ -1,11 +1,13 @@
 class Team < ActiveRecord::Base
+  include SoftDelete
+
   after_create :set_manager
   belongs_to :league
   has_one :system_name, :as => :nameable
-  has_many :players, :dependent => :destroy, :order => "lpad(jersey_number, #{Player::MaxJerseyNumberLength}, '0'), name"
+  has_many :players, :dependent => :destroy, :order => "lpad(jersey_number, #{Player::MaxJerseyNumberLength}, '0'), name", :conditions => { deleted_at: nil }
   has_many :users, :through => :players
   has_many :authorizations, :as => :authorizable
-  has_many :staff_members, :inverse_of => :team
+  has_many :staff_members, :inverse_of => :team, :conditions => { deleted_at: nil }
   delegate :name, :to => :system_name
 
   validates_presence_of :full_name

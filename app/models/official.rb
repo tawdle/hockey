@@ -1,4 +1,6 @@
 class Official < ActiveRecord::Base
+  include SoftDelete
+
   belongs_to :league
   has_many :game_officials
   has_many :games, :through => :game_officials

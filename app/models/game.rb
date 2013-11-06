@@ -1,5 +1,6 @@
 class Game < ActiveRecord::Base
   include AsyncMessaging
+  include SoftDelete
 
   state_machine :initial => :scheduled do
     event :activate do

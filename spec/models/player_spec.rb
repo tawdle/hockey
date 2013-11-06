@@ -105,4 +105,5 @@ describe Player do
       end
     end
   end
+  it_behaves_like "a model that implements soft delete"
 end

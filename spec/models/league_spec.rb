@@ -76,4 +76,5 @@ describe League do
     let(:action) { league.accepted_invitation_to_mark(user, invitation) }
     it_behaves_like "an action that creates an activity feed item"
   end
+  it_behaves_like "a model that implements soft delete"
 end

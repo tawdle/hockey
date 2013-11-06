@@ -1,6 +1,8 @@
 require 'active_support/inflector'
 
 class Player < ActiveRecord::Base
+  include SoftDelete
+
   belongs_to :team
   belongs_to :user
   attr_accessor :username_or_email, :creator, :email

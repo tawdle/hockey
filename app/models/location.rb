@@ -1,4 +1,6 @@
 class Location < ActiveRecord::Base
+  include SoftDelete
+
   has_many :authorizations, :as => :authorizable
 
   attr_accessible :name, :address_1, :address_2, :city, :state, :zip, :country, :telephone, :email, :website

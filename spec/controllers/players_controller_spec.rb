@@ -57,7 +57,7 @@ describe PlayersController do
       it "works" do
         expect {
           do_request
-        }.to change { Player.count }.by(-1)
+        }.to change { team.players.count }.by(-1)
         response.should be_redirect
       end
     end

@@ -6,7 +6,7 @@
     <th></th>
   </tr>
 
-<% @players.each do |player| %>
+<% @players.without_deleted.each do |player| %>
   <tr>
     <td><%= format_player_link(player) %></td>
     <td><%= link_to 'Remove', team_player_path(@team, player), method: :delete, data: { confirm: 'Are you sure?' } %></td>

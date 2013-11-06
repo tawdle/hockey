@@ -312,7 +312,8 @@ CREATE TABLE games (
     number character varying(255),
     league_id integer,
     started_at timestamp without time zone,
-    ended_at timestamp without time zone
+    ended_at timestamp without time zone,
+    deleted_at timestamp without time zone
 );
 
 
@@ -463,7 +464,8 @@ CREATE TABLE leagues (
     logo character varying(255),
     classification character varying(255),
     division character varying(255),
-    type character varying(255)
+    type character varying(255),
+    deleted_at timestamp without time zone
 );
 
 
@@ -503,7 +505,8 @@ CREATE TABLE locations (
     country character varying(255),
     telephone character varying(255),
     email character varying(255),
-    website character varying(255)
+    website character varying(255),
+    deleted_at timestamp without time zone
 );
 
 
@@ -565,7 +568,8 @@ ALTER SEQUENCE mentions_id_seq OWNED BY mentions.id;
 CREATE TABLE officials (
     id integer NOT NULL,
     name character varying(255),
-    league_id integer
+    league_id integer,
+    deleted_at timestamp without time zone
 );
 
 
@@ -639,7 +643,8 @@ CREATE TABLE players (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     jersey_number character varying(255),
-    name character varying(255)
+    name character varying(255),
+    deleted_at timestamp without time zone
 );
 
 
@@ -680,7 +685,8 @@ CREATE TABLE staff_members (
     name character varying(255) NOT NULL,
     team_id integer NOT NULL,
     role character varying(255) DEFAULT 'assistant_coach'::character varying,
-    user_id integer
+    user_id integer,
+    deleted_at timestamp without time zone
 );
 
 
@@ -744,7 +750,8 @@ CREATE TABLE teams (
     league_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    logo character varying(255)
+    logo character varying(255),
+    deleted_at timestamp without time zone
 );
 
 
@@ -1667,3 +1674,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131104044516');
 INSERT INTO schema_migrations (version) VALUES ('20131104182952');
 
 INSERT INTO schema_migrations (version) VALUES ('20131106003740');
+
+INSERT INTO schema_migrations (version) VALUES ('20131106192405');

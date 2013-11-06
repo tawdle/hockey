@@ -1,4 +1,6 @@
 class StaffMember < ActiveRecord::Base
+  include SoftDelete
+
   attr_accessible :name, :role
   belongs_to :team
   belongs_to :user # option, after being claimed

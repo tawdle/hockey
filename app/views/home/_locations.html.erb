@@ -1,8 +1,8 @@
-<% if Location.managed_by(current_user).any? %>
+<% if Location.managed_by(current_user).without_deleted.any? %>
   <div class="well">
     <h3>Arenas you manage</h3>
     <ul>
-      <% Location.managed_by(current_user).each do |location| %>
+      <% Location.managed_by(current_user).without_deleted.each do |location| %>
         <li><%= link_to location.name, location %></li>
       <% end %>
     </ul>

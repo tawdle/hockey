@@ -179,4 +179,5 @@ describe Game do
       }.not_to change { game.reload.home_team }
     end
   end
+  it_behaves_like "a model that implements soft delete"
 end
