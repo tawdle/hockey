@@ -1,9 +1,27 @@
 <h2><%= @team.full_name %> - Staff Members</h2>
 
-<ul>
-  <% @team.staff_members.each do |staff| %>
-    <li><%= link_to staff.name, edit_team_staff_member_path(@team, staff) %> - <em><%= staff.role.to_s.humanize %></em></li>
-  <% end %>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Role</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @team.staff_members.each do |staff| %>
+      <tr>
+        <td><%= staff.name %></td>
+        <td><%= staff.role.to_s.humanize %></td>
+        <td>
+          <%= link_to "Edit", edit_team_staff_member_path(@team, staff) if can? :edit, staff %>
+          <%= link_to "Delete", team_staff_member_path(@team, staff), method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, staff %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
 </ul>
 
 <%= link_to "Add new staff member", new_team_staff_member_path(@team), :class => "btn" %>

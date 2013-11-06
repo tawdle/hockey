@@ -6,6 +6,7 @@ describe StaffMembersController do
   let(:manager) { team.managers.first }
   context "with a logged in team manager" do
     before { sign_in(manager) }
+
     describe "#index" do
       def do_request
         get :index, :team_id => team.to_param
@@ -16,6 +17,7 @@ describe StaffMembersController do
         response.should render_template('index')
       end
     end
+
     describe "#new" do
       def do_request
         get :new, :team_id => team.to_param
@@ -25,6 +27,7 @@ describe StaffMembersController do
         response.should render_template("new")
       end
     end
+
     describe "#create" do
       def do_request
         post :create, :team_id => team.to_param, :staff_member => {:name => "Heny Mancini" }
@@ -39,6 +42,7 @@ describe StaffMembersController do
         response.should redirect_to team_staff_members_path(team)
       end
     end
+
     describe "#edit" do
       def do_request
         get :edit, :team_id => team.to_param, :id => staff_member.to_param
@@ -48,6 +52,7 @@ describe StaffMembersController do
         response.should render_template("edit")
       end
     end
+
     describe "#update" do
       def do_request
         put :update, :team_id => team.to_param, :id => staff_member.to_param, :staff_member => {:name => "Thurgood Marshall" }
@@ -59,6 +64,18 @@ describe StaffMembersController do
       it "redirect to the team's staff members page" do
         do_request
         response.should redirect_to team_staff_members_path(team)
+      end
+    end
+
+    describe "#destroy" do
+      def do_request
+        delete :destroy, :team_id => team.to_param, :id => staff_member.to_param
+      end
+
+      it "deletes the staff member" do
+        expect {
+          do_request
+        }.to change { team.staff_members.count }.by(-1)
       end
     end
   end

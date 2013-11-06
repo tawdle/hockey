@@ -40,4 +40,13 @@ class StaffMembersController < ApplicationController
       end
     end
   end
+
+  def destroy
+    @staff_member.destroy
+
+    respond_to do |format|
+      format.html { redirect_to team_staff_members_path(@team), notice: 'Staff member was successfully deleted.' }
+      format.json { head :no_content }
+    end
+  end
 end
