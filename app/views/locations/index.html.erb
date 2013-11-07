@@ -8,7 +8,7 @@
     <th></th>
   </tr>
 
-<% @locations.without_deleted.each do |location| %>
+<% @locations.each do |location| %>
   <tr>
     <td><%= link_to location.name, location %></td>
     <td><%= link_to 'Edit', edit_location_path(location) if can? :edit, location %></td>
