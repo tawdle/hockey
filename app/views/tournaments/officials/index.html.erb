@@ -11,7 +11,8 @@
     <% @tournament.officials.each do |official| %>
       <tr>
         <td><%= official.name %></td>
-        <td><%= link_to "Edit", edit_tournament_official_path(@tournament, official) %></td>
+        <td><%= link_to "Edit", edit_tournament_official_path(@tournament, official) if can? :edit, official %></td>
+        <td><%= link_to "Delete", tournament_official_path(@tournament, official), method: :delete, data: { confirm: 'Are you sure?' } if can? :edit, official %></td>
       </tr>
     <% end %>
   </tbody>
