@@ -6,6 +6,7 @@ FactoryGirl.define do
     team
     sequence(:name) { |n| "Player #{n}" }
     sequence(:jersey_number) {|n| n }
+    role :player
 
     trait :with_user do
       user

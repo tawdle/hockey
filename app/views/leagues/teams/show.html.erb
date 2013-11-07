@@ -29,6 +29,7 @@
     <th>Name</th>
     <th style="width: 20px;">#</th>
     <th>Profile</th>
+    <th>Role</th>
     <th></th>
   </tr>
 
@@ -37,6 +38,7 @@
       <td><%= player.name %>
       <td><%= player.jersey_number %></td>
       <td><%= format_player_link(player) %></td>
+      <td><%= player.role.to_s.humanize %></td>
       <td>
         <%= link_to 'Edit', edit_player_path(player) %>
         <%= link_to 'Remove', player, method: :delete, data: { confirm: 'Are you sure?' } %>

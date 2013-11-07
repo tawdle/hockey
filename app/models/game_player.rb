@@ -9,8 +9,7 @@ class GamePlayer < ActiveRecord::Base
 
   after_commit :broadcast_changes
 
-  Roles = [:player, :goalie, :captain, :assistant_captain]
-  symbolize :role, :in => Roles, :allow_nil => true
+  symbolize :role, :in => Player::Roles, :allow_nil => true
 
   scope :for_team, lambda {|team| joins(:player).where(:players => {:team_id => team.id}) }
   scope :goalies, where(:role => :goalie)

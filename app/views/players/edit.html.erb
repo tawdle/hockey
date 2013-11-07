@@ -23,6 +23,11 @@
     <%= f.text_field :jersey_number, :class => "span1" %>
   </div>
 
+  <div class="field">
+    <%= f.label :role %>
+    <%= f.collection_select :role, Player::Roles.map {|r| [r, r.to_s.humanize]}, :first, :second %>
+  </div>
+
   <div class="actions">
     <%= f.submit :class => "btn btn-primary" %>
   </div>

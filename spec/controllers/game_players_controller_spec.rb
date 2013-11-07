@@ -18,7 +18,7 @@ describe GamePlayersController do
 
   describe "#create" do
     def do_request
-      post :create, :game_id => game.to_param, :player => { :jersey_number => "17", :name => "John Smith" }
+      post :create, :game_id => game.to_param, :player => { :jersey_number => "17", :name => "John Smith", :role => :player }
     end
     it "creates a new player" do
       expect {

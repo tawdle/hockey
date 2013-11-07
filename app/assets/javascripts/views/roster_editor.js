@@ -43,6 +43,7 @@ App.RosterEditor = Backbone.View.extend({
 
   playerCreated: function(player) {
     this.$(".players").append(this.template(player));
+    this.$("#game_player_select_" + player.id).val(player.role);
     this.attachHandlers();
   },
 

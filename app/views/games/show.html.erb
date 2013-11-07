@@ -164,8 +164,8 @@
       </label>
     </td>
     <td>
-      <select name="game[game_players_attributes][{{= id }}][role]" value="player">
-        <% GamePlayer::Roles.each do |role| %>
+      <select id="game_player_select_{{= id }}" name="game[game_players_attributes][{{= id }}][role]" value="player">
+        <% Player::Roles.each do |role| %>
           <option value="<%= role %>"><%= role.to_s.humanize %></options>
         <% end %>
       </select>

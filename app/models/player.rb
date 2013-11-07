@@ -3,12 +3,14 @@ require 'active_support/inflector'
 class Player < ActiveRecord::Base
   include SoftDelete
 
+  Roles = [:player, :goalie, :captain, :assistant_captain]
+  MaxJerseyNumberLength = 4
+
   belongs_to :team
   belongs_to :user
+  symbolize :role, :in => Roles
   attr_accessor :username_or_email, :creator, :email
-  attr_accessible :team, :username_or_email, :creator, :jersey_number, :name
-
-  MaxJerseyNumberLength = 4
+  attr_accessible :team, :username_or_email, :creator, :jersey_number, :name, :role
 
   validates_presence_of :team
   validates_presence_of :name

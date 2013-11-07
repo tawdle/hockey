@@ -26,6 +26,11 @@
   </div>
 
   <div class="field">
+    <%= f.label :role %>
+    <%= f.collection_select :role, Player::Roles.map {|r| [r, r.to_s.humanize]}, :first, :second %>
+  </div>
+
+  <div class="field">
     <%= f.label :username_or_email %>
     <% if @player.new_record? %>
       <%= f.text_field :username_or_email, :placeholder => "Optional: enter email address to invite"  %>
