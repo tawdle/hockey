@@ -43,7 +43,12 @@
       <td><%= link_to game.home_team.name, game.home_team %></td>
       <td></td>
       <td><%= link_to game.visiting_team.name, game.visiting_team %></td>
-      <td><%= game.location.name %></td>
+      <td>
+        <%= link_to game.location.name, game.location %>
+        <%= link_to game.location.map_url, :target => "_blank" do %>
+          <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank" %>
+        <% end %>
+      </td>
       <td><%= "#{game.home_team_score} - #{game.visiting_team_score}" if game.active? %></td>
       <td>
         <%= link_to "Change", edit_league_game_path(@league, game), :class => "btn" if game.scheduled? && can?(:edit, game) %>

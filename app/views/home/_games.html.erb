@@ -1,3 +1,5 @@
+<% show_finished_games ||= false %>
+
 <% if games.without_deleted.active.any? %>
   <h3 class="page-header">Current Games <small>these games are being played right now</small></h3>
   <table class="table table-hover">
@@ -13,7 +15,12 @@
       <tr>
         <td><%= distance_of_time_in_words_to_now(game.start_time) %> ago</td>
         <td>@<%= link_to game.home_team.name, game.home_team %> <i>vs</i> @<%= link_to game.visiting_team.name, game.visiting_team %></td>
-        <td><%= game.location.name %></td>
+        <td>
+          <%= link_to game.location.name, game.location %>
+          <%= link_to game.location.map_url, :target => "_blank" do %>
+            <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank" %>
+          <% end %>
+        </td>
         <td><%= "#{game.home_team_score} - #{game.visiting_team_score}" %></td>
         <td style="text-align: right;"><%= link_to "See game", game, :class => "btn" %></td>
       </tr>
@@ -23,6 +30,34 @@
 
 <% if games.without_deleted.upcoming.any? %>
   <h3 class="page-header">Coming Games <small>these games are scheduled to start soon</small></h3>
+  <table class="table table-hover">
+    <tr>
+      <th>Starting</th>
+      <th>Teams</th>
+      <th>Location</th>
+      <th></th>
+      <th></th>
+    </tr>
+
+    <% games.without_deleted.scheduled.asc.each do |game| %>
+      <tr>
+        <td>in <%= distance_of_time_in_words_to_now(game.start_time) %></td>
+        <td>@<%= link_to game.home_team.name, game.home_team %> <i>vs</i> @<%= link_to game.visiting_team.name, game.visiting_team %></td>
+        <td>
+          <%= link_to game.location.name, game.location %>
+          <%= link_to game.location.map_url, :target => "_blank" do %>
+            <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon" %>
+          <% end %>
+        </td>
+        <td></td>
+        <td style="text-align: right;"><%= link_to "See game", game, :class => "btn" %></td>
+      </tr>
+    <% end %>
+  </table>
+<% end %>
+
+<% if show_finished_games && games.without_deleted.finished.any? %>
+  <h3 class="page-header">Completed Games <small>these games are over</small></h3>
   <table class="table table-hover">
     <tr>
       <th>Started</th>
@@ -36,7 +71,12 @@
       <tr>
         <td>in <%= distance_of_time_in_words_to_now(game.start_time) %></td>
         <td>@<%= link_to game.home_team.name, game.home_team %> <i>vs</i> @<%= link_to game.visiting_team.name, game.visiting_team %></td>
-        <td><%= game.location.name %></td>
+        <td>
+          <%= link_to game.location.name, game.location %>
+          <%= link_to game.location.map_url, :target => "_blank" do %>
+            <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon" %>
+          <% end %>
+        </td>
         <td></td>
         <td style="text-align: right;"><%= link_to "See game", game, :class => "btn" %></td>
       </tr>

@@ -69,7 +69,12 @@
         <td><%= link_to game.state.humanize, game %></td>
         <td><%= link_to game.opposing_team(@team).name, game.opposing_team(@team) %></td>
         <td><%= game.start_time.to_s(:long) %></td>
-        <td><%= game.location.name %></td>
+        <td>
+          <%= link_to game.location.name, game.location %>
+          <%= link_to game.location.map_url, :target => "_blank" do %>
+            <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank" %>
+          <% end %>
+        </td>
         <td><%= "#{game.score_for(@team)} - #{game.score_for_opposing_team(@team)}" if game.active? %></td>
       </tr>
     <% end %>
