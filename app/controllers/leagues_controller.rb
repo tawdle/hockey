@@ -4,7 +4,7 @@ class LeaguesController < ApplicationController
   # GET /leagues
   # GET /leagues.json
   def index
-    @leagues = League.where(:type => "League")
+    @leagues = League.where(:type => [nil, "League"])
 
     respond_to do |format|
       format.html # index.html.erb
