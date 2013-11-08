@@ -10,6 +10,19 @@ span#game-clock, span#game-period {
 }
 
 
+@-webkit-keyframes whitePulse {
+  from { color: #D6D9D6; }
+  25% { color: white; }
+  75% { color: white; }
+  to { color: #D6D9D6; }
+}
+
+#game-start {
+  -webkit-animation-name: whitePulse;
+  -webkit-animation-duration: 1.75s;
+  -webkit-animation-iteration-count: infinite;
+}
+
 #start-stop-clock {
   text-align: center;
   a {
