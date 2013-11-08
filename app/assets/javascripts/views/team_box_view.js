@@ -36,6 +36,7 @@ App.TeamBoxView = Backbone.View.extend({
 
   addPenalty: function(e) {
     e.preventDefault();
+    App.game.pause();
     var penalty = new App.Penalty({}, {collection: App.penalties});
     this.penaltyEditor.edit(penalty);
   },

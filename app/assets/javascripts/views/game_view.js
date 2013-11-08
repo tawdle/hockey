@@ -18,8 +18,28 @@ App.GameView = Backbone.View.extend({
   },
 
   events: {
+    "click #game-start" : "start",
+    "click #game-pause" : "pause",
+    "click #game-stop" : "stop",
     "ajax:success #new_activity_feed_item" : "clearMessageText",
     "click .swap" : "swapTeamBoxes"
+  },
+
+  start: function(e) {
+    e.preventDefault();
+    this.model.start();
+  },
+
+  pause: function(e) {
+    e.preventDefault();
+    this.model.pause();
+  },
+
+  stop: function(e) {
+    e.preventDefault();
+    if (confirm("End this period now?")) {
+      this.model.stop();
+    }
   },
 
   clearMessageText: function() {

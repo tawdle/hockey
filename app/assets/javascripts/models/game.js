@@ -32,5 +32,28 @@ App.Game = App.EmbeddedModel.extend({
     this.faye.subscribe("/games/" + this.get("id"), function(message) {
       this.set(message);
     }.bind(this));
+  },
+
+  url: function() {
+    return "/games/" + this.id;
+  },
+
+  perform: function(action) {
+    $.ajax({
+      type: "POST",
+      url: this.url() + "/" + action + ".json"
+    });
+  },
+
+  start: function() {
+    this.perform("start");
+  },
+
+  pause: function() {
+    this.perform("pause");
+  },
+
+  stop: function() {
+    this.perform("stop");
   }
 });

@@ -39,9 +39,9 @@
 
   <div id="start-stop-clock">
     <% if can? :mark, @game %>
-      <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, start_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-start", :class => "btn btn-large btn-success" %> 
-      <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, pause_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-pause", :class => "btn btn-large btn-warning" %>
-      <%= link_to "<i class='icon-stop icon-2x'></i>".html_safe, stop_game_path(@game, :format => :json), :method => :post, :remote => true, :id => "game-stop", :class => "btn btn-large btn-danger", :confirm => "End this period now?" %>
+      <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, "#", :id => "game-start", :class => "btn btn-large btn-success" %> 
+      <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, "#", :id => "game-pause", :class => "btn btn-large btn-warning" %>
+      <%= link_to "<i class='icon-stop icon-2x'></i>".html_safe, "#", :id => "game-stop", :class => "btn btn-large btn-danger" %>
     <% end %>
 
     <span id="game-period" class="label"></span>
