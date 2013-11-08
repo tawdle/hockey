@@ -25,6 +25,11 @@ describe Goal do
     end
   end
   describe "#create" do
+    it "stops the game clock" do
+      goal.game.should_receive(:pause)
+      goal.save!
+    end
+
     let(:action) { goal.save! }
     let(:count) { 2 }
     it_behaves_like "an action that creates an activity feed item"

@@ -19,6 +19,7 @@ class Goal < ActiveRecord::Base
   before_validation :set_time_and_period_from_game
   before_save :generate_save_feed_item, :unless => :players_empty?
   before_destroy :generate_destroy_feed_item, :unless => :players_empty?
+  after_create :stop_clock
   after_commit :broadcast_changes
 
   scope :for_team, lambda {|team| where(:team_id => team.id) }
@@ -76,5 +77,9 @@ class Goal < ActiveRecord::Base
 
   def broadcast_changes
     game.send(:broadcast_changes, :with => :goals)
+  end
+
+  def stop_clock
+    game.pause # If we're already stopped, this is a no-op
   end
 end
