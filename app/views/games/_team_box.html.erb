@@ -8,7 +8,6 @@
 
     <% if can? :mark, @game %>
       <a href="#" class="btn add-goal" title-"Add Goal"><i class="icon-plus"></i></a>
-      <a href="#" class="btn add-penalty" title="Add Penalty"><i class="icon-flag"></i></a>
       <a href="#" class="btn edit-roster" title="Edit Team Roster" ><i class="icon-male"></i></a>
       <a href="#" class="btn choose-goalie" title="Choose Goalie"><%= image_tag("goalie.svg", :style => "width: 16px; height: 18px;") %></a>
       <a href="#" class="btn swap" title="Switch Home/Visiting Positions"><i class="icon-refresh"></i></a>
@@ -47,35 +46,6 @@
 
       </div>
 
-      <div class="penalty-editor modal hide fade">
-        <div class="modal-header"><h3>Penalty for <%= team.name %></h3></div>
-        <div class="modal-body">
-          <div class="penalty-player">
-            <select name="player"></select>
-          </div>
-          <div class="penalty-serving-player">
-            <select name="player-serving"></select>
-          </div>
-          <div class="penalty-category">
-            <select>
-              <option value="" selected disabled>Type of penalty</option>
-              <% Penalty::Infractions.keys.each do |category| %>
-                <option value="<%= category %>"><%= category.to_s.humanize %></option>
-              <% end %>
-            </select>
-          </div>
-          <div class="penalty-infraction">
-            <select></select>
-          </div>
-          <div class="penalty-minutes">
-            <input type="number" placeholder="Penalty minutes" min="0" max="60" step="1"></input>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <%= link_to "Cancel", "#", :class => "cancel" %>
-          <%= link_to "Save", "#", :class => "save btn btn-primary" %>
-        </div>
-      </div>
     <% end %>
 
     <div style="clear: both;">

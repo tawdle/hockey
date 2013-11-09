@@ -33,6 +33,7 @@ class Penalty < ActiveRecord::Base
   belongs_to :serving_player, :class_name => "Player"
   belongs_to :timer
 
+  before_validation :set_minutes_from_category
   after_commit :broadcast_changes
   after_destroy :broadcast_changes
 
@@ -67,6 +68,29 @@ class Penalty < ActiveRecord::Base
       :throwing_stick,
       :tripping,
       :unsportsmanlike_conduct
+    ],
+    :bench_minor => [
+      :abuse_of_officials,
+      :delay_of_game,
+      :deliberate_illegal_substitution,
+      :face_off_violation,
+      :illegal_substitution,
+      :improper_starting_line_up,
+      :interference_from_players_or_penalty_bench,
+      :interference_with_an_official,
+      :leaving_bench_at_end_of_period,
+      :refusing_to_start_play,
+      :stepping_onto_ice_during_period,
+      :throwing_objects_onto_ice,
+      :too_many_men_on_the_ice,
+      :unsportsmanlike_conduct,
+      :unsustained_request_for_measurement
+    ],
+    :double_minor => [
+      :butt_ending,
+      :head_butting,
+      :high_sticking,
+      :spearing
     ],
     :major => [
       :boarding,
@@ -112,6 +136,10 @@ class Penalty < ActiveRecord::Base
   end
 
   private
+
+  def set_minutes_from_category
+    self.minutes ||= { minor: 2, bench_minor: 2, major: 5, double_major: 10 }[category]
+  end
 
   def game_playing?
     game.playing?

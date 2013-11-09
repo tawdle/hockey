@@ -39,6 +39,7 @@
 
   <div id="start-stop-clock">
     <% if can? :mark, @game %>
+      <a href="#" class="btn add-penalty" title="Add Penalty"><i class="icon-flag"></i></a>
       <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, "#", :id => "game-start", :class => "btn btn-large btn-success" %> 
       <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, "#", :id => "game-pause", :class => "btn btn-large btn-warning" %>
       <%= link_to "<i class='icon-stop icon-2x'></i>".html_safe, "#", :id => "game-stop", :class => "btn btn-large btn-danger" %>
@@ -109,6 +110,60 @@
   </table>
 </div>
 
+<div class="penalty-editor modal hide fade">
+  <div class="modal-header"><h3>Penalty</h3></div>
+  <div class="modal-body">
+    <form>
+
+      <fieldset>
+        <legend>Team</legend>
+        <div class="penalty-team">
+          <label class="radio inline">
+            <input type="radio" id="penalty-team-<%= @game.home_team_id %>" value="<%= @game.home_team_id %>" name="penalty[team_id]"></input>
+            <%= @game.home_team.full_name %>
+          </label>
+          <label class="radio inline">
+            <input type="radio" id="penalty-team-<%= @game.visiting_team_id %>" value="<%= @game.visiting_team_id %>" name="penalty[team_id]" ></input>
+            <%= @game.visiting_team.full_name %>
+          </label>
+        </div>
+      </fieldset>
+
+
+      <fieldset>
+        <legend>Player</legend>
+        <div class="penalty-player">
+          <div id="penalty-players-team-<%= @game.home_team_id %>"></div>
+          <div id="penalty-players-team-<%= @game.visiting_team_id %>"></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Category</legend>
+        <div class="penalty-category">
+          <% Penalty::Infractions.keys.each do |category| %>
+            <label class="radio inline">
+              <input type="radio" value="<%= category %>" name="penalty[category]"></input>
+              <%= category.to_s.humanize %>
+            </label>
+          <% end %>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend>Infraction</fieldset>
+        <div class="penalty-infraction">
+          <select></select>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <%= link_to "Cancel", "#", :class => "cancel" %>
+    <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+  </div>
+</div>
+
 <script type="text/html" id="feed-item">
 <td><img src="{{= avatar_thumbnail_url }}" height="50" width="50"></td>
 <td>{{= creator }}</td>
@@ -123,7 +178,7 @@
 <script type="text/html" id="penalty-view">
 <td>{{= App.periods[period] }}</td>
 <td>{{= App.displaySeconds(elapsed_time) }}</td>
-<td>{{= App.players.get(player_id).get("jersey_number") + (player_id != serving_player_id ? " (served by " + App.players.get(serving_player_id).get("jersey_number") + ")" : "") }}</td>
+<td>{{= App.players.get(player_id).get("jersey_number") + (serving_player_id ? " (served by " + App.players.get(serving_player_id).get("jersey_number") + ")" : "") }}</td>
 <td>{{= App.humanize(infraction) + " (" + App.humanize(category) + ")" }}</td>
 <td>{{= App.humanize(state) }}</td>
 <td class="timer" style="white-space: nowrap"></td>
@@ -152,6 +207,13 @@
     <i class="icon-remove"></i>
   <% end %>
 </td>
+</script>
+
+<script type="text/html" id="player-radio">
+  <label class="radio inline">
+    <input id="penalty-player-radio-{{= id }}" type="radio" name="penalty[player_id]" value="{{= id }}"></input>
+    {{= jersey_number }}
+  </label>
 </script>
 
 <script type="text/html" id="player-checkbox">

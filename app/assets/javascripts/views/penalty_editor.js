@@ -2,22 +2,36 @@ window.App = window.App || {};
 
 App.PenaltyEditor = Backbone.View.extend({
   initialize: function() {
-    this.playerSelect = this.$(".penalty-player select");
-    this.servingPlayerSelect = this.$(".penalty-serving-player select");
-    this.categorySelect = this.$(".penalty-category select");
     this.infractionSelect = this.$(".penalty-infraction select");
-    this.penaltyMinutes = this.$("input[type=number]");
-    this.teamId = this.options.teamId;
-    App.dispatcher.on("penalty:edit", this.editIf, this);
+    this.template = _.template($("#player-radio").html());
+    App.dispatcher.on("penalty:edit", this.edit, this);
   },
 
   tagName: "div",
 
   events: {
-    "change .penalty-player select" : "selectServingPlayer",
-    "change .penalty-category select" : "setInfractionOptions",
+    "change .penalty-team input" : "showTeamPlayers",
+    "change .penalty-category input" : "setInfractionOptions",
     "click a.save" : "saveAndClose",
     "click a.cancel" : "cancel"
+  },
+
+  getSetValue: function(cls, id) {
+    return id === undefined ?
+      this.$(cls + " input:checked").val() :
+      this.$(cls + " input[value='" + id + "']").prop("checked", true);
+  },
+
+  teamId: function(id) {
+    return this.getSetValue(".penalty-team", id);
+  },
+
+  playerId: function(id) {
+    return this.getSetValue(".penalty-player", id);
+  },
+
+  category: function(cat) {
+    return this.getSetValue(".penalty-category", cat);
   },
 
   optionPrompt: function(prompt) {
@@ -29,27 +43,31 @@ App.PenaltyEditor = Backbone.View.extend({
   },
 
   setInfractionOptions: function() {
-    var category = this.categorySelect.val();
+    var category = this.category();
     var infractions = App.infractions[category];
     var self = this;
     var options = _.map(infractions, function(s) { return self.optionString(s, self.humanize(s)); }).join("");
     this.infractionSelect.html(self.optionPrompt("Infraction") + options);
-    var minutes = category == "major" ? 10 : 2;
-    this.penaltyMinutes.val(minutes);
   },
 
-  setMinutes: function() {
-  },
-
-  setPlayerOptions: function() {
+  radiosFor: function(teamId) {
     var self = this;
-    var options = App.players.where({team_id: this.teamId}).map(function(player) { return self.optionString(player.id, player.get("name_and_number")); }).join("");
-    this.playerSelect.html(self.optionPrompt("Player who committed penalty") + options);
-    this.servingPlayerSelect.html(self.optionPrompt("Player who will serve penalty") + options);
+    var radios = App.players.where({team_id: teamId}).map(function(player) {
+      return self.template(player.toJSON());
+    });
+    return radios.join("");
   },
 
-  selectServingPlayer: function() {
-    this.servingPlayerSelect.val(this.playerSelect.val());
+  createPlayerRadios: function() {
+    var homeTeamId = App.game.get("home_team").id;
+    var visitingTeamId = App.game.get("visiting_team").id;
+
+    this.$("#penalty-players-team-" + homeTeamId).html(this.radiosFor(homeTeamId));
+    this.$("#penalty-players-team-" + visitingTeamId).html(this.radiosFor(visitingTeamId));
+  },
+
+  showTeamPlayers: function(e) {
+    this.$("#penalty-players-team-" + this.teamId()).toggle(true).siblings().toggle(false);
   },
 
   humanize: function(property) {
@@ -59,24 +77,25 @@ App.PenaltyEditor = Backbone.View.extend({
   },
 
   initializeForm: function() {
-    this.setPlayerOptions();
-    this.playerSelect.val(this.model.get("player_id"));
-    this.servingPlayerSelect.val(this.model.get("serving_player_id"));
-    this.categorySelect.val(this.model.get("category"));
+    var player_id = this.model.get("player_id");
+    var team_id = (player_id && App.players.get(player_id).get("team_id")) || App.game.get("home_team").id;
+
+    this.createPlayerRadios();
+    this.teamId(team_id);
+    this.showTeamPlayers();
+    this.category(this.model.get("category") || "minor");
+
     this.setInfractionOptions();
     this.infractionSelect.val(this.model.get("infraction"));
-    this.penaltyMinutes.val(this.model.get("minutes"));
   },
 
   saveAndClose: function(e) {
     e.preventDefault();
     var self = this;
     var values = {
-      player_id: this.playerSelect.val(),
-      serving_player_id: this.servingPlayerSelect.val(),
-      category: this.categorySelect.val(),
-      infraction: this.infractionSelect.val(),
-      minutes: this.penaltyMinutes.val()
+      player_id: this.playerId(),
+      category: this.category(),
+      infraction: this.infractionSelect.val()
     };
 
     this.model.save(values, { 
@@ -93,13 +112,6 @@ App.PenaltyEditor = Backbone.View.extend({
 
   close: function() {
     this.$el.modal('hide');
-  },
-
-  editIf: function(penalty) {
-    if (penalty.teamId() == this.teamId) {
-      this.edit(penalty);
-    }
-    return this;
   },
 
   edit: function(penalty) {

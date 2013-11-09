@@ -9,6 +9,7 @@ App.GameView = Backbone.View.extend({
     this.period = this.$("#game-period");
     this.homeView = new App.TeamBoxView({ el: "#home-team", teamId: this.model.get("home_team").id, side: "home_team" });
     this.visitingView = new App.TeamBoxView({ el: "#visiting-team", teamId: this.model.get("visiting_team").id, side: "visiting_team" });
+    this.penaltyEditor = new App.PenaltyEditor({el: this.$(".penalty-editor")});
 
     this.listenTo(this.model, "change", this.render);
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);
@@ -21,6 +22,7 @@ App.GameView = Backbone.View.extend({
     "click #game-start" : "start",
     "click #game-pause" : "pause",
     "click #game-stop" : "stop",
+    "click a.add-penalty" : "addPenalty",
     "ajax:success #new_activity_feed_item" : "clearMessageText",
     "click .swap" : "swapTeamBoxes"
   },
@@ -40,6 +42,13 @@ App.GameView = Backbone.View.extend({
     if (confirm("End this period now?")) {
       this.model.stop();
     }
+  },
+
+  addPenalty: function(e) {
+    e.preventDefault();
+    App.game.pause();
+    var penalty = new App.Penalty({}, {collection: App.penalties});
+    this.penaltyEditor.edit(penalty);
   },
 
   clearMessageText: function() {

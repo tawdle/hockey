@@ -2,7 +2,6 @@ App.TeamBoxView = Backbone.View.extend({
   initialize: function(options, other) {
     this.side = options.side;
     this.teamId = options.teamId;
-    this.penaltyEditor = new App.PenaltyEditor({teamId: this.teamId, el: this.$(".penalty-editor")});
     this.penaltiesView = new App.PenaltiesView({teamId: this.teamId, el: this.$(".penalties tbody")});
     this.goalEditor = new App.GoalEditor({teamId: this.teamId, el: this.$(".goal-editor")});
     this.goalsView = new App.GoalsView({teamId: this.teamId, el: this.$(".goals tbody")});
@@ -18,7 +17,6 @@ App.TeamBoxView = Backbone.View.extend({
 
 
   events: {
-    "click a.add-penalty" : "addPenalty",
     "click a.add-goal" : "addGoal",
     "click a.edit-roster" : "editRoster",
     "click a.choose-goalie" : "chooseGoalie",
@@ -32,13 +30,6 @@ App.TeamBoxView = Backbone.View.extend({
     // from the collection as it doesn't recognize it as the same object.
     var goal = App.goals.create({ team_id: this.teamId }, { wait: true });
     this.goalEditor.edit(goal);
-  },
-
-  addPenalty: function(e) {
-    e.preventDefault();
-    App.game.pause();
-    var penalty = new App.Penalty({}, {collection: App.penalties});
-    this.penaltyEditor.edit(penalty);
   },
 
   editRoster: function(e) {
