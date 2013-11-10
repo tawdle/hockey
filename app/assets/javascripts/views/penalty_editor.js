@@ -4,6 +4,8 @@ App.PenaltyEditor = Backbone.View.extend({
   initialize: function() {
     this.infractionSelect = this.$(".penalty-infraction select");
     this.template = _.template($("#player-radio").html());
+    this.title = this.$("h3");
+    this.saveButton = this.$("a.save");
     App.dispatcher.on("penalty:edit", this.edit, this);
   },
 
@@ -87,6 +89,9 @@ App.PenaltyEditor = Backbone.View.extend({
 
     this.setInfractionOptions();
     this.infractionSelect.val(this.model.get("infraction"));
+
+    this.title.text(this.model.isNew() ? "Create Penalty" : "Edit Penalty");
+    this.saveButton.text(this.model.isNew() ? "Create" : "Update");
   },
 
   saveAndClose: function(e) {
