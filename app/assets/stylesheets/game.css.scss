@@ -78,3 +78,27 @@ table.players, table.staff-members {
     margin-left: 10px;
   }
 }
+
+.penalty-editor {
+  .penalty-player {
+    font-size: 0px;
+
+    input {
+      display: none;
+    }
+
+    label {
+      font-weight: bold;
+      font-size: 16px;
+      min-width: 24px;
+      padding: 10px;
+    }
+
+    input:checked + label {
+      background-image: none;
+      background-color: #0044CC;
+      color: white;
+    }
+  }
+}
+

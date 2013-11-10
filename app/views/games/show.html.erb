@@ -118,11 +118,11 @@
       <fieldset>
         <legend>Team</legend>
         <div class="penalty-team">
-          <label class="radio inline">
+          <label class="radio">
             <input type="radio" id="penalty-team-<%= @game.home_team_id %>" value="<%= @game.home_team_id %>" name="penalty[team_id]"></input>
             <%= @game.home_team.full_name %>
           </label>
-          <label class="radio inline">
+          <label class="radio">
             <input type="radio" id="penalty-team-<%= @game.visiting_team_id %>" value="<%= @game.visiting_team_id %>" name="penalty[team_id]" ></input>
             <%= @game.visiting_team.full_name %>
           </label>
@@ -210,10 +210,8 @@
 </script>
 
 <script type="text/html" id="player-radio">
-  <label class="radio inline">
-    <input id="penalty-player-radio-{{= id }}" type="radio" name="penalty[player_id]" value="{{= id }}"></input>
-    {{= jersey_number }}
-  </label>
+  <input id="penalty-player-radio-{{= id }}" type="radio" name="penalty[player_id]" value="{{= id }}"></input>
+  <label for="penalty-player-radio-{{= id }}" class="btn">{{= jersey_number }}</label>
 </script>
 
 <script type="text/html" id="player-checkbox">
