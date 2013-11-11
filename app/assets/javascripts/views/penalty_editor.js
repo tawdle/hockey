@@ -14,6 +14,7 @@ App.PenaltyEditor = Backbone.View.extend({
   events: {
     "change .penalty-team input" : "showTeamPlayers",
     "change .penalty-category input" : "setInfractionOptions",
+    "change input, select" : "updateSaveState",
     "click a.save" : "saveAndClose",
     "click a.cancel" : "cancel"
   },
@@ -80,6 +81,15 @@ App.PenaltyEditor = Backbone.View.extend({
     });
   },
 
+  complete: function() {
+    return this.playerId() && App.players.get(this.playerId()).get("team_id") == this.teamId() && this.category() && this.infractionSelect.val();
+  },
+
+  updateSaveState: function() {
+    var disabled = !this.complete();
+    this.saveButton.prop("disabled", disabled).toggleClass("disabled", disabled);
+  },
+
   initializeForm: function() {
     var player_id = this.model.get("player_id");
     var team_id = (player_id && App.players.get(player_id).get("team_id")) || App.game.get("home_team").id;
@@ -95,6 +105,7 @@ App.PenaltyEditor = Backbone.View.extend({
 
     this.title.text(this.model.isNew() ? "Create Penalty" : "Edit Penalty");
     this.saveButton.text(this.model.isNew() ? "Create" : "Update");
+    this.updateSaveState();
   },
 
   saveAndClose: function(e) {
