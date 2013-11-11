@@ -84,7 +84,7 @@
 
 
 
-<%= link_to "Schedule a New Game", new_league_game_path(@league), :class => "btn" %>
+<%= link_to "Schedule a New Game", new_league_game_path(@league), :class => "btn" if can? :create, @league.games.build %>
 
 <h3>Teams</h3>
 
