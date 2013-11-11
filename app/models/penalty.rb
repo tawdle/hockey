@@ -240,7 +240,7 @@ class Penalty < ActiveRecord::Base
   validate :serving_player_on_same_team
   validates_numericality_of :period, :integer => true, :greater_than_or_equal_to => 0, :less_than => Game::Periods.length
   validates_numericality_of :elapsed_time, :greater_than_or_equal_to => 0
-  validates_numericality_of :minutes, :integer => true, :greater_than => 0
+  validates_numericality_of :minutes, :integer => true, :greater_than_or_equal_to => 0
 
   scope :running, where(:state => :running)
   scope :paused, where(:state => :paused)
