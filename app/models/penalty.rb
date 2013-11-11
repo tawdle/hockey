@@ -138,7 +138,7 @@ class Penalty < ActiveRecord::Base
   private
 
   def set_minutes_from_category
-    self.minutes ||= { minor: 2, bench_minor: 2, major: 5, double_major: 10 }[category]
+    self.minutes ||= { minor: 2, bench_minor: 2, major: 5, double_minor: 10 }[category]
   end
 
   def game_playing?
