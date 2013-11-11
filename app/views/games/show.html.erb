@@ -58,16 +58,13 @@
 <% elsif %>
 
   <h2>
-    <%= @game.home_team.name %> <i>vs</i>
-    <%= @game.visiting_team.name %>
+    <%= link_to @game.home_team.full_name, @game.home_team %> <i>vs</i>
+    <%= link_to @game.visiting_team.full_name, @game.visiting_team %>
   </h2>
 
-  <h3>
-    <%= link_to @game.league.name, @game.league %>
-  </h3>
+  <p><em>Playing in <%= link_to @game.league.name, @game.league %></em></p>
 
-  <%= @game.start_time.to_s(:long) %> at
-  <%= @game.location.name %>
+  <%= @game.start_time.to_s(:long) %> at <%= @game.location.name %>
 
   <% if @game.scheduled? %>
     <p>This game is scheduled to start <time class="timeago" datetime="<%= @game.start_time.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.start_time) %></time>.</p>
