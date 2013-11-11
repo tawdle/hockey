@@ -8,6 +8,6 @@ module ApplicationHelper
   # Override translate method to avoid stupid return of hash
   # for null values.
   def t(key, *args)
-    key.nil? || key.ends_with?(".") ? "" : super
+    key.nil? || (key.is_a?(String) && key.to_s.ends_with?(".")) ? "" : super
   end
 end

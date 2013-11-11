@@ -7,7 +7,6 @@ FactoryGirl.define do
     elapsed_time 127.4
     category "minor"
     infraction "boarding"
-    minutes 2
     after(:build) do |penalty|
       penalty.player ||= penalty.game.game_players.first.player
     end

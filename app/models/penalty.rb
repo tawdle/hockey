@@ -39,79 +39,197 @@ class Penalty < ActiveRecord::Base
 
   attr_accessible :state, :player_id, :serving_player_id, :period, :category, :game, :elapsed_time, :infraction, :minutes, :action
 
-  Infractions = {
-    :minor => [
-      :boarding,
-      :broken_stick,
-      :charging,
-      :clipping,
-      :closing_hand_on_puck,
-      :cross_checking,
-      :delay_of_game,
-      :elbowing,
-      :goalkeeper_interference,
-      :high_sticking,
-      :holding,
-      :holding_the_stick,
-      :hooking,
-      :illegal_equipment,
-      :illegal_stick,
-      :instigator,
-      :interference,
-      :kneeing,
-      :leaving_penalty_bench_early,
-      :leaving_the_crease,
-      :participating_in_the_play_beyond_the_red_line,
-      :roughing,
-      :slashing,
-      :throwing_puck_toward_opponents_goal,
-      :throwing_stick,
-      :tripping,
-      :unsportsmanlike_conduct
-    ],
-    :bench_minor => [
-      :abuse_of_officials,
-      :delay_of_game,
-      :deliberate_illegal_substitution,
-      :face_off_violation,
-      :illegal_substitution,
-      :improper_starting_line_up,
-      :interference_from_players_or_penalty_bench,
-      :interference_with_an_official,
-      :leaving_bench_at_end_of_period,
-      :refusing_to_start_play,
-      :stepping_onto_ice_during_period,
-      :throwing_objects_onto_ice,
-      :too_many_men_on_the_ice,
-      :unsportsmanlike_conduct,
-      :unsustained_request_for_measurement
-    ],
-    :double_minor => [
-      :butt_ending,
-      :head_butting,
-      :high_sticking,
-      :spearing
-    ],
-    :major => [
-      :boarding,
-      :butt_ending,
-      :charging,
-      :checking_from_behind,
-      :clipping,
-      :cross_checking,
-      :elbowing,
-      :fighting,
-      :head_butting,
-      :hooking,
-      :illegal_check_to_the_head,
-      :interference,
-      :kneeing,
-      :slashing,
-      :spearing
-    ]
+  Codes = {
+    # From http://www.hockeyestrie.qc.ca/documents/517-codification-des-punitions-anglais-2013-2014-couleur-1.pdf
+
+    minor:              # A
+    {
+      minutes: 2,
+      infractions: {
+        aggressor: "A1",
+        instigator: "A4",
+        first_player_leaving_bench_to_fight: "A8",
+        goalkeeper_leaving_crease_to_fight: "A9",
+        grabbing_hair_without_advantage: "A10",
+        slashing: "A22",
+        spearing: "A23",
+        butt_ending: "A24",
+        cross_checking: "A25",
+        high_sticking: "A26",
+        charging: "A31",
+        elbowing: "A34",
+        kneeing: "A35",
+        head_butting: "A37",
+        illegal_body_check: "A39",
+        checking_from_behind: "A40",
+        boarding: "A44",
+        roughing: "A47",
+        head_contact: "A48",
+        holding: "A50",
+        holding_the_stick: "A51",
+        hooking: "A52",
+        tripping: "A53",
+        interference: "A54",
+        interference_from_bench: "A55",
+        interference_with_goaltender: "A56",
+        verbal_abuse: "A61",
+        team_unsportsmanlike_conduct: "A63",
+        abusive_language: "A70",
+        too_many_players_on_ice: "A80",
+        playing_with_broken_stick: "A81",
+        unsustained_request_for_equipment_measurement: "A82",
+        refusing_to_have_equipment_measured: "A83",
+        playing_without_protective_equipment: "A84",
+        wearing_non_certified_equipment: "A85",
+        bench_minor_or_team_penalty: "A87",
+        kick_shot: "A89",
+        leaving_penalty_box: "A90",
+        throwing_stick: "A91",
+        delaying_game: "A92",
+        moving_goal: "A93",
+        illegal_face_off: "A95",
+        closing_hand_on_puck: "A96",
+        leaving_bench_at_end_of_period: "A98",
+      }
+    },
+    major:              # B
+    {
+      minutes: 5,
+      infractions: {
+        fighting: "B2",
+        fighting_single_player: "B3",
+        grabbing_hair_without_advantage: "B10",
+        grabbing_hair_with_advantage: "B11",
+        use_of_mask_as_weapon: "B12",
+        using_rings_as_weapons: "B13",
+        slashing: "B22",
+        spearing: "B23",
+        butt_ending: "B24",
+        cross_checking: "B25",
+        high_sticking: "B26",
+        charging: "B31",
+        attempting_to_injure: "B32",
+        elbowing: "B34",
+        kneeing: "B35",
+        kicking: "B36",
+        head_butting: "B37",
+        illegal_body_check: "B39",
+        checking_from_behind: "B40",
+        boarding: "B44",
+        roughing: "B47",
+        head_contact: "B48",
+        holding: "B50",
+        hooking: "B52",
+        tripping: "B53",
+        interference: "B54",
+        interference_with_goaltender: "B56",
+        diving: "B61",
+        threatening_an_official: "B77",
+        physical_aggression_against_official: "B78",
+        spitting: "B79",
+        kick_shot: "B89",
+        refusing_to_start_play: "B97",
+      }
+    },
+    misconduct:         # C
+    {
+      minutes: 10,
+      infractions: {
+        remaining_at_site_of_fight: "C5",
+        verbal_abuse: "C61",
+        abusive_language: "C70",
+        not_going_to_penalty_box: "C72",
+        inciting_an_opponent: "C76",
+        refusing_to_have_equipment_measured: "C83",
+        playing_without_protective_equipment: "C84",
+        wearing_equipment_in_non_regulatory_fashion: "C86",
+        throwing_stick: "C91",
+      }
+    },
+    game_misconduct:    # D
+    {
+      minutes: 0,
+      infractions: {
+        fighting: "D2",
+        fighting_single_player: "D3",
+        second_fight: "D6",
+        third_player_entering_fight: "D7",
+        first_player_leaving_bench_to_fight: "D8",
+        grabbing_hair_without_advantage: "D10",
+        removing_helmet_to_fight: "D14",
+        slashing: "D22",
+        spearing: "D23",
+        butt_ending: "D24",
+        cross_checking: "D25",
+        high_sticking: "D26",
+        charging: "D31",
+        elbowing: "D34",
+        kneeing: "D35",
+        head_butting: "D37",
+        illegal_body_check: "D39",
+        checking_from_behind: "D40",
+        boarding: "D44",
+        roughing: "D47",
+        head_contact: "D48",
+        holding: "D50",
+        hooking: "D52",
+        tripping: "D53",
+        interference: "D54",
+        interference_from_bench: "D55",
+        interference_with_goaltender: "D56",
+        verbal_abuse: "D61",
+        verbal_discrimination: "D62",
+        team_unsportsmanlike_conduct: "D63",
+        gross_misconduct_travesty: "D66",
+        abusive_language: "D70",
+        second_misconduct_penalty: "D88",
+        kick_shot: "D89",
+        refusing_to_start_play: "D97",
+        leaving_bench_at_end_of_period: "D98",
+      }
+    },
+    match:              # E
+    {
+      minutes: 0,
+      infractions: {
+        grabbing_hair_with_advantage: "E11",
+        use_of_mask_as_weapon: "E12",
+        using_rings_as_weapons: "E13",
+        slashing: "E22",
+        spearing: "E23",
+        butt_ending: "E24",
+        cross_checking: "E25",
+        high_sticking: "E26",
+        attempting_to_injure: "B32",
+        kicking: "B36",
+        head_butting: "E37",
+        checking_from_behind: "E40",
+        head_contact: "E48",
+        threatening_an_official: "E77",
+        physical_aggression_against_official: "E78",
+        spitting: "E79",
+      }
+    },
+    penalty_shot:       # F
+    {
+      minutes: 0,
+      infractions: {
+        tripping: "F53",
+        interference: "F54",
+        interference_from_bench: "F55",
+        too_many_players_on_ice: "F80",
+        leaving_penalty_box: "F90",
+        throwing_stick: "F91",
+        delaying_game: "F92",
+        moving_goal: "F93",
+        moving_goal_during_breakaway: "F94",
+        closing_hand_on_puck: "F96",
+        refusing_to_start_play: "F97",
+      }
+    }
   }
 
-  symbolize :category, :in => Infractions.keys
+  symbolize :category, :in => Codes.keys
   symbolize :infraction
 
   validates_presence_of :game
@@ -138,7 +256,7 @@ class Penalty < ActiveRecord::Base
   private
 
   def set_minutes_from_category
-    self.minutes ||= { minor: 2, bench_minor: 2, major: 5, double_minor: 10 }[category]
+    self.minutes ||= Codes[category].try(:[], :minutes)
   end
 
   def game_playing?
@@ -158,7 +276,7 @@ class Penalty < ActiveRecord::Base
   end
 
   def infraction_in_list
-    errors.add(:infraction, "not in list of infractions") unless category.nil? || Infractions[category].nil? || Infractions[category].include?(infraction)
+    errors.add(:infraction, "not in list of infractions") unless category.nil? || Codes[category].nil? || Codes[category][:infractions].include?(infraction)
   end
 
   def init_timer

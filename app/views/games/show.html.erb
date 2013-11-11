@@ -1,9 +1,10 @@
 <%= javascript_tag do %>
   $(function() {
     App.dispatcher = _.clone(Backbone.Events);
+    App.translations =  <%= {penalties: t("penalties") }.to_json.html_safe %>;
     App.players = new App.Players(<%= json_for(@game.players).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.goals = new App.Goals(<%= json_for(@game.goals).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
-    App.infractions = <%= Penalty::Infractions.to_json.html_safe %>;
+    App.infractions = <%= Penalty::Codes.to_json.html_safe %>;
     App.periods = <%= Game::Periods.to_json.html_safe %>;
     App.feedItems = new App.FeedItems(<%= json_for(@game.activity_feed_items).html_safe %>, {gameId: <%= @game.id %>});
     App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
@@ -141,16 +142,27 @@
       <fieldset>
         <legend>Category</legend>
         <div class="penalty-category">
-          <% Penalty::Infractions.keys.each do |category| %>
-            <label class="radio">
-              <input type="radio" value="<%= category %>" name="penalty[category]"></input>
-              <%= category.to_s.humanize %>
-            </label>
-          <% end %>
+          <div class="pull-left" style="width: 50%">
+            <% mid = Penalty::Codes.keys.length / 2 %>
+            <% Penalty::Codes.keys[0...mid].each do |category| %>
+              <label class="radio">
+                <input type="radio" value="<%= category %>" name="penalty[category]"></input>
+                <%= t(category, :scope => "penalties.categories") %>
+              </label>
+            <% end %>
+          </div>
+          <div class="pull-left">
+            <% Penalty::Codes.keys[mid..-1].each do |category| %>
+              <label class="radio">
+                <input type="radio" value="<%= category %>" name="penalty[category]"></input>
+                <%= t(category, :scope => "penalties.categories") %>
+              </label>
+            <% end %>
+          </div>
         </div>
       </fieldset>
 
-      <fieldset>
+      <fieldset class="clearfix">
         <legend>Infraction</fieldset>
         <div class="penalty-infraction">
           <select></select>

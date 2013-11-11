@@ -47,12 +47,12 @@ App.PenaltyEditor = Backbone.View.extend({
 
   setInfractionOptions: function() {
     var category = this.category();
-    var infractions = App.infractions[category];
+    var infractions = App.infractions[category].infractions;
     this.oldInfraction = this.infractionSelect.val() || this.oldInfraction;
     var self = this;
-    var options = _.map(infractions, function(s) { return self.optionString(s, self.humanize(s)); }).join("");
+    var options = _.map(infractions, function(v, s) { return self.optionString(s, App.translations.penalties.infractions[s]); }).join("");
     this.infractionSelect.html(self.optionPrompt("Infraction") + options);
-    if (infractions.indexOf(this.oldInfraction) >= 0) this.infractionSelect.val(this.oldInfraction);
+    if (infractions[this.oldInfraction]) this.infractionSelect.val(this.oldInfraction);
   },
 
   radiosFor: function(teamId) {
