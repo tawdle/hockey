@@ -142,7 +142,7 @@
         <legend>Category</legend>
         <div class="penalty-category">
           <% Penalty::Infractions.keys.each do |category| %>
-            <label class="radio inline">
+            <label class="radio">
               <input type="radio" value="<%= category %>" name="penalty[category]"></input>
               <%= category.to_s.humanize %>
             </label>

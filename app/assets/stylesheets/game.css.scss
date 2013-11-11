@@ -80,6 +80,13 @@ table.players, table.staff-members {
 }
 
 .penalty-editor {
+  legend {
+    border-bottom: none;
+    margin-bottom: 0px;
+    font-size: 16px;
+    font-weight: bold;
+  }
+
   .penalty-player {
     font-size: 0px;
 
@@ -88,6 +95,8 @@ table.players, table.staff-members {
     }
 
     label {
+      margin-top: 10px;
+      margin-bottom: 10px;
       font-weight: bold;
       font-size: 16px;
       min-width: 24px;
