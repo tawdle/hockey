@@ -16,7 +16,7 @@
   <% end %>
 
   <div class="fields">
-    <%= f.text_field :username_or_email %>
+    <%= f.text_field :username_or_email, :autofocus => true %>
     <%= f.hidden_field :predicate, :value => @invitation.predicate %>
     <%= f.hidden_field :target_id, :value => @invitation.target.to_param %>
     <%= f.hidden_field :target_type, :value => @invitation.target.class.to_s %>
