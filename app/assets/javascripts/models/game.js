@@ -50,7 +50,7 @@ App.Game = App.EmbeddedModel.extend({
   },
 
   pause: function() {
-    this.perform("pause");
+    if (this.get("state") == "playing") this.perform("pause");
   },
 
   stop: function() {
