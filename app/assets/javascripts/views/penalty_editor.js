@@ -87,6 +87,7 @@ App.PenaltyEditor = Backbone.View.extend({
     this.createPlayerRadios();
     this.teamId(team_id);
     this.showTeamPlayers();
+    this.playerId(player_id);
     this.category(this.model.get("category") || "minor");
 
     this.setInfractionOptions();
