@@ -1,4 +1,16 @@
 <% unless request.xhr? %>
+  <%= javascript_tag do %>
+    $(function() {
+      function toggleSelectVisibility(e) {
+        var checked = $(this).is(":checked");
+        $("select", $(e.target).parents("tr")).css({visibility: (checked ? "visible" : "hidden")});
+      }
+
+      $(".players input[type=checkbox]").on("click", toggleSelectVisibility);
+    });
+  <% end %>
+<% end %>
+<% unless request.xhr? %>
   <h3>Which players from <%= @team.name %> are playing in this game?</h3>
 <% end %>
 
