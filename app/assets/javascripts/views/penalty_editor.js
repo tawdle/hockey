@@ -4,7 +4,7 @@ App.PenaltyEditor = Backbone.View.extend({
   initialize: function() {
     this.infractionSelect = this.$(".penalty-infraction select");
     this.template = _.template($("#player-radio").html());
-    this.title = this.$("h3");
+    this.title = this.$("h3 span.title");
     this.saveButton = this.$("a.save");
     App.dispatcher.on("penalty:edit", this.edit, this);
   },
