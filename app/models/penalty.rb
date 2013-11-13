@@ -1,7 +1,7 @@
 class Penalty < ActiveRecord::Base
   state_machine :initial => :created do
     event :start do
-      transition [:created, :paused] => :running
+      transition [:created, :paused] => :running, :if => :timed_penalty?
     end
 
     event :pause do
@@ -242,8 +242,18 @@ class Penalty < ActiveRecord::Base
   validates_numericality_of :elapsed_time, :greater_than_or_equal_to => 0
   validates_numericality_of :minutes, :integer => true, :greater_than_or_equal_to => 0
 
+  default_scope order("id asc");
   scope :running, where(:state => :running)
   scope :paused, where(:state => :paused)
+  scope :pending, where(:state => :created).where("minutes <> 0")
+  scope :current, where(:state => [:running, :paused])
+  scope :finished, where(:state => [:completed, :canceled])
+  scope :for_team, lambda {|team| joins(:player).where(:players => {:team_id => team.id }) }
+
+
+  def timed_penalty?
+    minutes != 0
+  end
 
   def timer_expired(timer_id)
     expire!
@@ -280,7 +290,8 @@ class Penalty < ActiveRecord::Base
   end
 
   def init_timer
-    self.timer = Timer.create(:duration => minutes.minutes, :owner => self)
+    create_timer(:duration => minutes.minutes, :owner => self)
+    save!
   end
 
   def start_timer

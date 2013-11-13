@@ -23,6 +23,25 @@
         </div>
       </div>
 
+      <div data-remote="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>" class="roster modal hide fade">
+        <div class="modal-header"><h3>Select players for <%= team.name %></h3></div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <%= link_to "New Player", "#", :class => "create btn pull-left" %>
+          <%= link_to "Cancel", "#", :class => "cancel" %>
+          <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+        </div>
+      </div>
+
+      <div data-remote="<%= new_team_player_path(team) %>" class="player modal hide fade">
+        <div class="modal-header"><h3>Create new player for <%= team.name %></h3></div>
+        <div class="modal-body"></div>
+        <div class="modal-footer">
+          <%= link_to "Cancel", "#", :class => "cancel" %>
+          <%= link_to "Create", "#", :class => "create btn btn-primary" %>
+        </div>
+      </div>
+
       <div class="goal-editor modal hide fade">
         <div class="modal-header"><h3>Goal for <%= team.name %></h3></div>
         <div class="modal-body">
@@ -48,58 +67,54 @@
 
     <% end %>
 
-    <div style="clear: both;">
-      <h3 class="disclosure"><i></i> Penalties</h3>
-      <div class="hide">
-        <table class="penalties table">
-          <thead>
-            <tr>
-              <th>Per</th>
-              <th>Time</th>
-              <th>Plyr</th>
-              <th>Infraction</th>
-              <th>State</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
-      </div>
+    <div class="clearfix"></div>
 
-      <h3 class="disclosure"><i></i> Goals</h3>
-      <div class="hide">
-        <table class="goals table">
-          <thead>
-            <tr>
-              <th>Period</th>
-              <th>Time</th>
-              <th>Players</th>
-            </tr>
-          </thead>
-          <tbody></tbody>
-        </table>
+    <div class="tabbable penalties">
+      <ul class="nav nav-tabs">
+        <li><a href="#penalties-<%= home_or_visiting %>-all" data-toggle="tab">All</a></li>
+        <li><a href="#penalties-<%= home_or_visiting %>-current" data-toggle="tab">Current</a></li>
+        <li><a href="#penalties-<%= home_or_visiting %>-expired" data-toggle="tab">Expired</a></li>
+        <li><a href="#penalties-<%= home_or_visiting %>-other" data-toggle="tab">Other</a></li>
+      </ul>
+
+      <div class="tab-content">
+
+        <% ["all", "current", "expired", "other"].each do |category| %>
+
+          <div class="tab-pane fade <%= category == "all" ? "active in" : "" %>" id="<%= "penalties-#{home_or_visiting}-#{category}" %>">
+            <table class="penalties table <%= category %>">
+              <thead>
+                <tr>
+                  <th>Per</th>
+                  <th>Time</th>
+                  <th>Plyr</th>
+                  <th>Infraction</th>
+                  <th>State</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        <% end %>
       </div>
     </div>
 
-    <div data-remote="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>" class="roster modal hide fade">
-      <div class="modal-header"><h3>Select players for <%= team.name %></h3></div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <%= link_to "New Player", "#", :class => "create btn pull-left" %>
-        <%= link_to "Cancel", "#", :class => "cancel" %>
-        <%= link_to "Save", "#", :class => "save btn btn-primary" %>
-      </div>
-    </div>
-
-    <div data-remote="<%= new_team_player_path(team) %>" class="player modal hide fade">
-      <div class="modal-header"><h3>Create new player for <%= team.name %></h3></div>
-      <div class="modal-body"></div>
-      <div class="modal-footer">
-        <%= link_to "Cancel", "#", :class => "cancel" %>
-        <%= link_to "Create", "#", :class => "create btn btn-primary" %>
-      </div>
+    <h3 class="disclosure"><i></i> Goals</h3>
+    <div class="hide">
+      <table class="goals table">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Time</th>
+            <th>Players</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
     </div>
   </div>
+
 </div>
 
 

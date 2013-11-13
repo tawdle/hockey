@@ -2,7 +2,13 @@ App.TeamBoxView = Backbone.View.extend({
   initialize: function(options, other) {
     this.side = options.side;
     this.teamId = options.teamId;
-    this.penaltiesView = new App.PenaltiesView({teamId: this.teamId, el: this.$(".penalties tbody")});
+    this.$(".penalties li a:first").click();
+    this.penaltyViews = {
+      "all"     : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "all",     el: this.$("table.penalties.all")}),
+      "current" : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "current", el: this.$("table.penalties.current")}),
+      "expired" : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "expired", el: this.$("table.penalties.expired")}),
+      "other"   : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "other",  el: this.$("table.penalties.other")})
+    };
     this.goalEditor = new App.GoalEditor({teamId: this.teamId, el: this.$(".goal-editor")});
     this.goalsView = new App.GoalsView({teamId: this.teamId, el: this.$(".goals tbody")});
     this.playerEditor = new App.PlayerEditor({teamId: this.teamId, el: this.$(".player")});

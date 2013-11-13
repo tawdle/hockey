@@ -1,41 +1,44 @@
-App.PenaltiesView = Backbone.View.extend({
+App.PenaltiesView = Backbone.CollectionView.extend({
   initialize: function(options, other) {
+    var self = this;
+    var filter = null;
     this.teamId = options.teamId;
-    this.listenTo(App.penalties, 'add', this.addOne);
-    this.listenTo(App.penalties, 'reset', this.reset);
-    this.listenTo(App.penalties, 'remove', this.showHideTable);
-    this.addAll();
-  },
-
-  events: {
-  },
-
-
-  addOne: function(penalty) {
-    if (penalty.teamId() == this.teamId) {
-      var view = new App.PenaltyView({model: penalty});
-      this.$el.append(view.render().el);
-      this.showHideTable();
+    switch (options.type) {
+      case "all":
+        filter = function(penalty) {
+          return penalty.teamId() == self.teamId;
+        };
+        break;
+      case "current":
+        filter = function(penalty) {
+          var state = penalty.get("state");
+          return penalty.teamId() == self.teamId &&
+            (state == "created" || state == "running" || state == "paused") &&
+            (penalty.get("minutes") !== 0);
+        };
+        break;
+      case "expired":
+        filter = function(penalty) {
+          var state = penalty.get("state");
+          return penalty.teamId() == self.teamId &&
+            (state == "completed" || state == "canceled") &&
+            (penalty.get("minutes") !== 0);
+        };
+        break;
+      case "other":
+        filter = function(penalty) {
+          var state = penalty.get("state");
+          return penalty.teamId() == self.teamId &&
+            (state == "created") &&
+            (penalty.get("minutes") === 0);
+        };
+        break;
     }
-  },
-
-  addAll: function() {
-    App.penalties.each(this.addOne, this);
-    this.showHideTable();
-  },
-
-  reset: function() {
-    this.$el.empty();
-    this.addAll();
-  },
-
-  showHideTable: function() {
-    //var penalties = App.penalties.filter(function(penalty) { return (penalty.teamId() == this.teamId); }, this);
-    //var show = _.any(penalties, function(penalty) { return penalty.get("state") != "completed"; });
-    //this.$el.parent().toggle(show);
-  },
-
-  render: function() {
+    options.visibleModelsFilter = filter;
+    options.modelView = App.PenaltyView;
+    options.selectable = false;
+    Backbone.CollectionView.prototype.initialize.apply(this, [options]);
+    this.render();
   }
 });
 
