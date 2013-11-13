@@ -6,7 +6,13 @@ App.PenaltyEditor = Backbone.View.extend({
     this.template = _.template($("#player-radio").html());
     this.title = this.$("h3 span.title");
     this.saveButton = this.$("a.save");
+    this.listenTo(App.game, "change", this.render);
+    this.playButton = this.$(".start");
+    this.pauseButton = this.$(".pause");
+    this.clock = this.$(".clock");
     App.dispatcher.on("penalty:edit", this.edit, this);
+    this.gameClockView = new App.TimerView({el: this.clock, model: App.game.get("clock"), showTimeRemaining: true});
+    this.render();
   },
 
   tagName: "div",
@@ -16,7 +22,9 @@ App.PenaltyEditor = Backbone.View.extend({
     "change .penalty-category input" : "setInfractionOptions",
     "change input, select" : "updateSaveState",
     "click a.save" : "saveAndClose",
-    "click a.cancel" : "cancel"
+    "click a.cancel" : "cancel",
+    "click a.start" : "startGame",
+    "click a.pause" : "pauseGame"
   },
 
   getSetValue: function(cls, id) {
@@ -138,6 +146,22 @@ App.PenaltyEditor = Backbone.View.extend({
     this.initializeForm();
     this.$el.modal();
     return this;
+  },
+
+  startGame: function(e) {
+    e.preventDefault();
+    App.game.start();
+  },
+
+  pauseGame: function(e) {
+    e.preventDefault();
+    App.game.pause();
+  },
+
+  render: function() {
+    var state = App.game.get("state");
+    this.pauseButton.toggle(state == "playing");
+    this.playButton.toggle(state == "paused");
   }
 });
 

@@ -168,6 +168,11 @@
     </form>
   </div>
   <div class="modal-footer">
+    <div class="pull-left">
+      <%= link_to "<i class='icon-play'></i>".html_safe, "#", :class => "start btn btn-success", :style => "min-width: 20px;" %>
+      <%= link_to "<i class='icon-pause'></i>".html_safe, "#", :class => "pause btn btn-warning", :style => "margin-left: 0; min-width: 20px;" %>
+      <span class="label clock"></span>
+    </div>
     <%= link_to "Cancel", "#", :class => "cancel" %>
     <%= link_to "Save", "#", :class => "save btn btn-primary" %>
   </div>

@@ -109,5 +109,13 @@ table.players, table.staff-members {
       color: white;
     }
   }
+  .clock {
+    background-color: black;
+    color: lightgreen;
+    font-size: 20px;
+    line-height: 27px;
+    position: relative;
+    top: 3px;
+  }
 }
 
