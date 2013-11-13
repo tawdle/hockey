@@ -14,7 +14,7 @@ App.PenaltiesView = Backbone.CollectionView.extend({
           var state = penalty.get("state");
           return penalty.teamId() == self.teamId &&
             (state == "created" || state == "running" || state == "paused") &&
-            (penalty.get("minutes") !== 0);
+            penalty.get("minutes");
         };
         break;
       case "expired":
@@ -22,7 +22,7 @@ App.PenaltiesView = Backbone.CollectionView.extend({
           var state = penalty.get("state");
           return penalty.teamId() == self.teamId &&
             (state == "completed" || state == "canceled") &&
-            (penalty.get("minutes") !== 0);
+            penalty.get("minutes");
         };
         break;
       case "other":
@@ -30,7 +30,7 @@ App.PenaltiesView = Backbone.CollectionView.extend({
           var state = penalty.get("state");
           return penalty.teamId() == self.teamId &&
             (state == "created") &&
-            (penalty.get("minutes") === 0);
+            !penalty.get("minutes");
         };
         break;
     }

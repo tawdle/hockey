@@ -46,6 +46,10 @@ describe Penalty do
       penalty.minutes = 0
       penalty.should_not be_valid
     end
+    it "allows no penalty length (for untimed penalties)" do
+      penalty.minutes = nil
+      penalty.should be_valid
+    end
   end
   describe "#start" do
     context "with a 'created' penalty" do

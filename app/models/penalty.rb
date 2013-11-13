@@ -148,7 +148,7 @@ class Penalty < ActiveRecord::Base
     },
     game_misconduct:    # D
     {
-      minutes: 0,
+      minutes: nil,
       infractions: {
         fighting: "D2",
         fighting_single_player: "D3",
@@ -190,7 +190,7 @@ class Penalty < ActiveRecord::Base
     },
     match:              # E
     {
-      minutes: 0,
+      minutes: nil,
       infractions: {
         grabbing_hair_with_advantage: "E11",
         use_of_mask_as_weapon: "E12",
@@ -212,7 +212,7 @@ class Penalty < ActiveRecord::Base
     },
     penalty_shot:       # F
     {
-      minutes: 0,
+      minutes: nil,
       infractions: {
         tripping: "F53",
         interference: "F54",
@@ -240,9 +240,10 @@ class Penalty < ActiveRecord::Base
   validate :serving_player_on_same_team
   validates_numericality_of :period, :integer => true, :greater_than_or_equal_to => 0, :less_than => Game::Periods.length
   validates_numericality_of :elapsed_time, :greater_than_or_equal_to => 0
-  validates_numericality_of :minutes, :integer => true, :greater_than_or_equal_to => 0
+  validates_numericality_of :minutes, :integer => true, :greater_than => 0, :allow_nil => true
 
   default_scope order("id asc");
+  scope :timed, where("penalties.minutes is not null");
   scope :running, where(:state => :running)
   scope :paused, where(:state => :paused)
   scope :pending, where(:state => :created).where("minutes <> 0")
@@ -252,7 +253,7 @@ class Penalty < ActiveRecord::Base
 
 
   def timed_penalty?
-    minutes != 0
+    !minutes.nil?
   end
 
   def timer_expired(timer_id)
