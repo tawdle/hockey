@@ -817,7 +817,8 @@ CREATE TABLE timers (
     seconds_paused double precision DEFAULT 0.0,
     duration double precision,
     owner_type character varying(255),
-    owner_id integer
+    owner_id integer,
+    "offset" double precision DEFAULT 0
 );
 
 
@@ -1679,3 +1680,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131106003740');
 INSERT INTO schema_migrations (version) VALUES ('20131106192405');
 
 INSERT INTO schema_migrations (version) VALUES ('20131107010040');
+
+INSERT INTO schema_migrations (version) VALUES ('20131114001835');

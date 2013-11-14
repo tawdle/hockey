@@ -8,7 +8,7 @@ App.TimerView = Backbone.View.extend({
 
   render: function() {
     var timer = this.model;
-    var secs = this.options.showTimeRemaining ? timer.getTimeRemaining() : timer.getElapsedTime();
+    var secs = (this.options.showTimeRemaining ? timer.getTimeRemaining() : timer.getElapsedTime()) + this.model.get("offset");
     var hours = Math.floor(secs / 3600);
     var minutes = Math.floor(secs / 60) % 60;
     var seconds = Math.floor(secs % 60);

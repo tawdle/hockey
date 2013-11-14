@@ -1,7 +1,7 @@
 class Timer < ActiveRecord::Base
   belongs_to :owner, :polymorphic => true
 
-  attr_accessible :started_at, :paused_at, :seconds_paused, :duration, :owner
+  attr_accessible :started_at, :paused_at, :seconds_paused, :duration, :owner, :offset
 
   state_machine :initial => :created do
     event :start do
