@@ -21,11 +21,9 @@ class Penalty < ActiveRecord::Base
     end
 
     after_transition :created => :running, :do => :init_timer
-    after_transition any => :running, :do => :set_timer_offset
-    after_transition any => :running, :do => :start_timer
+    after_transition any => :running, :do => [:set_timer_offset, :start_timer]
     after_transition any => :paused, :do => :pause_timer
-    after_transition any => :completed, :do => :destroy_timer
-    after_transition any - :created => :canceled, :do => :destroy_timer
+    after_transition any - :created => [:canceled, :completed], :do => [:destroy_timer, :update_running_penalties]
   end
 
   belongs_to :game, :inverse_of => :penalties
@@ -35,6 +33,7 @@ class Penalty < ActiveRecord::Base
 
   before_validation :set_minutes_from_category
   after_commit :broadcast_changes
+  after_destroy :update_running_penalties
   after_destroy :broadcast_changes
 
   attr_accessible :state, :player_id, :serving_player_id, :period, :category, :game, :elapsed_time, :infraction, :minutes, :action
@@ -321,6 +320,10 @@ class Penalty < ActiveRecord::Base
 
   def broadcast_changes
     game.send(:broadcast_changes, :with => :penalties)
+  end
+
+  def update_running_penalties
+    Penalty.start_eligible_penalties(game) if game.playing?
   end
 
   MaxConcurrentPenalties = 2
