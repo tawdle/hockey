@@ -43,11 +43,11 @@
       <a href="#" class="btn btn-large add-penalty" title="Add Penalty"><i class="icon-flag icon-2x"></i></a>
       <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, "#", :id => "game-start", :class => "btn btn-large btn-success" %> 
       <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, "#", :id => "game-pause", :class => "btn btn-large btn-warning" %>
-      <%= link_to "<i class='icon-stop icon-2x'></i>".html_safe, "#", :id => "game-stop", :class => "btn btn-large btn-danger" %>
     <% end %>
 
     <span id="game-period" class="label"></span>
     <span id="game-clock" class="label"></span>
+    <%= link_to "<i class='icon-stop icon-2x'></i>".html_safe, "#", :id => "game-stop", :class => "btn btn-large btn-danger" if can? :mark, @game %>
   </div>
 
   <div class="row-fluid">
@@ -197,9 +197,6 @@
 <td>{{= App.humanize(state) }}</td>
 <td class="timer" style="white-space: nowrap"></td>
 <td style="white-space: nowrap">
-  <%= link_to "#", :class => "start btn btn-small btn-success" do %>
-    <i class="icon-play"></i>
-  <% end %>
   <%= link_to "#", :class => "edit btn btn-small" do %>
     <i class="icon-edit"></i>
   <% end %>

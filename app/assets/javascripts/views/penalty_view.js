@@ -9,8 +9,7 @@ App.PenaltyView = Backbone.View.extend({
 
   events: {
     "click a.edit" : "edit",
-    "click a.delete" : "deletePenalty",
-    "click a.start" : "start"
+    "click a.delete" : "deletePenalty"
   },
 
   edit: function(e) {
@@ -23,11 +22,6 @@ App.PenaltyView = Backbone.View.extend({
     if (confirm("Delete this penalty?")) {
       this.model.destroy({ wait: true });
     }
-  },
-
-  start: function(e) {
-    e.preventDefault();
-    this.model.save({action: "start"});
   },
 
   render: function() {
