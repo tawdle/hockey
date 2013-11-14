@@ -96,7 +96,13 @@ describe Penalty do
       let(:game) { FactoryGirl.create(:game, :with_players) }
 
       before do
-        @pending_penalties = FactoryGirl.create_list(:penalty, 3, :game => game, :player => game.players.first)
+        @pending_penalties = [
+          FactoryGirl.create(:penalty, :game => game, :player => game.home_team.players.first),
+          FactoryGirl.create(:penalty, :game => game, :player => game.home_team.players.last),
+          FactoryGirl.create(:penalty, :game => game, :player => game.home_team.players.first)
+        ]
+        @eldest_sibling = @pending_penalties[0]
+        @younger_sibling = @pending_penalties[2]
       end
 
       context "with no paused penalties" do
@@ -105,6 +111,13 @@ describe Penalty do
             Penalty.game_started(game)
           }.to change { game.reload.penalties.started.count }.from(0).to(2)
         end
+        it "starts an eldest sibling with its younger siblings' offsets" do
+          Penalty.game_started(game)
+          @eldest_sibling.reload.should be_running
+          @younger_sibling.reload.should_not be_running
+          @eldest_sibling.timer.offset.should == @younger_sibling.minutes.minutes
+        end
+
       end
       context "with 1 paused penalty" do
         before do

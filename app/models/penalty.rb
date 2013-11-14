@@ -21,6 +21,7 @@ class Penalty < ActiveRecord::Base
     end
 
     after_transition :created => :running, :do => :init_timer
+    after_transition any => :running, :do => :set_timer_offset
     after_transition any => :running, :do => :start_timer
     after_transition any => :paused, :do => :pause_timer
     after_transition any => :completed, :do => :destroy_timer
@@ -252,11 +253,15 @@ class Penalty < ActiveRecord::Base
   scope :pending, timed.where(:state => :created)
   scope :others, where("penalties.minutes is null")
   scope :finished, where(:state => [:completed, :canceled])
-  scope :oldest_sibling, timed.joins("left outer join penalties as others on others.id < penalties.id and penalties.game_id = others.game_id and penalties.player_id = others.player_id").where(:others => {:id => nil })
+  scope :eldest_siblings, timed.joins("left outer join penalties as others on others.id < penalties.id and penalties.game_id = others.game_id and penalties.player_id = others.player_id and others.state in ('created', 'running', 'paused')").where(:others => {:id => nil })
 
 
   def siblings
     Penalty.timed.current.where(:game_id => game_id, :player_id => player_id).where("id <> ?", id)
+  end
+
+  def younger_siblings
+    siblings.where("id > ?", id)
   end
 
   def timed_penalty?
@@ -298,6 +303,10 @@ class Penalty < ActiveRecord::Base
     save!
   end
 
+  def set_timer_offset
+    timer.offset = younger_siblings.sum(:minutes).minutes
+  end
+
   def start_timer
     timer.start!
   end
@@ -330,7 +339,7 @@ class Penalty < ActiveRecord::Base
       available = [MaxConcurrentPenalties - game.penalties.for_team(team).started.count,
                    game.penalties.for_team(team).pending.count].min
       if available > 0
-        game.penalties.for_team(team).pending.limit(available).readonly(false).each do |penalty|
+        game.penalties.for_team(team).pending.eldest_siblings.limit(available).readonly(false).each do |penalty|
           penalty.start!
         end
       end
