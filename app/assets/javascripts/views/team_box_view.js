@@ -7,7 +7,7 @@ App.TeamBoxView = Backbone.View.extend({
       "all"     : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "all",     el: this.$("table.penalties.all")}),
       "current" : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "current", el: this.$("table.penalties.current")}),
       "expired" : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "expired", el: this.$("table.penalties.expired")}),
-      "other"   : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "other",  el: this.$("table.penalties.other")})
+      "other"   : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "other",   el: this.$("table.penalties.other")})
     };
     this.goalEditor = new App.GoalEditor({teamId: this.teamId, el: this.$(".goal-editor")});
     this.goalsView = new App.GoalsView({teamId: this.teamId, el: this.$(".goals tbody")});
