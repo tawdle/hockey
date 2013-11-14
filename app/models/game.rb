@@ -39,8 +39,8 @@ class Game < ActiveRecord::Base
     after_transition any => :completed, :do => :destroy_clock
     after_transition any => :finished, :do => :generate_game_over_feed_item
     after_transition any => any, :do => :broadcast_changes_from_state_machine
-    after_transition any => :playing, :do => :start_paused_penalties
-    after_transition any => [:paused, :active, :finished], :do => :pause_running_penalties
+    after_transition any => :playing, :do => :notify_game_started
+    after_transition any => [:paused, :active, :finished], :do => :notify_game_paused
 
     state all - :scheduled do
       validate {|game| game.send(:schedule_not_changed) }
@@ -109,6 +109,7 @@ class Game < ActiveRecord::Base
   def start
     clock.reset unless paused?
     clock.start
+
     super
   end
 
@@ -287,18 +288,6 @@ class Game < ActiveRecord::Base
     activity_feed_items.create!(:message => "The between @#{home_team.name} and @#{visiting_team.name} ended.")
   end
 
-  def pause_running_penalties
-    penalties.running.each do |penalty|
-      penalty.pause!
-    end
-  end
-
-  def start_paused_penalties
-    penalties.paused.each do |penalty|
-      penalty.start!
-    end
-  end
-
   def set_next_period
     update_attribute(:period, period ? period + 1 : 0);
   end
@@ -338,5 +327,13 @@ class Game < ActiveRecord::Base
   def broadcast_changes(options={})
     json = active_model_serializer.new(self, options).as_json
     broadcast("/games/#{id}", json)
+  end
+
+  def notify_game_started
+    Penalty.game_started(self)
+  end
+
+  def notify_game_paused
+    Penalty.game_paused(self)
   end
 end

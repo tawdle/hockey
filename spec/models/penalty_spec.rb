@@ -76,6 +76,7 @@ describe Penalty do
       end
     end
   end
+
   describe "#pause" do
     context "with a 'running' penalty" do
       let(:penalty) { FactoryGirl.create(:penalty) }
@@ -86,6 +87,54 @@ describe Penalty do
         expect {
           penalty.pause!
         }.to change { penalty.timer.state }.to("paused")
+      end
+    end
+  end
+
+  describe ".game_started" do
+    context "with 3 pending penalties" do
+      let(:game) { FactoryGirl.create(:game, :with_players) }
+
+      before do
+        @pending_penalties = FactoryGirl.create_list(:penalty, 3, :game => game, :player => game.players.first)
+      end
+
+      context "with no paused penalties" do
+        it "starts 2 pending penalties" do
+          expect {
+            Penalty.game_started(game)
+          }.to change { game.reload.penalties.started.count }.from(0).to(2)
+        end
+      end
+      context "with 1 paused penalty" do
+        before do
+          @paused_penalty = FactoryGirl.create(:penalty, :paused, :game => game, :player => game.players.first)
+        end
+        it "starts 1 paused penalty" do
+          expect {
+            Penalty.game_started(game)
+          }.to change { @paused_penalty.reload.state }.from("paused").to("running")
+        end
+        it "starts 1 pending penalty" do
+          expect {
+            Penalty.game_started(game)
+          }.to change { @pending_penalties.select {|p| p.reload.running?}.count }.from(0).to(1)
+        end
+      end
+      context "with 3 paused penalties" do
+        before do
+          @paused_penalties = FactoryGirl.create_list(:penalty, 2, :paused, :game => game, :player => game.players.first)
+        end
+        it "starts 2 paused penalties" do
+          expect {
+            Penalty.game_started(game)
+          }.to change { @paused_penalties.select {|p| p.reload.running?}.count}.from(0).to(2)
+        end
+        it "starts none of the pending penalties" do
+          expect {
+            Penalty.game_started(game)
+          }.not_to change { @pending_penalties.select {|p| p.reload.running?}.count}.from(0)
+        end
       end
     end
   end

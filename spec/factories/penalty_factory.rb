@@ -10,5 +10,12 @@ FactoryGirl.define do
     after(:build) do |penalty|
       penalty.player ||= penalty.game.game_players.first.player
     end
+
+    trait :paused do
+      state :paused
+      after(:build) do |penalty|
+        penalty.build_timer(:duration => 5.minutes, :owner => penalty)
+      end
+    end
   end
 end

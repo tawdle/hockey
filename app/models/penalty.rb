@@ -25,7 +25,6 @@ class Penalty < ActiveRecord::Base
     after_transition any => :paused, :do => :pause_timer
     after_transition any => :completed, :do => :destroy_timer
     after_transition any - :created => :canceled, :do => :destroy_timer
-    after_transition any => :running, :do => :pause!, :unless => :game_playing?
   end
 
   belongs_to :game, :inverse_of => :penalties
@@ -243,14 +242,22 @@ class Penalty < ActiveRecord::Base
   validates_numericality_of :minutes, :integer => true, :greater_than => 0, :allow_nil => true
 
   default_scope order("id asc");
+  scope :for_team, lambda {|team| joins(:player).where(:players => {:team_id => team.id }) }
   scope :timed, where("penalties.minutes is not null");
   scope :running, where(:state => :running)
   scope :paused, where(:state => :paused)
-  scope :pending, where(:state => :created).where("minutes <> 0")
-  scope :current, where(:state => [:running, :paused])
+  scope :started, where(:state => [:running, :paused])
+  scope :current, timed.where(:state => [:created, :running, :paused])
+  scope :expired, timed.where(:state => [:canceled, :completed])
+  scope :pending, timed.where(:state => :created)
+  scope :others, where("penalties.minutes is null")
   scope :finished, where(:state => [:completed, :canceled])
-  scope :for_team, lambda {|team| joins(:player).where(:players => {:team_id => team.id }) }
+  scope :oldest_sibling, timed.joins("left outer join penalties as others on others.id < penalties.id and penalties.game_id = others.game_id and penalties.player_id = others.player_id").where(:others => {:id => nil })
 
+
+  def siblings
+    Penalty.timed.current.where(:game_id => game_id, :player_id => player_id).where("id <> ?", id)
+  end
 
   def timed_penalty?
     !minutes.nil?
@@ -268,10 +275,6 @@ class Penalty < ActiveRecord::Base
 
   def set_minutes_from_category
     self.minutes ||= Codes[category].try(:[], :minutes)
-  end
-
-  def game_playing?
-    game.playing?
   end
 
   def player_in_game
@@ -310,4 +313,40 @@ class Penalty < ActiveRecord::Base
   def broadcast_changes
     game.send(:broadcast_changes, :with => :penalties)
   end
+
+  MaxConcurrentPenalties = 2
+
+  def self.game_started(game)
+    start_paused_penalties(game)
+    start_pending_penalties(game)
+  end
+
+  def self.game_paused(game)
+    pause_running_penalties(game)
+  end
+
+  def self.start_pending_penalties(game)
+    game.teams.each do |team|
+      available = [MaxConcurrentPenalties - game.penalties.for_team(team).started.count,
+                   game.penalties.for_team(team).pending.count].min
+      if available > 0
+        game.penalties.for_team(team).pending.limit(available).readonly(false).each do |penalty|
+          penalty.start!
+        end
+      end
+    end
+  end
+
+  def self.pause_running_penalties(game)
+    game.penalties.running.each do |penalty|
+      penalty.pause!
+    end
+  end
+
+  def self.start_paused_penalties(game)
+    game.penalties.paused.each do |penalty|
+      penalty.start!
+    end
+  end
+
 end

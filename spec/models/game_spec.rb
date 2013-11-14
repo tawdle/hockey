@@ -103,6 +103,28 @@ describe Game do
           game.start!
         }.not_to change { game.started_at }
       end
+
+      it "notifies the penalty subsystem of its changed state" do
+        Penalty.should_receive(:game_started).with(game)
+        game.start!
+      end
+    end
+  end
+
+  describe "#pause" do
+    context "with a playing game" do
+      let(:game) { FactoryGirl.build(:game) }
+
+      before do
+        game.should_receive(:ready_to_activate?).and_return(true)
+        game.activate!
+        game.start!
+      end
+
+      it "notifies the penalty subsystem of its changed state" do
+        Penalty.should_receive(:game_paused).with(game)
+        game.pause!
+      end
     end
   end
 
