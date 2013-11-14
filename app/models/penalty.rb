@@ -325,12 +325,12 @@ class Penalty < ActiveRecord::Base
 
   MaxConcurrentPenalties = 2
 
-  def self.game_started(game)
+  def self.start_eligible_penalties(game)
     start_paused_penalties(game)
     start_pending_penalties(game)
   end
 
-  def self.game_paused(game)
+  def self.pause_running_penalties(game)
     pause_running_penalties(game)
   end
 

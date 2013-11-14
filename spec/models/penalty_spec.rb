@@ -91,7 +91,7 @@ describe Penalty do
     end
   end
 
-  describe ".game_started" do
+  describe ".start_eligible_penalties" do
     context "with 3 pending penalties" do
       let(:game) { FactoryGirl.create(:game, :with_players) }
 
@@ -108,11 +108,11 @@ describe Penalty do
       context "with no paused penalties" do
         it "starts 2 pending penalties" do
           expect {
-            Penalty.game_started(game)
+            Penalty.start_eligible_penalties(game)
           }.to change { game.reload.penalties.started.count }.from(0).to(2)
         end
         it "starts an eldest sibling with its younger siblings' offsets" do
-          Penalty.game_started(game)
+          Penalty.start_eligible_penalties(game)
           @eldest_sibling.reload.should be_running
           @younger_sibling.reload.should_not be_running
           @eldest_sibling.timer.offset.should == @younger_sibling.minutes.minutes
@@ -125,12 +125,12 @@ describe Penalty do
         end
         it "starts 1 paused penalty" do
           expect {
-            Penalty.game_started(game)
+            Penalty.start_eligible_penalties(game)
           }.to change { @paused_penalty.reload.state }.from("paused").to("running")
         end
         it "starts 1 pending penalty" do
           expect {
-            Penalty.game_started(game)
+            Penalty.start_eligible_penalties(game)
           }.to change { @pending_penalties.select {|p| p.reload.running?}.count }.from(0).to(1)
         end
       end
@@ -140,12 +140,12 @@ describe Penalty do
         end
         it "starts 2 paused penalties" do
           expect {
-            Penalty.game_started(game)
+            Penalty.start_eligible_penalties(game)
           }.to change { @paused_penalties.select {|p| p.reload.running?}.count}.from(0).to(2)
         end
         it "starts none of the pending penalties" do
           expect {
-            Penalty.game_started(game)
+            Penalty.start_eligible_penalties(game)
           }.not_to change { @pending_penalties.select {|p| p.reload.running?}.count}.from(0)
         end
       end

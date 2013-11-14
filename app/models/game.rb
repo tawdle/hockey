@@ -39,8 +39,8 @@ class Game < ActiveRecord::Base
     after_transition any => :completed, :do => :destroy_clock
     after_transition any => :finished, :do => :generate_game_over_feed_item
     after_transition any => any, :do => :broadcast_changes_from_state_machine
-    after_transition any => :playing, :do => :notify_game_started
-    after_transition any => [:paused, :active, :finished], :do => :notify_game_paused
+    after_transition any => :playing, :do => :start_eligible_penalties
+    after_transition any => [:paused, :active, :finished], :do => :pause_running_penalties
 
     state all - :scheduled do
       validate {|game| game.send(:schedule_not_changed) }
@@ -329,11 +329,11 @@ class Game < ActiveRecord::Base
     broadcast("/games/#{id}", json)
   end
 
-  def notify_game_started
-    Penalty.game_started(self)
+  def start_eligible_penalties
+    Penalty.start_eligible_penalties(self)
   end
 
-  def notify_game_paused
-    Penalty.game_paused(self)
+  def pause_running_penalties
+    Penalty.pause_running_penalties(self)
   end
 end

@@ -105,7 +105,7 @@ describe Game do
       end
 
       it "notifies the penalty subsystem of its changed state" do
-        Penalty.should_receive(:game_started).with(game)
+        Penalty.should_receive(:start_eligible_penalties).with(game)
         game.start!
       end
     end
@@ -122,7 +122,7 @@ describe Game do
       end
 
       it "notifies the penalty subsystem of its changed state" do
-        Penalty.should_receive(:game_paused).with(game)
+        Penalty.should_receive(:pause_running_penalties).with(game)
         game.pause!
       end
     end
