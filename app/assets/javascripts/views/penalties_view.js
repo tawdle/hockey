@@ -38,7 +38,14 @@ App.PenaltiesView = Backbone.CollectionView.extend({
     options.modelView = App.PenaltyView;
     options.selectable = false;
     Backbone.CollectionView.prototype.initialize.apply(this, [options]);
-    this.render();
+    this.listenTo(App.game, "change:state", this.gameStateChanged);
+    $("a[href=#" + this.el.parentNode.id + "]").on("show", function() { self.render(); });
+  },
+
+  gameStateChanged: function() {
+    if (this.$el.is(":visible") && App.game.get("state") == "playing") {
+      this.render();
+    }
   }
 });
 
