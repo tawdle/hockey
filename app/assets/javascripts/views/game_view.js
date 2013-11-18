@@ -77,7 +77,7 @@ App.GameView = Backbone.View.extend({
     var state = this.model.get("state");
     this.gameStart.toggle(state == "active" || state == "paused");
     this.gamePause.toggle(state == "playing");
-    this.gameStop.toggle(state== "playing");
+    this.gameStop.toggle(state== "playing" || state == "paused");
     $("p[class=" + state + "]", this.gameStatus).toggle(true).siblings().toggle(false);
 
     this.period.text(this.model.get("period_text"));
