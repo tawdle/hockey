@@ -16,11 +16,12 @@ class Goal < ActiveRecord::Base
   validates_numericality_of :period, :integer => true, :less_than_or_equal_to => Game::Periods.length, :greater_than_or_equal_to => 0
   validate :game_has_started
 
+  after_initialize :set_players_was_empty
   before_validation :set_time_and_period_from_game
-  before_save :generate_save_feed_item, :unless => :players_empty?
+  before_save :generate_save_feed_item, :if => :players_just_added
+  after_save :cancel_minor_penalty, :if => :players_just_added
   before_destroy :generate_destroy_feed_item, :unless => :players_empty?
   after_create :stop_clock
-  after_create :cancel_minor_penalty
   after_commit :broadcast_changes
 
   scope :for_team, lambda {|team| where(:team_id => team.id) }
@@ -38,6 +39,10 @@ class Goal < ActiveRecord::Base
   end
 
   private
+
+  def players_just_added
+    @players_was_empty && !players_empty?
+  end
 
   def cancel_minor_penalty
     Penalty.goal_scored(game, team)
@@ -86,5 +91,9 @@ class Goal < ActiveRecord::Base
 
   def stop_clock
     game.pause # If we're already stopped, this is a no-op
+  end
+
+  def set_players_was_empty
+    @players_was_empty = players_empty?
   end
 end
