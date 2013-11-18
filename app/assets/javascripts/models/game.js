@@ -38,10 +38,11 @@ App.Game = App.EmbeddedModel.extend({
     return "/games/" + this.id;
   },
 
-  perform: function(action) {
+  perform: function(action, data) {
     $.ajax({
       type: "POST",
-      url: this.url() + "/" + action + ".json"
+      url: this.url() + "/" + action + ".json",
+      data: data
     });
   },
 
@@ -50,7 +51,9 @@ App.Game = App.EmbeddedModel.extend({
   },
 
   pause: function() {
-    if (this.get("state") == "playing") this.perform("pause");
+    if (this.get("state") == "playing") {
+      this.perform("pause", { elapsed_time: this.get("clock").get("elapsed_time") } );
+    }
   },
 
   stop: function() {

@@ -76,12 +76,12 @@ class Timer < ActiveRecord::Base
 
   def elapsed_time=(val)
     if val.is_a?(String)
-      val = val.split(":").map(&:to_i)
+      val = val.split(":").map(&:to_f)
       seconds = val.pop
       seconds += val.pop * 60 if val.any?
       seconds += val.pop * 3600 if val.any?
     else
-      seconds = val.to_i
+      seconds = val.to_f
     end
     self.seconds_paused = diff_in_seconds(paused? ? paused_at : DateTime.now, started_at) - seconds
   end
