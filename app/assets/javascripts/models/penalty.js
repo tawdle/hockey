@@ -24,6 +24,10 @@ App.Penalty = App.EmbeddedModel.extend({
     return player.get("team_id");
   },
 
+  sameStoppageAs: function(other) {
+    return Math.abs(this.get("elapsed_time") - other.get("elapsed_time")) < 1.0;
+  },
+
   defaults: function() {
     return {
       state: "created",

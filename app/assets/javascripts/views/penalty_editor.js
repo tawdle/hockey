@@ -99,17 +99,21 @@ App.PenaltyEditor = Backbone.View.extend({
   },
 
   initializeForm: function() {
-    var player_id = this.model.get("player_id");
+    if (!this.lastPenalty || !this.lastPenalty.sameStoppageAs(this.model)) {
+      this.lastPenalty = this.model;
+    }
+
+    var player_id = this.model.get("player_id") || this.lastPenalty.get("player_id");
     var team_id = (player_id && App.players.get(player_id).get("team_id")) || App.game.get("home_team").id;
 
     this.createPlayerRadios();
     this.teamId(team_id);
     this.showTeamPlayers();
     this.playerId(player_id);
-    this.category(this.model.get("category") || "minor");
+    this.category(this.model.get("category") || this.lastPenalty.get("category") || "minor");
 
     this.setInfractionOptions();
-    this.infractionSelect.val(this.model.get("infraction"));
+    this.infractionSelect.val(this.model.get("infraction") || this.lastPenalty.get("infraction"));
 
     this.title.text(this.model.isNew() ? "Create Penalty" : "Edit Penalty");
     this.saveButton.text(this.model.isNew() ? "Create" : "Update");
@@ -128,6 +132,7 @@ App.PenaltyEditor = Backbone.View.extend({
     this.model.save(values, { 
       success: function() {
         self.close();
+        self.lastPenalty = self.model;
       }
     });
   },
