@@ -95,7 +95,7 @@ App.PenaltyEditor = Backbone.View.extend({
 
   updateSaveState: function() {
     var disabled = !this.complete();
-    this.saveButton.prop("disabled", disabled).toggleClass("disabled", disabled);
+    this.saveButton.toggleClass("disabled", disabled);
   },
 
   initializeForm: function() {

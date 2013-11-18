@@ -47,7 +47,10 @@ App.displaySeconds = function(seconds) {
   return s;
 };
 
-$('body').on('click', 'a.disabled', function(event) {
+$(function() {
+  $('html, body').on('click', 'a.disabled', function(event) {
     event.preventDefault();
+    return false;
+  });
 });
 
