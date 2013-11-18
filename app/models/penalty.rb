@@ -243,7 +243,9 @@ class Penalty < ActiveRecord::Base
 
   default_scope order("id asc");
   scope :for_team, lambda {|team| joins(:player).where(:players => {:team_id => team.id }) }
+  scope :for_game, lambda {|game| where(:game_id => game.id) }
   scope :timed, where("penalties.minutes is not null");
+  scope :minor, where(:category => :minor)
   scope :running, where(:state => :running)
   scope :paused, where(:state => :paused)
   scope :started, where(:state => [:running, :paused])
@@ -273,6 +275,17 @@ class Penalty < ActiveRecord::Base
 
   def action=(value)
     self.send("#{value}") if state_transitions.collect(&:event).map(&:to_s).include?(value)
+  end
+
+  def team
+    player.try(:team)
+  end
+
+  def coincidental?
+    other_team = game.opposing_team(team)
+    Penalty.for_team(other_team).current.minor.
+      where(:game_id => game_id, :period => period).
+      where("elapsed_time between ? and ?", elapsed_time - 1.0, elapsed_time + 1.0).any?
   end
 
   private
@@ -361,4 +374,9 @@ class Penalty < ActiveRecord::Base
     end
   end
 
+  def self.goal_scored(game, team)
+    # See if we can cancel a minor penalty against opposing team
+    cancelable_penalty = Penalty.for_game(game).for_team(game.opposing_team(team)).minor.current.readonly(false).detect {|p| !p.coincidental? }
+    cancelable_penalty.cancel! if cancelable_penalty
+  end
 end

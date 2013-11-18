@@ -20,6 +20,7 @@ class Goal < ActiveRecord::Base
   before_save :generate_save_feed_item, :unless => :players_empty?
   before_destroy :generate_destroy_feed_item, :unless => :players_empty?
   after_create :stop_clock
+  after_create :cancel_minor_penalty
   after_commit :broadcast_changes
 
   scope :for_team, lambda {|team| where(:team_id => team.id) }
@@ -37,6 +38,10 @@ class Goal < ActiveRecord::Base
   end
 
   private
+
+  def cancel_minor_penalty
+    Penalty.goal_scored(game, team)
+  end
 
   def updater_name
     updater.try(:at_name) || "The System"
