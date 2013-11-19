@@ -1,4 +1,4 @@
-App.GoalView = Backbone.View.extend({
+App.Marker.GoalView = Backbone.View.extend({
   initialize: function() {
     this.template = _.template($("#goal-view").html());
     this.listenTo(this.model, "change", this.render);

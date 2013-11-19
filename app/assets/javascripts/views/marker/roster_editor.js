@@ -1,4 +1,4 @@
-App.RosterEditor = Backbone.View.extend({
+App.Marker.RosterEditor = Backbone.View.extend({
   initialize: function() {
     this.dialog = this.$el;
     this.playerEditor = this.options.playerEditor;

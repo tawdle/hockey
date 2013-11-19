@@ -1,6 +1,4 @@
-window.App = window.App || {};
-
-App.GoalsView = Backbone.View.extend({
+App.Marker.GoalsView = Backbone.View.extend({
   initialize: function(options, other) {
     this.teamId = options.teamId;
     this.listenTo(App.goals, "add", this.addOne);
@@ -10,7 +8,7 @@ App.GoalsView = Backbone.View.extend({
 
   addOne: function(goal) {
     if (goal.get("team_id") == this.teamId) {
-      var view = new App.GoalView({model: goal});
+      var view = new App.Marker.GoalView({model: goal});
       this.$el.append(view.render().el);
     }
   },

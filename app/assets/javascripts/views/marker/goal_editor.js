@@ -1,6 +1,4 @@
-window.App = window.App || {};
-
-App.GoalEditor = Backbone.View.extend({
+App.Marker.GoalEditor = Backbone.View.extend({
   initialize: function() {
     this.teamId = this.options.teamId;
     this.playerSelect = this.$(".goal-player select");

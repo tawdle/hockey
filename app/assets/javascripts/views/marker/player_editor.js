@@ -1,4 +1,4 @@
-App.PlayerEditor = Backbone.View.extend({
+App.Marker.PlayerEditor = Backbone.View.extend({
   initialize: function() {
     this.dialog = this.$el;
   },

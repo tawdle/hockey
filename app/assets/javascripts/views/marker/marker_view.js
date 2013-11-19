@@ -1,15 +1,13 @@
-window.App = window.App || {};
-
-App.GameView = Backbone.View.extend({
+App.Marker.MarkerView = Backbone.View.extend({
   initialize: function() {
     this.gameStart = this.$("#game-start");
     this.gamePause = this.$("#game-pause");
     this.gameStop = this.$("#game-stop");
     this.gameStatus = this.$("#game-status");
     this.period = this.$("#game-period");
-    this.homeView = new App.TeamBoxView({ el: "#home-team", teamId: this.model.get("home_team").id, side: "home_team" });
-    this.visitingView = new App.TeamBoxView({ el: "#visiting-team", teamId: this.model.get("visiting_team").id, side: "visiting_team" });
-    this.penaltyEditor = new App.PenaltyEditor({el: this.$(".penalty-editor")});
+    this.homeView = new App.Marker.TeamBoxView({ el: "#home-team", teamId: this.model.get("home_team").id, side: "home_team" });
+    this.visitingView = new App.Marker.TeamBoxView({ el: "#visiting-team", teamId: this.model.get("visiting_team").id, side: "visiting_team" });
+    this.penaltyEditor = new App.Marker.PenaltyEditor({el: this.$(".penalty-editor")});
 
     this.listenTo(this.model, "change", this.render);
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);

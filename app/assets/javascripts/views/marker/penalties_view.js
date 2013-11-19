@@ -1,4 +1,4 @@
-App.PenaltiesView = Backbone.CollectionView.extend({
+App.Marker.PenaltiesView = Backbone.CollectionView.extend({
   filters: {
     all: function(self) {
       return function(penalty) { return penalty.teamId() == self.teamId; };
@@ -37,7 +37,7 @@ App.PenaltiesView = Backbone.CollectionView.extend({
     this.tab = $("a[href=#" + this.el.parentNode.id + "]");
     this.count = $("span.count", this.tab);
     options.visibleModelsFilter = this.filters[options.type](self);
-    options.modelView = App.PenaltyView;
+    options.modelView = App.Marker.PenaltyView;
     options.selectable = false;
     Backbone.CollectionView.prototype.initialize.apply(this, [options]);
     this.listenTo(App.game, "change:state", this.gameStateChanged);

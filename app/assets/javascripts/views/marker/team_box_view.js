@@ -1,19 +1,19 @@
-App.TeamBoxView = Backbone.View.extend({
+App.Marker.TeamBoxView = Backbone.View.extend({
   initialize: function(options, other) {
     this.side = options.side;
     this.teamId = options.teamId;
     this.penaltyViews = {
-      "all"     : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "all",     el: this.$("table.penalties.all")}),
-      "current" : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "current", el: this.$("table.penalties.current")}),
-      "expired" : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "expired", el: this.$("table.penalties.expired")}),
-      "other"   : new App.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "other",   el: this.$("table.penalties.other")})
+      "all"     : new App.Marker.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "all",     el: this.$("table.penalties.all")}),
+      "current" : new App.Marker.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "current", el: this.$("table.penalties.current")}),
+      "expired" : new App.Marker.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "expired", el: this.$("table.penalties.expired")}),
+      "other"   : new App.Marker.PenaltiesView({teamId: this.teamId, collection: App.penalties, type: "other",   el: this.$("table.penalties.other")})
     };
     this.$(".penalties li a.current").click();
-    this.goalEditor = new App.GoalEditor({teamId: this.teamId, el: this.$(".goal-editor")});
-    this.goalsView = new App.GoalsView({teamId: this.teamId, el: this.$(".goals tbody")});
-    this.playerEditor = new App.PlayerEditor({teamId: this.teamId, el: this.$(".player")});
-    this.rosterEditor = new App.RosterEditor({teamId: this.teamId, el: this.$(".roster"), playerEditor: this.playerEditor});
-    this.goalieChooser = new App.GoalieChooser({teamId: this.teamId, el: this.$(".goalie-chooser") });
+    this.goalEditor = new App.Marker.GoalEditor({teamId: this.teamId, el: this.$(".goal-editor")});
+    this.goalsView = new App.Marker.GoalsView({teamId: this.teamId, el: this.$(".goals tbody")});
+    this.playerEditor = new App.Marker.PlayerEditor({teamId: this.teamId, el: this.$(".player")});
+    this.rosterEditor = new App.Marker.RosterEditor({teamId: this.teamId, el: this.$(".roster"), playerEditor: this.playerEditor});
+    this.goalieChooser = new App.Marker.GoalieChooser({teamId: this.teamId, el: this.$(".goalie-chooser") });
     this.goalie = this.$(".goalie");
     this.$(".disclosure i").addClass("icon-caret-right");
     this.score = this.$(".score");

@@ -1,6 +1,4 @@
-window.App = window.App || {};
-
-App.PenaltyEditor = Backbone.View.extend({
+App.Marker.PenaltyEditor = Backbone.View.extend({
   initialize: function() {
     this.infractionSelect = this.$(".penalty-infraction select");
     this.template = _.template($("#player-radio").html());

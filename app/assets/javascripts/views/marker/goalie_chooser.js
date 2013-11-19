@@ -1,6 +1,4 @@
-window.App = window.App || {};
-
-App.GoalieChooser = Backbone.View.extend({
+App.Marker.GoalieChooser = Backbone.View.extend({
   initialize: function() {
     this.dialog = this.$el;
   },

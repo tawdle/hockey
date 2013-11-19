@@ -1,4 +1,4 @@
-App.PenaltyView = Backbone.View.extend({
+App.Marker.PenaltyView = Backbone.View.extend({
   initialize: function() {
     this.template = _.template($("#penalty-view").html());
     this.listenTo(this.model, "change", this.render);

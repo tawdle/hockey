@@ -9,7 +9,7 @@
     App.feedItems = new App.FeedItems(<%= json_for(@game.activity_feed_items).html_safe %>, {gameId: <%= @game.id %>});
     App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
     App.penalties = new App.Penalties(<%= json_for(@game.penalties).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
-    App.gameView = new App.GameView({ model: App.game, el: ".content" });
+    App.markerView = new App.Marker.MarkerView({ model: App.game, el: ".content" });
     App.feedItemsView = new Backbone.CollectionView({
       el: "#feed-items",
       collection: App.feedItems,
