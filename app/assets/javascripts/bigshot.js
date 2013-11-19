@@ -2,6 +2,8 @@ window.App = window.App || {};
 window.App.Marker = window.App.Marker || {};
 window.App.Scoreboard = window.App.Scoreboard || {};
 
+App.dispatcher = _.clone(Backbone.Events);
+
 App.humanize = function(property) {
   return property.replace(/_/g, ' ').replace(/(\w+)/g, function(match) {
     return match.charAt(0).toUpperCase() + match.slice(1);

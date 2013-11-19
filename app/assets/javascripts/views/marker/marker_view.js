@@ -14,6 +14,14 @@ App.Marker.MarkerView = Backbone.View.extend({
     var el = $("#game-clock").first();
     this.gameClockView = new App.TimerView({el: el, model: App.game.get("clock"), showTimeRemaining: true});
     this.render();
+
+    this.feedItemsView = new Backbone.CollectionView({
+      el: "#feed-items",
+      collection: App.feedItems,
+      modelView: App.FeedItemView,
+      emptyListCaption: "There are no activity feed items yet for this game."
+    });
+    this.feedItemsView.render();
   },
 
   events: {

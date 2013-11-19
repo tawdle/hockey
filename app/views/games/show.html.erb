@@ -1,6 +1,5 @@
 <%= javascript_tag do %>
   $(function() {
-    App.dispatcher = _.clone(Backbone.Events);
     App.translations =  <%= {penalties: t("penalties") }.to_json.html_safe %>;
     App.players = new App.Players(<%= json_for(@game.players).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.goals = new App.Goals(<%= json_for(@game.goals).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
@@ -10,13 +9,6 @@
     App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
     App.penalties = new App.Penalties(<%= json_for(@game.penalties).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.markerView = new App.Marker.MarkerView({ model: App.game, el: ".content" });
-    App.feedItemsView = new Backbone.CollectionView({
-      el: "#feed-items",
-      collection: App.feedItems,
-      modelView: App.FeedItemView,
-      emptyListCaption: "There are no activity feed items yet for this game."
-    });
-    App.feedItemsView.render();
   });
 <% end %>
 
