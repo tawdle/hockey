@@ -57,7 +57,7 @@ App.Marker.PenaltiesView = Backbone.CollectionView.extend({
   updateCount: function() {
     var self = this;
     var count = this.collection.reduce(function(memo, penalty) { return self.options.visibleModelsFilter(penalty) ? memo + 1 : memo; }, 0);
-    this.count.text(count ? " (" + count + ")" : "");
+    this.count.text(count || "");
   }
 });
 
