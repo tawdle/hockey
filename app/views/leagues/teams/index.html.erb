@@ -3,7 +3,8 @@
 <table class="table table-hover">
   <tr>
     <th style="width: 50px;">Logo</th>
-    <th>Full Name </th>
+    <th>City</th>
+    <th>Full Name</th>
     <th>Name</th>
     <th></th>
     <th>League</th>
@@ -14,6 +15,7 @@
 <% @teams.without_deleted.each do |team| %>
   <tr>
     <td><%= image_tag(team.logo_url(:thumbnail), :width => 50, :height => 50) if team.logo.present? %>
+    <td><%= team.city %></td>
     <td><%= team.full_name %></td>
     <td>
       <span class="pull-left" style="margin-right: 10px;">

@@ -19,7 +19,7 @@ class Team < ActiveRecord::Base
   end
 
   attr_accessor :manager
-  attr_accessible :full_name, :logo_cache, :logo, :manager, :league, :system_name_attributes
+  attr_accessible :full_name, :logo_cache, :logo, :manager, :league, :system_name_attributes, :city
 
   accepts_nested_attributes_for :system_name
 

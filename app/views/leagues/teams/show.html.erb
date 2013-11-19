@@ -2,6 +2,7 @@
   <% if @team.logo.present? %>
     <%= image_tag @team.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
   <% end %>
+  <span style="font-size: smaller;"><%= @team.city %></span><br>
   <%= @team.full_name %>
   <small>(<%= link_to 'edit', edit_team_path(@team) %>)</small>
   <%= render :partial => "follow_button", :locals => {:target => @team } %>
