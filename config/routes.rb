@@ -17,6 +17,7 @@ Hockey::Application.routes.draw do
       post :pause
       post :stop
       post :complete
+      post :sync
     end
   end
 

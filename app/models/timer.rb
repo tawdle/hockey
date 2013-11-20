@@ -86,6 +86,10 @@ class Timer < ActiveRecord::Base
     self.seconds_paused = diff_in_seconds(paused? ? paused_at : DateTime.now, started_at) - seconds
   end
 
+  def check_expiration
+    expire! if running? && duration && time_remaining <= 0
+  end
+
   private
 
   def set_started_at
@@ -111,10 +115,6 @@ class Timer < ActiveRecord::Base
 
   def estimated_expiration
     DateTime.now + time_remaining.seconds
-  end
-
-  def check_expiration
-    expire! if running? && duration && time_remaining <= 0
   end
 
   def notify_owner_of_expiration

@@ -253,6 +253,13 @@ class Game < ActiveRecord::Base
     game_goalies.current.for_team(team).select(:goalie_id).first.try(:[], "goalie_id")
   end
 
+  def sync
+    [clock, penalties.running.map(&:timer)].flatten.each do |timer|
+      timer.check_expiration
+    end
+    true
+  end
+
   private
 
   def set_started_at

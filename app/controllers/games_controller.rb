@@ -113,4 +113,16 @@ class GamesController < ApplicationController
       end
     end
   end
+
+  def sync
+    respond_to do |format|
+      if @game.sync
+        format.html { redirect_to :back, notice: 'Game has been synced. Thanks.' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to :back, alert: 'Something went wrong.' }
+        format.json { render json: ["Something went wrong."], status: :unprocessable_entity }
+      end
+    end
+  end
 end
