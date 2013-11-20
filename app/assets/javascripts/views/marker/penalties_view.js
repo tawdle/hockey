@@ -40,18 +40,16 @@ App.Marker.PenaltiesView = Backbone.CollectionView.extend({
     options.modelView = App.Marker.PenaltyView;
     options.selectable = false;
     Backbone.CollectionView.prototype.initialize.apply(this, [options]);
-    this.listenTo(App.game, "change:state", this.gameStateChanged);
     this.listenTo(App.penalties, "add", this.updateCount);
     this.listenTo(App.penalties, "remove", this.updateCount);
     this.listenTo(App.penalties, "change", this.updateCount);
+    this.listenTo(App.penalties, "change", this.renderIfDisplayed);
     this.tab.on("show", function() { self.render(); });
     this.updateCount();
   },
 
-  gameStateChanged: function() {
-    if (this.$el.is(":visible") && App.game.get("state") == "playing") {
-      this.render();
-    }
+  renderIfVisible: function() {
+    if (this.$el.is(":visible")) this.render();
   },
 
   updateCount: function() {
