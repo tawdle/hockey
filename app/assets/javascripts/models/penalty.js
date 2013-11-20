@@ -25,14 +25,15 @@ App.Penalty = App.EmbeddedModel.extend({
   },
 
   sameStoppageAs: function(other) {
-    return Math.abs(this.get("elapsed_time") - other.get("elapsed_time")) < 1.0;
+    return this.get("period") == other.get("period") &&
+      this.get("elapsed_time") == other.get("elapsed_time");
   },
 
   defaults: function() {
     return {
       state: "created",
       period: App.game.get("period"),
-      elapsed_time: App.game.get("clock").get("elapsed_time"),
+      elapsed_time: App.game.lastPausedAt || App.game.get("clock").get("elapsed_time"),
       player_id: null,
       serving_player_id: null,
       category: null,

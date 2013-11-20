@@ -284,8 +284,8 @@ class Penalty < ActiveRecord::Base
   def coincidental?
     other_team = game.opposing_team(team)
     Penalty.for_team(other_team).current.minor.
-      where(:game_id => game_id, :period => period).
-      where("elapsed_time between ? and ?", elapsed_time - 1.0, elapsed_time + 1.0).any?
+      where(:game_id => game_id, :period => period, :elapsed_time => elapsed_time).
+      any?
   end
 
   private

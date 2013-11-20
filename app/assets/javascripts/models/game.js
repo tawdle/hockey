@@ -52,7 +52,8 @@ App.Game = App.EmbeddedModel.extend({
 
   pause: function() {
     if (this.get("state") == "playing") {
-      this.perform("pause", { elapsed_time: this.get("clock").get("elapsed_time") } );
+      this.lastPausedAt = this.get("clock").get("elapsed_time");
+      this.perform("pause", { elapsed_time: this.lastPausedAt } );
     }
   },
 
