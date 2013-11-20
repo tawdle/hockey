@@ -254,7 +254,7 @@ class Penalty < ActiveRecord::Base
   scope :pending, timed.where(:state => :created)
   scope :others, where("penalties.minutes is null")
   scope :finished, where(:state => [:completed, :canceled])
-  scope :eldest_siblings, timed.joins("left outer join penalties as others on others.id < penalties.id and penalties.game_id = others.game_id and penalties.player_id = others.player_id and others.state in ('created', 'running', 'paused')").where(:others => {:id => nil })
+  scope :eldest_siblings, timed.joins("left outer join penalties as others on others.id < penalties.id and penalties.game_id = others.game_id and penalties.player_id = others.player_id and others.state in ('created', 'running', 'paused') and others.minutes is not null").where(:others => {:id => nil })
 
 
   def siblings
