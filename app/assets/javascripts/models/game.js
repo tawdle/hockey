@@ -47,11 +47,16 @@ App.Game = App.EmbeddedModel.extend({
   },
 
   start: function() {
+    var state = this.get("state");
+    if (state == "active" || state == "paused") {
+      this.set("state", "playing");
+    }
     this.perform("start");
   },
 
   pause: function() {
     if (this.get("state") == "playing") {
+      this.set("state", "paused");
       this.lastPausedAt = this.get("clock").get("elapsed_time");
       this.perform("pause", { elapsed_time: this.lastPausedAt } );
     }
