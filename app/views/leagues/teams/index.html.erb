@@ -16,7 +16,7 @@
   <tr>
     <td><%= image_tag(team.logo_url(:thumbnail), :width => 50, :height => 50) if team.logo.present? %>
     <td><%= team.city %></td>
-    <td><%= team.full_name %></td>
+    <td><%= link_to team.full_name, team %></td>
     <td>
       <span class="pull-left" style="margin-right: 10px;">
         <%= format_user_link(team) %>
