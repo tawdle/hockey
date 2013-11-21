@@ -5,6 +5,7 @@ App.Marker.GoalEditor = Backbone.View.extend({
     this.assistSelect = this.$(".goal-assist select");
     this.secondaryAssistSelect = this.$(".goal-secondary-assist select");
     this.advantageSelect = this.$(".goal-advantage select");
+    this.saveButton = this.$("a.save");
     this.listenTo(App.dispatcher, "goal:edit", this.editIf);
   },
 
@@ -13,12 +14,13 @@ App.Marker.GoalEditor = Backbone.View.extend({
   events: {
     "change .goal-player select": "playerChanged",
     "change .goal-assist select": "assistChanged",
-    "click a.save" : "saveAndClose",
+    "click a.save:not(.disabled)" : "saveAndClose",
     "click a.cancel" : "destroyAndClose"
   },
 
   playerChanged: function() {
     this.$(".goal-assist").slideDown();
+    this.updateSaveButton();
   },
 
   assistChanged: function() {
@@ -41,6 +43,14 @@ App.Marker.GoalEditor = Backbone.View.extend({
     this.secondaryAssistSelect.html(self.optionPrompt("Other player who assisted") + self.optionString("", "") + options);
   },
 
+  complete: function() {
+    return this.playerSelect.val() !== null;
+  },
+
+  updateSaveButton: function() {
+    this.saveButton.toggleClass("disabled", !this.complete());
+  },
+
   initializeForm: function() {
     var ids = this.model.get("player_ids");
     this.setPlayerOptions();
@@ -50,6 +60,7 @@ App.Marker.GoalEditor = Backbone.View.extend({
     this.advantageSelect.val(this.model.get("advantage") || 0);
     this.$(".goal-assist").toggle(ids.length > 0);
     this.$(".goal-secondary-assist").toggle(ids.length > 1);
+    this.updateSaveButton();
   },
 
   close: function() {

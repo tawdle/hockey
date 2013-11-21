@@ -19,7 +19,7 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     "change .penalty-team input" : "showTeamPlayers",
     "change .penalty-category input" : "setInfractionOptions",
     "change input, select" : "updateSaveState",
-    "click a.save" : "saveAndClose",
+    "click a.save:not(.disabled)" : "saveAndClose",
     "click a.cancel" : "cancel",
     "click a.start" : "startGame",
     "click a.pause" : "pauseGame"
