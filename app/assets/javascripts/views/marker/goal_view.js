@@ -25,12 +25,11 @@ App.Marker.GoalView = Backbone.View.extend({
   },
 
   render: function() {
-    var jersey_numbers = this.model.get("player_ids").map(function(player_id) {
-      return App.players.get(player_id).get("jersey_number");
+    var attrs = this.model.toJSON().goal;
+    attrs.players = this.model.get("player_ids").map(function(player_id) {
+      return App.players.get(player_id).get("name_and_number");
     });
 
-    var attrs = this.model.toJSON().goal;
-    attrs.jersey_numbers = jersey_numbers;
     this.$el.html(this.template(attrs));
     return this;
   }
