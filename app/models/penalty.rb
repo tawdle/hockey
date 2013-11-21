@@ -17,7 +17,7 @@ class Penalty < ActiveRecord::Base
     end
 
     event :cancel do
-      transition any => :canceled
+      transition any => :completed
     end
 
     after_transition :created => :running, :do => :init_timer
