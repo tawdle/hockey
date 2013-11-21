@@ -379,7 +379,8 @@ CREATE TABLE goals (
     elapsed_time integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    period integer DEFAULT 0 NOT NULL
+    period integer DEFAULT 0 NOT NULL,
+    advantage integer
 );
 
 
@@ -1685,3 +1686,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131107010040');
 INSERT INTO schema_migrations (version) VALUES ('20131114001835');
 
 INSERT INTO schema_migrations (version) VALUES ('20131119223053');
+
+INSERT INTO schema_migrations (version) VALUES ('20131121011958');

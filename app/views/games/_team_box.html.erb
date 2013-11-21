@@ -45,16 +45,20 @@
       <div class="goal-editor modal hide fade">
         <div class="modal-header"><h3>Goal for <%= team.name %></h3></div>
         <div class="modal-body">
+          <div class="goal-advantage">
+            <select><%= options_for_select(Goal::Advantages.invert) %></select>
+          </div>
+
           <div class="goal-player">
-            <select></select>
+            <select class="player"></select>
           </div>
 
           <div class="goal-assist">
-            <select></select>
+            <select class="player"></select>
           </div>
 
           <div class="goal-secondary-assist">
-            <select></select>
+            <select class="player"></select>
           </div>
         </div>
 

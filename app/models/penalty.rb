@@ -379,4 +379,8 @@ class Penalty < ActiveRecord::Base
     cancelable_penalty = Penalty.for_game(game).for_team(game.opposing_team(team)).minor.current.readonly(false).detect {|p| !p.coincidental? }
     cancelable_penalty.cancel! if cancelable_penalty
   end
+
+  def self.players_off_ice(game, team)
+    Penalty.for_game(game).for_team(team).minor.current.eldest_siblings.count
+  end
 end

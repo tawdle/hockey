@@ -4,6 +4,7 @@ App.Marker.GoalEditor = Backbone.View.extend({
     this.playerSelect = this.$(".goal-player select");
     this.assistSelect = this.$(".goal-assist select");
     this.secondaryAssistSelect = this.$(".goal-secondary-assist select");
+    this.advantageSelect = this.$(".goal-advantage select");
     this.listenTo(App.dispatcher, "goal:edit", this.editIf);
   },
 
@@ -46,6 +47,7 @@ App.Marker.GoalEditor = Backbone.View.extend({
     this.playerSelect.val(ids[0]);
     this.assistSelect.val(ids[1]);
     this.secondaryAssistSelect.val(ids[2]);
+    this.advantageSelect.val(this.model.get("advantage") || 0);
     this.$(".goal-assist").toggle(ids.length > 0);
     this.$(".goal-secondary-assist").toggle(ids.length > 1);
   },
@@ -57,9 +59,10 @@ App.Marker.GoalEditor = Backbone.View.extend({
 
   saveAndClose: function(event) {
     event.preventDefault();
-    var player_ids = _.uniq(_.compact(_.map(this.$("select"), function(select) { return Number($(select).val()); } )));
+    var player_ids = _.uniq(_.compact(_.map(this.$("select.player"), function(select) { return Number($(select).val()); } )));
+    var advantage = this.advantageSelect.val();
     var self = this;
-    this.model.save({player_ids: player_ids}, { success: function(model, response, options) { self.close(); }});
+    this.model.save({player_ids: player_ids, advantage: advantage}, { success: function(model, response, options) { self.close(); }});
     return false;
   },
 

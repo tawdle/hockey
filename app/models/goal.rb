@@ -6,7 +6,7 @@ class Goal < ActiveRecord::Base
   has_many :players, :through => :goal_players
 
   attr_accessor :updater
-  attr_accessible :game, :game_id, :creator, :team_id, :period, :player_ids, :elapsed_time
+  attr_accessible :game, :game_id, :creator, :team_id, :period, :player_ids, :elapsed_time, :advantage
 
 
   validates_presence_of :creator
@@ -18,6 +18,7 @@ class Goal < ActiveRecord::Base
 
   after_initialize :set_players_was_empty
   before_validation :set_time_and_period_from_game
+  before_validation :set_advantage
   before_save :generate_save_feed_item, :if => :players_just_added
   after_save :cancel_minor_penalty, :if => :players_just_added
   before_destroy :generate_destroy_feed_item, :unless => :players_empty?
@@ -25,6 +26,14 @@ class Goal < ActiveRecord::Base
   after_commit :broadcast_changes
 
   scope :for_team, lambda {|team| where(:team_id => team.id) }
+
+  Advantages = {
+    -2 => "Short-handed: 3 on 5",
+    -1 => "Short-handed: 4 on 5",
+     0 => "Even-handed",
+    +1 => "Powerplay: 5 on 4",
+    +2 => "Powerplay: 5 on 3"
+  }
 
   def player
     players.first
@@ -95,5 +104,9 @@ class Goal < ActiveRecord::Base
 
   def set_players_was_empty
     @players_was_empty = players_empty?
+  end
+
+  def set_advantage
+    self.advantage ||= (Penalty.players_off_ice(game, game.opposing_team(team)) - Penalty.players_off_ice(game, team)) if game && team
   end
 end
