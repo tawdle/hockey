@@ -60,10 +60,9 @@ span#game-clock, span#game-period {
 
 table.penalties {
   tr.completed, tr.canceled a {
-    display: none;
   }
   tr.running, tr.paused {
-    a {
+    a.edit {
       display: none;
     }
   }

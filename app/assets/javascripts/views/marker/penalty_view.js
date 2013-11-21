@@ -26,7 +26,7 @@ App.Marker.PenaltyView = Backbone.View.extend({
 
   render: function() {
     this.$el.html(this.template(this.model.toJSON().penalty));
-    this.$el.addClass(this.model.get("state"));
+    this.$el.removeClass().addClass(this.model.get("state"));
 
     var timer = this.model.get("timer");
     if (timer) {
