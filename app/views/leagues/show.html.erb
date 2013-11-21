@@ -1,22 +1,19 @@
-<h2 class="page-header">
+<h2>
   <% if @league.logo.present? %>
     <%= image_tag @league.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
   <% end %>
   <%= @league.name %>
-  <small>(<%= link_to 'edit', edit_league_path(@league) %>)</small>
+  <%= link_to 'Edit', edit_league_path(@league), class: "btn btn-small" if can? :edit, @league %>
 </h2>
 
 <h3>Managers
-<small>
-  (<%= link_to 'invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League") %>)
-</small>
+  <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league) %>
 </h3>
 
 <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
 
 <h3>Markers
-<small>
-  (<%= link_to 'invite', new_invitation_path(:predicate => :mark, :target_id => @league.to_param, :target_type => "League") %>)
+  <%= link_to 'invite', new_invitation_path(:predicate => :mark, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league)  %>
 </small>
 </h3>
 
