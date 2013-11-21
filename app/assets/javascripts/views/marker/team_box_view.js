@@ -34,8 +34,8 @@ App.Marker.TeamBoxView = Backbone.View.extend({
     // We wait here because we need the server's id for this new goal.
     // Otherwise, when the update comes in asynchronsously, it removes our model
     // from the collection as it doesn't recognize it as the same object.
-    var goal = App.goals.create({ team_id: this.teamId }, { wait: true });
-    goal.once("change", function() { this.goalEditor.edit(goal); }, this);
+    var self = this;
+    App.goals.create({ team_id: this.teamId }, { wait: true, success: function(goal) { self.goalEditor.edit(goal); } });
   },
 
   editRoster: function(e) {
