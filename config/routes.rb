@@ -21,9 +21,7 @@ Hockey::Application.routes.draw do
     end
   end
 
-  resources :locations, :except => [:destroy] do
-    resource :scoreboard, :only => [:show], :controller => "locations/scoreboards"
-  end
+  resources :locations, :except => [:destroy]
 
   resources :players, :only => [:show, :edit, :update, :destroy]
 
