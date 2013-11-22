@@ -80,6 +80,7 @@ GEM
     factory_girl_rails (3.6.0)
       factory_girl (~> 3.6.0)
       railties (>= 3.0.0)
+    fastclick-rails (0.0.1)
     ffi (1.9.0)
     figaro (0.6.4)
       bundler (~> 1.0)
@@ -201,6 +202,7 @@ DEPENDENCIES
   delayed_job_active_record
   devise
   factory_girl_rails (~> 3.0)
+  fastclick-rails
   figaro
   i18n_country_select
   jasmine

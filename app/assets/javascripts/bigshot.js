@@ -24,6 +24,8 @@ $(function() {
     event.preventDefault();
     return false;
   });
+
+  FastClick.attach(document.body);
 });
 
 

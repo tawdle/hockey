@@ -22,6 +22,7 @@
 //= require_tree .
 //= require jquery.timeago
 //= require typeahead
+//= require fastclick
 
 _.templateSettings = {
     interpolate: /\{\{\=(.+?)\}\}/gim,
