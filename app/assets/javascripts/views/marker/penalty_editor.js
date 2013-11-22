@@ -20,9 +20,7 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     "change .penalty-category input" : "setInfractionOptions",
     "change input, select" : "updateSaveState",
     "click a.save:not(.disabled)" : "saveAndClose",
-    "click a.cancel" : "cancel",
-    "click a.start" : "startGame",
-    "click a.pause" : "pauseGame"
+    "click a.cancel" : "cancel"
   },
 
   getSetValue: function(cls, id) {
@@ -149,16 +147,6 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     this.initializeForm();
     this.$el.modal();
     return this;
-  },
-
-  startGame: function(e) {
-    e.preventDefault();
-    App.game.start();
-  },
-
-  pauseGame: function(e) {
-    e.preventDefault();
-    App.game.pause();
   },
 
   render: function() {
