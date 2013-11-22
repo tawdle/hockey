@@ -118,3 +118,19 @@ table.players, table.staff-members {
   }
 }
 
+/* Fix penalty editor on ipad */
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .modal.penalty-editor {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    right: 20px;
+    width: auto;
+    margin: 0px;
+
+    .modal-body {
+      max-height: 700px;
+    }
+  }
+}
