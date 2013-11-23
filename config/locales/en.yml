@@ -10,6 +10,12 @@ en:
         address_1: "Address"
         state: "State/Province/Region"
         zip: "ZIP/Postal Code"
+      penalty:
+        category: Category
+        infraction: Infraction
+    models:
+      team: Team
+      player: Player
 
   league:
     classifications:
@@ -48,6 +54,8 @@ en:
       game_misconduct: "Game Misconduct (ejection)"
       match: "Match (ejection)"
       penalty_shot: "Penalty shot"
+    editor:
+      title: Penalty
     infractions:
       abusive_language: "Abusive language, gesture or obscene gestures"
       aggressor: "Aggressor"
@@ -116,5 +124,8 @@ en:
       verbal_discrimination: "Engaging in verbal taunts, insults, or intimidation based on discriminatory remarks"
       wearing_equipment_in_non_regulatory_fashion: "Wearing equipment in a non-regulatory fashion"
       wearing_non_certified_equipment: "Wearing non-certified or dangerous equipment"
-
-
+    labels:
+      all: All
+      current: Current
+      completed: Completed
+      other: Other

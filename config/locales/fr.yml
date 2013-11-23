@@ -1,15 +1,21 @@
---- 
-fr: 
-  activerecord: 
-    attributes: 
-      league: 
+---
+fr:
+  activerecord:
+    attributes:
+      league:
         classification: Class
-      location: 
+      location:
         address_1: Address
         state: State/Province/Region
-        zip: "ZIP/Postal Code"
-  league: 
-    classifications: 
+        zip: ZIP/Postal Code
+      penalty:
+        category: Catégorie
+        infraction: Infraction
+    models:
+      team: Équipe
+      player: Joueur
+  league:
+    classifications:
       a: A
       aa: AA
       aaa: AAA
@@ -17,8 +23,8 @@ fr:
       bb: BB
       c: C
       cc: CC
-    divisions: 
-      adult_recreational: "Adulte Récréatif"
+    divisions:
+      adult_recreational: Adulte Récréatif
       atom: Atome
       bantam: Bantam
       college: Collégial
@@ -27,25 +33,27 @@ fr:
       intermediate: Intermédiaire
       junior: Junior
       juvenile: Juvénile
-      major_junior: "Junior Majeur"
+      major_junior: Junior Majeur
       midget: midget
       novice: Novice
-      other_junior: "Junior Autre"
+      other_junior: Junior Autre
       pee_wee: Pee-Wee
       prenovice: Pré-Novice
       secondary: Secondaire
       senior: Sénior
       university: Universitaire
-  penalties: 
-    categories: 
-      game_misconduct: "Extrême inconduite (expulsion)"
-      major: "Majeure (5 minutes)"
-      match: "Match (expulsion)"
-      minor: "Mineure (2 minutes)"
-      misconduct: "Inconduite (10 minutes)"
+  penalties:
+    categories:
+      game_misconduct: Extrême inconduite (expulsion)
+      major: Majeure (5 minutes)
+      match: Match (expulsion)
+      minor: Mineure (2 minutes)
+      misconduct: Inconduite (10 minutes)
       penalty_shot: Tir de punition
-    infractions: 
-      abusive_language: "Langage, geste abusifs et obscènes"
+    editor:
+      title: Punition
+    infractions:
+      abusive_language: Langage, geste abusifs et obscènes
       aggressor: Agresseur
       attempting_to_injure: Tentative de blesser
       bench_minor_or_team_penalty: Punition de banc ou d’équipe
@@ -60,10 +68,13 @@ fr:
       elbowing: Donner du coude
       fighting: Bataille 
       fighting_single_player: Bataille (1 seul joueur impliqué)
-      first_player_leaving_bench_to_fight: "Premier joueur à quitter le banc lors d’une bataille ou pour commencer une bataille"
+      first_player_leaving_bench_to_fight: Premier joueur à quitter le banc lors d’une bataille ou pour commencer
+        une bataille
       goalkeeper_leaving_crease_to_fight: Gardien qui quitte son enceinte lors d’une bataille
-      grabbing_hair_with_advantage: "Saisir les cheveux, protecteur facial, casque protecteur ou la mentonnière et en tirer avantage pour infliger une correction ou blessure"
-      grabbing_hair_without_advantage: "Saisir les cheveux, protecteur facial, casque protecteur ou mentonnière sans  en tirer avantage pour infliger une correction ou blessure"
+      grabbing_hair_with_advantage: Saisir les cheveux, protecteur facial, casque protecteur ou la mentonnière et
+        en tirer avantage pour infliger une correction ou blessure
+      grabbing_hair_without_advantage: Saisir les cheveux, protecteur facial, casque protecteur ou mentonnière sans 
+        en tirer avantage pour infliger une correction ou blessure
       gross_misconduct_travesty: Inconduite grossière pour tourner le match en dérision
       head_butting: Donner un coup de tête
       head_contact: Contact avec la tête
@@ -87,7 +98,7 @@ fr:
       moving_goal_during_breakaway: Déplacer intentionnellement le but de sa position lors d’une échappée
       not_going_to_penalty_box: Ne pas se rendre immédiatement au banc des punitions
       physical_aggression_against_official: Agression physique envers un officiel
-      playing_with_broken_stick: "Jouer avec un bâton brisé, illégal ou obtenu illégalement"
+      playing_with_broken_stick: Jouer avec un bâton brisé, illégal ou obtenu illégalement
       playing_without_protective_equipment: Participer au jeu sans l’équipement protecteur approprié
       refusing_to_have_equipment_measured: Refus de se soumettre à un mesurage
       refusing_to_start_play: Refus de se mettre au jeu ou refus de quitter le banc ou la glace
@@ -107,9 +118,13 @@ fr:
       tripping: Faire trébucher
       unsustained_request_for_equipment_measurement: Demande non justifiée de mesurage
       use_of_mask_as_weapon: Utiliser son protecteur facial comme une arme
-      use_of_rings_as_weapons: "Bagues, ruban gommé ou autre matériau sur les mains pour blesser un adversaire"
-      verbal_abuse: "Abus verbal envers les officiels, conduite antisportive et inconduite"
+      use_of_rings_as_weapons: Bagues, ruban gommé ou autre matériau sur les mains pour blesser un adversaire
+      verbal_abuse: Abus verbal envers les officiels, conduite antisportive et inconduite
       verbal_discrimination: Se livrer à des insultes ou intimidation de nature discriminatoire
       wearing_equipment_in_non_regulatory_fashion: Porter un équipement non certifié ou dangereux
       wearing_non_certified_equipment: Porter un équipement non certifié ou dangereux
-
+    labels:
+      all: Toutes
+      completed: Terminé
+      current: Actuel
+      other: Autres

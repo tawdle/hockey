@@ -101,12 +101,12 @@
 </div>
 
 <div class="penalty-editor modal hide">
-  <div class="modal-header"><h3><i class="icon-flag"></i> <span class="title">Penalty</span></h3></div>
+  <div class="modal-header"><h3><i class="icon-flag"></i> <span class="title"><%= t "penalty.editor.title" %></span></h3></div>
   <div class="modal-body">
     <form>
 
       <fieldset>
-        <legend>Team</legend>
+        <legend><%= Team.model_name.human %></legend>
         <div class="penalty-team">
           <label class="radio">
             <input type="radio" id="penalty-team-<%= @game.home_team_id %>" value="<%= @game.home_team_id %>" name="penalty[team_id]"></input>
@@ -121,7 +121,7 @@
 
 
       <fieldset>
-        <legend>Player</legend>
+        <legend><%= Player.model_name.human %></legend>
         <div class="penalty-player">
           <div id="penalty-players-team-<%= @game.home_team_id %>"></div>
           <div id="penalty-players-team-<%= @game.visiting_team_id %>"></div>
@@ -129,7 +129,7 @@
       </fieldset>
 
       <fieldset>
-        <legend>Category</legend>
+        <legend><%= Penalty.human_attribute_name(:category) %></legend>
         <div class="penalty-category">
           <div class="pull-left" style="width: 50%">
             <% mid = Penalty::Codes.keys.length / 2 %>
@@ -152,7 +152,7 @@
       </fieldset>
 
       <fieldset class="clearfix">
-        <legend>Infraction</fieldset>
+        <legend><%= Penalty.human_attribute_name(:infraction) %></fieldset>
         <div class="penalty-infraction">
           <select></select>
         </div>
