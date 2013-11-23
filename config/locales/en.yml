@@ -13,6 +13,14 @@ en:
       penalty:
         category: Category
         infraction: Infraction
+    values:
+      goal:
+        advantage:
+          five_on_three: "Powerplay: 5 on 3"
+          five_on_four:  "Powerplay: 5 on 4"
+          even:          "Even"
+          four_on_five:  "Short-handed: 4 on 5"
+          three_on_five: "Short-handed: 3 on 5"
     models:
       team: Team
       player: Player

@@ -28,11 +28,11 @@ class Goal < ActiveRecord::Base
   scope :for_team, lambda {|team| where(:team_id => team.id) }
 
   Advantages = {
-    -2 => "Short-handed: 3 on 5",
-    -1 => "Short-handed: 4 on 5",
-     0 => "Even-handed",
-    +1 => "Powerplay: 5 on 4",
-    +2 => "Powerplay: 5 on 3"
+    -2 => :three_on_five,
+    -1 => :four_on_five,
+     0 => :even,
+    +1 => :five_on_four,
+    +2 => :five_on_three
   }
 
   def player
