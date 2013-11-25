@@ -86,7 +86,7 @@ table.players, table.staff-members {
     font-weight: bold;
   }
 
-  .penalty-player {
+  .penalty-player, {
     font-size: 0px;
 
     input {
@@ -108,6 +108,27 @@ table.players, table.staff-members {
       color: white;
     }
   }
+
+  .penalty-infraction {
+    font-size: 0px;
+
+    input {
+      display: none;
+    }
+
+    label {
+      margin-bottom: 10px;
+      padding: 10px;
+      min-width: 100px;
+    }
+
+    input:checked + label {
+      background-image: none;
+      background-color: #0044CC;
+      color: white;
+    }
+  }
+
   .clock {
     background-color: black;
     color: lightgreen;
@@ -119,6 +140,10 @@ table.players, table.staff-members {
 }
 
 /* Fix penalty editor on ipad */
+
+.modal-body {
+  max-height: 100%;
+}
 
 @media (min-width: 768px) and (max-width: 1024px) {
   .modal.penalty-editor {

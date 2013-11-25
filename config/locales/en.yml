@@ -65,6 +65,9 @@ en:
     editor:
       title: Penalty
     infractions:
+      abbreviations:
+        verbal_abuse: "Verbal abuse"
+        illegal_body_check: "Body check"
       abusive_language: "Abusive language, gesture or obscene gestures"
       aggressor: "Aggressor"
       attempting_to_injure: "Attempt to injure"
@@ -98,7 +101,7 @@ en:
       interference: "Interference"
       interference_from_bench: "Interference from the bench"
       interference_with_goaltender: "Interference with the goaltender"
-      kickshot: "Kick shot"
+      kick_shot: "Kick shot"
       kicking: "Kicking"
       kneeing: "Kneeing"
       leaving_bench_at_end_of_period: "Leaving the bench at the end of a period and/or the game"

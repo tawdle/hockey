@@ -18,6 +18,8 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
   events: {
     "change .penalty-team input" : "showTeamPlayers",
     "change .penalty-category select" : "setInfractionOptions",
+    "change .penalty-infraction input" : "updateInfractionSelect",
+    "change .penalty-infraction select" : "updateInfractionRadios",
     "change input, select" : "updateSaveState",
     "click a.save:not(.disabled)" : "saveAndClose",
     "click a.cancel" : "cancel"
@@ -43,6 +45,10 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
       this.$(".penalty-category select").val(cat);
   },
 
+  infractionRadios: function(id) {
+    return this.getSetValue(".penalty-infraction", id);
+  },
+
   optionPrompt: function(prompt) {
     return '<option selected disabled value="">' + prompt + '</option>';
   },
@@ -59,6 +65,17 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     var options = _.map(infractions, function(v, s) { return self.optionString(s, App.translations.penalties.infractions[s]); }).join("");
     this.infractionSelect.html(self.optionPrompt("Infraction") + options);
     if (infractions[this.oldInfraction]) this.infractionSelect.val(this.oldInfraction);
+    this.$(".penalty-infraction-radios").toggle(["minor", "major", "game_misconduct"].indexOf(category) >= 0);
+    this.updateInfractionRadios();
+  },
+
+  updateInfractionSelect: function(e) {
+    this.infractionSelect.val(this.infractionRadios());
+  },
+
+  updateInfractionRadios: function(e) {
+    if (!this.infractionRadios(this.infractionSelect.val()).length)
+      this.$(".penalty-infraction input[type='radio']").prop("checked", false);
   },
 
   radiosFor: function(teamId) {

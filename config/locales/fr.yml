@@ -18,10 +18,10 @@ fr:
       goal:
         advantage:
           even: Even
-          five_on_four: 'Powerplay: 5 on 4'
-          five_on_three: 'Powerplay: 5 on 3'
-          four_on_five: 'Short-handed: 4 on 5'
-          three_on_five: 'Short-handed: 3 on 5'
+          five_on_four: ! 'Powerplay: 5 on 4'
+          five_on_three: ! 'Powerplay: 5 on 3'
+          four_on_five: ! 'Short-handed: 4 on 5'
+          three_on_five: ! 'Short-handed: 3 on 5'
   league:
     classifications:
       a: A
@@ -61,6 +61,15 @@ fr:
     editor:
       title: Punition
     infractions:
+      abbreviations:
+        illegal_body_check: Mise en échec illégale
+        verbal_abuse: Abus verbal envers les officiels, conduite antisportive et inconduite
+        head_contact: Contact-tête
+        verbal_abuse: Abus verbal
+        illegal_body_check: Échec illégal
+        cross_checking: Double échec
+        boarding: Donner-bande
+        kneeing: Donner-genou
       abusive_language: Langage, geste abusifs et obscènes
       aggressor: Agresseur
       attempting_to_injure: Tentative de blesser
@@ -97,8 +106,8 @@ fr:
       interference: Obstruction
       interference_from_bench: Obstruction du banc
       interference_with_goaltender: Obstruction sur le gardien de but
+      kick_shot: Tir botté
       kicking: Donner un coup de patin
-      kickshot: Tir botté
       kneeing: Donner du genou
       leaving_bench_at_end_of_period: Quitter le banc en fin de période et/ou de match
       leaving_penalty_box: Quitter le banc des punitions

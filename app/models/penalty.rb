@@ -44,6 +44,22 @@ class Penalty < ActiveRecord::Base
     minor:              # A
     {
       minutes: 2,
+
+      common: {
+        tripping: "A53",
+        roughing: "A47",
+        hooking: "A52",
+        head_contact: "A48",
+        slashing: "A22",
+        interference: "A54",
+        verbal_abuse: "A61",
+        illegal_body_check: "A39",
+        cross_checking: "A25",
+        boarding: "A44",
+        holding: "A50",
+        kneeing: "A35"
+      },
+
       infractions: {
         aggressor: "A1",
         instigator: "A4",
