@@ -34,7 +34,7 @@ end
 
 gem 'active_model_serializers'
 gem 'acts_as_list'
-gem 'bootstrap-sass'
+gem 'bootstrap-sass', '~> 2'
 gem 'cancan'
 gem 'carrierwave'
 gem 'cloudinary'
