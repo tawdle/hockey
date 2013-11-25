@@ -17,7 +17,7 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
 
   events: {
     "change .penalty-team input" : "showTeamPlayers",
-    "change .penalty-category input" : "setInfractionOptions",
+    "change .penalty-category select" : "setInfractionOptions",
     "change input, select" : "updateSaveState",
     "click a.save:not(.disabled)" : "saveAndClose",
     "click a.cancel" : "cancel"
@@ -38,7 +38,9 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
   },
 
   category: function(cat) {
-    return this.getSetValue(".penalty-category", cat);
+    return cat === undefined ?
+      this.$(".penalty-category select").val() :
+      this.$(".penalty-category select").val(cat);
   },
 
   optionPrompt: function(prompt) {

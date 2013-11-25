@@ -131,23 +131,9 @@
       <fieldset>
         <legend><%= Penalty.human_attribute_name(:category) %></legend>
         <div class="penalty-category">
-          <div class="pull-left" style="width: 50%">
-            <% mid = Penalty::Codes.keys.length / 2 %>
-            <% Penalty::Codes.keys[0...mid].each do |category| %>
-              <label class="radio">
-                <input type="radio" value="<%= category %>" name="penalty[category]"></input>
-                <%= t(category, :scope => "penalties.categories") %>
-              </label>
-            <% end %>
-          </div>
-          <div class="pull-left">
-            <% Penalty::Codes.keys[mid..-1].each do |category| %>
-              <label class="radio">
-                <input type="radio" value="<%= category %>" name="penalty[category]"></input>
-                <%= t(category, :scope => "penalties.categories") %>
-              </label>
-            <% end %>
-          </div>
+          <select>
+            <%= options_for_select(Penalty::Codes.keys.map {|category| [t(category, :scope => "penalties.categories"), category] }) %>
+          </select>
         </div>
       </fieldset>
 
