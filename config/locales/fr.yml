@@ -18,10 +18,10 @@ fr:
       goal:
         advantage:
           even: Even
-          five_on_four: ! 'Powerplay: 5 on 4'
-          five_on_three: ! 'Powerplay: 5 on 3'
-          four_on_five: ! 'Short-handed: 4 on 5'
-          three_on_five: ! 'Short-handed: 3 on 5'
+          five_on_four: 'Powerplay: 5 on 4'
+          five_on_three: 'Powerplay: 5 on 3'
+          four_on_five: 'Short-handed: 4 on 5'
+          three_on_five: 'Short-handed: 3 on 5'
   league:
     classifications:
       a: A
