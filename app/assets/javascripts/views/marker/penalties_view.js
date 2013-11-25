@@ -43,7 +43,7 @@ App.Marker.PenaltiesView = Backbone.CollectionView.extend({
     this.listenTo(App.penalties, "add", this.updateCount);
     this.listenTo(App.penalties, "remove", this.updateCount);
     this.listenTo(App.penalties, "change", this.updateCount);
-    this.listenTo(App.penalties, "change", this.renderIfDisplayed);
+    this.listenTo(App.penalties, "change", this.renderIfVisible);
     this.tab.on("show", function() { self.render(); });
     this.updateCount();
   },
