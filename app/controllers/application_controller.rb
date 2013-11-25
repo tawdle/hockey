@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
 
   def set_locale
-    extracted_locale = params[:locale] || extract_locale_from_accept_language_header
+    extracted_locale = params[:locale] || extract_locale_from_accept_language_header || :en
 
     I18n.locale = (I18n::available_locales.include? extracted_locale.to_sym) ?
       extracted_locale : I18n.default_locale
@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   # Get locale from "Accept-Language" HTTP Header or return nil if such locale is not available
   #   example: Accept-Language: da, en-gb;q=0.8, en;q=0.7
   def extract_locale_from_accept_language_header
-    request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first
+    request.env['HTTP_ACCEPT_LANGUAGE'].scan(/^[a-z]{2}/).first if request.env['HTTP_ACCEPT_LANGUAGE']
   end
 
   TLD_LOCALES = {
