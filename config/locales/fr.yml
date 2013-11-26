@@ -62,14 +62,12 @@ fr:
       title: Punition
     infractions:
       abbreviations:
-        illegal_body_check: Mise en échec illégale
-        verbal_abuse: Abus verbal envers les officiels, conduite antisportive et inconduite
-        head_contact: Contact-tête
-        verbal_abuse: Abus verbal
-        illegal_body_check: Échec illégal
-        cross_checking: Double échec
         boarding: Donner-bande
+        cross_checking: Double échec
+        head_contact: Contact-tête
+        illegal_body_check: Échec illégal
         kneeing: Donner-genou
+        verbal_abuse: Abus verbal
       abusive_language: Langage, geste abusifs et obscènes
       aggressor: Agresseur
       attempting_to_injure: Tentative de blesser
