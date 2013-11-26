@@ -22,6 +22,8 @@ App.Marker.MarkerView = Backbone.View.extend({
       emptyListCaption: "There are no activity feed items yet for this game."
     });
     this.feedItemsView.render();
+    this.timerOnSound = new Audio("/assets/sounds/timer_on.wav");
+    this.timerOffSound = new Audio("/assets/sounds/timer_off.wav");
   },
 
   events: {
@@ -36,11 +38,13 @@ App.Marker.MarkerView = Backbone.View.extend({
   start: function(e) {
     e.preventDefault();
     this.model.start();
+    this.timerOnSound.play();
   },
 
   pause: function(e) {
     e.preventDefault();
     this.model.pause();
+    this.timerOffSound.play();
   },
 
   stop: function(e) {
