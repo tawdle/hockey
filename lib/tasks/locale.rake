@@ -1,17 +1,15 @@
 LOCALES_PATH  = "#{Rails.root}/config/locales/*.yml"
 MASTER_LOCALE = "#{Rails.root}/config/locales/en.yml"
 
-#class Hash
-  #def to_yaml( opts = {} )
-    #YAML::quick_emit( object_id, opts ) do |out|
-      #out.map( taguri, to_yaml_style ) do |map|
-        #sort.each do |k, v| # "sort" added
-          #map.add( k, v )
-        #end
-      #end
-    #end
-  #end
-#end
+require 'active_support'
+
+def deeply_sort_hash(object)
+  return object unless object.is_a?(Hash)
+  hash = RUBY_VERSION >= '1.9' ? Hash.new : ActiveSupport::OrderedHash.new
+  object.each { |k, v| hash[k] = deeply_sort_hash(v) }
+  sorted = hash.sort { |a, b| a[0].to_s <=> b[0].to_s }
+  hash.class[sorted]
+end
 
 namespace :locales do
   task :merge do
@@ -32,7 +30,7 @@ namespace :locales do
       merged = master[master_language_code].deep_merge(slave[language_code])
       final = { language_code => merged } # remove other keys
       File.open(file_name, 'w') do |file|
-        file.write final.to_yaml.gsub("!ruby/object:Hash", "").gsub(/\s+$/, '')
+        file.write deeply_sort_hash(final).to_yaml.gsub(/\s+$/, '')
       end
       puts "+ merged #{File.basename(file_name)} with master"
     end
