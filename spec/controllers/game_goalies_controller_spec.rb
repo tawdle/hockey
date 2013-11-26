@@ -21,8 +21,8 @@ describe GameGoaliesController do
     end
 
     describe "#create" do
-      def do_request
-        post :create, :game_id => game.to_param, :game_goalie => {:goalie_id => goalie.to_param }
+      def do_request(params={})
+        post :create, :game_id => game.to_param, :game_goalie => {:goalie_id => goalie.to_param }.merge(params)
       end
 
       it "should create the game goalie" do
@@ -30,6 +30,14 @@ describe GameGoaliesController do
           do_request
           response.should redirect_to(game)
         }.to change { GameGoalie.count }.by(1)
+      end
+
+      it "pulls the current goalie if the id provided is 0" do
+        game_goalie = FactoryGirl.create(:game_goalie, :game => game, :goalie => game.players.where(:role => :goalie).first)
+
+        expect {
+          do_request(:goalie_id => 0)
+        }.to change { game_goalie.reload.current? }.from(true).to(false)
       end
     end
   end

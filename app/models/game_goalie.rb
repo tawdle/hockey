@@ -17,7 +17,12 @@ class GameGoalie < ActiveRecord::Base
 
   def finish!
     set_end_time_and_period
-    save!
+    if minutes_played == 0
+      self.destroy
+    else
+      save!
+    end
+    game.send(:broadcast_changes) if game
   end
 
   def current?
