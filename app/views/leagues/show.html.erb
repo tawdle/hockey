@@ -74,7 +74,7 @@
       <td></td>
       <td><%= game.visiting_team.name %></td>
       <td><%= game.location.name %></td>
-      <td><%= "#{game.home_team_score} - #{game.visiting_team_score}" %></td>
+      <td><%= link_to "#{game.home_team_score} - #{game.visiting_team_score}", game_path(game, :format => :pdf)  %></td>
     </tr>
   <% end %>
 </table>

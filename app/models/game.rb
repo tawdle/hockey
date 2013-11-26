@@ -96,7 +96,7 @@ class Game < ActiveRecord::Base
   scope :active, where(:state => [:active, :paused, :playing])
   scope :upcoming, lambda { where("start_time > ?", DateTime.now) }
   scope :scheduled_or_active, where(:state => [:scheduled, :active])
-  scope :finished, where(:state => :finished)
+  scope :finished, where(:state => :completed)
   scope :asc, order("start_time ASC")
   scope :desc, order("start_time DESC")
 
