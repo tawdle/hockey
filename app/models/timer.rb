@@ -60,10 +60,10 @@ class Timer < ActiveRecord::Base
         [duration - elapsed_time, 0.0].max
       end
       def elapsed_time_hms
-        to_hms(elapsed_time)
+        Timer.to_hms(elapsed_time)
       end
       def time_remaining_hms
-        to_hms(time_remaining)
+        Timer.to_hms(time_remaining)
       end
     end
 
@@ -129,7 +129,7 @@ class Timer < ActiveRecord::Base
     duration ? [val, duration].min : val
   end
 
-  def to_hms(seconds)
+  def self.to_hms(seconds)
     seconds = seconds.to_i
     hours = seconds / 3600
     minutes = (seconds / 60) % 60

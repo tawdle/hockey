@@ -21,6 +21,12 @@ en:
           even:          "Even"
           four_on_five:  "Short-handed: 4 on 5"
           three_on_five: "Short-handed: 3 on 5"
+      staff_member:
+        role:
+          head_coach: Head coach
+          assistant_coach: Assistant coach
+          manager: Manager
+          safety_attendant: Safety Attendant
     models:
       team: Team
       player: Player

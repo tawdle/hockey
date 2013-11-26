@@ -262,6 +262,7 @@ class Penalty < ActiveRecord::Base
   scope :for_game, lambda {|game| where(:game_id => game.id) }
   scope :timed, where("penalties.minutes is not null");
   scope :minor, where(:category => :minor)
+  scope :nonminor, where("penalties.category <> 'minor'")
   scope :running, where(:state => :running)
   scope :paused, where(:state => :paused)
   scope :started, where(:state => [:running, :paused])

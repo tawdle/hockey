@@ -313,7 +313,8 @@ CREATE TABLE games (
     league_id integer,
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    marker_id integer
 );
 
 
@@ -1688,3 +1689,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131114001835');
 INSERT INTO schema_migrations (version) VALUES ('20131119223053');
 
 INSERT INTO schema_migrations (version) VALUES ('20131121011958');
+
+INSERT INTO schema_migrations (version) VALUES ('20131126194432');

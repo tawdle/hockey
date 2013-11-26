@@ -9,6 +9,7 @@ class GameStaffMember < ActiveRecord::Base
 
   attr_accessible :game, :staff_member_id, :staff_member, :role
 
+  default_scope order(StaffMember::Roles.map {|role| "game_staff_members.role != '#{role}'"}.join(","))
   scope :for_team, lambda {|team| joins(:staff_member).where(:staff_members => {:team_id => team.id }) }
 
   private

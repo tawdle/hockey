@@ -24,6 +24,25 @@ class GameGoalie < ActiveRecord::Base
     persisted? && end_time.nil? && end_period.nil?
   end
 
+  def period_time(period, time, otherwise)
+    return otherwise unless period && time
+    (period || 0) * 1_000_000 + (time || 0)
+  end
+
+  FixnumMax = (2**(0.size * 8 - 2) - 1)
+  FixnumMin = -(2**(0.size * 8 - 2))
+
+  def goals
+    Goal.where(:game_id => game_id).for_team(game.opposing_team(goalie.team)).
+      where("goals.period * 1000000 + goals.elapsed_time between ? and ?",
+            period_time(start_period, start_time, FixnumMin), period_time(end_period, end_time, FixnumMax))
+  end
+
+  def minutes_played
+    return 0 unless end_period && end_time
+    ((end_period - start_period) * game.period_duration + (end_time - start_time)) / 60.0
+  end
+
   private
 
   def set_start_time_and_period

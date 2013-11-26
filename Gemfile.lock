@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.0.2)
     actionmailer (3.2.13)
       actionpack (= 3.2.13)
       mail (~> 2.5.3)
@@ -32,6 +33,7 @@ GEM
       multi_json (~> 1.0)
     acts_as_list (0.3.0)
       activerecord (>= 3.0)
+    afm (0.2.0)
     arel (3.0.3)
     atomic (1.1.14)
     aws_cf_signer (0.1.2)
@@ -87,6 +89,7 @@ GEM
     figaro (0.7.0)
       bundler (~> 1.0)
       rails (>= 3, < 5)
+    hashery (2.1.1)
     hike (1.2.3)
     i18n (0.6.1)
     i18n-country-translations (1.0.2)
@@ -113,8 +116,17 @@ GEM
     mime-types (1.25.1)
     multi_json (1.8.2)
     orm_adapter (0.5.0)
+    pdf-reader (1.3.3)
+      Ascii85 (~> 1.0.0)
+      afm (~> 0.2.0)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
     pg (0.17.0)
     polyglot (0.3.3)
+    prawn (0.12.0)
+      pdf-reader (>= 0.9.0)
+      ttfunk (~> 1.0.2)
     rack (1.4.5)
     rack-cache (1.2)
       rack (>= 0.4)
@@ -160,6 +172,7 @@ GEM
       rspec-core (~> 2.14.0)
       rspec-expectations (~> 2.14.0)
       rspec-mocks (~> 2.14.0)
+    ruby-rc4 (0.1.5)
     rubyzip (1.0.0)
     sass (3.2.12)
     sass-rails (3.2.6)
@@ -187,6 +200,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.0.3)
     tzinfo (0.3.38)
     uglifier (2.3.1)
       execjs (>= 0.3.0)
@@ -217,6 +231,7 @@ DEPENDENCIES
   jasmine
   jquery-rails
   pg
+  prawn
   rails (= 3.2.13)
   rails-i18n (~> 3.0.0)
   rspec-rails (~> 2.0)

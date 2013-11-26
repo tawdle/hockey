@@ -22,6 +22,12 @@ fr:
           five_on_three: ! 'Powerplay: 5 on 3'
           four_on_five: ! 'Short-handed: 4 on 5'
           three_on_five: ! 'Short-handed: 3 on 5'
+      staff_member:
+        role:
+          assistant_coach: Entraîneur Adjoint
+          head_coach: Entraîneur Chef
+          manager: Gérant
+          safety_attendant: Préposé à la Sécurité
   league:
     classifications:
       a: A
@@ -42,7 +48,7 @@ fr:
       junior: Junior
       juvenile: Juvénile
       major_junior: Junior Majeur
-      midget: midget
+      midget: Midget
       novice: Novice
       other_junior: Junior Autre
       pee_wee: Pee-Wee

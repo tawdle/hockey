@@ -56,6 +56,7 @@ class Game < ActiveRecord::Base
   belongs_to :visiting_team, :class_name => 'Team'
   belongs_to :location
   belongs_to :clock, :class_name => "Timer", :dependent => :destroy
+  belongs_to :marker, :class_name => "User"
 
   has_many :activity_feed_items, :dependent => :destroy, :order => :created_at, :limit => 5
   has_many :goals, :inverse_of => :game, :dependent => :destroy
@@ -214,9 +215,8 @@ class Game < ActiveRecord::Base
   end
 
   def possible_officials
-    (home_team.league.officials + visiting_team.league.officials).sort_by(&:name).uniq
+    league.officials
   end
-
 
   def ready_to_activate?
     officials_checked_in? &&
@@ -258,6 +258,12 @@ class Game < ActiveRecord::Base
       timer.check_expiration
     end
     true
+  end
+
+  def reset
+    update_attribute(:state, :scheduled)
+    update_attribute(:period, nil)
+    clock.destroy if clock
   end
 
   private
