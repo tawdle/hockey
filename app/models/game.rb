@@ -33,6 +33,7 @@ class Game < ActiveRecord::Base
 
     after_transition :active => :playing, :do => [:generate_game_started_feed_item, :set_started_at]
     after_transition any => :finished, :do => :set_ended_at
+    after_transition any => :finished, :do => :finish_goalies
     after_transition any => :canceled, :do => :generate_cancel_feed_item
     before_transition :scheduled => :active, :do => :create_clock
     after_transition :active => :playing, :do => :set_next_period
@@ -348,5 +349,11 @@ class Game < ActiveRecord::Base
 
   def pause_running_penalties
     Penalty.pause_running_penalties(self)
+  end
+
+  def finish_goalies
+    game_goalies.current.each do |game_goalie|
+      game_goalie.finish!
+    end
   end
 end
