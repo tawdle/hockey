@@ -27,23 +27,27 @@ describe GameGoalie do
       }.to change { game_goalie.start_period }.from(nil).to(0)
     end
 
-    it "caps the previous one when creating a new one" do
-      previous_game_goalie = FactoryGirl.create(:game_goalie, :game => game)
-      expect {
-        game_goalie.save!
-      }.to change { previous_game_goalie.reload.end_time }.from(nil)
+    context "with a previous goalie with elapsed time" do
+      let(:previous_game_goalie) { FactoryGirl.create(:game_goalie, :game => game, :start_time => -5) }
+
+      describe "#create" do
+        let(:action) { game_goalie.save! }
+
+        it "caps the previous one when creating a new one" do
+          expect { action }.to change { previous_game_goalie.reload.end_time }.from(nil)
+        end
+
+        let(:count) { 2 }
+        it_behaves_like "an action that creates an activity feed item"
+      end
     end
 
-    describe "#create" do
-      let(:action) { game_goalie.save! }
+    context "with a previous goalie who has spent no time in goal" do
+      let(:previous_game_goalie) { FactoryGirl.create(:game_goalie, :game => game) }
 
-      it "caps the previous one when creating a new one" do
-        previous_game_goalie = FactoryGirl.create(:game_goalie, :game => game)
-        expect { action }.to change { previous_game_goalie.reload.end_time }.from(nil)
+      it "deletes the previous goalie" do
+        expect { game_goalie.save! }.to change { GameGoalie.find_by_id(previous_game_goalie.id) }.to(nil)
       end
-
-      let(:count) { 2 }
-      it_behaves_like "an action that creates an activity feed item"
     end
   end
 end

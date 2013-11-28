@@ -33,7 +33,7 @@ describe GameGoaliesController do
       end
 
       it "pulls the current goalie if the id provided is 0" do
-        game_goalie = FactoryGirl.create(:game_goalie, :game => game, :goalie => game.players.where(:role => :goalie).first)
+        game_goalie = FactoryGirl.create(:game_goalie, :game => game, :goalie => game.players.where(:role => :goalie).first, :start_time => -5)
 
         expect {
           do_request(:goalie_id => 0)
