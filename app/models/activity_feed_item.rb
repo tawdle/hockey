@@ -1,6 +1,6 @@
 class ActivityFeedItem < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
-  belongs_to :game
+  belongs_to :game, :inverse_of => :activity_feed_items
   has_many :mentions
 
   attr_accessible :creator, :message, :game, :game_id
@@ -54,6 +54,6 @@ class ActivityFeedItem < ActiveRecord::Base
   end
 
   def broadcast_changes
-    game.send(:broadcast_changes, :with => :activity_feed_items) if game
+    game.send(:broadcast_changes, :with => [:activity_feed_items]) if game
   end
 end

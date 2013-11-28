@@ -32,7 +32,7 @@ class Penalty < ActiveRecord::Base
   belongs_to :timer
 
   before_validation :set_minutes_from_category
-  after_commit :broadcast_changes
+  after_save :broadcast_changes
   after_destroy :update_running_penalties
   after_destroy :broadcast_changes
 
@@ -349,7 +349,7 @@ class Penalty < ActiveRecord::Base
   end
 
   def broadcast_changes
-    game.send(:broadcast_changes, :with => :penalties)
+    game.send(:broadcast_changes, :with => [:penalties])
   end
 
   def update_running_penalties
@@ -373,6 +373,7 @@ class Penalty < ActiveRecord::Base
                    game.penalties.for_team(team).pending.count].min
       if available > 0
         game.penalties.for_team(team).pending.eldest_siblings.limit(available).readonly(false).each do |penalty|
+          penalty.game = game # See note below
           penalty.start!
         end
       end
@@ -381,12 +382,20 @@ class Penalty < ActiveRecord::Base
 
   def self.pause_running_penalties(game)
     game.penalties.running.each do |penalty|
+      penalty.game = game # See note below
       penalty.pause!
     end
   end
 
   def self.start_paused_penalties(game)
     game.penalties.paused.each do |penalty|
+      # NOTE: For Game#batch_broadcasts to work properly, we need penalty.game to
+      # be the same object as game. Unfortunately, due to a weakness in the
+      # activerecord implementation of inverse_of, using a scope (like "paused"
+      # here, and others above) breaks it, and penalty.game becomes a different
+      # object (even though it represents the same db record). Fooey. We
+      # re-establish the existing game object by setting it manually, like so:
+      penalty.game = game
       penalty.start!
     end
   end
@@ -394,7 +403,10 @@ class Penalty < ActiveRecord::Base
   def self.goal_scored(game, team)
     # See if we can cancel a minor penalty against opposing team
     cancelable_penalty = Penalty.for_game(game).for_team(game.opposing_team(team)).minor.current.readonly(false).detect {|p| !p.coincidental? }
-    cancelable_penalty.cancel! if cancelable_penalty
+    if cancelable_penalty
+      cancelable_penalty.game = game # See note
+      cancelable_penalty.cancel!
+    end
   end
 
   def self.players_off_ice(game, team)

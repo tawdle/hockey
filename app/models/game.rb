@@ -59,7 +59,7 @@ class Game < ActiveRecord::Base
   belongs_to :clock, :class_name => "Timer", :dependent => :destroy
   belongs_to :marker, :class_name => "User"
 
-  has_many :activity_feed_items, :dependent => :destroy, :order => :created_at, :limit => 5
+  has_many :activity_feed_items, :dependent => :destroy, :order => :created_at, :inverse_of => :game, :limit => 5
   has_many :goals, :inverse_of => :game, :dependent => :destroy
   has_many :penalties, :inverse_of => :game, :dependent => :destroy
   has_many :game_players, :inverse_of => :game, :dependent => :destroy
@@ -109,27 +109,31 @@ class Game < ActiveRecord::Base
   LiveStates = %w(active playing paused finished)
 
   def start
-    clock.reset unless paused?
-    clock.start
-
-    super
+    batch_broadcasts do
+      clock.reset unless paused?
+      clock.start
+      super
+    end
   end
 
   def stop
-    # Beware the return value here; returning false kills the state transition.
-    clock.pause
-    if super
-      if game_over?
-        finish
-      else
-        true
+    batch_broadcasts do
+      clock.pause
+      if super
+        if game_over?
+          finish
+        else
+          true
+        end
       end
     end
   end
 
   def pause
-    clock.pause
-    super
+    batch_broadcasts do
+      clock.pause
+      super
+    end
   end
 
   def faye_uri
@@ -267,6 +271,28 @@ class Game < ActiveRecord::Base
     clock.destroy if clock
   end
 
+  def batch_broadcasts
+    @batch_depth = (@batch_depth || 0) + 1
+    #puts "#{object_id}: ************* Entering batch depth = #{@batch_depth}"
+    @batch_options ||= {}
+    ret = yield
+    @batch_depth = @batch_depth - 1
+    #puts "#{object_id}: ************* Exiting batch depth = #{@batch_depth}"
+    broadcast_changes(@batch_options) unless batching_broadcasts?
+    ret
+  end
+
+  def broadcast_changes(options={})
+    unless batching_broadcasts?
+      #puts "#{object_id}: ************* Performing broadcast with #{options}"
+      json = active_model_serializer.new(self, options).as_json
+      broadcast("/games/#{id}", json)
+    else
+      @batch_options = deep_safe_merge(@batch_options, options)
+      #puts "#{object_id}: ************* Batching broadcast, now #{@batch_options}"
+    end
+  end
+
   private
 
   def set_started_at
@@ -338,9 +364,22 @@ class Game < ActiveRecord::Base
     broadcast_changes
   end
 
-  def broadcast_changes(options={})
-    json = active_model_serializer.new(self, options).as_json
-    broadcast("/games/#{id}", json)
+  def deep_safe_merge(source_hash, new_hash)
+    source_hash.merge(new_hash) do |key, old, new|
+      if new.respond_to?(:blank) && new.blank?
+        old
+      elsif (old.kind_of?(Hash) && new.kind_of?(Hash))
+        deep_merge(old, new)
+      elsif (old.kind_of?(Array) && new.kind_of?(Array))
+        old.concat(new).uniq
+      else
+        new
+      end
+    end
+  end
+
+  def batching_broadcasts?
+    @batch_depth && @batch_depth > 0
   end
 
   def start_eligible_penalties

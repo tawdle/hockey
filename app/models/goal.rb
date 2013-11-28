@@ -19,11 +19,10 @@ class Goal < ActiveRecord::Base
   after_initialize :set_players_was_empty
   before_validation :set_time_and_period_from_game
   before_validation :set_advantage
-  before_save :generate_save_feed_item, :if => :players_just_added
-  after_save :cancel_minor_penalty, :if => :players_just_added
-  before_destroy :generate_destroy_feed_item, :unless => :players_empty?
-  after_create :stop_clock
-  after_commit :broadcast_changes
+
+  after_create :goal_created
+  after_save :complete_goal_saved, :if => :players_just_added
+  after_destroy :goal_destroyed
 
   scope :for_team, lambda {|team| where(:team_id => team.id) }
 
@@ -53,6 +52,28 @@ class Goal < ActiveRecord::Base
     @players_was_empty && !players_empty?
   end
 
+  def complete_goal_saved
+    game.batch_broadcasts do
+      broadcast_changes
+      cancel_minor_penalty
+      generate_save_feed_item
+    end
+  end
+
+  def goal_created
+    game.batch_broadcasts do
+      stop_clock
+      broadcast_changes
+    end
+  end
+
+  def goal_destroyed
+    game.batch_broadcasts do
+      generate_destroy_feed_item unless players_empty?
+      broadcast_changes
+    end
+  end
+
   def cancel_minor_penalty
     Penalty.goal_scored(game, team)
   end
@@ -67,7 +88,7 @@ class Goal < ActiveRecord::Base
       message << ", assisted by "
       message << assisting_players.collect(&:feed_name).join(" and ")
     end
-    game.activity_feed_items.create!(:message => message)
+    game.activity_feed_items.create!(:message => message, :game => game)
   end
 
   def generate_destroy_feed_item
@@ -95,7 +116,7 @@ class Goal < ActiveRecord::Base
   end
 
   def broadcast_changes
-    game.send(:broadcast_changes, :with => :goals)
+    game.send(:broadcast_changes, :with => [:goals])
   end
 
   def stop_clock

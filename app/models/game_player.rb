@@ -24,6 +24,6 @@ class GamePlayer < ActiveRecord::Base
   end
 
   def broadcast_changes
-    game.send(:broadcast_changes, :with => :players)
+    game.send(:broadcast_changes, :with => [:players])
   end
 end
