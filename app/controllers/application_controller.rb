@@ -3,6 +3,15 @@ class ApplicationController < ActionController::Base
   check_authorization :unless => :devise_controller?
 
   before_filter :set_locale
+  around_filter :user_time_zone, :if => :current_user
+
+  def user_time_zone(&block)
+    if current_user.time_zone
+      Time.use_zone(current_user.time_zone, &block)
+    else
+      yield
+    end
+  end
 
   def set_locale
     extracted_locale = params[:locale] || extract_locale_from_accept_language_header || :en
