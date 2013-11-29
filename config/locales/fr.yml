@@ -149,3 +149,6 @@ fr:
       completed: Terminé
       current: Actuel
       other: Autres
+  time:
+    formats:
+      game: ! "%e %B %Y - %H:%M %Z"

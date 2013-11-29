@@ -72,7 +72,7 @@
       <tr>
         <td><%= link_to game.state.humanize, game %></td>
         <td><%= link_to game.opposing_team(@team).name, game.opposing_team(@team) %></td>
-        <td><%= game.start_time.to_s(:long) %></td>
+        <td><%= l game.start_time, :format => :game %></td>
         <td>
           <%= link_to game.location.name, game.location %>
           <%= link_to game.location.map_url, :target => "_blank" do %>
