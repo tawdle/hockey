@@ -328,7 +328,7 @@ class Penalty < ActiveRecord::Base
   end
 
   def init_timer
-    create_timer(:duration => minutes.minutes, :owner => self)
+    create_timer(:duration => minutes.minutes, :owner => self, :master => game.clock)
     save!
   end
 
@@ -361,10 +361,6 @@ class Penalty < ActiveRecord::Base
   def self.start_eligible_penalties(game)
     start_paused_penalties(game)
     start_pending_penalties(game)
-  end
-
-  def self.pause_running_penalties(game)
-    pause_running_penalties(game)
   end
 
   def self.start_pending_penalties(game)

@@ -118,9 +118,15 @@ class Game < ActiveRecord::Base
 
   def pause
     batch_broadcasts do
-      clock.pause
+      clock.pause if clock.running?
       super
     end
+  end
+
+  def pause_with_elapsed_time(et)
+    clock.pause if clock.running?
+    clock.elapsed_time = et if et
+    pause
   end
 
   def stop

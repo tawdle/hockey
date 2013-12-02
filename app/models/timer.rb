@@ -1,7 +1,8 @@
 class Timer < ActiveRecord::Base
   belongs_to :owner, :polymorphic => true
+  belongs_to :master, :class_name => "Timer"
 
-  attr_accessible :started_at, :paused_at, :seconds_paused, :duration, :owner, :offset
+  attr_accessible :started_at, :paused_at, :seconds_paused, :duration, :owner, :offset, :master, :last_started_at
 
   state_machine :initial => :created do
     event :start do
@@ -83,7 +84,12 @@ class Timer < ActiveRecord::Base
     else
       seconds = val.to_f
     end
-    self.seconds_paused = diff_in_seconds(paused? ? paused_at : DateTime.now, started_at) - seconds
+
+    if paused?
+      self.paused_at = started_at + seconds + seconds_paused
+    else
+      self.seconds_paused = diff_in_seconds(paused? ? paused_at : DateTime.now, started_at) - seconds
+    end
   end
 
   def check_expiration
@@ -93,20 +99,22 @@ class Timer < ActiveRecord::Base
   private
 
   def set_started_at
-    update_attributes(:started_at => DateTime.now)
+    now_starting_at = master.try(:last_started_at) || DateTime.now
+    update_attributes(:started_at => now_starting_at, :last_started_at => now_starting_at)
   end
 
   def set_paused_at
-    update_attributes(:paused_at => DateTime.now)
+    update_attributes(:paused_at => master.try(:paused_at) || DateTime.now)
   end
 
   def clear_paused_at
-    pause_duration = diff_in_seconds(DateTime.now, paused_at)
-    update_attributes(:paused_at => nil, :seconds_paused => seconds_paused + pause_duration)
+    now_starting_at = master.try(:lasted_started_at) || DateTime.now
+    pause_duration = diff_in_seconds(now_starting_at, paused_at)
+    update_attributes(:paused_at => nil, :seconds_paused => seconds_paused + pause_duration, :last_started_at => now_starting_at)
   end
 
   def reset_timer
-    update_attributes(:paused_at => nil, :seconds_paused => 0.0, :started_at => nil)
+    update_attributes(:paused_at => nil, :seconds_paused => 0.0, :started_at => nil, :last_started_at => nil)
   end
 
   def queue_expiration_check

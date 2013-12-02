@@ -73,9 +73,8 @@ class GamesController < ApplicationController
   end
 
   def pause
-    @game.clock.elapsed_time = params[:elapsed_time] if params[:elapsed_time]
     respond_to do |format|
-      if @game.pause
+      if @game.pause_with_elapsed_time(params[:elapsed_time])
         format.html { redirect_to :back, notice: 'Game clock has been stopped.' }
         format.json { head :no_content }
       else
