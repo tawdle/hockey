@@ -20,7 +20,7 @@ class Game < ActiveRecord::Base
     end
 
     event :finish do
-      transition :active => :finished
+      transition [:playing, :paused, :active] => :finished
     end
 
     event :complete do
@@ -34,11 +34,11 @@ class Game < ActiveRecord::Base
     after_transition :active => :playing, :do => [:generate_game_started_feed_item, :set_started_at]
     after_transition any => :finished, :do => :set_ended_at
     after_transition any => :finished, :do => :finish_goalies
+    after_transition any => :finished, :do => :generate_game_over_feed_item
     after_transition any => :canceled, :do => :generate_cancel_feed_item
     before_transition :scheduled => :active, :do => :create_clock
     after_transition :active => :playing, :do => :set_next_period
     after_transition any => :completed, :do => :destroy_clock
-    after_transition any => :finished, :do => :generate_game_over_feed_item
     after_transition any => any, :do => :broadcast_changes_from_state_machine
     after_transition any => :playing, :do => :start_eligible_penalties
     after_transition any => [:paused, :active, :finished], :do => :pause_running_penalties
@@ -116,6 +116,13 @@ class Game < ActiveRecord::Base
     end
   end
 
+  def pause
+    batch_broadcasts do
+      clock.pause
+      super
+    end
+  end
+
   def stop
     batch_broadcasts do
       clock.pause
@@ -129,10 +136,10 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def pause
+  def finish
     batch_broadcasts do
-      clock.pause
-      super
+      clock.pause if super && clock.running?
+      true
     end
   end
 

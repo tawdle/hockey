@@ -63,6 +63,6 @@ App.Game = App.EmbeddedModel.extend({
   },
 
   stop: function() {
-    this.perform("stop");
+    this.perform("finish");
   }
 });

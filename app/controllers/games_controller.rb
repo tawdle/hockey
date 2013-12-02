@@ -79,19 +79,19 @@ class GamesController < ApplicationController
         format.html { redirect_to :back, notice: 'Game clock has been stopped.' }
         format.json { head :no_content }
       else
-        format.html { redirect_ to :back, alert: 'Something went wrong.' }
+        format.html { redirect_to :back, alert: 'Something went wrong.' }
         format.json { render json: ["Something went wrong."], status: :unprocessable_entity }
       end
     end
   end
 
-  def stop
+  def finish
     respond_to do |format|
-      if @game.stop
-        format.html { redirect_to :back, notice: 'The period has been ended.' }
+      if @game.finish
+        format.html { redirect_to :back, notice: 'The game has been ended.' }
         format.json { head :no_content }
       else
-        format.html { redirect_ to :back, alert: 'Something went wrong.' }
+        format.html { redirect_to :back, alert: 'Something went wrong.' }
         format.json { render json: ["Something went wrong."], status: :unprocessable_entity }
       end
     end

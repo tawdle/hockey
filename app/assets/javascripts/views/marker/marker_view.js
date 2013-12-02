@@ -49,7 +49,7 @@ App.Marker.MarkerView = Backbone.View.extend({
 
   stop: function(e) {
     e.preventDefault();
-    if (confirm("End this period now?")) {
+    if (confirm("End this game now?")) {
       this.model.stop();
     }
   },
@@ -87,7 +87,7 @@ App.Marker.MarkerView = Backbone.View.extend({
     var state = this.model.get("state");
     this.gameStart.toggle(state == "active" || state == "paused");
     this.gamePause.toggle(state == "playing");
-    this.gameStop.toggle(state== "playing" || state == "paused");
+    this.gameStop.toggle((state== "playing" || state == "paused") && this.model.get("period") >= 2);
     $("p[class=" + state + "]", this.gameStatus).toggle(true).siblings().toggle(false);
 
     this.period.text(this.model.get("period_text"));

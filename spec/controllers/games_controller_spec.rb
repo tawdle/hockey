@@ -65,17 +65,17 @@ describe GamesController do
       end
     end
 
-    describe "#stop" do
+    describe "#finish" do
       def do_request
-        post :stop, :id => game.to_param
+        post :finish, :id => game.to_param
       end
 
       let(:game) { FactoryGirl.create(:game, :playing, :league => league) }
 
-      it "changes the state to active" do
+      it "changes the state to finished" do
         expect {
           do_request
-        }.to change { game.reload.state }.to("active")
+        }.to change { game.reload.state }.to("finished")
       end
     end
 
