@@ -59,10 +59,13 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
 
   setInfractionOptions: function() {
     var category = this.category();
-    var infractions = App.infractions[category].infractions;
+    var translations = App.translations.penalties.infractions;
+    var infractions = Object.keys(App.infractions[category].infractions).sort(function(a, b) {
+      return translations[a].localeCompare(translations[b]);
+    });
     this.oldInfraction = this.infractionSelect.val() || this.oldInfraction;
     var self = this;
-    var options = _.map(infractions, function(v, s) { return self.optionString(s, App.translations.penalties.infractions[s]); }).join("");
+    var options = _.map(infractions, function(s) { return self.optionString(s, translations[s]); }).join("");
     this.infractionSelect.html(self.optionPrompt("Infraction") + options);
     if (infractions[this.oldInfraction]) this.infractionSelect.val(this.oldInfraction);
     this.$(".penalty-infraction-radios").toggle(["minor", "major", "game_misconduct"].indexOf(category) >= 0);
