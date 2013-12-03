@@ -86,7 +86,16 @@ table.players, table.staff-members {
     font-weight: bold;
   }
 
-  .penalty-player, {
+  .penalty-team {
+    input, label {
+      margin-top: 0px;
+      margin-right: 10px;
+      font-size: 16px;
+      line-height: 16px;
+    }
+  }
+
+  .penalty-player {
     font-size: 0px;
 
     input {
@@ -94,11 +103,12 @@ table.players, table.staff-members {
     }
 
     label {
-      margin-top: 10px;
       margin-bottom: 10px;
       font-weight: bold;
-      font-size: 16px;
-      min-width: 24px;
+      font-size: 24px;
+      line-height: 44px;
+      min-width: 44px;
+      min-height: 44px;
       padding: 10px;
     }
 
