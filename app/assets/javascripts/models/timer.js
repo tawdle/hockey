@@ -104,7 +104,6 @@ App.Timer = Backbone.Model.extend({
   },
 
   sync: function() {
-    console.log("timer " + this.id + " syncing");
     $.ajax({
       type: "POST",
       url: App.game.url() + "/sync.json"
