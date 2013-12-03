@@ -341,7 +341,7 @@ class Penalty < ActiveRecord::Base
   end
 
   def pause_timer
-    timer.pause!
+    timer.try(:pause!)
   end
 
   def destroy_timer
