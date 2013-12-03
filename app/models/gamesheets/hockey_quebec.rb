@@ -70,9 +70,9 @@ class Gamesheets::HockeyQuebec < Prawn::Document
     end
   end
 
-  def draw_penalties(team, x)
-    draw_these_penalties(@game.penalties.for_team(team).minor.limit(20), x)
-    draw_these_penalties(@game.penalties.for_team(team).nonminor.limit(20), x + 101)
+  def draw_penalties(team, x, flip=false)
+    draw_these_penalties(@game.penalties.for_team(team).minor.limit(20), flip ? x + 101  : x)
+    draw_these_penalties(@game.penalties.for_team(team).nonminor.limit(20), flip ? x : x + 101)
   end
 
   def draw_staff_members(team, x)
@@ -160,7 +160,7 @@ class Gamesheets::HockeyQuebec < Prawn::Document
     draw_goals(@game.home_team, 708)
 
     draw_penalties(@game.visiting_team, 2)
-    draw_penalties(@game.home_team, 810)
+    draw_penalties(@game.home_team, 810, true)
 
     font_size(20) do
       draw_text(@game.visiting_team_score, at: [168, 33])
