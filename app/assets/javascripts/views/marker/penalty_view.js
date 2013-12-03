@@ -28,6 +28,8 @@ App.Marker.PenaltyView = Backbone.View.extend({
     this.$el.html(this.template(this.model.toJSON().penalty));
     this.$el.removeClass().addClass(this.model.get("state"));
 
+    if (this.timerView) this.timerView.remove();
+
     var timer = this.model.get("timer");
     if (timer) {
       this.timerView = new App.TimerView({el: this.$(".timer"), model: timer, showTimeRemaining: true});
