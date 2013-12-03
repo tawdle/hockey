@@ -34,14 +34,21 @@ App.EmbeddedModel = Backbone.Model.extend({
               o.set(a, options);
               delete attrs[model];
             } else {
-              this.set(model, new models[model](a));
+              var nm = new models[model](a);
+              this.set(model, nm);
+              delete attrs[model];
+            }
+          } else {
+            o = this.get(model);
+            if (o) {
+              o.set(a.attributes, options);
               delete attrs[model];
             }
           }
         }
       }
     }
-    return Backbone.Model.prototype.set.apply(this, arguments);
+    return Backbone.Model.prototype.set.call(this, attrs, options);
   }
 });
 
