@@ -28,6 +28,8 @@ fr:
           head_coach: Entraîneur Chef
           manager: Gérant
           safety_attendant: Préposé à la Sécurité
+  goalie:
+    pulled: Retiré
   league:
     classifications:
       a: A
