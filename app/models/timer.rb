@@ -108,7 +108,7 @@ class Timer < ActiveRecord::Base
   end
 
   def clear_paused_at
-    now_starting_at = master.try(:lasted_started_at) || DateTime.now
+    now_starting_at = master.try(:last_started_at) || DateTime.now
     pause_duration = diff_in_seconds(now_starting_at, paused_at)
     update_attributes(:paused_at => nil, :seconds_paused => seconds_paused + pause_duration, :last_started_at => now_starting_at)
   end
