@@ -33,6 +33,11 @@
     <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)" %>
   </div>
 
+  <div class="field">
+    <%= f.label :language %>
+    <%= f.collection_select :language, [["Français", :fr], ["English", :en]], :second, :first %>
+  </div>
+
   <div class="actions">
     <%= f.submit :class => "btn btn-primary" %>
   </div>

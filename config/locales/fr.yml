@@ -56,6 +56,8 @@ fr:
       secondary: Secondaire
       senior: Sénior
       university: Universitaire
+  navigation:
+    greeting: Bonjour
   penalties:
     categories:
       game_misconduct: Extrême inconduite (expulsion)
@@ -151,4 +153,4 @@ fr:
       other: Autres
   time:
     formats:
-      game: ! "%e %B %Y - %H:%M %Z"
+      game: ! '%e %B %Y - %H:%M %Z'

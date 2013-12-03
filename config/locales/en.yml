@@ -60,6 +60,9 @@ en:
       university: "University"
       house: "House"
 
+  navigation:
+    greeting: Hello
+
   penalties:
     categories:
       minor: "Minor (2 minutes)"

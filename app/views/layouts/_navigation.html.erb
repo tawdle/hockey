@@ -2,7 +2,7 @@
 <ul class="nav">
   <% if user_signed_in? %>
     <li>
-      <p class="navbar-text">Hello, <%= format_user_link(current_user) %>. </p>
+      <p class="navbar-text"><%= t("navigation.greeting") %>, <%= format_user_link(current_user) %>. </p>
     </li>
     <li>
     <%= link_to('Log out', destroy_user_session_path, :method=>'delete') %>

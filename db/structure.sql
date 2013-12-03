@@ -866,7 +866,8 @@ CREATE TABLE users (
     updated_at timestamp without time zone NOT NULL,
     name character varying(255),
     avatar character varying(255),
-    time_zone character varying(255)
+    time_zone character varying(255),
+    language character varying(255)
 );
 
 
@@ -1698,3 +1699,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131126194432');
 INSERT INTO schema_migrations (version) VALUES ('20131128145212');
 
 INSERT INTO schema_migrations (version) VALUES ('20131202191133');
+
+INSERT INTO schema_migrations (version) VALUES ('20131203041541');

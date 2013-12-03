@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
   end
 
   def set_locale
-    extracted_locale = params[:locale] || extract_locale_from_accept_language_header || :en
+    extracted_locale = params[:locale] || current_user.try(:language) || extract_locale_from_accept_language_header || :en
 
     I18n.locale = (I18n::available_locales.include? extracted_locale.to_sym) ?
       extracted_locale : I18n.default_locale

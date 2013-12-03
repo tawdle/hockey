@@ -8,8 +8,10 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessor :avatar_cache
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :avatar, :avatar_cache, :time_zone
+  attr_accessible :avatar, :avatar_cache, :time_zone, :language
   attr_readonly :name
+
+  symbolize :language, in: [:en, :fr]
 
   has_many :authorizations, :dependent => :destroy
   has_many :players, :dependent => :destroy, :conditions => { deleted_at: nil }
