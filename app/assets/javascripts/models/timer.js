@@ -53,18 +53,17 @@ App.Timer = Backbone.Model.extend({
     switch (this.get("state")) {
       case "created":
         break;
-      case "finished":
-        break;
       case "running":
-      case "finished":
         et = (Date.now() - this.secondsPaused - this.baseTime) / 1000.0;
-        if (!this.synced && duration && et >= duration) this.sync();
+        if (!this.synced && duration && et >= duration) {
+          this.sync();
+        }
         break;
       case "paused":
         et = (this.pausedAt - this.secondsPaused - this.baseTime) / 1000.0;
         break;
       case "expired":
-        et = this.get("duration");
+        et = duration;
         break;
     }
     return duration ? Math.min(et, this.get("duration")) : et;
@@ -90,7 +89,7 @@ App.Timer = Backbone.Model.extend({
       case "paused":
         this.pausedAt = this.pausedAt || Date.now();
         break;
-      case "finished":
+      case "expired":
         break;
     }
   },
@@ -105,6 +104,7 @@ App.Timer = Backbone.Model.extend({
   },
 
   sync: function() {
+    console.log("timer " + this.id + " syncing");
     $.ajax({
       type: "POST",
       url: App.game.url() + "/sync.json"
