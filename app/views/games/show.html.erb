@@ -120,12 +120,25 @@
         </div>
       </fieldset>
 
-
       <fieldset>
         <legend><%= Player.model_name.human %></legend>
         <div class="penalty-player">
           <div id="penalty-players-team-<%= @game.home_team_id %>"></div>
           <div id="penalty-players-team-<%= @game.visiting_team_id %>"></div>
+        </div>
+        <div>
+          <select></select>
+          <label class="checkbox">
+            <input type="checkbox" class="served-by-other-player"></input>
+            Served by another player
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <div class="penalty-serving-player">
+          <div class="home-team"></div>
+          <div class="visiting-team"></div>
         </div>
       </fieldset>
 
@@ -176,7 +189,7 @@
 <script type="text/html" id="penalty-view">
 <td>{{= App.periods[period] }}</td>
 <td>{{= App.displaySeconds(elapsed_time) }}</td>
-<td>{{= penalizable_type == "Player" ? App.players.get(penalizable_id).get("jersey_number") : penalizable_type == "Team" ? "Bench" : penalizable_type == "StaffMember" ? "Coach" : "" + (serving_player_id ? " (served by " + App.players.get(serving_player_id).get("jersey_number") + ")" : "") }}</td>
+<td>{{= (penalizable_type == "Player" ? App.players.get(penalizable_id).get("jersey_number") : penalizable_type == "Team" ? "Bench" : penalizable_type == "StaffMember" ? "Coach" : "") + (serving_player_id ? " (served by " + App.players.get(serving_player_id).get("jersey_number") + ")" : "") }}</td>
 <td>{{= App.translations.penalties.infractions[infraction] + " - " + App.translations.penalties.categories[category] }}</td>
 <td>{{= App.humanize(state) }}</td>
 <td class="timer" style="white-space: nowrap"></td>
@@ -205,8 +218,8 @@
 </script>
 
 <script type="text/html" id="player-radio">
-  <input id="penalty-player-radio-{{= id }}" type="radio" name="penalty[player_id]" value="{{= id }}"></input>
-  <label for="penalty-player-radio-{{= id }}" class="btn">{{= jersey_number }}</label>
+<input id="penalty-player-radio-{{= serving ? "serving-" : ""}}{{= id }}" type="radio" name="penalty[{{= serving ? 'serving_player_id' : 'player_id' }}]" value="{{= id }}"></input>
+  <label for="penalty-player-radio-{{= serving ? "serving-": ""}}{{= id }}" class="btn">{{= jersey_number }}</label>
 </script>
 
 <script type="text/html" id="player-checkbox">

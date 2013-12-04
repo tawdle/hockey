@@ -20,7 +20,10 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     "change .penalty-category select" : "setInfractionOptions",
     "change .penalty-infraction input" : "updateInfractionSelect",
     "change .penalty-infraction select" : "updateInfractionRadios",
+    "change .penalty-player input" : "deselectServingPlayer",
+    "change .penalty-serving-player input": "deselectPlayer",
     "change input, select" : "updateSaveState",
+    "change .served-by-other-player" : "showServingPlayers",
     "click a.save:not(.disabled)" : "saveAndClose",
     "click a.cancel" : "cancel"
   },
@@ -39,6 +42,10 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     return this.getSetValue(".penalty-player", id);
   },
 
+  servingPlayerId: function(id) {
+    return this.getSetValue(".penalty-serving-player", id);
+  },
+
   category: function(cat) {
     return cat === undefined ?
       this.$(".penalty-category select").val() :
@@ -47,6 +54,12 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
 
   infractionRadios: function(id) {
     return this.getSetValue(".penalty-infraction", id);
+  },
+
+  servedByOtherPlayer: function(bool) {
+    return bool === undefined ?
+      this.$("input[type=checkbox].served-by-other-player").prop("checked") :
+      this.$("input[type=checkbox].served-by-other-player").prop("checked", bool);
   },
 
   optionPrompt: function(prompt) {
@@ -72,6 +85,14 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     this.updateInfractionRadios();
   },
 
+  deselectServingPlayer: function() {
+    this.$(".penalty-serving-player input[value=" + this.playerId() + "]").prop("checked", false);
+  },
+
+  deselectPlayer: function() {
+    this.$(".penalty-player input[value=" + this.servingPlayerId() + "]").prop("checked", false);
+  },
+
   updateInfractionSelect: function(e) {
     this.infractionSelect.val(this.infractionRadios());
   },
@@ -81,10 +102,10 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
       this.$(".penalty-infraction input[type='radio']").prop("checked", false);
   },
 
-  radiosFor: function(teamId) {
+  radiosFor: function(teamId, serving) {
     var self = this;
     var radios = App.players.where({team_id: teamId}).map(function(player) {
-      return self.template(player.toJSON());
+      return self.template(_.extend(player.toJSON(), { serving: serving}));
     });
     return radios.join("");
   },
@@ -97,8 +118,26 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     this.$("#penalty-players-team-" + visitingTeamId).html(this.radiosFor(visitingTeamId));
   },
 
+  createServingPlayerRadios: function() {
+    var homeTeamId = App.game.get("home_team").id;
+    var visitingTeamId = App.game.get("visiting_team").id;
+
+    this.$(".penalty-serving-player .home-team").html(this.radiosFor(homeTeamId, true));
+    this.$(".penalty-serving-player .visiting-team").html(this.radiosFor(visitingTeamId, true));
+  },
+
   showTeamPlayers: function(e) {
     this.$("#penalty-players-team-" + this.teamId()).toggle(true).siblings().toggle(false);
+    if (e) this.showServingPlayers();
+  },
+
+  showServingPlayers: function(e) {
+    var side = this.teamId() == App.game.get("home_team").id ? "home-team" : "visiting-team";
+    if (this.servedByOtherPlayer()) {
+      this.$(".penalty-serving-player ." + side)[e ? "slideDown" : "show"]().siblings().hide();
+    } else {
+      this.$(".penalty-serving-player ." + side)[e ? "slideUp" : "hide"]().siblings().hide();
+    }
   },
 
   humanize: function(property) {
@@ -108,7 +147,11 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
   },
 
   complete: function() {
-    return this.playerId() && App.players.get(this.playerId()).get("team_id") == this.teamId() && this.category() && this.infractionSelect.val();
+    return this.playerId() &&
+      App.players.get(this.playerId()).get("team_id") == this.teamId() &&
+      (!this.servedByOtherPlayer() || (this.servingPlayerId() && App.players.get(this.servingPlayerId()).get("team_id") == this.teamId())) &&
+      this.category() &&
+      this.infractionSelect.val();
   },
 
   updateSaveState: function() {
@@ -116,35 +159,16 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     this.saveButton.toggleClass("disabled", disabled);
   },
 
-  initializeForm: function() {
-    if (!this.lastPenalty || !this.lastPenalty.sameStoppageAs(this.model)) {
-      this.lastPenalty = this.model;
-    }
-
-    var player_id = this.model.get("player_id") || this.lastPenalty.get("player_id");
-    var team_id = (player_id && App.players.get(player_id).get("team_id")) || App.game.get("home_team").id;
-
-    this.createPlayerRadios();
-    this.teamId(team_id);
-    this.showTeamPlayers();
-    this.playerId(player_id);
-    this.category(this.model.get("category") || this.lastPenalty.get("category") || "minor");
-
-    this.setInfractionOptions();
-    this.infractionSelect.val(this.model.get("infraction") || this.lastPenalty.get("infraction"));
-
-    this.title.text(this.model.isNew() ? "Create Penalty" : "Edit Penalty");
-    this.saveButton.text(this.model.isNew() ? "Create" : "Update");
-    this.updateSaveState();
-  },
-
   saveAndClose: function(e) {
     e.preventDefault();
     var self = this;
     var values = {
-      player_id: this.playerId(),
+      team_id: this.teamId(),
+      penalizable_type: "Player",
+      penalizable_id: this.playerId(),
       category: this.category(),
-      infraction: this.infractionSelect.val()
+      infraction: this.infractionSelect.val(),
+      serving_player_id: this.servedByOtherPlayer() && this.servingPlayerId()
     };
 
     this.model.save(values, { 
@@ -175,6 +199,32 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     var state = App.game.get("state");
     this.pauseButton.toggle(state == "playing");
     this.playButton.toggle(state == "paused");
+  },
+
+  initializeForm: function() {
+    if (!this.lastPenalty || !this.lastPenalty.sameStoppageAs(this.model)) {
+      this.lastPenalty = this.model;
+    }
+
+    var player_id = this.model.get("penalizable_id") || this.lastPenalty.get("penalizable_id");
+    var team_id = this.model.get("team_id") || this.lastPenalty.get("team_id") || App.game.get("home_team").id;
+
+    this.createPlayerRadios();
+    this.createServingPlayerRadios();
+    this.teamId(team_id);
+    this.showTeamPlayers();
+    this.playerId(player_id);
+    this.servedByOtherPlayer(this.model.get("serving_player_id"));
+    this.showServingPlayers();
+    this.servingPlayerId(this.model.get("serving_player_id"));
+    this.category(this.model.get("category") || this.lastPenalty.get("category") || "minor");
+
+    this.setInfractionOptions();
+    this.infractionSelect.val(this.model.get("infraction") || this.lastPenalty.get("infraction"));
+
+    this.title.text(this.model.isNew() ? "Create Penalty" : "Edit Penalty");
+    this.saveButton.text(this.model.isNew() ? "Create" : "Update");
+    this.updateSaveState();
   }
 });
 
