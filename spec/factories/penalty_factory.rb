@@ -7,9 +7,8 @@ FactoryGirl.define do
     elapsed_time 127.4
     category "minor"
     infraction "boarding"
-    after(:build) do |penalty|
-      penalty.player ||= penalty.game.game_players.first.player
-    end
+    penalizable { game.game_players.first.player }
+    team { penalizable.team }
 
     trait :paused do
       state :paused

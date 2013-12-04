@@ -602,7 +602,7 @@ CREATE TABLE penalties (
     id integer NOT NULL,
     state character varying(255),
     game_id integer,
-    player_id integer,
+    penalizable_id integer,
     serving_player_id integer,
     timer_id integer,
     period integer,
@@ -611,7 +611,9 @@ CREATE TABLE penalties (
     infraction character varying(255),
     minutes integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    team_id integer,
+    penalizable_type character varying(255)
 );
 
 
@@ -1451,7 +1453,7 @@ CREATE INDEX index_penalties_on_game_id ON penalties USING btree (game_id);
 -- Name: index_penalties_on_player_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_penalties_on_player_id ON penalties USING btree (player_id);
+CREATE INDEX index_penalties_on_player_id ON penalties USING btree (penalizable_id);
 
 
 --
@@ -1701,3 +1703,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131128145212');
 INSERT INTO schema_migrations (version) VALUES ('20131202191133');
 
 INSERT INTO schema_migrations (version) VALUES ('20131203041541');
+
+INSERT INTO schema_migrations (version) VALUES ('20131204001302');

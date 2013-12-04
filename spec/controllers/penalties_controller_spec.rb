@@ -13,7 +13,7 @@ describe PenaltiesController do
 
     describe "#create" do
       def do_request
-        post :create, :game_id => game.to_param, :penalty => { :period => 2, :elapsed_time => 350, :category => :major, :infraction => :boarding, :minutes => 10, :player_id => penalty.player.to_param }
+        post :create, :game_id => game.to_param, :penalty => { :period => 2, :elapsed_time => 350, :category => :major, :infraction => :boarding, :minutes => 10, :penalizable_id => penalty.penalizable_id, :penalizable_type => penalty.penalizable_type, :team_id => penalty.team_id }
       end
       it "creates a penalty" do
         expect {

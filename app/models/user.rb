@@ -11,7 +11,7 @@ class User < ActiveRecord::Base
   attr_accessible :avatar, :avatar_cache, :time_zone, :language
   attr_readonly :name
 
-  symbolize :language, in: [:en, :fr]
+  symbolize :language, in: [:en, :fr], allow_nil: true
 
   has_many :authorizations, :dependent => :destroy
   has_many :players, :dependent => :destroy, :conditions => { deleted_at: nil }

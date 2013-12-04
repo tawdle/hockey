@@ -11,8 +11,8 @@ describe Penalty do
       penalty.game = nil
       penalty.should_not be_valid
     end
-    it "requires a player" do
-      penalty.player = nil
+    it "requires a penalizable" do
+      penalty.penalizable = nil
       penalty.should_not be_valid
     end
     it "requires a legal category" do
@@ -23,8 +23,20 @@ describe Penalty do
       penalty.infraction = :picking_the_nose
       penalty.should_not be_valid
     end
-    it "requires player to be in game" do
-      penalty.player = FactoryGirl.build(:player)
+    it "requires a team" do
+      penalty.team = nil
+      penalty.should_not be_valid
+    end
+    it "requires the team to be in the game" do
+      penalty.team = FactoryGirl.create(:team)
+      penalty.should_not be_valid
+    end
+    it "requires the penalized player to be on the team" do
+      penalty.team = penalty.game.visiting_team
+      penalty.should_not be_valid
+    end
+    it "requires the penalized player to be in game" do
+      penalty.penalizable = FactoryGirl.build(:player)
       penalty.should_not be_valid
     end
     it "requires the serving player to be in game" do
@@ -32,7 +44,8 @@ describe Penalty do
       penalty.should_not be_valid
     end
     it "requires the serving player to be on the same team" do
-      penalty.serving_player = penalty.game.opposing_team(penalty.player.team).players.first
+      penalty.serving_player = penalty.game.opposing_team(penalty.penalizable.team).players.first
+      penalty.should_not be_valid
     end
     it "requires a valid period" do
       penalty.period = 17
@@ -97,9 +110,9 @@ describe Penalty do
 
       before do
         @pending_penalties = [
-          FactoryGirl.create(:penalty, :game => game, :player => game.home_team.players.first),
-          FactoryGirl.create(:penalty, :game => game, :player => game.home_team.players.last),
-          FactoryGirl.create(:penalty, :game => game, :player => game.home_team.players.first)
+          FactoryGirl.create(:penalty, :game => game, :penalizable => game.home_team.players.first),
+          FactoryGirl.create(:penalty, :game => game, :penalizable => game.home_team.players.last),
+          FactoryGirl.create(:penalty, :game => game, :penalizable => game.home_team.players.first)
         ]
         @eldest_sibling = @pending_penalties[0]
         @younger_sibling = @pending_penalties[2]
@@ -121,7 +134,7 @@ describe Penalty do
       end
       context "with 1 paused penalty" do
         before do
-          @paused_penalty = FactoryGirl.create(:penalty, :paused, :game => game, :player => game.players.first)
+          @paused_penalty = FactoryGirl.create(:penalty, :paused, :game => game, :penalizable => game.players.first)
         end
         it "starts 1 paused penalty" do
           expect {
@@ -136,7 +149,7 @@ describe Penalty do
       end
       context "with 3 paused penalties" do
         before do
-          @paused_penalties = FactoryGirl.create_list(:penalty, 2, :paused, :game => game, :player => game.players.first)
+          @paused_penalties = FactoryGirl.create_list(:penalty, 2, :paused, :game => game, :penalizable => game.players.first)
         end
         it "starts 2 paused penalties" do
           expect {

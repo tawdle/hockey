@@ -27,7 +27,8 @@ class Penalty < ActiveRecord::Base
   end
 
   belongs_to :game, :inverse_of => :penalties
-  belongs_to :player
+  belongs_to :team
+  belongs_to :penalizable, :polymorphic => true
   belongs_to :serving_player, :class_name => "Player"
   belongs_to :timer
 
@@ -36,7 +37,8 @@ class Penalty < ActiveRecord::Base
   after_destroy :update_running_penalties
   after_destroy :broadcast_changes
 
-  attr_accessible :state, :player_id, :serving_player_id, :period, :category, :game, :elapsed_time, :infraction, :minutes, :action
+  attr_accessible :state, :penalizable_type_and_id, :penalizable_id, :penalizable_type, :serving_player_id,
+    :period, :category, :game, :elapsed_time, :infraction, :minutes, :action, :penalizable, :team, :team_id
 
   Codes = {
     # From http://www.hockeyestrie.qc.ca/documents/517-codification-des-punitions-anglais-2013-2014-couleur-1.pdf
@@ -248,17 +250,20 @@ class Penalty < ActiveRecord::Base
   symbolize :infraction
 
   validates_presence_of :game
-  validates_presence_of :player
+  validates_presence_of :team
+  validates_presence_of :penalizable
   validate :infraction_in_list
-  validate :player_in_game
+  validate :team_in_game
+  validate :penalizable_on_team
+  validate :penalizable_in_game
   validate :serving_player_in_game
-  validate :serving_player_on_same_team
+  validate :serving_player_on_team
   validates_numericality_of :period, :integer => true, :greater_than_or_equal_to => 0, :less_than => Game::Periods.length
   validates_numericality_of :elapsed_time, :greater_than_or_equal_to => 0
   validates_numericality_of :minutes, :integer => true, :greater_than => 0, :allow_nil => true
 
   default_scope order("id asc");
-  scope :for_team, lambda {|team| joins(:player).where(:players => {:team_id => team.id }) }
+  scope :for_team, lambda {|team| where(:team_id => team.id) }
   scope :for_game, lambda {|game| where(:game_id => game.id) }
   scope :timed, where("penalties.minutes is not null");
   scope :minor, where(:category => :minor)
@@ -271,11 +276,23 @@ class Penalty < ActiveRecord::Base
   scope :pending, timed.where(:state => :created)
   scope :others, where("penalties.minutes is null")
   scope :finished, where(:state => [:completed, :canceled])
-  scope :eldest_siblings, timed.joins("left outer join penalties as others on others.id < penalties.id and penalties.game_id = others.game_id and penalties.player_id = others.player_id and others.state in ('created', 'running', 'paused') and others.minutes is not null").where(:others => {:id => nil })
+  scope :eldest_siblings, timed.joins("left outer join penalties as others on others.id < penalties.id and penalties.game_id = others.game_id and penalties.penalizable_id = others.penalizable_id and penalties.penalizable_type = others.penalizable_type and others.state in ('created', 'running', 'paused') and others.minutes is not null").where(:others => {:id => nil })
 
+
+  def penalizable_type_and_id=(val)
+    if val
+      self.penalizable_type, self.penalizable_id = val.split("-")
+    else
+      self.penalizable_type = self.penalizable_id = nil
+    end
+  end
+
+  def penalizable_type_and_id
+    penalizable_type && penalizable_id ? "#{penalizable_type}-#{penalizable_id}" : nil
+  end
 
   def siblings
-    Penalty.timed.current.where(:game_id => game_id, :player_id => player_id).where("id <> ?", id)
+    Penalty.timed.current.where(:game_id => game_id, :penalizable_id => penalizable_id, :penalizable_type => penalizable_type).where("id <> ?", id)
   end
 
   def younger_siblings
@@ -294,10 +311,6 @@ class Penalty < ActiveRecord::Base
     self.send("#{value}") if state_transitions.collect(&:event).map(&:to_s).include?(value)
   end
 
-  def team
-    player.try(:team)
-  end
-
   def coincidental?
     other_team = game.opposing_team(team)
     Penalty.for_team(other_team).current.minor.
@@ -311,6 +324,27 @@ class Penalty < ActiveRecord::Base
     self.minutes ||= Codes[category].try(:[], :minutes)
   end
 
+  def team_in_game
+    errors.add(:team, "must be in game") unless game.nil? || team.nil? || game.teams.include?(team)
+  end
+
+  def penalizable_on_team
+    errors.add(:penalizable, "must be on team") unless team.nil? || penalizable.nil? || (penalizable.is_a?(Team) && penalizable == team) || (penalizable.respond_to?(:team) && penalizable.team == team)
+  end
+
+  def penalizable_in_game
+    return unless penalizable && game
+
+    case penalizable_type
+    when Team
+      errors.add(:penalizable, "must be in game") unless game.teams.include?(penalizable)
+    when Player
+      errors.add(:penalizable, "must be in game") unless game.players.include?(penalizable)
+    when StaffMember
+      errors.add(:penalizable, "must be in game") unless game.staff_members.include?(penalizable)
+    end
+  end
+
   def player_in_game
     errors.add(:player, "must be in game") unless game.nil? || player.nil? || game.players.include?(player)
   end
@@ -319,8 +353,8 @@ class Penalty < ActiveRecord::Base
     errors.add(:serving_player, "must be in game") unless game.nil? || serving_player.nil? || game.players.include?(serving_player)
   end
 
-  def serving_player_on_same_team
-    errors.add(:serving_player, "must be on same team") unless player.nil? || serving_player.nil? || player.team == serving_player.team
+  def serving_player_on_team
+    errors.add(:serving_player, "must be on team") unless serving_player.nil? || team.nil? || serving_player.team == team
   end
 
   def infraction_in_list
