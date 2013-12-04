@@ -176,7 +176,7 @@
 <script type="text/html" id="penalty-view">
 <td>{{= App.periods[period] }}</td>
 <td>{{= App.displaySeconds(elapsed_time) }}</td>
-<td>{{= App.players.get(player_id).get("jersey_number") + (serving_player_id ? " (served by " + App.players.get(serving_player_id).get("jersey_number") + ")" : "") }}</td>
+<td>{{= penalizable_type == "Player" ? App.players.get(penalizable_id).get("jersey_number") : penalizable_type == "Team" ? "Bench" : penalizable_type == "StaffMember" ? "Coach" : "" + (serving_player_id ? " (served by " + App.players.get(serving_player_id).get("jersey_number") + ")" : "") }}</td>
 <td>{{= App.translations.penalties.infractions[infraction] + " - " + App.translations.penalties.categories[category] }}</td>
 <td>{{= App.humanize(state) }}</td>
 <td class="timer" style="white-space: nowrap"></td>

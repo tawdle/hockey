@@ -14,16 +14,6 @@ App.Penalty = App.EmbeddedModel.extend({
     };
   },
 
-  teamId: function() {
-    var player_id = this.get("player_id");
-    if (!player_id) return null;
-
-    var player = App.players.get(player_id);
-    if (!player) return null;
-
-    return player.get("team_id");
-  },
-
   sameStoppageAs: function(other) {
     return this.get("period") == other.get("period") &&
       this.get("elapsed_time") == other.get("elapsed_time");

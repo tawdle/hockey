@@ -1,12 +1,12 @@
 App.Marker.PenaltiesView = Backbone.CollectionView.extend({
   filters: {
     all: function(self) {
-      return function(penalty) { return penalty.teamId() == self.teamId; };
+      return function(penalty) { return penalty.get("team_id") == self.teamId; };
     },
     current: function(self) {
       return function(penalty) {
           var state = penalty.get("state");
-          return penalty.teamId() == self.teamId &&
+          return penalty.get("team_id") == self.teamId &&
             (state == "created" || state == "running" || state == "paused") &&
             penalty.get("minutes");
       };
@@ -14,7 +14,7 @@ App.Marker.PenaltiesView = Backbone.CollectionView.extend({
     expired: function(self) {
       return function(penalty) {
           var state = penalty.get("state");
-          return penalty.teamId() == self.teamId &&
+          return penalty.get("team_id") == self.teamId &&
             (state == "completed" || state == "canceled") &&
             penalty.get("minutes");
       };
@@ -22,7 +22,7 @@ App.Marker.PenaltiesView = Backbone.CollectionView.extend({
     other: function(self) {
       return function(penalty) {
         var state = penalty.get("state");
-        return penalty.teamId() == self.teamId &&
+        return penalty.get("team_id") == self.teamId &&
           (state == "created") &&
           !penalty.get("minutes");
       };
