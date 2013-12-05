@@ -61,7 +61,28 @@ class Gamesheets::HockeyQuebec < Prawn::Document
     translate(x, 430) do
       penalties.each_with_index do |penalty, index|
         translate(0, -index * 18) do
-          draw_text(penalty.player.jersey_number, at: [1, 0])
+          case penalty.penalizable_type
+          when "Player"
+            draw_text(penalty.penalizable.jersey_number, at: [1, 0])
+            if penalty.serving_player
+              font_size 6 do
+                fill_color "FFFFFF"
+                fill_and_stroke_circle [-1, 12], 6
+                fill_color "000000"
+                draw_text(penalty.serving_player.jersey_number, at: [-4.5, 10])
+              end
+            end
+          when "StaffMember"
+            role = @game.game_staff_members.where(:staff_member_id => penalty.penalizable_id).first.role
+            draw_text(I18n.t(role, scope: "activerecord.values.staff_member.role.abbreviations"), at: [1, 0])
+          when "Team"
+            if penalty.serving_player
+              fill_color "FFFFFF"
+              fill_and_stroke_circle [6, 5], 8
+              fill_color "000000"
+              draw_text(penalty.serving_player.jersey_number, at: [1, 2])
+            end
+          end
           draw_text(Penalty::Codes[penalty.category][:infractions][penalty.infraction], at: [22, 0])
           text_box(Timer.to_hms(penalty.elapsed_time), at: [45, 7], height: 10, width: 40, align: :right)
           text_box(Game::Periods[penalty.period], at: [88, 7], height: 10, width: 10, align: :center)

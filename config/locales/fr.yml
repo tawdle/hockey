@@ -24,6 +24,11 @@ fr:
           three_on_five: ! 'Short-handed: 3 on 5'
       staff_member:
         role:
+          abbreviations:
+            assistant_coach: EA
+            head_coach: EC
+            manager: Gér
+            safety_attendant: PS
           assistant_coach: Entraîneur Adjoint
           head_coach: Entraîneur Chef
           manager: Gérant

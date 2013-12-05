@@ -27,6 +27,12 @@ en:
           assistant_coach: Assistant coach
           manager: Manager
           safety_attendant: Safety Attendant
+          abbreviations:
+            head_coach: HC
+            assistant_coach: AC
+            manager: MGR
+            safety_attendant: SA
+
     models:
       team: Team
       player: Player
