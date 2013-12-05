@@ -16,12 +16,13 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
   tagName: "div",
 
   events: {
-    "change .penalty-team input" : "showTeamPlayers",
+    "change .penalty-team input" : "teamChanged",
     "change .penalty-category select" : "setInfractionOptions",
     "change .penalty-infraction input" : "updateInfractionSelect",
     "change .penalty-infraction select" : "updateInfractionRadios",
-    "change .penalty-player input" : "deselectServingPlayer",
-    "change .penalty-serving-player input": "deselectPlayer",
+    "change .penalty-player input" : "playerChanged",
+    "change .penalty-serving-player input": "servingPlayerChanged",
+    "change select.other-player" : "otherPlayerChanged",
     "change input, select" : "updateSaveState",
     "change .served-by-other-player" : "showServingPlayers",
     "click a.save:not(.disabled)" : "saveAndClose",
@@ -40,6 +41,30 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
 
   playerId: function(id) {
     return this.getSetValue(".penalty-player", id);
+  },
+
+  penalizableId: function() {
+    var val = this.$("select.other-player").val();
+    return val ? val.split("-")[1] : null;
+  },
+
+  penalizableType: function() {
+    var val = this.$("select.other-player").val();
+    return val ? val.split("-")[0] : null;
+  },
+
+  penalizableTeamId: function() {
+    switch (this.penalizableType()) {
+      case null: return null;
+      case "Player": return App.players.get(this.penalizableId()).get("team_id");
+      case "StaffMember": return App.staffMembers.get(this.penalizableId()).get("team_id");
+      case "Team": return this.penalizableId();
+    }
+  },
+
+  otherPlayerSelectId: function(type, id) {
+    this.$("select.other-player").val(type + "-" + id);
+    this.otherPlayerChanged();
   },
 
   servingPlayerId: function(id) {
@@ -81,16 +106,38 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     var options = _.map(infractions, function(s) { return self.optionString(s, translations[s]); }).join("");
     this.infractionSelect.html(self.optionPrompt("Infraction") + options);
     if (infractions[this.oldInfraction]) this.infractionSelect.val(this.oldInfraction);
-    this.$(".penalty-infraction-radios").toggle(["minor", "major", "game_misconduct"].indexOf(category) >= 0);
+    this.$(".penalty-infraction-radios")[(["minor", "major", "game_misconduct"].indexOf(category) >= 0 ? "slideDown" : "slideUp")]();
     this.updateInfractionRadios();
   },
 
-  deselectServingPlayer: function() {
+  playerChanged: function() {
     this.$(".penalty-serving-player input[value=" + this.playerId() + "]").prop("checked", false);
+    this.$("select.other-player").val("Player-" + this.playerId());
   },
 
-  deselectPlayer: function() {
+  servingPlayerChanged: function() {
     this.$(".penalty-player input[value=" + this.servingPlayerId() + "]").prop("checked", false);
+  },
+
+  clearPlayer: function() {
+    this.$(".penalty-player input").prop("checked", false);
+  },
+
+  otherPlayerChanged: function(e) {
+    var val = this.$("select.other-player").val(),
+        cls = val.split("-")[0],
+        id = val.split("-")[1];
+
+    if (cls == "Team") {
+      this.clearPlayer();
+      this.servedByOtherPlayer(true);
+      this.showServingPlayers(true);
+    } else if (cls == "Player") {
+      this.playerId(id);
+      this.playerChanged();
+    } else if (cls == "StaffMember") {
+      this.clearPlayer();
+    }
   },
 
   updateInfractionSelect: function(e) {
@@ -126,9 +173,30 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     this.$(".penalty-serving-player .visiting-team").html(this.radiosFor(visitingTeamId, true));
   },
 
-  showTeamPlayers: function(e) {
+  createOtherSelect: function() {
+    var self = this;
+    var teamId = Number(this.teamId());
+    var options = [];
+    var roles = App.translations.activerecord.values.staff_member.role;
+    options.push([this.optionPrompt("Others"), this.optionString("Team-" + this.teamId(), "Bench")]);
+    options.push(App.staffMembers.where({team_id: teamId}).map(function(staff) {
+      return self.optionString("StaffMember-" + staff.id, staff.get("name") + " - " + roles[staff.get("role")]);
+    }));
+    options.push(App.players.where({team_id: teamId}).map(function(player) {
+      return self.optionString("Player-" + player.id, player.get("name_and_number"));
+    }));
+    this.$("select.other-player").html(options.join(""));
+    if (this.playerId() && App.players.get(this.playerId()).get("team_id") == teamId) {
+      this.otherPlayerSelectId("Player", this.playerId());
+    }
+  },
+
+  teamChanged: function(e) {
     this.$("#penalty-players-team-" + this.teamId()).toggle(true).siblings().toggle(false);
-    if (e) this.showServingPlayers();
+    this.createOtherSelect();
+    if (e) {
+      this.showServingPlayers();
+    }
   },
 
   showServingPlayers: function(e) {
@@ -147,8 +215,8 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
   },
 
   complete: function() {
-    return this.playerId() &&
-      App.players.get(this.playerId()).get("team_id") == this.teamId() &&
+    return this.penalizableId() &&
+      Number(this.penalizableTeamId()) == Number(this.teamId()) &&
       (!this.servedByOtherPlayer() || (this.servingPlayerId() && App.players.get(this.servingPlayerId()).get("team_id") == this.teamId())) &&
       this.category() &&
       this.infractionSelect.val();
@@ -164,8 +232,8 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
     var self = this;
     var values = {
       team_id: this.teamId(),
-      penalizable_type: "Player",
-      penalizable_id: this.playerId(),
+      penalizable_type: this.penalizableType(),
+      penalizable_id: this.penalizableId(),
       category: this.category(),
       infraction: this.infractionSelect.val(),
       serving_player_id: this.servedByOtherPlayer() && this.servingPlayerId()
@@ -206,14 +274,15 @@ App.Marker.PenaltyEditor = Backbone.View.extend({
       this.lastPenalty = this.model;
     }
 
-    var player_id = this.model.get("penalizable_id") || this.lastPenalty.get("penalizable_id");
+    var penalizable_type = this.model.get("penalizable_type") || this.lastPenalty.get("penalizable_type");
+    var penalizable_id = this.model.get("penalizable_id") || this.lastPenalty.get("penalizable_id");
     var team_id = this.model.get("team_id") || this.lastPenalty.get("team_id") || App.game.get("home_team").id;
 
     this.createPlayerRadios();
     this.createServingPlayerRadios();
     this.teamId(team_id);
-    this.showTeamPlayers();
-    this.playerId(player_id);
+    this.teamChanged();
+    if (penalizable_type) this.otherPlayerSelectId(penalizable_type, penalizable_id);
     this.servedByOtherPlayer(this.model.get("serving_player_id"));
     this.showServingPlayers();
     this.servingPlayerId(this.model.get("serving_player_id"));

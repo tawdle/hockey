@@ -79,6 +79,10 @@ table.players, table.staff-members {
 }
 
 .penalty-editor {
+  select {
+    width: auto;
+  }
+
   legend {
     border-bottom: none;
     margin-bottom: 0px;

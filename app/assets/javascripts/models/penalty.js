@@ -25,7 +25,7 @@ App.Penalty = App.EmbeddedModel.extend({
       period: App.game.get("period"),
       elapsed_time: App.game.lastPausedAt || App.game.get("clock").get("elapsed_time"),
       penalizable_id: null,
-      penalizable_type: "Player",
+      penalizable_type: null,
       serving_player_id: null,
       category: null,
       infraction: null,
