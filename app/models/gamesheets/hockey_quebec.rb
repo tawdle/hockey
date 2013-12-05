@@ -13,7 +13,7 @@ class Gamesheets::HockeyQuebec < Prawn::Document
   end
 
   def draw_goalies(team, x)
-    goalies = @game.game_players.for_team(team).goalies.limit(2).map(&:player)
+    goalies = @game.game_players.for_team(team).goalies.sorted.limit(2).map(&:player)
     translate(x, 558) do
       goalies.each_with_index do |goalie, index|
         translate(0, -index * 18) do
@@ -29,7 +29,7 @@ class Gamesheets::HockeyQuebec < Prawn::Document
   def draw_players(team, x)
     game_players = @game.game_players.for_team(team).nongoalies.limit(19)
     translate(x, 520) do
-      game_players.each_with_index do |game_player, index|
+      game_players.sorted.each_with_index do |game_player, index|
         player = game_player.player
         translate(0, -index * 18) do
           draw_text(player.jersey_number, at: [0, 0])
