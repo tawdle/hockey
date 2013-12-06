@@ -110,6 +110,7 @@ table.penalties {
   }
 
   .penalty-player, .penalty-serving-player {
+    max-width: 528px;
     font-size: 0px;
 
     input {
@@ -134,7 +135,7 @@ table.penalties {
   }
 
   .penalty-infraction-radios {
-    max-width: 732px;
+    max-width: 488px;
   }
 
   .penalty-infraction {
