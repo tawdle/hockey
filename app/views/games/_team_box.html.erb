@@ -14,7 +14,7 @@
 
       <span class="goalie pull-right"></span>
 
-      <div data-remote="<%= new_game_game_goalie_path(@game, :team => home_or_visiting) %>" class="goalie-chooser modal hide">
+      <div data-remote="<%= new_game_game_goalie_path(@game, :team => home_or_visiting) %>" class="goalie-chooser modal hide" data-backdrop="static" tabindex="-1">
         <div class="modal-header"><h3>Choose goalie for <%= team.name %></h3></div>
         <div class="modal-body"></div>
         <div class="modal-footer">
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div data-remote="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>" class="roster modal hide">
+      <div data-remote="<%= edit_game_roster_path(@game, :team => home_or_visiting) %>" class="roster modal hide" data-backdrop="static" tabindex="-1">
         <div class="modal-header"><h3>Select players for <%= team.name %></h3></div>
         <div class="modal-body"></div>
         <div class="modal-footer">
@@ -33,7 +33,7 @@
         </div>
       </div>
 
-      <div data-remote="<%= new_team_player_path(team) %>" class="player modal hide">
+      <div data-remote="<%= new_team_player_path(team) %>" class="player modal hide" data-backdrop="static" tabindex="-1">
         <div class="modal-header"><h3>Create new player for <%= team.name %></h3></div>
         <div class="modal-body"></div>
         <div class="modal-footer">
@@ -42,7 +42,7 @@
         </div>
       </div>
 
-      <div class="goal-editor modal hide">
+      <div class="goal-editor modal hide" data-backdrop="static" tabindex="-1">
         <div class="modal-header"><h3>Goal for <%= team.name %></h3></div>
         <div class="modal-body">
           <div class="goal-advantage">
