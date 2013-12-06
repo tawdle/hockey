@@ -78,6 +78,16 @@ table.players, table.staff-members {
   }
 }
 
+table.penalties {
+  td.infraction {
+    width: 100%;
+  }
+
+  span.timer {
+    margin-right: 5px;
+  }
+}
+
 .penalty-editor {
   select {
     width: auto;
