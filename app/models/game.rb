@@ -338,7 +338,7 @@ class Game < ActiveRecord::Base
   end
 
   def generate_game_over_feed_item
-    activity_feed_items.create!(:message => "The between @#{home_team.name} and @#{visiting_team.name} ended.")
+    activity_feed_items.create!(:message => "The game between @#{home_team.name} and @#{visiting_team.name} ended.")
   end
 
   def set_next_period
