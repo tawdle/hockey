@@ -440,6 +440,6 @@ class Penalty < ActiveRecord::Base
   end
 
   def self.players_off_ice(game, team)
-    Penalty.for_game(game).for_team(team).minor.current.eldest_siblings.count
+    [Penalty.for_game(game).for_team(team).minor.current.eldest_siblings.count, MaxConcurrentPenalties].min
   end
 end
