@@ -1,7 +1,7 @@
 class ActivityFeedItem < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :game, :inverse_of => :activity_feed_items
-  has_many :mentions
+  has_many :mentions, :dependent => :destroy, :inverse_of => :activity_feed_item
 
   attr_accessible :creator, :message, :game, :game_id
 
@@ -12,20 +12,26 @@ class ActivityFeedItem < ActiveRecord::Base
 
   default_scope order("created_at desc")
 
-  UserIdsForFollowedUsers = "SELECT system_names.nameable_id
+  UserIdsForFollowedUsers = "SELECT followings.followable_id
                              FROM followings
-                             JOIN system_names ON followings.system_name_id = system_names.id
-                             WHERE followings.user_id = ? AND system_names.nameable_type = 'User'"
+                             WHERE followings.user_id = ? AND followings.followable_type = 'User'"
 
   def self.for(obj)
-    system_name = obj.system_name
     if obj.is_a?(User)
+      # XXX: This needs some attention now that mentionable/followable have been introduced.
+      # Can't I just do this as a 3-way join (activity_feed_item to mentions to followings)?
+      # Find activity feeed items that
+      # (1) were created by user or
+      # (2) were created by someone this user follows or
+      # (3) mention this user or
       joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
-        where("creator_id = ? OR creator_id IN (#{UserIdsForFollowedUsers}) OR mentions.system_name_id = ?",
-              obj.id, obj.id, system_name.id)
+        where("creator_id = ? OR
+               creator_id IN (#{UserIdsForFollowedUsers}) OR
+               (mentions.mentionable_id = ? AND mentions.mentionable_type = ?)",
+              obj.id, obj.id, obj.id, obj.class.name)
     else
       joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
-        where("mentions.system_name_id = ?", system_name.id)
+        where(mentions: { mentionable_id: obj.id, mentionable_type: obj.class.name })
     end
   end
 
@@ -44,11 +50,19 @@ class ActivityFeedItem < ActiveRecord::Base
   private
 
   def find_mentions
-    username_matches = message.scan(/\@#{SystemName::NameFormat}/)
-    if username_matches
-      usernames = username_matches.uniq.map {|s| s[1..-1] }
-      SystemName.where(:name => usernames).each do |sn|
-        mentions << Mention.new(:system_name => sn)
+    username_matches = message.scan(Mention::NameOrPlayerPattern)
+    usernames = username_matches.flatten.uniq
+    usernames.each do |username|
+      if username.include?("#")
+        team_name, jersey_number = username.split("#")
+        if team = Team.find_by_name(team_name)
+          if player = Player.find_by_jersey_number_and_team_id(jersey_number, team.id)
+            mentions << Mention.new(mentionable: player)
+          end
+        end
+      else
+        sn = SystemName.find_by_name(username)
+        mentions << Mention.new(:mentionable => sn.nameable) if sn
       end
     end
   end

@@ -1,30 +1,22 @@
 class Following < ActiveRecord::Base
   belongs_to :user
-  belongs_to :system_name
+  belongs_to :followable, :polymorphic => true
 
   validates_presence_of :user
-  validates_presence_of :system_name
-  validates_uniqueness_of :system_name_id, :scope => :user_id
-  validate :user_is_not_target
+  validates_presence_of :followable
+  validates_uniqueness_of :followable_id, :scope => [:user_id, :followable_type]
+  validate :user_is_not_followable
 
-  attr_accessible :user, :target, :user_id, :system_name, :system_name_id
+  attr_accessible :user, :user_id, :followable, :followable_id, :followable_type
 
-  def self.lookup(user, target_obj)
-    return nil unless user && target_obj && target_obj.try(:system_name).try(:id)
-    find_by_system_name_id_and_user_id(target_obj.system_name.id, user.id)
-  end
-
-  def target
-    system_name.try(:nameable)
-  end
-
-  def target=(obj)
-    self.system_name = obj.system_name if obj.respond_to?(:system_name)
+  def self.lookup(user, followable)
+    return nil unless user && followable
+    find_by_followable_id_and_followable_type_and_user_id(followable.id, followable.class.name, user.id)
   end
 
   private
 
-  def user_is_not_target
-    errors.add(:target, "may not folow self") if user && target && user == target
+  def user_is_not_followable
+    errors.add(:followable, "may not folow self") if user && followable && user == followable
   end
 end

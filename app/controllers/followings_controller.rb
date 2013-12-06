@@ -7,8 +7,8 @@ class FollowingsController < ApplicationController
 
     respond_to do |format|
       if @following.save
-        format.html { redirect_to :back, notice: "You are now following #{@following.target.name}." }
-        format.json { render json: @following, status: :created, location: @following.target }
+        format.html { redirect_to @following.followable, notice: "You are now following #{@following.followable.name}." }
+        format.json { render json: @following, status: :created, location: @following.followable }
       else
         format.html { redirect_to :back, error: "Follow action failed." }
         format.json { render json: @following.errors, status: :unprocessable_entity }
@@ -19,7 +19,7 @@ class FollowingsController < ApplicationController
   def destroy
     respond_to do |format|
       if @following.destroy
-        format.html { redirect_to :back, notice: "You are no longer following #{@following.target.name}."}
+        format.html { redirect_to :back, notice: "You are no longer following #{@following.followable.name}."}
         format.json { head :no_content }
       else
         format.html { redirect_to :back, error: "Unable to stop following." }

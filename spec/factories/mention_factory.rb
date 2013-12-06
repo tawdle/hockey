@@ -3,6 +3,6 @@ require 'factory_girl'
 FactoryGirl.define do
   factory :mention do
     activity_feed_item
-    system_name
+    mentionable { build(:player) }
   end
 end

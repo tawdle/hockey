@@ -1,12 +1,13 @@
 <% if current_user %>
   <% unfollowing = Following.lookup(current_user, target)
-     following = Following.new(:user => current_user, :target => target) unless unfollowing || current_user == target
+    following = Following.new(user: current_user, followable_id: target.id, followable_type: target.class.name) unless unfollowing || current_user == target
    %>
 
   <% if following %>
     <%= form_for following do |f| %>
       <%= f.hidden_field :user_id %>
-      <%= f.hidden_field :system_name_id %>
+      <%= f.hidden_field :followable_type %>
+      <%= f.hidden_field :followable_id %>
       <%= f.submit "Follow", :class => "btn btn-mini btn-primary" %>
     <% end %>
   <% elsif unfollowing %>

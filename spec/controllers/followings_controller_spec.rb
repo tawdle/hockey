@@ -10,7 +10,7 @@ describe FollowingsController do
     describe "#create" do
       def do_request
         request.env["HTTP_REFERER"] = "/"
-        post :create, :following => { :user_id => user.to_param, :system_name_id => other_user.system_name.to_param }
+        post :create, :following => { :user_id => user.to_param, :followable_id => other_user.to_param, :followable_type => other_user.class.name }
       end
 
       it "should create the following" do

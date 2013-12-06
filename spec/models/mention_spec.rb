@@ -10,8 +10,8 @@ describe Mention do
       mention.activity_feed_item = nil
       mention.should_not be_valid
     end
-    it "requires a system name" do
-      mention.system_name = nil
+    it "requires a mentionable" do
+      mention.mentionable = nil
       mention.should_not be_valid
     end
   end

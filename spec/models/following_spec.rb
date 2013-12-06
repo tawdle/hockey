@@ -13,18 +13,20 @@ describe Following do
       following.should_not be_valid
     end
 
-    it "should require a system name" do
-      following.system_name = nil
+    it "should require a followable" do
+      following.followable = nil
       following.should_not be_valid
     end
 
     it "should prevent duplicates" do
-      other_following = FactoryGirl.create(:following, :user => following.user, :system_name => following.system_name)
+      team = FactoryGirl.create(:team)
+      following = FactoryGirl.build(:following, :followable => team)
+      other_following = FactoryGirl.create(:following, :user => following.user, :followable => team)
       following.should_not be_valid
     end
 
     it "should prevent self-following" do
-      following.system_name = following.user.system_name
+      following.followable = following.user
       following.should_not be_valid
     end
   end

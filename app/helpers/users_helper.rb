@@ -23,7 +23,7 @@ module UsersHelper
   end
 
   def format_message_with_usernames(msg)
-    username_matches = msg.scan(/\@(#{SystemName::NameFormat}(?:#[\d]+)?)/)
+    username_matches = msg.scan(Mention::NameOrPlayerPattern)
       if username_matches
         username_matches = username_matches.flatten
         msg = msg.clone

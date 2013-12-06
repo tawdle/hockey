@@ -141,7 +141,8 @@ CREATE TABLE followings (
     user_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    system_name_id integer
+    followable_id integer,
+    followable_type character varying(255)
 );
 
 
@@ -540,7 +541,8 @@ CREATE TABLE mentions (
     activity_feed_item_id integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    system_name_id integer
+    mentionable_id integer,
+    mentionable_type character varying(255)
 );
 
 
@@ -1268,10 +1270,10 @@ CREATE INDEX delayed_jobs_priority ON delayed_jobs USING btree (priority, run_at
 
 
 --
--- Name: index_followings_on_system_name_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_followings_on_followable_id_and_followable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_followings_on_system_name_id ON followings USING btree (system_name_id);
+CREATE INDEX index_followings_on_followable_id_and_followable_type ON followings USING btree (followable_id, followable_type);
 
 
 --
@@ -1429,10 +1431,10 @@ CREATE INDEX index_mentions_on_activity_feed_item_id ON mentions USING btree (ac
 
 
 --
--- Name: index_mentions_on_system_name_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_mentions_on_mentionable_id_and_mentionable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_mentions_on_system_name_id ON mentions USING btree (system_name_id);
+CREATE INDEX index_mentions_on_mentionable_id_and_mentionable_type ON mentions USING btree (mentionable_id, mentionable_type);
 
 
 --
@@ -1705,3 +1707,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131202191133');
 INSERT INTO schema_migrations (version) VALUES ('20131203041541');
 
 INSERT INTO schema_migrations (version) VALUES ('20131204001302');
+
+INSERT INTO schema_migrations (version) VALUES ('20131206182029');

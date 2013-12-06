@@ -1,11 +1,13 @@
 class Mention < ActiveRecord::Base
-  belongs_to :activity_feed_item
-  belongs_to :system_name
+  belongs_to :activity_feed_item, :inverse_of => :mentions
+  belongs_to :mentionable, :polymorphic => true
 
-  attr_accessible :activity_feed_item, :system_name
+  attr_accessible :activity_feed_item, :mentionable_id, :mentionable_type, :mentionable
 
   validates_presence_of :activity_feed_item
-  validates_presence_of :system_name
+  validates_presence_of :mentionable
+
+  NameOrPlayerPattern = /\@(#{SystemName::NameFormat}(?:#[\d]+)?)/
 
   def self.rename(user, old_name, new_name)
     ActivityFeedItem.joins(:mentions).where(:mentions => {:user_id => user.id}).readonly(false).each do |item|

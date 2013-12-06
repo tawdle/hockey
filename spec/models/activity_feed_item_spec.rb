@@ -15,11 +15,10 @@ describe ActivityFeedItem do
     end
   end
 
-  describe "#save" do
-    let(:user1) { FactoryGirl.create(:user) }
-    let(:user2) { FactoryGirl.create(:user) }
-    let(:user3) { FactoryGirl.create(:user) }
-    let(:activity_feed_item) { FactoryGirl.build(:activity_feed_item, :message => "@#{user1.name} just checked @#{user2.name} into the boards!") }
+  describe "#find_mentions" do
+    let(:user) { FactoryGirl.create(:user) }
+    let(:player) { FactoryGirl.create(:player) }
+    let(:activity_feed_item) { FactoryGirl.build(:activity_feed_item, :message => "#{user.at_name} just checked #{player.at_name} into the boards!") }
 
     it "should extract mentions" do
       expect {
