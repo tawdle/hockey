@@ -11,15 +11,15 @@ span#game-clock, span#game-period {
 
 
 @-webkit-keyframes whitePulse {
-  from { color: #D6D9D6; }
-  25% { color: white; }
-  75% { color: white; }
-  to { color: #D6D9D6; }
+  from { color: #D6D9D6; -webkit-box-shadow: 0 0 5px 5px #eee }
+  25% { color: white; -webkit-box-shadow: 0 0 9px 9px #a0ffa0 }
+  75% { color: white; -webkit-box-shadow: 0 0 9px 9px #a0ffa0 }
+  to { color: #D6D9D6; -webkit-box-shadow: 0 0 5px 5px #eee }
 }
 
 #game-start {
   -webkit-animation-name: whitePulse;
-  -webkit-animation-duration: 1.75s;
+  -webkit-animation-duration: 1.5s;
   -webkit-animation-iteration-count: infinite;
 }
 
