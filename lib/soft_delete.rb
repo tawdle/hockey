@@ -6,10 +6,12 @@ module SoftDelete
   end
 
   def destroy
-    update_attribute(:deleted_at, Time.now)
+    run_callbacks(:destroy) do
+      delete
+    end
   end
 
   def delete
-    destroy
+    update_attribute(:deleted_at, Time.now)
   end
 end
