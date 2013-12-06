@@ -67,92 +67,89 @@ fr:
     greeting: Bonjour
   penalties:
     categories:
-      game_misconduct: Extrême inconduite (expulsion)
+      game_misconduct: Extrême inconduite (expulsion)
       major: Majeure (5 minutes)
       match: Match (expulsion)
       minor: Mineure (2 minutes)
       misconduct: Inconduite (10 minutes)
-      penalty_shot: Tir de punition
+      penalty_shot: Tir de punition
     editor:
       title: Punition
     infractions:
       abbreviations:
         boarding: Donner-bande
-        cross_checking: Double échec
+        cross_checking: Double échec
         head_contact: Contact-tête
         illegal_body_check: Échec illégal
         kneeing: Donner-genou
         verbal_abuse: Abus verbal
-      abusive_language: Langage, geste abusifs et obscènes
+      abusive_language: Langage, geste abusifs et obscènes
       aggressor: Agresseur
-      attempting_to_injure: Tentative de blesser
-      bench_minor_or_team_penalty: Punition de banc ou d’équipe
-      boarding: Donner de la bande
-      butt_ending: Donner un « six pouces »
+      attempting_to_injure: Tentative de blesser
+      bench_minor_or_team_penalty: Punition de banc ou d’équipe
+      boarding: Donner de la bande
+      butt_ending: Donner un « six pouces »
       charging: Assaut
-      checking_from_behind: Mise en échec par derrière
-      closing_hand_on_puck: Saisir ou geler la rondelle
-      cross_checking: Faire double échec
-      delaying_game: Retarder le jeu 
-      diving: Plonger 
-      elbowing: Donner du coude
-      fighting: Bataille 
-      fighting_single_player: Bataille (1 seul joueur impliqué)
-      first_player_leaving_bench_to_fight: Premier joueur à quitter le banc lors d’une bataille ou pour commencer
-        une bataille
-      goalkeeper_leaving_crease_to_fight: Gardien qui quitte son enceinte lors d’une bataille
-      grabbing_hair_with_advantage: Saisir les cheveux, protecteur facial, casque protecteur ou la mentonnière et
-        en tirer avantage pour infliger une correction ou blessure
-      grabbing_hair_without_advantage: Saisir les cheveux, protecteur facial, casque protecteur ou mentonnière sans 
-        en tirer avantage pour infliger une correction ou blessure
-      gross_misconduct_travesty: Inconduite grossière pour tourner le match en dérision
-      head_butting: Donner un coup de tête
-      head_contact: Contact avec la tête
-      high_sticking: Porter son bâton trop élevé
+      checking_from_behind: Mise en échec par derrière
+      closing_hand_on_puck: Saisir ou geler la rondelle
+      cross_checking: Faire double échec
+      delaying_game: Retarder le jeu
+      diving: Plonger
+      elbowing: Donner du coude
+      fighting: Bataille
+      fighting_single_player: Bataille (1 seul joueur impliqué)
+      first_player_leaving_bench_to_fight: Premier joueur à quitter le banc lors d’une bataille ou pour commencer une bataille
+      goalkeeper_leaving_crease_to_fight: Gardien qui quitte son enceinte lors d’une bataille
+      grabbing_hair_with_advantage: Saisir les cheveux, protecteur facial, casque protecteur ou la mentonnière et en tirer avantage pour infliger une correction ou blessure
+      grabbing_hair_without_advantage: Saisir les cheveux, protecteur facial, casque protecteur ou mentonnière sans en tirer avantage pour infliger une correction ou blessure
+      gross_misconduct_travesty: Inconduite grossière pour tourner le match en dérision
+      head_butting: Donner un coup de tête
+      head_contact: Contact avec la tête
+      high_sticking: Porter son bâton trop élevé
       holding: Retenir
-      holding_the_stick: Avoir retenu le bâton
+      holding_the_stick: Avoir retenu le bâton
       hooking: Accrocher
-      illegal_body_check: Mise en échec illégale
-      illegal_face_off: Mise au jeu illégale
-      inciting_an_opponent: Provoquer l’adversaire
-      instigator: Instigateur 
+      illegal_body_check: Mise en échec illégale
+      illegal_face_off: Mise au jeu illégale
+      inciting_an_opponent: Provoquer l’adversaire
+      instigator: Instigateur
       interference: Obstruction
-      interference_from_bench: Obstruction du banc
-      interference_with_goaltender: Obstruction sur le gardien de but
-      kick_shot: Tir botté
-      kicking: Donner un coup de patin
-      kneeing: Donner du genou
-      leaving_bench_at_end_of_period: Quitter le banc en fin de période et/ou de match
-      leaving_penalty_box: Quitter le banc des punitions
-      moving_goal: Déplacer intentionnellement le but de sa position
-      moving_goal_during_breakaway: Déplacer intentionnellement le but de sa position lors d’une échappée
-      not_going_to_penalty_box: Ne pas se rendre immédiatement au banc des punitions
-      physical_aggression_against_official: Agression physique envers un officiel
-      playing_with_broken_stick: Jouer avec un bâton brisé, illégal ou obtenu illégalement
-      playing_without_protective_equipment: Participer au jeu sans l’équipement protecteur approprié
-      refusing_to_have_equipment_measured: Refus de se soumettre à un mesurage
-      refusing_to_start_play: Refus de se mettre au jeu ou refus de quitter le banc ou la glace
-      remaining_at_site_of_fight: Demeurer sur les lieux d’une bataille 
-      removing_helmet_to_fight: Enlever son casque pour se battre ou inviter un adversaire à se battre
+      interference_from_bench: Obstruction du banc
+      interference_with_goaltender: Obstruction sur le gardien de but
+      kick_shot: Tir botté
+      kicking: Donner un coup de patin
+      kneeing: Donner du genou
+      leaving_bench_at_end_of_period: Quitter le banc en fin de période et/ou de match
+      leaving_penalty_box: Quitter le banc des punitions
+      moving_goal: Déplacer intentionnellement le but de sa position
+      moving_goal_during_breakaway: Déplacer intentionnellement le but de sa position lors d’une échappée
+      not_going_to_penalty_box: Ne pas se rendre immédiatement au banc des punitions
+      physical_aggression_against_official: Agression physique envers un officiel
+      playing_with_broken_stick: Jouer avec un bâton brisé, illégal ou obtenu illégalement
+      playing_without_protective_equipment: Participer au jeu sans l’équipement protecteur approprié
+      refusing_to_have_equipment_measured: Refus de se soumettre à un mesurage
+      refusing_to_start_play: Refus de se mettre au jeu ou refus de quitter le banc ou la glace
+      remaining_at_site_of_fight: Demeurer sur les lieux d’une bataille
+      removing_helmet_to_fight: Enlever son casque pour se battre ou inviter un adversaire à se battre
       roughing: Rudesse
-      second_fight: Deuxième bataille ou bataille subséquente au cours d’un même arrêt de jeu
-      second_misconduct_penalty: Deuxième punition d’inconduite
-      slashing: Coup de bâton
-      spearing: Darder 
+      second_fight: Deuxième bataille ou bataille subséquente au cours d’un même arrêt de jeu
+      second_misconduct_penalty: Deuxième punition d’inconduite
+      slashing: Coup de bâton
+      spearing: Darder
       spitting: Cracher
-      team_unsportsmanlike_conduct: Manifestation antisportive d’équipe
-      third_player_entering_fight: Troisième ou autre joueur à intervenir dans une bataille
-      threatening_an_official: Menacer de frapper ou tenter de frapper un officiel 
-      throwing_stick: Lancer son bâton ou tout autre objet
-      too_many_players_on_ice: Trop de joueurs sur la patinoire
-      tripping: Faire trébucher
-      unsustained_request_for_equipment_measurement: Demande non justifiée de mesurage
-      use_of_mask_as_weapon: Utiliser son protecteur facial comme une arme
-      use_of_rings_as_weapons: Bagues, ruban gommé ou autre matériau sur les mains pour blesser un adversaire
-      verbal_abuse: Abus verbal envers les officiels, conduite antisportive et inconduite
-      verbal_discrimination: Se livrer à des insultes ou intimidation de nature discriminatoire
-      wearing_equipment_in_non_regulatory_fashion: Porter un équipement non certifié ou dangereux
-      wearing_non_certified_equipment: Porter un équipement non certifié ou dangereux
+      team_unsportsmanlike_conduct: Manifestation antisportive d’équipe
+      third_player_entering_fight: Troisième ou autre joueur à intervenir dans une bataille
+      threatening_an_official: Menacer de frapper ou tenter de frapper un officiel
+      throwing_stick: Lancer son bâton ou tout autre objet
+      too_many_players_on_ice: Trop de joueurs sur la patinoire
+      tripping: Faire trébucher
+      unsustained_request_for_equipment_measurement: Demande non justifiée de mesurage
+      use_of_mask_as_weapon: Utiliser son protecteur facial comme une arme
+      use_of_rings_as_weapons: Bagues, ruban gommé ou autre matériau sur les mains pour blesser un adversaire
+      verbal_abuse: Abus verbal envers les officiels, conduite antisportive et inconduite
+      verbal_discrimination: Se livrer à des insultes ou intimidation de nature discriminatoire
+      wearing_equipment_in_non_regulatory_fashion: Porter un équipement non certifié ou dangereux
+      wearing_non_certified_equipment: Porter un équipement non certifié ou dangereux
     labels:
       all: Toutes
       completed: Terminé
