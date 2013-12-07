@@ -309,11 +309,11 @@ class Game < ActiveRecord::Base
   private
 
   def set_started_at
-    self.started_at = Time.now
+    self.started_at ||= Time.now
   end
 
   def set_ended_at
-    update_attribute(:ended_at, Time.now)
+    update_attribute(:ended_at, Time.now) unless ended_at
   end
 
   def updater_name
