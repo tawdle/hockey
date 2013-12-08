@@ -1,6 +1,6 @@
 <%= javascript_tag do %>
   $(function() {
-    App.translations =  <%= {penalties: t("penalties"), activerecord: t("activerecord") }.to_json.html_safe %>;
+    App.translations =  <%= I18n.t(".").to_json.html_safe %>;
     App.players = new App.Players(<%= json_for(@game.players).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.staffMembers = new Backbone.Collection(<%= json_for(@game.game_staff_members).html_safe %>)
     App.goals = new App.Goals(<%= json_for(@game.goals).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);

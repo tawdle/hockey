@@ -57,7 +57,7 @@ App.Marker.TeamBoxView = Backbone.View.extend({
     var attrs = App.game.get(this.side);
     var goalie = attrs.goalie_id && App.players.get(attrs.goalie_id);
     this.score.text(attrs.score);
-    this.goalie.text(goalie ? goalie.get("name_and_number") : "none");
+    this.goalie.text(goalie ? goalie.get("name_and_number") : App.translations.goalie.pulled);
   }
 
 });

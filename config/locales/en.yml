@@ -38,7 +38,7 @@ en:
       player: Player
 
   goalie:
-    pulled: Pulled
+    pulled: Empty net
 
   league:
     classifications:
