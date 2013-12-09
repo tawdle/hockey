@@ -4,12 +4,6 @@ class UsersController < ApplicationController
   skip_authorization_check :only => :show
 
   def show
-    if current_user && current_user.following?(@user)
-      @unfollowing = Following.lookup(current_user, @user)
-    else
-      @following = Following.new(:user => current_user, :followable => @user)
-      @following = nil if !@following.valid? || cannot?(:create, @following)
-    end
   end
 
   def edit

@@ -37,10 +37,6 @@ class User < ActiveRecord::Base
       :authorizable_id => authorizable.id).count > 0 }
   end
 
-  def following?(target)
-    Following.where(:user_id => id, :followable_id => target.id, :followable_type => target.class.name).any?
-  end
-
   def at_name
     "@#{name}"
   end
