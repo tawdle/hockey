@@ -3,7 +3,7 @@ class Goal < ActiveRecord::Base
   belongs_to :game, :inverse_of => :goals
   belongs_to :team
   has_many :goal_players, :order => "ordinal asc"
-  has_many :players, :through => :goal_players
+  has_many :players, :through => :goal_players, :order => "goal_players.ordinal asc"
 
   attr_accessor :updater
   attr_accessible :game, :game_id, :creator, :team_id, :period, :player_ids, :elapsed_time, :advantage
