@@ -7,7 +7,7 @@ class UsersController < ApplicationController
     if current_user && current_user.following?(@user)
       @unfollowing = Following.lookup(current_user, @user)
     else
-      @following = Following.new(:user => current_user, :target => @user)
+      @following = Following.new(:user => current_user, :followable => @user)
       @following = nil if !@following.valid? || cannot?(:create, @following)
     end
   end

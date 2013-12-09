@@ -38,8 +38,7 @@ class User < ActiveRecord::Base
   end
 
   def following?(target)
-    system_name = target.system_name
-    Following.where(:user_id => id, :system_name_id => system_name.id).any?
+    Following.where(:user_id => id, :followable_id => target.id, :followable_type => target.class.name).any?
   end
 
   def at_name
