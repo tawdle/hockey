@@ -2,16 +2,13 @@ require 'factory_girl'
 
 FactoryGirl.define do
   factory :user do
-    sequence :name do |n|
-      "user_#{n}"
-    end
     sequence :email do |n|
       "user#{n}@example.com"
     end
     password "abcd1234"
 
     after(:build) do |user|
-      user.system_name ||= build(:system_name, :nameable => user)
+      user.system_name.name = "User_#{rand(1_000_000)}"
     end
   end
 
