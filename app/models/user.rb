@@ -8,7 +8,7 @@ class User < ActiveRecord::Base
   # Setup accessible (or protected) attributes for your model
   attr_accessor :avatar_cache
   attr_accessible :email, :password, :password_confirmation, :remember_me
-  attr_accessible :avatar, :avatar_cache, :time_zone, :language
+  attr_accessible :avatar, :avatar_cache, :time_zone, :language, :system_name_attributes
   attr_readonly :name
 
   symbolize :language, in: [:en, :fr], allow_nil: true
@@ -16,13 +16,15 @@ class User < ActiveRecord::Base
   has_many :authorizations, :dependent => :destroy
   has_many :players, :dependent => :destroy, :conditions => { deleted_at: nil }
   has_many :teams, :through => :players
-  has_one :system_name, :as => :nameable
+  has_one :system_name, :as => :nameable, :inverse_of => :nameable
 
   mount_uploader :avatar, AvatarUploader
 
-  before_validation :set_nameable
+  after_initialize :init_system_name
   before_update :update_mentions, :if => :name_changed?
   before_create :cache_name
+
+  accepts_nested_attributes_for :system_name
 
   # Add helpers for authorizations
   Authorization::GlobalRoles.each do |role|
@@ -65,6 +67,10 @@ class User < ActiveRecord::Base
 
   private
 
+  def init_system_name
+    self.system_name ||= SystemName.new if new_record?
+  end
+
   def update_id(model, field, other)
     model.update_all("#{field}_id = #{id}", "#{field}_id = #{other.id}")
   end
@@ -75,11 +81,5 @@ class User < ActiveRecord::Base
 
   def cache_name
     self.name = system_name.name
-  end
-
-  def set_nameable
-    # Not sure why ActiveRecord doesn't do this for us
-    system_name || build_system_name
-    system_name.nameable = self
   end
 end

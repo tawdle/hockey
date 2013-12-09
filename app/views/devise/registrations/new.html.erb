@@ -18,13 +18,15 @@
     <%= f.password_field :password_confirmation %>
   </div>
 
-  <div>
-    <%= f.label :name %>
-    <div class="input-prepend">
-      <span class="add-on">@</span>
-      <%= f.text_field :name %>
+  <%= f.fields_for :system_name do |ff| %>
+    <div>
+      <%= ff.label :name %>
+      <div class="input-prepend">
+        <span class="add-on">@</span>
+        <%= ff.text_field :name %>
+      </div>
     </div>
-  </div>
+  <% end %>
 
   <div>
     <%= f.submit "Sign up", :class => "btn btn-primary" %>

@@ -1,5 +1,5 @@
 class SystemName < ActiveRecord::Base
-  belongs_to :nameable, :polymorphic => true
+  belongs_to :nameable, :polymorphic => true, :inverse_of => :system_name
 
   NameFormat = "[[:alpha:]\\d\\-_]+"
 
@@ -10,5 +10,5 @@ class SystemName < ActiveRecord::Base
   validates_presence_of :nameable
   validates_uniqueness_of :nameable_id, :scope => :nameable_type
 
-  attr_accessible :name
+  attr_accessible :name, :nameable
 end
