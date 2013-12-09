@@ -26,14 +26,14 @@ class Invitation < ActiveRecord::Base
 
   def accept!(accepting_user)
     Invitation.transaction do
-      target.send("accepted_invitation_to_#{predicate}", accepting_user, self)
+      target.send("accepted_invitation_to_#{predicate}", accepting_user, self) if target.respond_to?("accepted_invitation_to_#{predicate}")
       update_attribute(:state, :accepted)
     end
   end
 
   def decline!
     declining_user = user || User.find_by_email(email)
-    target.send("declined_invitation_to_#{predicate}", declining_user, self)
+    target.send("declined_invitation_to_#{predicate}", declining_user, self) if target.respond_to?("declined_invitation_to#{predicate}")
     update_attribute(:state, :declined)
   end
 
