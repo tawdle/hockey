@@ -1,4 +1,5 @@
 <%= form_for([@game, @game_goalie], :format => :json, :remote => request.xhr?) do |f| %>
+  <%= hidden_field_tag :team, params[:team] %>
   <% selected = false %>
   <% @game.game_players.goalies.for_team(@team).each do |game_player| %>
     <% goalie = game_player.player %>
