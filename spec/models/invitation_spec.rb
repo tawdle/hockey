@@ -114,8 +114,9 @@ describe Invitation do
       User.stub(:find_by_email).and_return(user)
     end
 
-    it "should notify target" do
-      target.should_receive(:declined_invitation_to_manage).with(user, invitation).and_return(mail)
+    it "should try to notify target" do
+      target.should_receive(:respond_to?).with("declined_invitation_to_manage").and_return(true)
+      target.should_receive("declined_invitation_to_manage").with(user, invitation).and_return(mail)
       expect {
         invitation.decline!
       }.to change { invitation.state }.from(:pending).to(:declined)

@@ -33,7 +33,7 @@ class Invitation < ActiveRecord::Base
 
   def decline!
     declining_user = user || User.find_by_email(email)
-    target.send("declined_invitation_to_#{predicate}", declining_user, self) if target.respond_to?("declined_invitation_to#{predicate}")
+    target.send("declined_invitation_to_#{predicate}", declining_user, self) if target.respond_to?("declined_invitation_to_#{predicate}")
     update_attribute(:state, :declined)
   end
 
