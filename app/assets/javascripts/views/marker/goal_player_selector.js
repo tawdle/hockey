@@ -1,4 +1,4 @@
-App.GoalPlayerSelector = Backbone.View.extend({
+App.Marker.GoalPlayerSelector = Backbone.View.extend({
   initialize: function() {
     this.role = this.options.role;
     this.teamId = this.options.teamId;

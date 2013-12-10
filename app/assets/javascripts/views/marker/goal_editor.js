@@ -18,7 +18,7 @@ App.Marker.GoalEditor = Backbone.View.extend({
   createPlayerSelectors: function() {
     var self = this;
     this.selectors = _.map(["player", "assist", "secondary-assist"], function(role) {
-      return new App.GoalPlayerSelector({ role: role, el: self.$(".goal-" + role), teamId: self.teamId, parent: self });
+      return new App.Marker.GoalPlayerSelector({ role: role, el: self.$(".goal-" + role), teamId: self.teamId, parent: self });
     });
   },
 
