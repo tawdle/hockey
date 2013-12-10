@@ -3,6 +3,7 @@ App.Marker.MarkerView = Backbone.View.extend({
     this.gameStart = this.$("#game-start");
     this.gamePause = this.$("#game-pause");
     this.gameStop = this.$("#game-stop");
+    this.gameActivate = this.$("#game-activate");
     this.gameStatus = this.$("#game-status");
     this.period = this.$("#game-period");
     this.homeView = new App.Marker.TeamBoxView({ el: "#home-team", teamId: this.model.get("home_team").id, side: "home_team" });
@@ -30,6 +31,7 @@ App.Marker.MarkerView = Backbone.View.extend({
     "click #game-start" : "start",
     "click #game-pause" : "pause",
     "click #game-stop" : "stop",
+    "click #game-activate" : "activate",
     "click a.add-penalty" : "addPenalty",
     "ajax:success #new_activity_feed_item" : "clearMessageText",
     "click .swap" : "swapTeamBoxes"
@@ -52,6 +54,11 @@ App.Marker.MarkerView = Backbone.View.extend({
     if (confirm("End this game now?")) {
       this.model.stop();
     }
+  },
+
+  activate: function(e) {
+    e.preventDefault();
+    this.model.activate();
   },
 
   addPenalty: function(e) {
@@ -85,9 +92,10 @@ App.Marker.MarkerView = Backbone.View.extend({
 
   render: function() {
     var state = this.model.get("state");
-    this.gameStart.toggle(state == "active" || state == "paused");
+    this.gameStart.toggle(state == "ready" || state == "paused");
     this.gamePause.toggle(state == "playing");
     this.gameStop.toggle((state== "playing" || state == "paused") && this.model.get("period") >= 2);
+    this.gameActivate.toggle(state == "active");
     $("p[class=" + state + "]", this.gameStatus).toggle(true).siblings().toggle(false);
 
     this.period.text(this.model.get("period_text"));

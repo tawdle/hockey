@@ -24,7 +24,8 @@
 <% if @game.live? %>
   <% if can? :mark, @game %>
     <div id="game-status" style="text-align: center;">
-      <p class="active">This game is ready to play. Press <i class="icon-play"></i> to start the next period.</p>
+      <p class="active">The period has ended. Press <i class="icon-check"></i> when marking for the period is complete.</p>
+      <p class="ready">The game is ready to go. Press <i class="icon-play"></i> to start.</p>
       <p class="playing">This game is playing. Press <i class="icon-pause"></i> to pause the game clock.</p>
       <p class="paused">This game is paused. Press <i class="icon-play"></i> to resume.</p>
       <p class="finished">This game has ended. When you have completed recording all items, press: <%= link_to "Complete Game", complete_game_path(@game), :class => "btn", :method => :post %> </p>
@@ -34,7 +35,8 @@
   <div id="start-stop-clock">
     <% if can? :mark, @game %>
       <a href="#" class="btn btn-large add-penalty" title="Add Penalty"><i class="icon-flag icon-2x"></i></a>
-      <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, "#", :id => "game-start", :class => "btn btn-large btn-success" %> 
+      <%= link_to "<i class='icon-check icon-2x'></i>".html_safe, "#", :id => "game-activate", :class => "btn btn-large btn-success" %>
+      <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, "#", :id => "game-start", :class => "btn btn-large btn-success" %>
       <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, "#", :id => "game-pause", :class => "btn btn-large btn-warning" %>
     <% end %>
 

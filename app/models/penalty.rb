@@ -379,7 +379,7 @@ class Penalty < ActiveRecord::Base
   end
 
   def destroy_timer
-    timer.destroy
+    timer.destroy if timer
   end
 
   def broadcast_changes
@@ -427,6 +427,13 @@ class Penalty < ActiveRecord::Base
       # re-establish the existing game object by setting it manually, like so:
       penalty.game = game
       penalty.start!
+    end
+  end
+
+  def self.terminate_penalties(game)
+    game.penalties.each do |penalty|
+      penalty.game = game
+      penalty.terminate
     end
   end
 

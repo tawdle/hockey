@@ -4,11 +4,12 @@ class Game < ActiveRecord::Base
 
   state_machine :initial => :scheduled do
     event :activate do
-      transition :scheduled => :active, :if => :ready_to_activate?
+      transition :scheduled => :ready, :if => :ready_to_activate?
+      transition :active => :ready
     end
 
     event :start do
-      transition [:active, :paused] => :playing
+      transition [:ready, :paused] => :playing
     end
 
     event :pause do
@@ -31,17 +32,15 @@ class Game < ActiveRecord::Base
       transition :scheduled => :canceled
     end
 
-    after_transition :active => :playing, :do => [:generate_game_started_feed_item, :set_started_at]
-    after_transition any => :finished, :do => :set_ended_at
-    after_transition any => :finished, :do => :finish_goalies
-    after_transition any => :finished, :do => :generate_game_over_feed_item
+    after_transition :ready => :playing, :do => [:generate_game_started_feed_item, :set_started_at], :if => :first_period?
+    after_transition any => :finished, :do => [:set_ended_at, :finish_goalies, :terminate_penalties, :generate_game_over_feed_item]
     after_transition any => :canceled, :do => :generate_cancel_feed_item
-    before_transition :scheduled => :active, :do => :create_clock
-    after_transition :active => :playing, :do => :set_next_period
+    before_transition :scheduled => :ready, :do => :create_clock
+    after_transition [:scheduled, :active] => :ready, :do => [:set_next_period, :reset_game_clock]
     after_transition any => :completed, :do => :destroy_clock
     after_transition any => any, :do => :broadcast_changes_from_state_machine
     after_transition any => :playing, :do => :start_eligible_penalties
-    after_transition any => [:paused, :active, :finished], :do => :pause_running_penalties
+    after_transition :playing => any, :do => :pause_running_penalties
 
     state all - :scheduled do
       validate {|game| game.send(:schedule_not_changed) }
@@ -106,11 +105,10 @@ class Game < ActiveRecord::Base
 
   Periods = %w(1 2 3 OT OT2 OT3)
 
-  LiveStates = %w(active playing paused finished)
+  LiveStates = %w(ready active playing paused finished)
 
   def start
     batch_broadcasts do
-      clock.reset unless paused?
       clock.start
       super
     end
@@ -308,6 +306,10 @@ class Game < ActiveRecord::Base
 
   private
 
+  def first_period?
+    period == 0
+  end
+
   def set_started_at
     self.started_at ||= Time.now
   end
@@ -401,6 +403,10 @@ class Game < ActiveRecord::Base
 
   def pause_running_penalties
     Penalty.pause_running_penalties(self)
+  end
+
+  def terminate_penalties
+    Penalty.terminate_penalties(self)
   end
 
   def finish_goalies

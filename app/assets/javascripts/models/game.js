@@ -46,6 +46,10 @@ App.Game = App.EmbeddedModel.extend({
     });
   },
 
+  activate: function() {
+    this.perform("activate");
+  },
+
   start: function() {
     var state = this.get("state");
     if (state == "active" || state == "paused") {
