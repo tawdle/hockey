@@ -28,6 +28,14 @@ FactoryGirl.define do
       end
     end
 
+    trait :ready do
+      after(:build) do |game|
+        game.state = "ready"
+        game.period = 0
+        game.build_clock
+      end
+    end
+
     trait :playing do
       after(:build) do |game|
         game.state = "playing"

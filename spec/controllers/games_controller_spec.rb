@@ -42,7 +42,7 @@ describe GamesController do
         post :start, :id => game.to_param
       end
 
-      let(:game) { FactoryGirl.create(:game, :active, :league => league) }
+      let(:game) { FactoryGirl.create(:game, :ready, :league => league) }
 
       it "changes the state to playing" do
         expect {
