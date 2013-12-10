@@ -1,50 +1,43 @@
 App.Marker.GoalEditor = Backbone.View.extend({
   initialize: function() {
     this.teamId = this.options.teamId;
-    this.playerSelect = this.$(".goal-player select");
-    this.assistSelect = this.$(".goal-assist select");
-    this.secondaryAssistSelect = this.$(".goal-secondary-assist select");
     this.advantageSelect = this.$(".goal-advantage select");
     this.saveButton = this.$("a.save");
     this.listenTo(App.dispatcher, "goal:edit", this.editIf);
+    this.createPlayerSelectors();
   },
 
   tagName: "div",
 
   events: {
-    "change .goal-player select": "playerChanged",
-    "change .goal-assist select": "assistChanged",
+    "change input" : "updateSaveButton",
     "click a.save:not(.disabled)" : "saveAndClose",
     "click a.cancel" : "destroyAndClose"
   },
 
-  playerChanged: function() {
-    this.$(".goal-assist").slideDown();
-    this.updateSaveButton();
-  },
-
-  assistChanged: function() {
-    if (this.assistSelect.val()) this.$(".goal-secondary-assist").slideDown();
-  },
-
-  optionPrompt: function(prompt) {
-    return '<option selected disabled value="">' + prompt + '</option>';
-  },
-
-  optionString: function(value, text) {
-    return '<option value="' + value + '">' + text + '</option>';
-  },
-
-  setPlayerOptions: function() {
+  createPlayerSelectors: function() {
     var self = this;
-    var options = App.players.where({team_id: this.teamId}).map(function(player) { return self.optionString(player.id, player.get("name_and_number")); }).join("");
-    this.playerSelect.html(self.optionPrompt("Player who scored goal") + options);
-    this.assistSelect.html(self.optionPrompt("Player who assisted") + self.optionString("", "") + options);
-    this.secondaryAssistSelect.html(self.optionPrompt("Other player who assisted") + self.optionString("", "") + options);
+    this.selectors = _.map(["player", "assist", "secondary-assist"], function(role) {
+      return new App.GoalPlayerSelector({ role: role, el: self.$(".goal-" + role), teamId: self.teamId, parent: self });
+    });
+  },
+
+  initializePlayerSelectors: function(ids) {
+    _.each(this.selectors, function(selector, index) {
+      selector.initializeForm(ids[index], index === 0);
+    });
   },
 
   complete: function() {
-    return this.playerSelect.val() !== null;
+    var ids = _.map(this.selectors, function(s) { return s.playerId(); });
+    var bits = _.map(ids, function(id) { return id !== undefined ? 1 : 0; } );
+    var sum = bits[0] * 1 + bits[1] * 2 + bits[2] * 4;
+    if (sum == 1 || sum == 3 || sum == 7) {
+      var set = _.filter(ids, function(id) { return id !== undefined; } );
+      var uniq = _.uniq(set);
+      return (set.length == uniq.length);
+    }
+    return false;
   },
 
   updateSaveButton: function() {
@@ -53,13 +46,8 @@ App.Marker.GoalEditor = Backbone.View.extend({
 
   initializeForm: function() {
     var ids = this.model.get("player_ids");
-    this.setPlayerOptions();
-    this.playerSelect.val(ids[0]);
-    if (ids[1]) this.assistSelect.val(ids[1]);
-    if (ids[2]) this.secondaryAssistSelect.val(ids[2]);
+    this.initializePlayerSelectors(ids);
     this.advantageSelect.val(this.model.get("advantage") || 0);
-    this.$(".goal-assist").toggle(ids.length > 0);
-    this.$(".goal-secondary-assist").toggle(ids.length > 1);
     this.updateSaveButton();
   },
 
@@ -70,10 +58,12 @@ App.Marker.GoalEditor = Backbone.View.extend({
 
   saveAndClose: function(event) {
     event.preventDefault();
-    var player_ids = _.uniq(_.compact(_.map(this.$("select.player"), function(select) { return Number($(select).val()); } )));
-    var advantage = this.advantageSelect.val();
     var self = this;
-    this.model.save({player_ids: player_ids, advantage: advantage}, { success: function(model, response, options) { self.close(); }});
+    var player_ids = _.uniq(_.compact(_.map(self.selectors,
+      function(selector) { return Number(selector.playerId()); } )));
+    var advantage = this.advantageSelect.val();
+    this.model.save({player_ids: player_ids, advantage: advantage},
+                    { success: function(model, response, options) { self.close(); }});
     return false;
   },
 

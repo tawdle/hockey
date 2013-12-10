@@ -88,6 +88,34 @@ table.penalties {
   }
 }
 
+.goal-editor {
+  .players legend {
+    cursor: pointer;
+  }
+
+  .goal-player, .goal-assist, .goal-secondary-assist {
+    input {
+      display: none;
+    }
+
+    label {
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 10px;
+    }
+
+    input:checked + label {
+      background-image: none;
+      background-color: #0044CC;
+      color: white;
+    }
+  }
+}
+
 .penalty-editor {
   select {
     width: auto;

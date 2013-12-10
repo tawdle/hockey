@@ -217,9 +217,14 @@
 </td>
 </script>
 
-<script type="text/html" id="player-radio">
+<script type="text/html" id="penalty-player-radio">
 <input id="penalty-player-radio-{{= serving ? "serving-" : ""}}{{= id }}" type="radio" name="penalty[{{= serving ? 'serving_player_id' : 'player_id' }}]" value="{{= id }}"></input>
   <label for="penalty-player-radio-{{= serving ? "serving-": ""}}{{= id }}" class="btn">{{= jersey_number }}</label>
+</script>
+
+<script type="text/html" id="goal-player-radio">
+<input id="goal-player-radio-{{= role }}-{{= id }}" type="radio" name="penalty[{{= role}}_id]" value="{{= id }}"></input>
+  <label for="goal-player-radio-{{= role }}-{{= id }}" class="btn">{{= jersey_number }}</label>
 </script>
 
 <script type="text/html" id="player-checkbox">
