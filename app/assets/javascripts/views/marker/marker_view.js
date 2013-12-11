@@ -91,10 +91,10 @@ App.Marker.MarkerView = Backbone.View.extend({
   },
 
   render: function() {
-    var state = this.model.get("state");
+    var state = this.model.get("state"), period = this.model.get("period");
     this.gameStart.toggle(state == "ready" || state == "paused");
     this.gamePause.toggle(state == "playing");
-    this.gameStop.toggle((state== "playing" || state == "paused") && this.model.get("period") >= 2);
+    this.gameStop.toggle(((state == "playing" || state == "paused" || state == "active") && period >= 2) || (state == "ready" && period >= 3));
     this.gameActivate.toggle(state == "active");
     $("p[class=" + state + "]", this.gameStatus).toggle(true).siblings().toggle(false);
 

@@ -17,11 +17,11 @@ class Game < ActiveRecord::Base
     end
 
     event :stop do
-      transition [:playing, :paused] => :active
+      transition [:ready, :playing, :paused] => :active
     end
 
     event :finish do
-      transition [:playing, :paused, :active] => :finished
+      transition [:ready, :playing, :paused, :active] => :finished
     end
 
     event :complete do
