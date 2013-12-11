@@ -47,7 +47,7 @@ describe Leagues::GamesController do
           :visiting_team_id => visiting_team.to_param,
           :location_id => location.to_param,
           :start_time => 1.week.from_now,
-          :period_duration => 20.minutes }
+          :period_durations => [20.minutes] * 6 }
       end
       it "should create a game" do
         expect {
