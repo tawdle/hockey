@@ -45,7 +45,9 @@ class GameGoalie < ActiveRecord::Base
 
   def minutes_played
     return 0 unless end_period && end_time
-    ((end_period - start_period) * game.period_duration + (end_time - start_time)) / 60.0
+    period_seconds = 0
+    (start_period...end_period).each {|period| period_seconds += game.period_durations[period] }
+    (period_seconds + end_time - start_time) / 60.0
   end
 
   private
