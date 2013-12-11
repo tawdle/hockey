@@ -311,7 +311,7 @@ class Game < ActiveRecord::Base
   end
 
   def set_started_at
-    self.started_at ||= Time.now
+    update_attribute(:started_at, Time.now) unless started_at
   end
 
   def set_ended_at
