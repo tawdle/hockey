@@ -203,6 +203,7 @@ class Game < ActiveRecord::Base
   end
 
   def reset_game_clock
+    clock.duration = period_durations[period]
     clock.reset!
   end
 
@@ -245,6 +246,7 @@ class Game < ActiveRecord::Base
   end
 
   def current_period_duration=(seconds)
+    seconds = seconds.to_i
     lengths = period_durations
     lengths[period] = seconds
     self.period_durations = lengths
