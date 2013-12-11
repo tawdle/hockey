@@ -18,6 +18,7 @@ Hockey::Application.routes.draw do
       post :finish
       post :complete
       post :sync
+      put :update_clock
     end
   end
 

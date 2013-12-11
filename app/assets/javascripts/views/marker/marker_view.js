@@ -6,14 +6,15 @@ App.Marker.MarkerView = Backbone.View.extend({
     this.gameActivate = this.$("#game-activate");
     this.gameStatus = this.$("#game-status");
     this.period = this.$("#game-period");
+    this.gameClock = this.$("#game-clock");
     this.homeView = new App.Marker.TeamBoxView({ el: "#home-team", teamId: this.model.get("home_team").id, side: "home_team" });
     this.visitingView = new App.Marker.TeamBoxView({ el: "#visiting-team", teamId: this.model.get("visiting_team").id, side: "visiting_team" });
     this.penaltyEditor = new App.Marker.PenaltyEditor({el: this.$(".penalty-editor")});
+    this.clockEditor = new App.Marker.ClockEditor({el: this.$(".clock-editor"), model: this.model });
 
     this.listenTo(this.model, "change", this.render);
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);
-    var el = $("#game-clock").first();
-    this.gameClockView = new App.TimerView({el: el, model: App.game.get("clock"), showTimeRemaining: true});
+    this.gameClockView = new App.TimerView({el: this.gameClock, model: App.game.get("clock"), showTimeRemaining: true});
     this.render();
 
     this.feedItemsView = new Backbone.CollectionView({
@@ -32,6 +33,7 @@ App.Marker.MarkerView = Backbone.View.extend({
     "click #game-pause" : "pause",
     "click #game-stop" : "stop",
     "click #game-activate" : "activate",
+    "click #game-clock" : "adjustClock",
     "click a.add-penalty" : "addPenalty",
     "ajax:success #new_activity_feed_item" : "clearMessageText",
     "click .swap" : "swapTeamBoxes"
@@ -59,6 +61,11 @@ App.Marker.MarkerView = Backbone.View.extend({
   activate: function(e) {
     e.preventDefault();
     this.model.activate();
+  },
+
+  adjustClock: function(e) {
+    e.preventDefault();
+    this.clockEditor.edit();
   },
 
   addPenalty: function(e) {
@@ -100,5 +107,6 @@ App.Marker.MarkerView = Backbone.View.extend({
 
     this.period.text(this.model.get("period_text"));
     this.gameStatus.removeClass("active playing paused finished").addClass(state);
+    this.gameClock.css( {cursor: state == "ready" ? "pointer" : "normal"});
   }
 });

@@ -104,6 +104,22 @@
   </table>
 </div>
 
+<div class="clock-editor modal hide" data-backdrop="static" tabindex="-1">
+  <div class="modal-header"><h3>Adjust game clock</h3></div>
+  <div class="modal-body">
+    <form class="form-inline">
+      <input id="clock-minutes" type="number"></input>
+      <label for="clock-minutes">Minutes</label>
+      <input id="clock-seconds" type="number"></input>
+      <label for="clock-seconds">Seconds</label>
+  </div>
+
+  <div class="modal-footer">
+    <%= link_to "Cancel", "#", :class => "cancel" %>
+    <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+  </div>
+</div>
+
 <div class="penalty-editor modal hide" data-backdrop="static" tabindex="-1">
   <div class="modal-header"><h3><i class="icon-flag"></i> <span class="title"><%= t "penalty.editor.title" %></span></h3></div>
   <div class="modal-body">

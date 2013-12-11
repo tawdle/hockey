@@ -86,8 +86,8 @@ class Game < ActiveRecord::Base
 
   attr_accessor :updater
   attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id,
-    :start_time, :updater, :player_ids, :period_duration, :period_minutes, :game_players_attributes,
-    :referee_ids, :linesman_ids, :game_staff_members_attributes, :number
+    :start_time, :updater, :player_ids, :period_durations, :period_minutes, :game_players_attributes,
+    :referee_ids, :linesman_ids, :game_staff_members_attributes, :number, :current_period_duration
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
@@ -240,6 +240,18 @@ class Game < ActiveRecord::Base
     arr
   end
 
+  def current_period_duration
+    period_durations[period]
+  end
+
+  def current_period_duration=(seconds)
+    lengths = period_durations
+    lengths[period] = seconds
+    self.period_durations = lengths
+    clock.update_attributes(duration: seconds)
+    broadcast_changes
+  end
+
   def possible_officials
     league.officials
   end
@@ -358,7 +370,7 @@ class Game < ActiveRecord::Base
   end
 
   def create_clock
-    self.clock = Timer.new(:owner => self, :duration => period_duration) unless clock
+    self.clock = Timer.new(:owner => self, :duration => period_durations.first) unless clock
   end
 
   def destroy_clock
