@@ -222,12 +222,22 @@ class Game < ActiveRecord::Base
     period >= 2 && !tied?
   end
 
-  def period_minutes
-    period_duration / 60
+  def period_durations
+    val = super
+    val ? JSON.parse(val) : [15 * 60] * Periods.length
   end
 
-  def period_minutes=(val)
-    self.period_duration = val.to_i * 60
+  def period_durations=(arr)
+    super(arr.to_json)
+  end
+
+  def period_minutes
+    period_durations.map { |s| s / 60 }
+  end
+
+  def period_minutes=(arr)
+    self.period_durations = arr.map {|m| m.to_i * 60 }
+    arr
   end
 
   def possible_officials

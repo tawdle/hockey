@@ -309,13 +309,13 @@ CREATE TABLE games (
     updated_at timestamp without time zone NOT NULL,
     clock_id integer,
     period integer,
-    period_duration integer DEFAULT 900 NOT NULL,
     number character varying(255),
     league_id integer,
     started_at timestamp without time zone,
     ended_at timestamp without time zone,
     deleted_at timestamp without time zone,
-    marker_id integer
+    marker_id integer,
+    period_durations json
 );
 
 
@@ -1709,3 +1709,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131203041541');
 INSERT INTO schema_migrations (version) VALUES ('20131204001302');
 
 INSERT INTO schema_migrations (version) VALUES ('20131206182029');
+
+INSERT INTO schema_migrations (version) VALUES ('20131211011559');

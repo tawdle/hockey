@@ -31,10 +31,27 @@
     <%= f.datetime_select :start_time, { :default => DateTime.now.at_beginning_of_hour + 7.days, :start_year => DateTime.now.year}, { :class => "span1" } %>
   </div>
 
-  <div class="field">
-    <%= f.label :period_minutes %>
-    <%= f.text_field :period_minutes %>
-  </div>
+  <fieldset class="period-lengths">
+    <legend>Period Lengths</legend>
+    <table>
+      <thead>
+        <tr>
+          <% Game::Periods.each do |period| %>
+            <th><%= period %></th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <% Game::Periods.each_with_index do |period, index| %>
+            <td>
+              <input id="period_length_<%= index %>" type="number" min="0" max="60" name="game[period_minutes][]" value="<%= @game.period_minutes[index] %>">
+            </td>
+          <% end %>
+        </tr>
+      </tbody>
+    </table>
+  </fieldset>
 
   <div class="field">
     <%= f.label :number %>
