@@ -2,6 +2,7 @@ class Location < ActiveRecord::Base
   include SoftDelete
 
   has_many :authorizations, :as => :authorizable
+  has_many :games
 
   attr_accessible :name, :address_1, :address_2, :city, :state, :zip, :country, :telephone, :email, :website
 
@@ -40,6 +41,10 @@ class Location < ActiveRecord::Base
   end
 
   def declined_invitation_to_manage(user, invitation)
+  end
+
+  def current_game
+    games.active.asc.first
   end
 
   private
