@@ -19,7 +19,7 @@
 //= require bigshot
 //= require_tree ./models
 //= require_tree ./collections
-//= require_tree .
+//= require_tree ./views
 //= require jquery.timeago
 //= require typeahead
 //= require fastclick
