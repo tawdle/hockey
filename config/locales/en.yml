@@ -13,6 +13,8 @@ en:
       penalty:
         category: Category
         infraction: Infraction
+      game:
+        period: Period
     values:
       goal:
         advantage:

@@ -11,6 +11,8 @@ fr:
       penalty:
         category: Catégorie
         infraction: Infraction
+      game:
+        period: Période
     models:
       player: Joueur
       team: Équipe
