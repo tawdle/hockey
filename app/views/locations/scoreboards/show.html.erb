@@ -1,0 +1,36 @@
+<%= javascript_tag do %>
+  $(function() {
+    App.players = new App.Players(<%= json_for(@game.players).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
+    App.penalties = new App.Penalties(<%= json_for(@game.penalties).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
+    App.goals = new App.Goals(<%= json_for(@game.goals).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
+    App.feedItems = new App.FeedItems(<%= json_for(@game.activity_feed_items).html_safe %>, {gameId: <%= @game.id %>});
+    App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
+    App.gameView = new App.Scoreboard.GameView({model: App.game, el: "#game-board"});
+  });
+<% end %>
+
+<% content_for(:head) do %>
+  <%= javascript_include_tag AsyncMessaging::FAYE_CONFIG[:script] %>
+<% end %>
+
+<div id="game-board">
+  <div class="visiting-team one-third text-center">
+    <p class="score"></p>
+    <div class="logo"><%= image_tag @game.visiting_team.logo.url(:medium) %></div>
+    <p class="team-name"><span><%= @game.visiting_team.full_name %><span></p>
+  </div>
+
+  <div class="one-third text-center">
+    <p class="clock">
+    <div class="period-label-and-number">
+      <p class="period-label"><%= t("activerecord.attributes.game.period") %></p>
+      <p class="period"></p>
+    </div>
+  </div>
+
+  <div class="home-team one-third text-center">
+    <p class="score"></p>
+    <div class="logo""><%= image_tag @game.home_team.logo.url %></div>
+    <p class="team-name"><span><%= @game.home_team.full_name %><span></p>
+  </div>
+</div>
