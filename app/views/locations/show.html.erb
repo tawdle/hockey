@@ -8,6 +8,7 @@
 
     <address>
       <strong style="font-variant: small-caps; font-size: 120%;"><%= @location.name %></strong><br>
+      <%= format_team_link(@location) %><%= render :partial => "follow_button", :locals => { :target => @location }%><br>
       <%= @location.address_1 %><br>
       <% if @location.address_2.present? %>
         <%= @location.address_2 %><br>

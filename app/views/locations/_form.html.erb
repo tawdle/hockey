@@ -15,8 +15,18 @@
     <div class="span4">
       <div class="field">
         <%= f.label :name %>
-        <%= f.text_field :name, :class => "span4" %>
+        <%= f.text_field :name, :class => "span4", :"data-suggest-system-name-in" => "location_system_name_attributes_name" %>
       </div>
+
+      <%= f.fields_for :system_name do |snf| %>
+        <div class="field">
+          <%= snf.label :name %>
+          <div class="input-prepend">
+            <span class="add-on">@</span>
+            <%= snf.text_field :name %>
+          </div>
+        </div>
+      <% end %>
 
       <div class="field">
         <%= f.label :address_1 %>

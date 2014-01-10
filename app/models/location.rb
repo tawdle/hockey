@@ -1,13 +1,18 @@
 class Location < ActiveRecord::Base
   include SoftDelete
 
+  has_one :system_name, :as => :nameable
   has_many :authorizations, :as => :authorizable
   has_many :games
 
-  attr_accessible :name, :address_1, :address_2, :city, :state, :zip, :country, :telephone, :email, :website
+  attr_accessible :name, :address_1, :address_2, :city, :state, :zip, :country, :telephone, :email, :website, :system_name_attributes
+  accepts_nested_attributes_for :system_name
+
+  after_initialize :set_nameable
 
   validates_uniqueness_of :name
   validates_presence_of :name
+  validates_presence_of :system_name
   validates_presence_of :address_1
   validates_presence_of :city
   validates_presence_of :state
@@ -15,6 +20,10 @@ class Location < ActiveRecord::Base
   validates_presence_of :country
 
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
+
+  def at_name
+    "@#{system_name.name}"
+  end
 
   def map_url
     "https://www.google.com/maps/?#{url_encoded_address(:q)}"
@@ -53,4 +62,9 @@ class Location < ActiveRecord::Base
     { param_name => [address_1, address_2, city, state, zip, country].compact.join(",") }.to_query
   end
 
+  def set_nameable
+    # Not sure why ActiveRecord doesn't do this for us
+    system_name || build_system_name
+    system_name.nameable = self
+  end
 end
