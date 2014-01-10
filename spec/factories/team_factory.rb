@@ -2,7 +2,7 @@ require 'factory_girl'
 
 FactoryGirl.define do
   factory :team do
-    sequence :full_name do |n|
+    sequence :name do |n|
       "Test Team #{n}"
     end
     league

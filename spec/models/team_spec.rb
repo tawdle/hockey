@@ -6,10 +6,10 @@ describe Team do
     it "should generate a valid object" do
       team.should be_valid
     end
-    it "should require a full_name" do
-      team.full_name = ""
+    it "should require a name" do
+      team.name = ""
       team.should_not be_valid
-      team.full_name = nil
+      team.name = nil
       team.should_not be_valid
     end
     it "should require a league" do
@@ -22,11 +22,11 @@ describe Team do
     end
   end
 
-  describe "#name" do
+  describe "#at_name" do
     let(:team) { FactoryGirl.build(:team) }
 
     it "should delegate to the system name" do
-      team.name.should == team.system_name.name
+      team.at_name.should == "@" + team.system_name.name
     end
   end
 

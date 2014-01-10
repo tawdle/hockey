@@ -6,7 +6,7 @@
     <% league.teams.each do |team| %>
       <%= label_tag dom_id(team), :class => "checkbox" do %>
         <%= check_box_tag "[tournament][team_ids][]", team.id, @tournament.teams.include?(team), :id => dom_id(team) %>
-        <%= team.full_name %>
+        <%= team.name %>
       <% end %>
     <% end %>
   <% end %>

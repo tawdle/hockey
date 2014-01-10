@@ -55,7 +55,7 @@ class ActivityFeedItem < ActiveRecord::Base
     usernames.each do |username|
       if username.include?("#")
         team_name, jersey_number = username.split("#")
-        if team = Team.find_by_name(team_name)
+        if team = Team.find_by_at_name(team_name)
           if player = Player.find_by_jersey_number_and_team_id(jersey_number, team.id)
             mentions << Mention.new(mentionable: player)
           end

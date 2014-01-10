@@ -3,7 +3,7 @@
     <%= image_tag @team.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
   <% end %>
   <span style="font-size: smaller;"><%= @team.city %></span><br>
-  <%= @team.full_name %>
+  <%= @team.name %>
   <%= link_to 'Edit', edit_team_path(@team), :class => "btn btn-small" if can? :edit, @team %>
   <%= render :partial => "follow_button", :locals => {:target => @team } %>
 </h2>

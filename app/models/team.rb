@@ -8,9 +8,8 @@ class Team < ActiveRecord::Base
   has_many :users, :through => :players
   has_many :authorizations, :as => :authorizable, :dependent => :destroy
   has_many :staff_members, :inverse_of => :team, :conditions => { deleted_at: nil }
-  delegate :name, :to => :system_name
 
-  validates_presence_of :full_name
+  validates_presence_of :name
   validates_presence_of :system_name
   validates_presence_of :league
 
@@ -19,7 +18,7 @@ class Team < ActiveRecord::Base
   end
 
   attr_accessor :manager
-  attr_accessible :full_name, :logo_cache, :logo, :manager, :league, :system_name_attributes, :city
+  attr_accessible :name, :logo_cache, :logo, :manager, :league, :system_name_attributes, :city
 
   accepts_nested_attributes_for :system_name
 
@@ -27,12 +26,12 @@ class Team < ActiveRecord::Base
 
   before_validation :set_nameable
 
-  def self.find_by_name(name)
+  def self.find_by_at_name(name)
     SystemName.find_by_name_and_nameable_type(name, "Team").try(:nameable)
   end
 
   def at_name
-    "@#{name}"
+    "@#{system_name.name}"
   end
 
   def managers

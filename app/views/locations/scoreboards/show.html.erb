@@ -17,7 +17,7 @@
   <div class="visiting-team one-third text-center">
     <p class="score"></p>
     <div class="logo"><%= image_tag @game.visiting_team.logo.url(:medium) %></div>
-    <p class="team-name"><span><%= @game.visiting_team.full_name %><span></p>
+    <p class="team-name"><span><%= @game.visiting_team.name %><span></p>
   </div>
 
   <div class="one-third text-center">
@@ -31,6 +31,6 @@
   <div class="home-team one-third text-center">
     <p class="score"></p>
     <div class="logo""><%= image_tag @game.home_team.logo.url %></div>
-    <p class="team-name"><span><%= @game.home_team.full_name %><span></p>
+    <p class="team-name"><span><%= @game.home_team.name %><span></p>
   </div>
 </div>

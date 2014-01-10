@@ -753,7 +753,7 @@ ALTER SEQUENCE system_names_id_seq OWNED BY system_names.id;
 
 CREATE TABLE teams (
     id integer NOT NULL,
-    full_name character varying(255) NOT NULL,
+    name character varying(255) NOT NULL,
     league_id integer NOT NULL,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
@@ -1511,7 +1511,7 @@ CREATE INDEX index_team_memberships_on_team_id ON players USING btree (team_id);
 -- Name: index_teams_on_league_id_and_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE INDEX index_teams_on_league_id_and_name ON teams USING btree (league_id, full_name);
+CREATE INDEX index_teams_on_league_id_and_name ON teams USING btree (league_id, name);
 
 
 --
@@ -1711,3 +1711,5 @@ INSERT INTO schema_migrations (version) VALUES ('20131204001302');
 INSERT INTO schema_migrations (version) VALUES ('20131206182029');
 
 INSERT INTO schema_migrations (version) VALUES ('20131211011559');
+
+INSERT INTO schema_migrations (version) VALUES ('20140110000510');

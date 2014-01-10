@@ -164,8 +164,8 @@ class Gamesheets::HockeyQuebec < Prawn::Document
     end
 
     translate(0, 594) do
-      draw_text(@game.visiting_team.full_name, at: [310, 0])
-      draw_text(@game.home_team.full_name, at: [575, 0])
+      draw_text(@game.visiting_team.name, at: [310, 0])
+      draw_text(@game.home_team.name, at: [575, 0])
     end
 
     draw_goalies(@game.visiting_team, 307)

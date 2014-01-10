@@ -54,7 +54,7 @@ describe Leagues::TeamsController do
 
     describe "#create" do
       def do_request
-        post :create, :team => {:full_name => "My New Team", :system_name_attributes => {:name => "MyNewTeam" } }, :league_id => league.to_param
+        post :create, :team => {:name => "My New Team", :system_name_attributes => {:name => "MyNewTeam" } }, :league_id => league.to_param
       end
 
       it "should work" do
@@ -64,10 +64,10 @@ describe Leagues::TeamsController do
 
     describe "#update" do
       def do_request
-        put :update, :id => team.to_param, :team => {:full_name => "My Very New Team" }
+        put :update, :id => team.to_param, :team => {:name => "My Very New Team" }
       end
       it "should work" do
-        expect { do_request }.to change { team.reload.full_name }.to("My Very New Team")
+        expect { do_request }.to change { team.reload.name }.to("My Very New Team")
       end
     end
   end
