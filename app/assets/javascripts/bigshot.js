@@ -29,3 +29,20 @@ $(function() {
 });
 
 
+$(function() {
+  $("[data-suggest-system-name-in]").each(function() {
+    var source = this;
+    var target = $("#" + $(this).attr("data-suggest-system-name-in"));
+
+    if (target.val() === "") {   // only if field is empty on load
+      $(source).on("input", function() {
+        if (!$(target).data("system-name-suggest-disabled")) {
+          $(target).val($(source).val().replace(/[^A-Za-z\d-_\u00C0-\u017F]/gi, ''));
+        }
+      });
+      $(target).on("focus", function() {
+        $(target).data("system-name-suggest-disabled", true);
+      });
+    }
+  });
+});

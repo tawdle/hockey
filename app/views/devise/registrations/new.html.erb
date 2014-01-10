@@ -20,7 +20,7 @@
 
   <div>
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :"data-suggest-system-name-in" => "user_system_name_attributes_name" %>
   </div>
 
   <%= f.fields_for :system_name do |ff| %>
