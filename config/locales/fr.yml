@@ -14,7 +14,7 @@ fr:
       game:
         period: Période
       system_name:
-        name: "@Username"
+        name: "@Name"
     models:
       player: Joueur
       team: Équipe

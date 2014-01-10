@@ -16,7 +16,7 @@ en:
       game:
         period: Period
       system_name:
-        name: "@Username"
+        name: "@Name"
     values:
       goal:
         advantage:
