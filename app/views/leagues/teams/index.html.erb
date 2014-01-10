@@ -4,8 +4,8 @@
   <tr>
     <th style="width: 50px;">Logo</th>
     <th>City</th>
-    <th>Full Name</th>
     <th>Name</th>
+    <th>Profile</th>
     <th></th>
     <th>League</th>
     <th></th>
@@ -18,9 +18,7 @@
     <td><%= team.city %></td>
     <td><%= link_to team.name, team %></td>
     <td>
-      <span class="pull-left" style="margin-right: 10px;">
-        <%= format_user_link(team) %>
-      </span>
+      <%= format_team_link(team) %>
       <%= render :partial => 'follow_button', :locals => {:target => team } %>
     </td>
     <td><%= team.league.name %></td>
