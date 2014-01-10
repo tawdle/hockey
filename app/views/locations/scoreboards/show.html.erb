@@ -1,13 +1,21 @@
 <%= javascript_tag do %>
   $(function() {
+    App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
     App.players = new App.Players(<%= json_for(@game.players).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.penalties = new App.Penalties(<%= json_for(@game.penalties).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.goals = new App.Goals(<%= json_for(@game.goals).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.feedItems = new App.FeedItems(<%= json_for(@game.activity_feed_items).html_safe %>, {gameId: <%= @game.id %>});
-    App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
     App.gameView = new App.Scoreboard.GameView({model: App.game, el: "#game-board"});
   });
 <% end %>
+
+
+<!--
+
+<%= "This is for game #{@game.id}" %>
+
+-->
+
 
 <% content_for(:head) do %>
   <%= javascript_include_tag AsyncMessaging::FAYE_CONFIG[:script] %>
