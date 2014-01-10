@@ -1,16 +1,15 @@
 class Team < ActiveRecord::Base
   include SoftDelete
+  include Followable
 
   after_create :set_manager
   belongs_to :league
-  has_one :system_name, :as => :nameable
   has_many :players, :dependent => :destroy, :order => "lpad(jersey_number, #{Player::MaxJerseyNumberLength}, '0'), name", :conditions => { deleted_at: nil }
   has_many :users, :through => :players
   has_many :authorizations, :as => :authorizable, :dependent => :destroy
   has_many :staff_members, :inverse_of => :team, :conditions => { deleted_at: nil }
 
   validates_presence_of :name
-  validates_presence_of :system_name
   validates_presence_of :league
 
   def activity_feed_items
@@ -18,20 +17,12 @@ class Team < ActiveRecord::Base
   end
 
   attr_accessor :manager
-  attr_accessible :name, :logo_cache, :logo, :manager, :league, :system_name_attributes, :city
-
-  accepts_nested_attributes_for :system_name
+  attr_accessible :name, :logo_cache, :logo, :manager, :league, :city
 
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
 
-  before_validation :set_nameable
-
   def self.find_by_at_name(name)
     SystemName.find_by_name_and_nameable_type(name, "Team").try(:nameable)
-  end
-
-  def at_name
-    "@#{system_name.name}"
   end
 
   def managers
@@ -60,11 +51,5 @@ class Team < ActiveRecord::Base
 
   def set_manager
     Authorization.create!(:role => :manager, :user => manager, :authorizable => self)
-  end
-
-  def set_nameable
-    # Not sure why ActiveRecord doesn't do this for us
-    system_name || build_system_name
-    system_name.nameable = self
   end
 end
