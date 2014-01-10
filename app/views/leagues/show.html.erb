@@ -5,6 +5,7 @@
   <%= @league.name %>
   <%= link_to 'Edit', edit_league_path(@league), class: "btn btn-small" if can? :edit, @league %>
 </h2>
+<%= format_team_link(@league) %><%= render :partial => "follow_button", :locals => { :target => @league } %>
 
 <h3>Managers
   <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league) %>

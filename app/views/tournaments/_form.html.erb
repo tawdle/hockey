@@ -13,8 +13,18 @@
 
   <div class="field">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :"data-suggest-system-name-in" => "tournament_system_name_attributes_name" %>
   </div>
+
+  <%= f.fields_for :system_name do |snf| %>
+    <div class="field">
+      <%= snf.label :name %>
+      <div class="input-prepend">
+        <span class="add-on">@</span>
+        <%= snf.text_field :name %>
+      </div>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= f.label :division %>

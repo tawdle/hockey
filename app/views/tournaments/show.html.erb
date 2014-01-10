@@ -5,6 +5,8 @@
       <%= link_to "<span class='icon-edit'>".html_safe, edit_tournament_path(@tournament), :class => "btn" if can? :edit, @tournament %>
     </h3>
 
+    <%= format_team_link(@tournament) %><%= render :partial => "follow_button", :locals => {:target => @tournament } %>
+
     <dl class="dl-horizontal">
       <dt>Name</dt>
       <dd><%= @tournament.name %></dd>

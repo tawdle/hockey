@@ -1,5 +1,6 @@
 class League < ActiveRecord::Base
   include SoftDelete
+  include Followable
 
   Divisions = %w(prenovice initiation novice atom pee_wee bantam midget intermediate juvenile secondary junior major_junior other_junior adult_recreational senior college university house).map(&:to_sym)
   Classifications = %w(a b c aa bb cc aaa).map(&:to_sym)
