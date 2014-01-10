@@ -54,6 +54,8 @@ class Ability
       user.admin?
     end
 
+    can :read, Location
+
     can :manage, Location do |location|
       user.admin? || user.manager_of?(location)
     end
