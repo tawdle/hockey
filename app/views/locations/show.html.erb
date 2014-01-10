@@ -45,6 +45,10 @@
 
 <div class="clearfix"></div>
 
+<% if can? :view_scoreboard, @location %>
+  <%= link_to "View Scoreboard", location_scoreboard_path(@location) %>
+<% end %>
+
 <div style="margin-top: 10px;">
   <%= link_to "Back", :back %>
 </div>
