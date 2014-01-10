@@ -3,7 +3,6 @@ class SystemName < ActiveRecord::Base
 
   NameFormat = "[[:alpha:]\\d\\-_]+"
 
-  validates_presence_of :name
   validates_uniqueness_of :name, :case_sensitive => false
   validates_format_of :name, :with => /\A#{NameFormat}\Z/, :message => 'can contain only alphanumeric characters'
   validates_length_of :name, :within => 3..32
