@@ -9,7 +9,8 @@ class User < ActiveRecord::Base
   attr_accessor :avatar_cache
   attr_accessible :email, :password, :password_confirmation, :remember_me
   attr_accessible :avatar, :avatar_cache, :time_zone, :language, :system_name_attributes
-  attr_readonly :name
+  attr_accessible :name
+  attr_readonly :cached_system_name
 
   symbolize :language, in: [:en, :fr], allow_nil: true
 
@@ -21,7 +22,7 @@ class User < ActiveRecord::Base
   mount_uploader :avatar, AvatarUploader
 
   after_initialize :init_system_name
-  before_update :update_mentions, :if => :name_changed?
+  before_update :update_mentions, :if => :cached_system_name_changed?
   before_create :cache_name
 
   accepts_nested_attributes_for :system_name
@@ -37,8 +38,12 @@ class User < ActiveRecord::Base
       :authorizable_id => authorizable.id).count > 0 }
   end
 
+  def name
+    super || cached_system_name
+  end
+
   def at_name
-    "@#{name}"
+    "@#{cached_system_name}"
   end
 
   def merge(other)
@@ -71,10 +76,10 @@ class User < ActiveRecord::Base
   end
 
   def update_mentions
-    Mention.rename(self, name_was, name)
+    Mention.rename(self, cached_system_name_was, cached_system_name)
   end
 
   def cache_name
-    self.name = system_name.name
+    self.cached_system_name = system_name.name
   end
 end

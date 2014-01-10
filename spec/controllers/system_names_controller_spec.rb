@@ -14,7 +14,7 @@ describe SystemNamesController do
 
     context "with a user's name" do
       let(:user) { FactoryGirl.create(:user) }
-      let(:id) { user.name }
+      let(:id) { user.cached_system_name }
 
       it "redirects to the user's page" do
         get :show, :id => id

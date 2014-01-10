@@ -2,7 +2,7 @@ module UsersHelper
   include Rails.application.routes.url_helpers
 
   def format_user_link(user)
-    "<span class='username'>@#{link_to(user.name, user)}</span>".html_safe if user
+    "<span class='username'>@#{link_to(user.cached_system_name, user)}</span>".html_safe if user
   end
 
   def format_team_link(team)

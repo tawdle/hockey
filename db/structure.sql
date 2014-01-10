@@ -868,10 +868,11 @@ CREATE TABLE users (
     last_sign_in_ip character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    name character varying(255),
+    cached_system_name character varying(255),
     avatar character varying(255),
     time_zone character varying(255),
-    language character varying(255)
+    language character varying(255),
+    name character varying(255)
 );
 
 
@@ -1546,7 +1547,7 @@ CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 -- Name: index_users_on_lowercase_name; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE UNIQUE INDEX index_users_on_lowercase_name ON users USING btree (lower((name)::text));
+CREATE UNIQUE INDEX index_users_on_lowercase_name ON users USING btree (lower((cached_system_name)::text));
 
 
 --
@@ -1713,3 +1714,7 @@ INSERT INTO schema_migrations (version) VALUES ('20131206182029');
 INSERT INTO schema_migrations (version) VALUES ('20131211011559');
 
 INSERT INTO schema_migrations (version) VALUES ('20140110000510');
+
+INSERT INTO schema_migrations (version) VALUES ('20140110010821');
+
+INSERT INTO schema_migrations (version) VALUES ('20140110012751');

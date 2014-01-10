@@ -44,7 +44,7 @@ describe Player do
     describe "#at_name" do
       context "without a user" do
         it "returns the team#jersey" do
-          player.at_name.should match(player.team.name)
+          player.at_name.should match(player.team.system_name.name)
           player.at_name.should match(player.jersey_number.to_s)
         end
       end

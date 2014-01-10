@@ -18,6 +18,11 @@
     <%= f.password_field :password_confirmation %>
   </div>
 
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
   <%= f.fields_for :system_name do |ff| %>
     <div>
       <%= ff.label :name %>

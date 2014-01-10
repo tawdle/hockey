@@ -13,6 +13,8 @@ fr:
         infraction: Infraction
       game:
         period: Période
+      system_name:
+        name: "@Username"
     models:
       player: Joueur
       team: Équipe

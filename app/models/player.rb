@@ -36,7 +36,7 @@ class Player < ActiveRecord::Base
   end
 
   def team_and_jersey
-    "#{team.name}##{jersey_number}"
+    "#{team.system_name.name}##{jersey_number}"
   end
 
   def at_name
@@ -62,7 +62,7 @@ class Player < ActiveRecord::Base
     username_match = /^\@(.*)$/.match(username_or_email)
     if username_match
       username = username_match[1].strip
-      user = User.find_by_name(username)
+      user = User.find_by_cached_system_name(username)
       if user
         self.email = user.email
       else
