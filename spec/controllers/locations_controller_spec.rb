@@ -1,13 +1,12 @@
 require 'spec_helper'
 
 describe LocationsController do
-  context "with a logged in admin" do
-    let(:location) { FactoryGirl.create(:location) }
-    before { sign_in_as_admin }
+  let(:location) { FactoryGirl.create(:location) }
 
-    describe "#index" do
+  context "without a logged in user" do
+    describe "#show" do
       def do_request
-        get :index
+        get :show, :id => location.to_param
       end
 
       it "should work" do
@@ -15,10 +14,14 @@ describe LocationsController do
         response.should be_ok
       end
     end
+  end
 
-    describe "#show" do
+  context "with a logged in admin" do
+    before { sign_in_as_admin }
+
+    describe "#index" do
       def do_request
-        get :show, :id => location.to_param
+        get :index
       end
 
       it "should work" do
