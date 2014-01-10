@@ -6,7 +6,7 @@ module UsersHelper
   end
 
   def format_team_link(team)
-    "<span class='username'>@#{link_to(team.system_name.name, team)}</span>".html_safe if team
+    "<span class='username'>@#{link_to(team.system_name.name, team)}</span>".html_safe if team && team.system_name
   end
 
   def format_username_link(username)
