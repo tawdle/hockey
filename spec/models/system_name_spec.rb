@@ -41,8 +41,8 @@ describe SystemName do
         system_name.name = "ab"
         system_name.should_not be_valid
       end
-      it "requires fewer than 20 chars" do
-        system_name.name = "x" * 21
+      it "requires fewer than 32 chars" do
+        system_name.name = "x" * 33
         system_name.should_not be_valid
       end
       it "allows accented characters" do
