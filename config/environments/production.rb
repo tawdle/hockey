@@ -52,7 +52,7 @@ Hockey::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # So devise can send email
-  config.action_mailer.default_url_options = { :host => 'powerplay.io' }
+  config.action_mailer.default_url_options = { :host => 'bigshot.io' }
 
   ActionMailer::Base.smtp_settings = {
     :address        => 'smtp.sendgrid.net',
