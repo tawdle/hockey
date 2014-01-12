@@ -1,0 +1,9 @@
+<h2>Kiosk Mode</h2>
+
+<% if @kiosk.valid? %>
+  <p>Kiosk mode is currently enabled in this browser.</p>
+  <%= link_to "Disable", admin_kiosk_path, :method => :delete, :class => "btn btn-warning" %>
+<% else %>
+  <p>Kiosk mode is currently disabled in this browser.</p>
+  <%= link_to "Enable", new_admin_kiosk_path, :class => "btn btn-primary" %>
+<% end %>

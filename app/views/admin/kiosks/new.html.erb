@@ -1,0 +1,30 @@
+<h1>Enable Kiosk Mode</h1>
+
+<%= form_for([:admin, @kiosk], :url => admin_kiosk_path) do |f| %>
+  <% if @kiosk.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@kiosk.errors.count, "error") %> prohibited kiosk mode from being enabled:</h2>
+
+      <ul>
+      <% @kiosk.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password, :autofocus => true %>
+  </div>
+
+  <div class="field">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <%= f.submit %>
+
+<% end %>
+

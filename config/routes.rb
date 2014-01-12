@@ -65,6 +65,10 @@ Hockey::Application.routes.draw do
 
   match 'typeahead/get_users' => 'typeahead#get_users'
 
+  namespace :admin do
+    resource :kiosk, :except => [:edit, :update]
+  end
+
   #
   # The priority is based upon order of creation:
   # first created -> highest priority.

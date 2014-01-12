@@ -48,6 +48,10 @@ class Ability
       user.persisted?
     end
 
+    can :manage, Kiosk do
+      user.admin?
+    end
+
     can :read, League
 
     can [:create, :update, :destroy], League do |league|
