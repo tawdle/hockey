@@ -1,6 +1,6 @@
 <h2>
   <% if @team.logo.present? %>
-    <%= image_tag @team.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
+    <%= cl_image_tag @team.logo_url(:thumbnail), :secure => Rails.env.production?, :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
   <% end %>
   <span style="font-size: smaller;"><%= @team.city %></span><br>
   <%= @team.name %>

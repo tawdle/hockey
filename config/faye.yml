@@ -4,8 +4,8 @@ development:
   script: "http://localhost:8000/faye.js"
   password: "this_is_a_SeCRet"
 production:
-  uri: "http://salty-bayou-1265.herokuapp.com/faye"
-  script: "http://salty-bayou-1265.herokuapp.com/faye.js"
+  uri: "https://salty-bayou-1265.herokuapp.com/faye"
+  script: "https://salty-bayou-1265.herokuapp.com/faye.js"
   password: "this_is_a_SeCRet"
 test:
   disabled: true
