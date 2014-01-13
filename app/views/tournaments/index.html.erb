@@ -14,7 +14,7 @@
 
 <% Tournament.without_deleted.each do |tournament| %>
   <tr>
-    <td><%= image_tag(tournament.logo_url(:thumbnail)) if tournament.logo.present? %></td>
+    <td><%= cl_image_tag(tournament.logo_url(:thumbnail)) if tournament.logo.present? %></td>
     <td><%= link_to tournament.name, tournament %></td>
     <td><%= t("league.divisions.#{tournament.division}") %>
     <td><%= t("league.classifications.#{tournament.classification}") %>

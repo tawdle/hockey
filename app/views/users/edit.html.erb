@@ -21,7 +21,7 @@
 
   <div class="field">
     <% if @user.avatar.present? %>
-      <%= image_tag @user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
+      <%= cl_image_tag @user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
     <% end %>
 
     <%= f.label :avatar %>

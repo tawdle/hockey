@@ -14,7 +14,7 @@
 
 <% @teams.without_deleted.each do |team| %>
   <tr>
-    <td><%= image_tag(team.logo_url(:thumbnail), :width => 50, :height => 50) if team.logo.present? %>
+    <td><%= cl_image_tag(team.logo_url(:thumbnail), :width => 50, :height => 50) if team.logo.present? %>
     <td><%= team.city %></td>
     <td><%= link_to team.name, team %></td>
     <td>

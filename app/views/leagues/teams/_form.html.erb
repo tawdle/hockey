@@ -35,7 +35,7 @@
 
   <div class="field">
     <% if @team.logo.present? %>
-      <%= image_tag @team.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
+      <%= cl_image_tag @team.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
     <% end %>
 
     <%= f.label :logo %>
