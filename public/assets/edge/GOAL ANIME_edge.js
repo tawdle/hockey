@@ -43,15 +43,8 @@ var symbols = {
             rect:['638px','-1000px','1643px','925px','auto','auto'],
             fill:["rgba(0,0,0,0)", assetPath + 'Medias/Logo%20AiglesALPHA.png','0px','0px'],
             transform:[[],['15']]
-         },
-         {
-            id:'Text5',
-            type:'text',
-            rect:['586px','495px','691px','208px','auto','auto'],
-            text:"Click anywhere<br>to start animation",
-            align:"center",
-            font:['Arial, Helvetica, sans-serif',53,"rgba(255,255,255,1)","normal","none","normal"]
-         }],
+         }
+         ],
          symbolInstances: [
 
          ]
@@ -81,13 +74,6 @@ var symbols = {
             ["color", "background-color", 'rgba(0,0,0,1.00)'],
             ["style", "left", '0px'],
             ["style", "width", '1920px']
-         ],
-         "${_Text5}": [
-            ["style", "top", '495px'],
-            ["style", "height", '208px'],
-            ["style", "opacity", '1'],
-            ["style", "left", '586px'],
-            ["style", "width", '691px']
          ],
          "${_But_ALPHA}": [
             ["style", "top", '-417px'],
@@ -172,7 +158,6 @@ var symbols = {
             { id: "eid131", tween: [ "style", "${_But_ALPHA}", "height", '733px', { fromValue: '1010px'}], position: 14667, duration: 935 },
             { id: "eid132", tween: [ "style", "${_But_ALPHA}", "height", '873px', { fromValue: '733px'}], position: 15602, duration: 938 },
             { id: "eid133", tween: [ "style", "${_But_ALPHA}", "height", '1894px', { fromValue: '873px'}], position: 16540, duration: 525 },
-            { id: "eid236", tween: [ "style", "${_Text5}", "opacity", '0', { fromValue: '1'}], position: 9000, duration: 500 },
             { id: "eid212", tween: [ "transform", "${_Logo_AiglesALPHA}", "rotateZ", '-14deg', { fromValue: '21deg'}], position: 13000, duration: 1424 },
             { id: "eid217", tween: [ "transform", "${_Logo_AiglesALPHA}", "rotateZ", '11deg', { fromValue: '-14deg'}], position: 14424, duration: 936 },
             { id: "eid218", tween: [ "transform", "${_Logo_AiglesALPHA}", "rotateZ", '0deg', { fromValue: '11deg'}], position: 15360, duration: 450 },

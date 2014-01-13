@@ -11,38 +11,11 @@ var Composition = Edge.Composition, Symbol = Edge.Symbol; // aliases for commonl
 
    //Edge symbol: 'stage'
    (function(symbolName) {
-      
-      
       Symbol.bindTriggerAction(compId, symbolName, "Default Timeline", 17065, function(sym, e) {
          // play the timeline from the given position (ms or label)
          sym.play("Loop");
-         
-         
-         
-
       });
       //Edge binding end
-
-      Symbol.bindTriggerAction(compId, symbolName, "Default Timeline", 10000, function(sym, e) {
-         
-         
-         
-         
-         
-         
-
-      });
-      //Edge binding end
-
-      Symbol.bindElementAction(compId, symbolName, "${_But_ALPHA}", "click", function(sym, e) {
-         
-         sym.play("Preroll");
-         
-         
-
-      });
-      //Edge binding end
-
    })("stage");
    //Edge symbol end:'stage'
 
