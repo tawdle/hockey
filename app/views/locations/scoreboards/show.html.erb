@@ -1,3 +1,13 @@
+<% content_for(:head) do %>
+  <%= javascript_include_tag AsyncMessaging::FAYE_CONFIG[:script] %>
+<!--Adobe Edge Runtime-->
+    <script type="text/javascript" charset="utf-8" src="/assets/edge/GOAL%20ANIME_edgePreload.js"></script>
+    <style>
+        .edgeLoad-EDGE-404308 { visibility:hidden; }
+    </style>
+<!--Adobe Edge Runtime End-->
+<% end %>
+
 <%= javascript_tag do %>
   $(function() {
     App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
@@ -9,6 +19,12 @@
   });
 <% end %>
 
+<%= javascript_tag do %>
+  AdobeEdge.bootstrapCallback(function(compId) {
+    console.log("edge says it finished loading " + compId);
+  });
+
+<% end %>
 
 <!--
 
@@ -16,10 +32,6 @@
 
 -->
 
-
-<% content_for(:head) do %>
-  <%= javascript_include_tag AsyncMessaging::FAYE_CONFIG[:script] %>
-<% end %>
 
 <div id="game-board">
   <div class="visiting-team one-third text-center">
@@ -43,4 +55,7 @@
     <div class="logo"><%= cl_image_tag @game.home_team.logo.url %></div>
     <p class="team-name"><span><%= @game.home_team.name %><span></p>
   </div>
+</div>
+
+<div id="Stage" class="EDGE-404308">
 </div>
