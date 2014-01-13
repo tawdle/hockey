@@ -10,6 +10,8 @@ var fonts = {};
 
 var resources = [
 ];
+var assetPath = "/assets/edge/";
+
 var symbols = {
 "stage": {
    version: "2.0.1",
@@ -32,14 +34,14 @@ var symbols = {
             id:'But_ALPHA',
             type:'image',
             rect:['-574px','-159px','2374px','1994px','auto','auto'],
-            fill:["rgba(0,0,0,0)",'Medias/But_ALPHA.png','0px','0px'],
+            fill:["rgba(0,0,0,0)", assetPath + 'Medias/But_ALPHA.png','0px','0px'],
             transform:[[],['-9']]
          },
          {
             id:'Logo_AiglesALPHA',
             type:'image',
             rect:['638px','-1000px','1643px','925px','auto','auto'],
-            fill:["rgba(0,0,0,0)",'Medias/Logo%20AiglesALPHA.png','0px','0px'],
+            fill:["rgba(0,0,0,0)", assetPath + 'Medias/Logo%20AiglesALPHA.png','0px','0px'],
             transform:[[],['15']]
          },
          {

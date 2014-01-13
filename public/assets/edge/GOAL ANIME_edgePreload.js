@@ -43,11 +43,13 @@ if(document.addEventListener ){
    htFallbacks={
     };
 
+    var assetPath = "/assets/edge/";
+
    aLoader = [
-    { load: "edge_includes/jquery-1.7.1.min.js"},
-    { load: "edge_includes/edge.2.0.1.min.js"},
-          { load: "GOAL%20ANIME_edge.js"},
-          { load: "GOAL%20ANIME_edgeActions.js"}];
+    //{ load: "edge_includes/jquery-1.7.1.min.js"},
+    { load: assetPath + "edge_includes/edge.2.0.1.min.js"},
+          { load: assetPath + "GOAL%20ANIME_edge.js"},
+          { load: assetPath + "GOAL%20ANIME_edgeActions.js"}];
 
 if (AdobeEdge.bootstrapLoading) { signaledLoading = true; AdobeEdge.loadResources=doLoadResources; AdobeEdge.playWhenReady=playWhenReady; }
 
