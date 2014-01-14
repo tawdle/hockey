@@ -18,7 +18,7 @@
     <td><%= link_to tournament.name, tournament %></td>
     <td><%= t("league.divisions.#{tournament.division}") %>
     <td><%= t("league.classifications.#{tournament.classification}") %>
-    <td><%= link_to 'Edit', edit_league_path(tournament) if can? :edit, tournament %></td>
+    <td><%= link_to 'Edit', edit_tournament_path(tournament) if can? :edit, tournament %></td>
     <td><%= link_to 'Delete', tournament, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, tournament %></td>
   </tr>
 <% end %>
