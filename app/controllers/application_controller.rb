@@ -5,6 +5,10 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
   around_filter :user_time_zone, :if => :current_user
 
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to main_app.root_url, :alert => exception.message
+  end
+
   def user_time_zone(&block)
     if current_user.time_zone
       Time.use_zone(current_user.time_zone, &block)
