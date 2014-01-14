@@ -15,9 +15,12 @@
     App.penalties = new App.Penalties(<%= json_for(@game.penalties).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.goals = new App.Goals(<%= json_for(@game.goals).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
     App.feedItems = new App.FeedItems(<%= json_for(@game.activity_feed_items).html_safe %>, {gameId: <%= @game.id %>});
-    var gameView = new App.Scoreboard.GameView({model: App.game, el: "#game-board"});
-    var goalAnimation = new App.Scoreboard.GoalAnimationView({ el: "#Stage" });
-    App.boardView = new App.Scoreboard.BoardView({el: ".content", gameBoard: gameView, goalAnimation: goalAnimation });
+    var views = [];
+    views.push(new App.Scoreboard.GameView({model: App.game, el: "#game-board"}));
+    views.push(new App.Scoreboard.GoalAnimationView({ el: "#Stage" }));
+    views.push(new App.Scoreboard.ReplayView( { el: "#goal-replay" }));
+    views.push(new App.Scoreboard.PlayerGoalView( { el: "#player-goal" }));
+    App.boardView = new App.Scoreboard.BoardView({el: ".content", views: views, defaultView: views[0]});
   });
 <% end %>
 
@@ -60,4 +63,13 @@
 </div>
 
 <div id="Stage" class="EDGE-404308">
+</div>
+
+<div id="goal-replay">
+  <video></video>
+</div>
+
+<div id="player-goal" style="color: white;">
+  <h1>Insert Player Goal Animation Here</h1>
+  <div class="player" style="font-size: 14px;"></div>
 </div>

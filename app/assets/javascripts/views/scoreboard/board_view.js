@@ -1,40 +1,54 @@
 App.Scoreboard.BoardView = Backbone.View.extend({
   initialize: function(options) {
-    this.gameBoard = options.gameBoard;
-    this.goalAnimation = options.goalAnimation;
+    this.views = options.views;
+    this.defaultView = options.defaultView || options.views[0];
+    this.queue = [];
     this.currentView = null;
     this.$el.children().hide();
-    this.show(this.gameBoard);
-    this.listenTo(App.goals, "add", this.goalAdded);
+
+    var self = this;
+    _.each(this.views, function(view) {
+      self.listenTo(view, "finished", self.onFinished);
+      view.board = self;
+    });
+
+    this.show(this.defaultView);
   },
 
-  show: function(view, args) {
+  show: function(view) {
     var current = this.currentView;
 
     if (current == view) return;
 
     if (current) current.trigger("hiding");
-    view.trigger("showing", args);
+    view.trigger("showing");
 
     if (current) current.$el.hide();
     if (current) current.trigger("hidden");
 
     view.$el.show();
-    view.trigger("shown", args);
+    view.trigger("shown");
 
     this.currentView = view;
   },
 
-  goalAdded: function(goal) {
-    var self = this;
-    this.show(this.goalAnimation, goal);
-    goal.once("change:player_ids remove", function() {
-      self.goalCompleted();
-    });
+  onFinished: function(view) {
+    if (view == this.currentView) {
+      this.showNext();
+    }
   },
 
-  goalCompleted: function() {
-    this.show(this.gameBoard);
+  showNext: function() {
+    this.show(this.queue.shift() || this.defaultView);
+  },
+
+  enqueue: function(view) {
+    this.queue.push(view);
+  },
+
+  reset: function() {
+    this.queue = [];
+    this.showNext();
   }
 });
 

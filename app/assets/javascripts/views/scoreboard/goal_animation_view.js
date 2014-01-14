@@ -1,14 +1,29 @@
 App.Scoreboard.GoalAnimationView = Backbone.View.extend({
+  name: "GoalAnimationView",
+
   initialize: function(options) {
     this.listenTo(this, "showing", this.start);
     this.listenTo(this, "hidden", this.stop);
+    this.listenTo(App.goals, "add", this.goalAdded);
     this.sound = new Audio("/assets/edge/Medias/Dallas_Stars_Horn.mp3");
   },
 
-  start: function(goal) {
+  goalAdded: function(goal) {
+    this.goal = goal;
+
     var side = App.game.homeOrVisting(goal.get("team_id"));
     var logoSrc = $("." + side + "-team .logo img").attr("src");
     $("#Stage_Logo_AiglesALPHA").css("background-image", "url(" + logoSrc + ")");
+
+    this.board.show(this);
+  },
+
+  start: function() {
+    var self = this;
+    this.listenTo(this.goal, "remove", function() {
+      self.board.reset();
+    });
+
     this.stage().play("Loop");
     this.sound.volume = 0;
     this.sound.currentTime = 0;
@@ -18,6 +33,8 @@ App.Scoreboard.GoalAnimationView = Backbone.View.extend({
 
   stop: function() {
     var self = this;
+    this.stopListening(this.goal);
+
     this.stage().stop();
     $(this.sound).animate( { volume: 0 }, 750, function() {
       self.sound.pause();

@@ -1,4 +1,6 @@
 App.Scoreboard.GameView = Backbone.View.extend({
+  name: "GameView",
+
   initialize: function(options) {
     this.homeView = new App.Scoreboard.TeamView({
       model: this.model, 
