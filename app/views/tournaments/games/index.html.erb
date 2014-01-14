@@ -23,7 +23,7 @@
       <td><%= "#{game.home_team_score} - #{game.visiting_team_score}" if game.active? %></td>
       <td>
         <%= link_to "Change", edit_tournament_game_path(@tournament, game), :class => "btn" if game.scheduled? && can?(:edit, game) %>
-        <%= link_to "Cancel", game, method: :delete, data: { confirm: 'Are you sure you want to cancel this game?' }, class: "btn" if (game.scheduled? && can?(:destroy, game)) %>
+        <%= link_to "Cancel", tournament_game_path(@tournament, game), method: :delete, data: { confirm: 'Are you sure you want to cancel this game?' }, class: "btn" if (game.scheduled? && can?(:destroy, game)) %>
       </td>
     </tr>
   <% end %>
