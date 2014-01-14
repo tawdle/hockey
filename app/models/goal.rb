@@ -6,7 +6,7 @@ class Goal < ActiveRecord::Base
   has_many :players, :through => :goal_players, :order => "goal_players.ordinal asc"
 
   attr_accessor :updater
-  attr_accessible :game, :game_id, :creator, :team_id, :period, :player_ids, :elapsed_time, :advantage
+  attr_accessible :created_at, :game, :game_id, :creator, :team_id, :period, :player_ids, :elapsed_time, :advantage
 
 
   validates_presence_of :creator
