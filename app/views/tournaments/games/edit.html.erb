@@ -2,7 +2,7 @@
   <%= @game.home_team.name %> <i>vs.</i> <%= @game.visiting_team.name %>
 </h3>
 
-<%= form_for([@league, @game]) do |f| %>
+<%= form_for([@tournament, @game]) do |f| %>
   <% if @game.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@game.errors.count, "error") %> prohibited this game from being updated:</h2>
