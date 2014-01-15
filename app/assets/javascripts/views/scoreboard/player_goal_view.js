@@ -7,9 +7,11 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
     this.listenTo(App.goals, "add", this.goalAdded);
   },
 
-  duration: 5000, // msec
+  duration: 10000, // msec
 
   start: function() {
+    this.stage().play(0);
+
     var self = this;
     setTimeout(function() {
       self.trigger("finished", self);
@@ -18,6 +20,7 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
 
   stop: function() {
     this.stopListening(this.goal);
+    this.stage().stop();
   },
 
   goalAdded: function(goal) {
@@ -28,14 +31,22 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
 
   goalCompleted: function() {
     var player = App.players.get(this.goal.get("player_ids")[0]);
-    var playerNameAndNumber = player.get("name_and_number");
+    var name = player.get("name");
+    var number = player.get("jersey_number");
     var photoUrl = player.get("photo_url");
-    this.$(".player").html("<p>" + playerNameAndNumber + "</p><img src='" + photoUrl + "'></img>");
+    console.log("setting name to " + name);
+    $("#player-goal-animation_Player_Name").html(name);
+    $("#player-goal-animation_Maxime_Leblond__74Copy").css("background-image", "url(" + photoUrl + ")");
     this.board.show(this);
   },
 
   goalRemoved: function() {
     this.board.reset();
+  },
+
+  stage: function() {
+    return AdobeEdge.getComposition("EDGE-278437879").getStage();
   }
+
 });
 

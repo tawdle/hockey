@@ -48,19 +48,15 @@ if(document.addEventListener ){
    aLoader = [
     //{ load: "edge_includes/jquery-1.7.1.min.js"},
     { load: assetPath + "edge_includes/edge.2.0.1.min.js"},
-          { load: assetPath + "GOAL%20ANIME_edge.js"},
-          { load: assetPath + "GOAL%20ANIME_edgeActions.js"}];
+          { load: assetPath + "PlayerAnimation_edge.js"},
+          { load: assetPath + "PlayerAnimation_edgeActions.js"}];
 
 if (AdobeEdge.bootstrapLoading) { signaledLoading = true; AdobeEdge.loadResources=doLoadResources; AdobeEdge.playWhenReady=playWhenReady; }
 
 loadResources(aLoader, doDelayLoad);
 
-preContent={
-   dom: [
-   ]};//simpleContent
+preContent={dom: [ ]};//simpleContent
 
-dlContent={
-   dom: [
-]};//simpleContent
+dlContent={dom: [ ]};//simpleContent
 
-})( "EDGE-404308");
+})( "EDGE-278437879");

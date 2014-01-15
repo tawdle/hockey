@@ -13,7 +13,7 @@ App.Scoreboard.GoalAnimationView = Backbone.View.extend({
 
     var side = App.game.homeOrVisting(goal.get("team_id"));
     var logoSrc = $("." + side + "-team .logo img").attr("src");
-    $("#Stage_Logo_AiglesALPHA").css("background-image", "url(" + logoSrc + ")");
+    $("#team-goal-animation_Logo_AiglesALPHA").css("background-image", "url(" + logoSrc + ")");
 
     this.board.show(this);
   },
