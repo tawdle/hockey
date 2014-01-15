@@ -6,6 +6,7 @@
   <tr>
     <th style="width: 50px;">Logo</th>
     <th>Name</th>
+    <th>@Name</th>
     <th>Division</td>
     <th>Class</td>
     <th></th>
@@ -16,6 +17,7 @@
   <tr>
     <td><%= cl_image_tag(tournament.logo_url(:thumbnail)) if tournament.logo.present? %></td>
     <td><%= link_to tournament.name, tournament %></td>
+    <td><%= format_team_link(tournament) %> <%= render :partial => "follow_button", :locals => {:target => tournament } %></td>
     <td><%= t("league.divisions.#{tournament.division}") %>
     <td><%= t("league.classifications.#{tournament.classification}") %>
     <td><%= link_to 'Edit', edit_tournament_path(tournament) if can? :edit, tournament %></td>
