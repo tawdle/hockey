@@ -28,6 +28,7 @@
 
 <table class="table table-hover">
   <tr>
+    <th>Photo</th>
     <th>Name</th>
     <th style="width: 20px;">#</th>
     <th>Profile</th>
@@ -37,7 +38,8 @@
 
   <% @team.players.each do |player| %>
     <tr>
-      <td><%= player.name %>
+      <td><%= cl_image_tag(player.photo_url(:thumbnail)) %></td>
+      <td><%= player.name %></td>
       <td><%= player.jersey_number %></td>
       <td><%= format_player_link(player) %></td>
       <td><%= player.role.to_s.humanize %></td>

@@ -651,7 +651,8 @@ CREATE TABLE players (
     jersey_number character varying(255),
     name character varying(255),
     deleted_at timestamp without time zone,
-    role character varying(255)
+    role character varying(255),
+    photo character varying(255)
 );
 
 
@@ -1718,3 +1719,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140110000510');
 INSERT INTO schema_migrations (version) VALUES ('20140110010821');
 
 INSERT INTO schema_migrations (version) VALUES ('20140110012751');
+
+INSERT INTO schema_migrations (version) VALUES ('20140115005546');

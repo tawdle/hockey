@@ -1,7 +1,12 @@
-<h2>Player page for <%= @player.name %></h2>
+<h2>Player: <%= @player.name %>
+  <%= render partial: "follow_button", locals: { target: @player } %>
+</h2>
 
-<%= render partial: "follow_button", locals: { target: @player } %>
+<h3>Team: <%= @player.team.name %></h3>
 
-<p>
-  Content coming soon.
-</p>
+<div>
+  <%= cl_image_tag(@player.photo.url(:small)) %>
+</div>
+
+<% link_to "Edit", edit_player_path(@player), :class => "btn" if can?(:edit, @player) %>
+

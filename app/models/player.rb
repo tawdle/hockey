@@ -9,8 +9,8 @@ class Player < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
   symbolize :role, :in => Roles
-  attr_accessor :username_or_email, :creator, :email
-  attr_accessible :team, :username_or_email, :creator, :jersey_number, :name, :role
+  attr_accessor :username_or_email, :creator, :email, :photo_cache
+  attr_accessible :team, :username_or_email, :creator, :jersey_number, :name, :role, :photo, :photo_cache
 
   validates_presence_of :team
   validates_presence_of :name
@@ -22,6 +22,8 @@ class Player < ActiveRecord::Base
   scope :for_user, lambda {|user| where(:user_id => user.id) }
 
   after_save :send_invitation, :if => :user_is_invited?
+
+  mount_uploader :photo, PhotoUploader
 
   def league
     team.league
