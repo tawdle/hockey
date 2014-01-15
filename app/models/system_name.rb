@@ -5,7 +5,7 @@ class SystemName < ActiveRecord::Base
 
   validates_uniqueness_of :name, :case_sensitive => false
   validates_format_of :name, :with => /\A#{NameFormat}\Z/, :message => 'can contain only alphanumeric characters'
-  validates_length_of :name, :within => 3..32
+  validates_length_of :name, :within => 3..40
   validates_presence_of :nameable
   validates_uniqueness_of :nameable_id, :scope => :nameable_type
 
