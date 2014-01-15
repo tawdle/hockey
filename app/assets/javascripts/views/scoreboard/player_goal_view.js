@@ -27,9 +27,10 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
   },
 
   goalCompleted: function() {
-    var playerId = this.goal.get("player_ids")[0];
-    var playerNameAndNumber = App.players.get(playerId).get("name_and_number");
-    this.$(".player").html("<p>" + playerNameAndNumber + "</p>");
+    var player = App.players.get(this.goal.get("player_ids")[0]);
+    var playerNameAndNumber = player.get("name_and_number");
+    var photoUrl = player.get("photo_url");
+    this.$(".player").html("<p>" + playerNameAndNumber + "</p><img src='" + photoUrl + "'></img>");
     this.board.show(this);
   },
 
