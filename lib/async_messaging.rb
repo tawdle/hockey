@@ -7,7 +7,7 @@ module AsyncMessaging
       #puts "AsyncMessaging: #{msg || capture(&block)}"
       message = {:channel => channel, :data => msg || capture(&block), :ext => {:password => FAYE_CONFIG[:password]}}
       # We don't really need to use https here, and the code to POST over SSL is strangely nasty
-      uri = URI.parse(FAYE_CONFIG[:uri].sub(/^https/, "http")
+      uri = URI.parse(FAYE_CONFIG[:uri].sub(/^https/, "http"))
       Net::HTTP.post_form(uri, :message => message.to_json)
     end
   end
