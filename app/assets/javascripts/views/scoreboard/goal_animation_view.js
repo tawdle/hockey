@@ -11,7 +11,7 @@ App.Scoreboard.GoalAnimationView = Backbone.View.extend({
   goalAdded: function(goal) {
     this.goal = goal;
 
-    var side = App.game.homeOrVisting(goal.get("team_id"));
+    var side = App.game.homeOrVisiting(goal.get("team_id"));
     var logoSrc = $("." + side + "-team .logo img").attr("src");
     $("#team-goal-animation_Logo_AiglesALPHA").css("background-image", "url(" + logoSrc + ")");
 

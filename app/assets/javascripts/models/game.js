@@ -70,7 +70,7 @@ App.Game = App.EmbeddedModel.extend({
     this.perform("finish");
   },
 
-  homeOrVisting: function(teamId) {
+  homeOrVisiting: function(teamId) {
     return this.get("home_team").id == teamId ?
       "home" : this.get("visiting_team").id == teamId ?
       "visiting" : null;
