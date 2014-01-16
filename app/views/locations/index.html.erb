@@ -5,12 +5,14 @@
 <table class="table table-hover">
   <tr>
     <th>Name</th>
+    <th>@Name</th>
     <th></th>
   </tr>
 
 <% @locations.each do |location| %>
   <tr>
     <td><%= link_to location.name, location %></td>
+    <td><%= format_team_link(location) %></td>
     <td><%= link_to 'Edit', edit_location_path(location) if can? :edit, location %></td>
   </tr>
 <% end %>
