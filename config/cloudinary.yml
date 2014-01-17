@@ -18,6 +18,7 @@ staging:
   api_secret: Vl18JF_Qc9gL5uFbXlAcHgTNMrI
   enhance_image_tag: true
   static_image_support: true
+  secure: true
 test:
   cloud_name: diyuhaftw
   api_key: '954522487732129'
