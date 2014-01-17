@@ -16,7 +16,7 @@ module AsyncMessaging
     unless FAYE_CONFIG[:disabled]
       #puts "AsyncMessaging: #{msg || capture(&block)}"
       message = {:channel => channel, :data => msg || capture(&block), :ext => {:password => ENV["FAYE_PASSWORD"]}}
-      uri = URI.parse(FAYE_CONFIG[:uri]
+      uri = URI.parse(FAYE_CONFIG[:uri])
       post_form(uri, :message => message.to_json)
       #Net::HTTP.post_form(uri, :message => message.to_json)
     end
