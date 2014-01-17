@@ -34,9 +34,9 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
     var name = player.get("name");
     var number = player.get("jersey_number");
     var photoUrl = player.get("photo_url");
-    console.log("setting name to " + name);
     $("#player-goal-animation_Player_Name").html(name);
     $("#player-goal-animation_Maxime_Leblond__74Copy").css("background-image", "url(" + photoUrl + ")");
+    $("#player-goal-animation_Jerser_Number").html("#" + number);
     this.board.show(this);
   },
 
