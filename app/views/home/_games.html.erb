@@ -14,7 +14,7 @@
     <% games.without_deleted.active.desc.each do |game| %>
       <tr>
         <td><%= distance_of_time_in_words_to_now(game.start_time) %> ago</td>
-        <td>@<%= link_to game.home_team.name, game.home_team %> <i>vs</i> @<%= link_to game.visiting_team.name, game.visiting_team %></td>
+        <td><%= format_team_link(game.home_team) %> <i>vs</i> <%= format_team_link(game.visiting_team) %></td>
         <td>
           <%= link_to game.location.name, game.location %>
           <%= link_to game.location.map_url, :target => "_blank" do %>
