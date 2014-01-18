@@ -2,11 +2,9 @@ App.Scoreboard.ReplayView = Backbone.View.extend({
   name: "ReplayView",
 
   initialize: function(options) {
-    this.video = this.$("video");
     this.listenTo(this, "showing", this.start);
     this.listenTo(this, "hidden", this.stop);
     this.playing = false;
-    this.video[0].addEventListener("ended", this.playNextVideo.bind(this));  // BUG: https://code.google.com/p/chromium/issues/detail?id=157543
     this.listenTo(App.goals, "add", this.goalAdded);
   },
 
@@ -23,9 +21,22 @@ App.Scoreboard.ReplayView = Backbone.View.extend({
         console.log("arenad call returned error: " + error);
       },
       success: function(data) {
-        self.playlist = data.playlist;
+        self.processPlaylist(data.playlist);
         self.board.enqueue(self);
       }
+    });
+  },
+
+  processPlaylist: function(playlist) {
+    var self = this;
+    this.playlist = playlist;
+    this.$el.empty();
+    playlist.forEach(function(item) {
+      var video = $("<video src='" + item.file + "'>");
+      video.load();
+      // BUG: https://code.google.com/p/chromium/issues/detail?id=157543
+      video[0].addEventListener("ended", self.playNextVideo.bind(self));
+      self.$el.append(video);
     });
   },
 
@@ -36,21 +47,22 @@ App.Scoreboard.ReplayView = Backbone.View.extend({
   },
 
   stop: function() {
-    this.playing = false;
-    this.video[0].pause();
+    if (this.playing) {
+      this.playing = false;
+      var video = this.$("video")[this.currentVideo];
+      if (video && video.pause) video.pause();
+    }
   },
 
   playNextVideo: function() {
-    var video = this.video;
     this.currentVideo += 1;
     if (this.currentVideo >= this.playlist.length) {
       this.trigger("finished", this);
     } else if (this.playing) {
-      video.attr("src", this.playlist[this.currentVideo].file);
-      video.one("canplay", function() {
-        video[0].currentTime = 0;
-        video[0].play();
-      });
+      var video = this.$("video")[this.currentVideo];
+      video.currentTime = 0;
+      video.play();
+      $(video).show().siblings().hide();
     }
   }
 });
