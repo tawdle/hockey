@@ -93,7 +93,7 @@ class Game < ActiveRecord::Base
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
   scope :scheduled, where(:state => :scheduled)
   scope :due, lambda { where("start_time < ?", DateTime.now) }
-  scope :active, where(:state => [:active, :paused, :playing])
+  scope :active, where(:state => [:active, :paused, :ready, :playing])
   scope :upcoming, lambda { where("start_time > ?", DateTime.now) }
   scope :scheduled_or_active, where(:state => [:scheduled, :active])
   scope :finished, where(:state => :completed)
