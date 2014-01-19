@@ -1,6 +1,6 @@
 App.Scoreboard.BoardView = Backbone.View.extend({
   initialize: function(options) {
-    this.views = options.views;
+    this.views = _.object(_.map(options.views, function(view) { return [view.name, view]; }));
     this.defaultView = options.defaultView || options.views[0];
     this.queue = [];
     this.currentView = null;
