@@ -20,26 +20,17 @@ App.Scoreboard.GoalAnimationView = Backbone.View.extend({
 
   start: function() {
     var self = this;
-    this.listenTo(this.goal, "remove", function() {
+    this.listenToOnce(this.goal, "remove", function() {
       self.board.reset();
     });
 
     this.stage().play("Loop");
-    this.sound.volume = 0;
-    this.sound.currentTime = 0;
-    this.sound.play();
-    $(this.sound).animate( { volume: 1 }, 10); // avoid glitch on restart
+    this.board.playSound(this.sound);
   },
 
   stop: function() {
-    var self = this;
     this.stopListening(this.goal);
-
     this.stage().stop();
-    $(this.sound).animate( { volume: 0 }, 750, function() {
-      self.sound.pause();
-      self.sound.currentTime = 0;
-    });
   },
 
   stage: function() {

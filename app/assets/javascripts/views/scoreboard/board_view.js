@@ -5,6 +5,9 @@ App.Scoreboard.BoardView = Backbone.View.extend({
     this.queue = [];
     this.currentView = null;
     this.$el.children().hide();
+    this.sound = null;
+
+    this.listenTo(App.game, "change:state", this.gameStateChanged);
 
     var self = this;
     _.each(this.views, function(view) {
@@ -30,6 +33,8 @@ App.Scoreboard.BoardView = Backbone.View.extend({
     view.trigger("shown");
 
     this.currentView = view;
+    if (this.currentView == this.defaultView)
+      this.stopSound();
   },
 
   onFinished: function(view) {
@@ -49,6 +54,29 @@ App.Scoreboard.BoardView = Backbone.View.extend({
   reset: function() {
     this.queue = [];
     this.showNext();
+  },
+
+  playSound: function(audio) {
+    this.sound = audio;
+    this.sound.volume = 0;
+    this.sound.currentTime = 0;
+    this.sound.play();
+    $(this.sound).animate( { volume: 1 }, 100); // avoid glitch on restart
+  },
+
+  stopSound: function() {
+    var self = this;
+    if (this.sound) {
+      $(this.sound).animate( { volume: 0 }, 1000, function() {
+        self.sound.pause();
+        self.sound.currentTime = 0;
+      });
+    }
+  },
+
+  gameStateChanged: function(game, state) {
+    if (state == "playing")
+      this.stopSound();
   }
 });
 
