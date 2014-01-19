@@ -5,6 +5,10 @@ FactoryGirl.define do
     sequence(:name) { |n| "Tournament #{n}" }
     division :bantam
 
+    after(:build) do |tournament|
+      tournament.system_name.name ||= tournament.name.gsub(/\s+/, "")
+    end
+
     trait :with_manager do
       after :build do |tournament|
         tournament.authorizations << build(:authorization, :authorizable => tournament, :role => :manager)

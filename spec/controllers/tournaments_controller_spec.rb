@@ -33,7 +33,7 @@ describe TournamentsController do
     describe "#create" do
       it "works" do
         expect {
-          post :create, :tournament => {:name => "My Tournament", :division => "bantam" }
+          post :create, :tournament => {:name => "My Tournament", :division => "bantam", :system_name_attributes => {:name => "foo"} }
           response.should be_redirect
         }.to change { Tournament.count }.by(1)
       end

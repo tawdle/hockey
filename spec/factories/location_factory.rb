@@ -11,5 +11,9 @@ FactoryGirl.define do
     telephone "867-5309"
     email "foo@barr.com"
     website "http://foo.bar.com/"
+
+    after(:build) do |location|
+      location.system_name.name ||= location.name.gsub(/\s+/, "")
+    end
   end
 end

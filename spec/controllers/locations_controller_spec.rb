@@ -54,12 +54,13 @@ describe LocationsController do
 
     describe "#create" do
       def do_request
-        post :create, :location => {:name => "My New Location", :address_1 => "87 Truman Road", :city => "Newton Centre", :state => "MA", :zip => "02159", :country => "US" }
+        post :create, :location => {:name => "My New Location", :address_1 => "87 Truman Road", :city => "Newton Centre", :state => "MA", :zip => "02159", :country => "US", :system_name_attributes => {:name => "foo"} }
       end
 
       it "should create a new location" do
         expect {
           do_request
+          response.should be_redirect
         }.to change { Location.count }.by(1)
       end
     end

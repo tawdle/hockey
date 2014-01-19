@@ -8,6 +8,10 @@ FactoryGirl.define do
     classification :aa
     division :bantam
 
+    after(:build) do |league|
+      league.system_name.name ||= league.name.gsub(/\s+/, "")
+    end
+
     trait :with_manager do
       after :create do |league|
         create(:authorization, :authorizable => league, :role => :manager)

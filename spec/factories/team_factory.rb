@@ -9,7 +9,7 @@ FactoryGirl.define do
     manager { build(:user) }
 
     after(:build) do |team|
-      team.system_name ||= build(:system_name, :nameable => team)
+      team.system_name.name ||= team.name.gsub(/\s+/, "")
     end
 
     trait :with_players do

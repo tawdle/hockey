@@ -1,6 +1,7 @@
 shared_examples "a controller action requiring authentication" do
-  it "returns a 403" do
-    expect { do_request }.to raise_error(CanCan::AccessDenied)
+  it "redirects to root" do
+    do_request
+    expect(response).to redirect_to(root_url)
   end
 end
 
