@@ -56,12 +56,18 @@ App.Game = App.EmbeddedModel.extend({
       this.set("state", "playing");
     }
     this.perform("start");
+    this.lastPausedAt = null;
+    this.pausedAtDate = null;
   },
 
   pause: function() {
     if (this.get("state") == "playing") {
       this.set("state", "paused");
+      // These two assignmets suffer from te same bug: they
+      // only record local action. So if someone else pauses us,
+      // this value won't get set.
       this.lastPausedAt = this.get("clock").get("elapsed_time");
+      this.pausedAtDate = new Date();
       this.perform("pause", { elapsed_time: this.lastPausedAt } );
     }
   },

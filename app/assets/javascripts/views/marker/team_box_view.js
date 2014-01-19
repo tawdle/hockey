@@ -35,7 +35,8 @@ App.Marker.TeamBoxView = Backbone.View.extend({
     // Otherwise, when the update comes in asynchronously, it removes our model
     // from the collection as it doesn't recognize it as the same object.
     var self = this;
-    App.goals.create({ team_id: this.teamId }, { wait: true, success: function(goal) { self.goalEditor.edit(goal); } });
+    var createdAt = (App.game.get("state") == "paused" && App.game.pausedAtDate) ? App.game.pausedAtDate : new Date();
+    App.goals.create({ team_id: this.teamId, created_at: createdAt.toISOString() }, { wait: true, success: function(goal) { self.goalEditor.edit(goal); } });
   },
 
   editRoster: function(e) {
