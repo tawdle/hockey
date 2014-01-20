@@ -13,9 +13,10 @@ App.Scoreboard.BoardView = Backbone.View.extend({
     _.each(this.views, function(view) {
       self.listenTo(view, "finished", self.onFinished);
       view.board = self;
+      view.trigger("added", self);
     });
 
-    this.show(this.defaultView);
+    if (!this.currentView) this.show(this.defaultView);
   },
 
   show: function(view) {
@@ -48,7 +49,11 @@ App.Scoreboard.BoardView = Backbone.View.extend({
   },
 
   enqueue: function(view) {
-    this.queue.push(view);
+    if (!this.currentView) {
+      this.show(view);
+    } else {
+      this.queue.push(view);
+    }
   },
 
   reset: function() {

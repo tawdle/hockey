@@ -25,6 +25,7 @@
       views.push(new App.Scoreboard.GoalAnimationView({ el: "#team-goal-animation" }));
       views.push(new App.Scoreboard.ReplayView( { el: "#goal-replay" }));
       views.push(new App.Scoreboard.PlayerGoalView( { el: "#player-goal-animation" }));
+      views.push(new App.Scoreboard.PreGameShowView( { el: "#pre-game-show" } ));
       App.boardView = new App.Scoreboard.BoardView({el: ".content", views: views, defaultView: views[0]});
     });
   <% end %>
@@ -70,4 +71,13 @@
 </div>
 
 <div id="player-goal-animation" class="EDGE-278437879">
+</div>
+
+<div id="pre-game-show">
+  <div id="bigshot-tag">
+  </div>
+
+  <div id="countdown">
+    <video src="/assets/videos/countdown.mp4"></video>
+  </div>
 </div>

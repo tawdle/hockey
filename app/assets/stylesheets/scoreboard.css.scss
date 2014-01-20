@@ -74,3 +74,13 @@ div.content {
     width: 400px;
   }
 }
+
+#bigshot-tag {
+  height: 1080px;
+  background: image-url("bigshot-logo.png") no-repeat center center;
+
+  .fade {
+    opacity: 0;
+    transition: opacity 1s;
+  }
+}
