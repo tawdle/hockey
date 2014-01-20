@@ -31,8 +31,9 @@ App.Scoreboard.ReplayView = Backbone.View.extend({
     var self = this;
     this.playlist = playlist;
     this.$el.empty();
-    playlist.forEach(function(item) {
-      var video = $("<video src='" + item.file + "'>");
+    playlist.forEach(function(shot) {
+      var video = $("<video src='" + shot.file + "'>");
+      if (shot.speed) video.attr("playbackRate", shot.speed);
       video.load();
       // BUG: https://code.google.com/p/chromium/issues/detail?id=157543
       video[0].addEventListener("ended", self.playNextVideo.bind(self));
