@@ -1,86 +1,41 @@
-<% show_finished_games ||= false %>
-
-<% if games.without_deleted.active.any? %>
-  <h3 class="page-header">Current Games <small>these games are being played right now</small></h3>
-  <table class="table table-hover">
+<% if games.without_deleted.any? %>
+  <h3>Games</h3>
+  <table class="games table table-hover">
     <tr>
-      <th>Started</th>
-      <th>Teams</th>
+      <th>Date</th>
+      <th></th>
+      <th>Visitor</th>
+      <th></th>
+      <th>Home</th>
+      <th></th>
+      <th>Status</th>
       <th>Location</th>
-      <th>Score</th>
       <th></th>
     </tr>
 
-    <% games.without_deleted.active.desc.each do |game| %>
-      <tr>
-        <td><%= distance_of_time_in_words_to_now(game.start_time) %> ago</td>
-        <td><%= format_team_link(game.home_team) %> <i>vs</i> <%= format_team_link(game.visiting_team) %></td>
+    <% games.without_deleted.each do |game| %>
+      <tr <%= "style='font-weight: bold;" if game.live? %> >
+        <td><%= l game.start_time, :format => :game %></td>
+        <td><%= format_team_link(game.visiting_team) %></td>
+        <td><%= image_tag(game.visiting_team.logo_url(:thumbnail)) %></td>
+        <td>
+          <% if game.scheduled? %>
+            <i>vs</i>
+          <% else %>
+            <%= "#{game.visiting_team_score} - #{game.home_team_score}" %>
+          <% end %>
+        </td>
+        <td><%= image_tag(game.home_team.logo_url(:thumbnail)) %></td>
+        <td><%= format_team_link(game.home_team) %></td>
+        <td><%= game.period_text %></td>
         <td>
           <%= link_to game.location.name, game.location %>
           <%= link_to game.location.map_url, :target => "_blank" do %>
             <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank" %>
           <% end %>
         </td>
-        <td><%= "#{game.home_team_score} - #{game.visiting_team_score}" %></td>
         <td style="text-align: right;"><%= link_to "See game", game, :class => "btn" %></td>
       </tr>
     <% end %>
   </table>
 <% end %>
-
-<% if games.without_deleted.upcoming.any? %>
-  <h3 class="page-header">Coming Games <small>these games are scheduled to start soon</small></h3>
-  <table class="table table-hover">
-    <tr>
-      <th>Starting</th>
-      <th>Teams</th>
-      <th>Location</th>
-      <th></th>
-      <th></th>
-    </tr>
-
-    <% games.without_deleted.scheduled.asc.each do |game| %>
-      <tr>
-        <td>in <%= distance_of_time_in_words_to_now(game.start_time) %></td>
-        <td>@<%= link_to game.home_team.name, game.home_team %> <i>vs</i> @<%= link_to game.visiting_team.name, game.visiting_team %></td>
-        <td>
-          <%= link_to game.location.name, game.location %>
-          <%= link_to game.location.map_url, :target => "_blank" do %>
-            <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon" %>
-          <% end %>
-        </td>
-        <td></td>
-        <td style="text-align: right;"><%= link_to "See game", game, :class => "btn" %></td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
-
-<% if show_finished_games && games.without_deleted.finished.any? %>
-  <h3 class="page-header">Completed Games <small>these games are over</small></h3>
-  <table class="table table-hover">
-    <tr>
-      <th>Started</th>
-      <th>Teams</th>
-      <th>Location</th>
-      <th></th>
-      <th></th>
-    </tr>
-
-    <% games.without_deleted.scheduled.asc.each do |game| %>
-      <tr>
-        <td>in <%= distance_of_time_in_words_to_now(game.start_time) %></td>
-        <td>@<%= link_to game.home_team.name, game.home_team %> <i>vs</i> @<%= link_to game.visiting_team.name, game.visiting_team %></td>
-        <td>
-          <%= link_to game.location.name, game.location %>
-          <%= link_to game.location.map_url, :target => "_blank" do %>
-            <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon" %>
-          <% end %>
-        </td>
-        <td></td>
-        <td style="text-align: right;"><%= link_to "See game", game, :class => "btn" %></td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
-

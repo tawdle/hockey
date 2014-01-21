@@ -199,7 +199,7 @@ class Game < ActiveRecord::Base
   end
 
   def period_text
-    Periods[period || 0]
+    completed? ? 'F' : period ? Periods[period] : '-'
   end
 
   def reset_game_clock
@@ -326,6 +326,12 @@ class Game < ActiveRecord::Base
       @batch_options = deep_safe_merge(@batch_options, options)
       #puts "#{object_id}: ************* Batching broadcast, now #{@batch_options}"
     end
+  end
+
+  def self.for_user(user)
+    where("start_time between ? and ?", 1.week.ago, 1.week.from_now).
+      order("games.start_time asc").
+      limit(20);
   end
 
   private
