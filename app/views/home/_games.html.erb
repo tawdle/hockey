@@ -22,7 +22,7 @@
           <% if game.scheduled? %>
             <i>vs</i>
           <% else %>
-            <%= "#{game.visiting_team_score} - #{game.home_team_score}" %>
+            <%= "#{game.visiting_team_score}&nbsp;-&nbsp;#{game.home_team_score}".html_safe %>
           <% end %>
         </td>
         <td><%= image_tag(game.home_team.logo_url(:thumbnail)) %></td>
