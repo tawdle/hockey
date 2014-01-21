@@ -38,9 +38,7 @@ class ActivityFeedItem < ActiveRecord::Base
   scope :for_game, lambda {|game| where(:game_id => game.id) }
 
   def avatar_url(version_name = nil)
-    creator ?
-      creator.avatar_url(version_name) :
-      ActionController::Base.helpers.asset_path("fallback/" + [version_name, "default.png"].compact.join('_'))
+   (creator || User.new).avatar_url(version_name)
   end
 
   def avatar_url_thumbnail

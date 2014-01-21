@@ -23,7 +23,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
   end
 
   def default_url
-    ActionController::Base.helpers.asset_path("fallback/" + [version_name, "player.png"].compact.join('_'))
+    ActionController::Base.helpers.asset_path("fallback/" + ["player", version_name].compact.join('_') + ".png")
   end
 
   process :convert => 'png'
