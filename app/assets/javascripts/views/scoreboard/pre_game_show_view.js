@@ -29,11 +29,11 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
     this.$("#bigshot-tag").removeClass("fade").show().siblings().hide();
     var self = this;
     setTimeout(function() {
-      this.$("#bigshot-tag").addClass("fade");
+      this.$("#bigshot-tag").addClass("fade-out");
       setTimeout(function() {
         self.showCountDown();
-      }, 2000);
-    }, 5000);
+      }, 6000);
+    }, 1000);
   },
 
   showCountDown: function() {

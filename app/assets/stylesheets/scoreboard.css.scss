@@ -79,8 +79,9 @@ div.content {
   height: 1080px;
   background: image-url("bigshot-logo.png") no-repeat center center;
 
-  .fade {
+  &.fade-out {
     opacity: 0;
-    transition: opacity 1s;
+    -webkit-transition: opacity 2s 3s ease;
+    transition: opacity 2s 3s ease;
   }
 }
