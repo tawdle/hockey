@@ -328,10 +328,9 @@ class Game < ActiveRecord::Base
     end
   end
 
-  def self.for_user(user)
-    where("start_time between ? and ?", 1.week.ago, 1.week.from_now).
-      order("games.start_time asc").
-      limit(20);
+  def self.recent
+    where("start_time between ? and ?", 1.week.ago, 2.weeks.from_now).
+      order("games.start_time asc")
   end
 
   private
