@@ -26,7 +26,9 @@ Hockey::Application.routes.draw do
     resource :scoreboard, :only => :show, :controller => "locations/scoreboards"
   end
 
-  resources :players, :only => [:show, :edit, :update, :destroy]
+  resources :players, :only => [:show, :edit, :update, :destroy] do
+    resource :claims, :only => [:new, :create], :controller => "players/claims"
+  end
 
   resources :teams, :only => [:index, :show, :edit, :update, :destroy], :controller => "leagues/teams" do
     resources :players, :only => [:new, :create]

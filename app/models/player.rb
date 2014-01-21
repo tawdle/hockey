@@ -9,8 +9,8 @@ class Player < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
   symbolize :role, :in => Roles
-  attr_accessor :username_or_email, :creator, :email, :photo_cache
-  attr_accessible :team, :username_or_email, :creator, :jersey_number, :name, :role, :photo, :photo_cache
+  attr_accessor :username_or_email, :creator, :email, :photo_cache, :kiosk_password_matches
+  attr_accessible :team, :username_or_email, :creator, :jersey_number, :name, :role, :photo, :photo_cache, :user_id, :kiosk_password_matches
 
   validates_presence_of :team
   validates_presence_of :name
@@ -18,6 +18,7 @@ class Player < ActiveRecord::Base
   validate :provided_username_or_email, :if => :username_or_email?
   validates_uniqueness_of :user_id, :scope => :team_id, :allow_nil => true
   validates_uniqueness_of :jersey_number, :scope => [:team_id, :name]
+  validate :kiosk_password
 
   scope :for_user, lambda {|user| where(:user_id => user.id) }
 
@@ -89,5 +90,9 @@ class Player < ActiveRecord::Base
 
   def send_invitation
     Invitation.create!(:creator => creator, :target => self, :predicate => :claim, :email => email)
+  end
+
+  def kiosk_password
+    errors.add(:base, "Incorrect kiosk password provided") if kiosk_password_matches == false
   end
 end

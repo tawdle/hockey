@@ -1,12 +1,20 @@
-<h2>Player: <%= @player.name %>
+<h3>Player: <%= @player.name %>
   <%= render partial: "follow_button", locals: { target: @player } %>
-</h2>
+</h3>
 
-<h3>Team: <%= @player.team.name %></h3>
+<h4>Team: <%= @player.team.name %></h4>
 
 <div>
   <%= cl_image_tag(@player.photo.url(:small)) %>
 </div>
+
+<% if !@player.user %>
+  <% if current_user %>
+    <p>Is this you? Click here to <%= link_to "Claim", new_player_claims_path(@player), :class => "btn btn-small" %> this player for your account.</p>
+  <% end %>
+<% else %>
+  <p>This player belongs to <%= format_user_link(@player.user) %>.</p>
+<% end %>
 
 <% link_to "Edit", edit_player_path(@player), :class => "btn" if can?(:edit, @player) %>
 

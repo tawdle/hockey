@@ -80,6 +80,10 @@ class Ability
 
     can :read, Player
 
+    can :claim, Player do |player|
+      user.persisted? && player.user.nil?
+    end
+
     can :manage, Player do |player|
       user.manager_of?(player.team) || user.marker_of?(player.league)
     end

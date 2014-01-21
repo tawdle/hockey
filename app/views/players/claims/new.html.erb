@@ -1,0 +1,31 @@
+<h1>Claim Player</h1>
+
+<% if @kiosk %>
+  <p>You can claim this user immediately. Simply have an authorized Bigshot representative enter their approval password below.</p>
+
+  <%= form_tag(player_claims_path(@player)) do %>
+    <% if @player.errors.any? %>
+      <div id="error_explanation">
+        <h2><%= pluralize(@player.errors.count, "error") %> prohibited this league from being saved:</h2>
+
+        <ul>
+        <% @player.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= label_tag :claim, :kiosk_password do %>Password<% end %>
+      <%= password_field :claim, :kiosk_password %>
+    </div>
+    <div class="actions">
+      <%= submit_tag "Authorize Claim" %>
+    </div>
+  <% end %>
+
+<% else %>
+  <p>Kiosk mode is not currently enabled. Please try again later.</p>
+<% end %>
+
