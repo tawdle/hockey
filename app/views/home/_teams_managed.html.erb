@@ -1,6 +1,10 @@
 <% if Team.managed_by(current_user).without_deleted.any? %>
-  <% Team.managed_by(current_user).without_deleted.each do |team| %>
-    <h2 class="page-header"><%= link_to team.name, team %> <small>You manage this team</small></h2>
-    <%= render :partial => "games", :locals => {:games => Game.for_team(team) } %>
-  <% end %>
+  <div class="well">
+    <h3>Teams you manage</h3>
+    <ul>
+      <% Team.managed_by(current_user).without_deleted.each do |team| %>
+        <li><%= link_to team.name, team %></li>
+      <% end %>
+    </ul>
+  </div>
 <% end %>
