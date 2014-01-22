@@ -1,13 +1,10 @@
 class ActivityFeedItem < ActiveRecord::Base
-  belongs_to :creator, :class_name => "User"
   belongs_to :game, :inverse_of => :activity_feed_items
   has_many :mentions, :dependent => :destroy, :inverse_of => :activity_feed_item
 
-  attr_accessible :creator, :message, :game, :game_id
+  attr_accessible :game, :game_id
 
-  validates_presence_of :message
-
-  before_create :find_mentions
+  before_create :build_mentions
   after_create :broadcast_changes
 
   default_scope order("created_at desc")
@@ -38,31 +35,25 @@ class ActivityFeedItem < ActiveRecord::Base
   scope :for_game, lambda {|game| where(:game_id => game.id) }
 
   def avatar_url(version_name = nil)
-   (creator || User.new).avatar_url(version_name)
+   User.new.avatar_url(version_name)
   end
 
-  def avatar_url_thumbnail
-    avatar.url(:thumbnail)
+  def active_model_serializer
+    ActivityFeedItemSerializer
   end
 
   private
 
-  def find_mentions
-    username_matches = message.scan(Mention::NameOrPlayerPattern)
-    usernames = username_matches.flatten.uniq
-    usernames.each do |username|
-      if username.include?("#")
-        team_name, jersey_number = username.split("#")
-        if team = Team.find_by_at_name(team_name)
-          if player = Player.find_by_jersey_number_and_team_id(jersey_number, team.id)
-            mentions << Mention.new(mentionable: player)
-          end
-        end
-      else
-        sn = SystemName.find_by_name(username)
-        mentions << Mention.new(:mentionable => sn.nameable) if sn
-      end
-    end
+  def mentioned_objects
+    throw "must be implemented by subclasses"
+  end
+
+  def build_mentions
+    add_mentioned_objects(mentioned_objects)
+  end
+
+  def add_mentioned_objects(arr)
+    mentions.concat(arr.map {|obj| Mention.new(mentionable: obj) })
   end
 
   def broadcast_changes

@@ -43,7 +43,7 @@ describe Team do
     it "should generate an activity feed item" do
       expect {
         team.accepted_invitation_to_manage(user, invitation)
-      }.to change { team.activity_feed_items.count }.by(1)
+      }.to change { ActivityFeedItem.count }.by(1)
     end
     context "with an already-existing authorization" do
       let!(:authorization) { FactoryGirl.create(:authorization, :user => user, :role => :manager, :authorizable => team) }

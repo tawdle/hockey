@@ -38,7 +38,13 @@ CREATE TABLE activity_feed_items (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     creator_id integer,
-    game_id integer
+    game_id integer,
+    type character varying(255),
+    subject_id integer,
+    target_id integer,
+    player_id integer,
+    player2_id integer,
+    player3_id integer
 );
 
 
@@ -1721,3 +1727,11 @@ INSERT INTO schema_migrations (version) VALUES ('20140110010821');
 INSERT INTO schema_migrations (version) VALUES ('20140110012751');
 
 INSERT INTO schema_migrations (version) VALUES ('20140115005546');
+
+INSERT INTO schema_migrations (version) VALUES ('20140121194138');
+
+INSERT INTO schema_migrations (version) VALUES ('20140121201815');
+
+INSERT INTO schema_migrations (version) VALUES ('20140121213759');
+
+INSERT INTO schema_migrations (version) VALUES ('20140122010753');

@@ -1,4 +1,7 @@
 shared_examples_for "an action that creates an activity feed item" do
+  before do
+    setup if defined?(setup)
+  end
   it "creates an activity feed item" do
     expect {
       action

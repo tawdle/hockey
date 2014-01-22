@@ -73,6 +73,6 @@ class GameGoalie < ActiveRecord::Base
   end
 
   def create_feed_item
-    game.activity_feed_items.create!(:message => "#{goalie.feed_name} is now the goalie for #{goalie.team.at_name}")
+    Feed::NewGoalie.create!(game: game, player: goalie)
   end
 end

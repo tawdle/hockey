@@ -37,7 +37,6 @@ describe GameGoalie do
           expect { action }.to change { previous_game_goalie.reload.end_time }.from(nil)
         end
 
-        let(:count) { 2 }
         it_behaves_like "an action that creates an activity feed item"
       end
     end

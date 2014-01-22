@@ -147,41 +147,45 @@ describe Game do
 
   describe "actions that create an activity feed item" do
     let(:game) { FactoryGirl.build(:game) }
+    let(:user) { FactoryGirl.build(:user) }
     let(:saved_game) { FactoryGirl.create(:game) }
     let(:new_start_time) { 3.weeks.from_now }
     let(:new_location) { FactoryGirl.create(:location) }
 
     describe "#create" do
+      let(:setup) { game.updater = user }
       let(:action) { game.save! }
       it_behaves_like "an action that creates an activity feed item"
     end
 
     describe "#update start_time" do
-      let(:action) { saved_game.update_attributes(:start_time => new_start_time) }
-      let(:count ) { 2 }
+      let(:setup) { reference = saved_game }
+      let(:action) { saved_game.update_attributes(:start_time => new_start_time, :updater => user) }
       it_behaves_like "an action that creates an activity feed item"
     end
 
     describe "#update location" do
-      let(:action) { saved_game.update_attributes(:location => new_location) }
-      let(:count) { 2 }
+      let(:setup) { reference = saved_game }
+      let(:action) { saved_game.update_attributes(:location => new_location, :updater => user) }
       it_behaves_like "an action that creates an activity feed item"
     end
 
     describe "#update start_time AND location" do
-      let(:action) { saved_game.update_attributes(:start_time => new_start_time, :location => new_location) }
-      let(:count) { 3 }
+      let(:setup) { reference = saved_game }
+      let(:action) { saved_game.update_attributes(:start_time => new_start_time, :location => new_location, :updater => user) }
+      let(:count) { 2 }
       it_behaves_like "an action that creates an activity feed item"
     end
 
     describe "#cancel" do
+      let(:setup) { saved_game.updater = user }
       let(:action) { saved_game.cancel! }
-      let(:count) { 2 }
       it_behaves_like "an action that creates an activity feed item"
     end
 
     describe "#start" do
       before do
+        game.updater = user
         game.should_receive(:ready_to_activate?).and_return(true)
         game.activate!
       end

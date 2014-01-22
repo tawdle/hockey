@@ -78,7 +78,7 @@
   <h2>Activity Feed</h2>
 
   <% if current_user %>
-    <%= form_for(ActivityFeedItem.new(:game => @game), :remote => true) do |f| %>
+    <%= form_for(Feed::UserPost.new(:game => @game), :remote => true) do |f| %>
       <div class="field pull-left" style="margin-right: 10px;" >
         <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
       </div>

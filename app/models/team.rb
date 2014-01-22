@@ -33,7 +33,7 @@ class Team < ActiveRecord::Base
     Team.transaction do
       begin
         Authorization.create!(:user => user, :role => :manager, :authorizable => self)
-        ActivityFeedItem.create!(:message => "#{user.at_name} became a manager of #{at_name}")
+        Feed::NewTeamManager.create!(:user => user, :team => self)
       rescue ActiveRecord::RecordInvalid => e
         # If the authorization already exists, fail silently
         raise unless e.message == "Validation failed: User has already been taken"

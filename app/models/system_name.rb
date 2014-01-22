@@ -10,4 +10,8 @@ class SystemName < ActiveRecord::Base
   validates_uniqueness_of :nameable_id, :scope => :nameable_type
 
   attr_accessible :name, :nameable
+
+  def at_name
+    "@#{name}"
+  end
 end

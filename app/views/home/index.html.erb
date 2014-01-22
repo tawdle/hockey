@@ -5,7 +5,7 @@
   <%= render :partial => "teams_managed" %>
   <%= render :partial => "locations" %>
   <%= render :partial => "leagues_managed" %>
-  <%= render :partial => "activity_feed", :locals => {:new_activity_feed_item => ActivityFeedItem.new, :activity_feed_items => ActivityFeedItem.for(current_user), :in_game_context => false } %>
+  <%= render :partial => "activity_feed", :locals => {:new_activity_feed_item => Feed::UserPost.new, :activity_feed_items => ActivityFeedItem.for(current_user), :in_game_context => false } %>
 <% else %>
   <%= render :partial => "welcome" %>
   <%= render :partial => "games", :locals => {:games => Game.recent } %>

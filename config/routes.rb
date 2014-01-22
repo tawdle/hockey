@@ -1,6 +1,8 @@
 Hockey::Application.routes.draw do
 
-  resources :activity_feed_items, :only => [:create]
+  namespace :feed do
+    resources :user_posts, :only => [:create]
+  end
 
   resources :followings, :only => [:create, :destroy]
 

@@ -2,6 +2,8 @@
 fr:
   activerecord:
     attributes:
+      game:
+        period: Période
       league:
         classification: Class
       location:
@@ -11,10 +13,8 @@ fr:
       penalty:
         category: Catégorie
         infraction: Infraction
-      game:
-        period: Période
       system_name:
-        name: "@Name"
+        name: ! '@Name'
     models:
       player: Joueur
       team: Équipe
@@ -37,6 +37,29 @@ fr:
           head_coach: Entraîneur Chef
           manager: Gérant
           safety_attendant: Préposé à la Sécurité
+  feed:
+    cancel_game: ! '%{user} canceled a game between %{visiting_team} and %{home_team}'
+    cancel_goal: ! '%{user} canceled %{player}''s goal'
+    change_game_location: ! '%{user} changed the location for a game between %{visiting_team}
+      and %{home_team}'
+    change_game_time: ! '%{user} changed the start time for a game between %{visiting_team}
+      and %{home_team}'
+    game_ended: Game over! Final score %{first_team} %{first_team_score} - %{second_team}
+      %{second_team_score}
+    game_started: The game between %{game.visiting_team.at_name} and %{home_team}
+      started at %{location}
+    new_game: ! '%{user} scheduled a game between %{visiting_team} and %{home_team}'
+    new_goal:
+      one_assist: ! '%{player} scored a goal against %{against_team}, assisted by
+        %{assist1}'
+      solo: ! '%{player} scored a goal against %{against_team}'
+      two_assists: ! '%{player} scored a goal against %{against_team}, assisted by
+        %{assist1} and %{assist2}'
+    new_goalie: ! '%{player} is in the net for %{team}'
+    new_league_manager: ! '%{user} became a manager of %{league}'
+    new_league_marker: ! '%{user} became a marker for %{league}'
+    new_location_manager: ! '%{user} became a manager of %{location}'
+    new_team_manager: ! '%{user} became a manager of %{team}'
   goalie:
     pulled: Filet désert
   league:
@@ -102,10 +125,16 @@ fr:
       elbowing: Donner du coude
       fighting: Bataille
       fighting_single_player: Bataille (1 seul joueur impliqué)
-      first_player_leaving_bench_to_fight: Premier joueur à quitter le banc lors d’une bataille ou pour commencer une bataille
-      goalkeeper_leaving_crease_to_fight: Gardien qui quitte son enceinte lors d’une bataille
-      grabbing_hair_with_advantage: Saisir les cheveux, protecteur facial, casque protecteur ou la mentonnière et en tirer avantage pour infliger une correction ou blessure
-      grabbing_hair_without_advantage: Saisir les cheveux, protecteur facial, casque protecteur ou mentonnière sans en tirer avantage pour infliger une correction ou blessure
+      first_player_leaving_bench_to_fight: Premier joueur à quitter le banc lors d’une
+        bataille ou pour commencer une bataille
+      goalkeeper_leaving_crease_to_fight: Gardien qui quitte son enceinte lors d’une
+        bataille
+      grabbing_hair_with_advantage: Saisir les cheveux, protecteur facial, casque
+        protecteur ou la mentonnière et en tirer avantage pour infliger une correction
+        ou blessure
+      grabbing_hair_without_advantage: Saisir les cheveux, protecteur facial, casque
+        protecteur ou mentonnière sans en tirer avantage pour infliger une correction
+        ou blessure
       gross_misconduct_travesty: Inconduite grossière pour tourner le match en dérision
       head_butting: Donner un coup de tête
       head_contact: Contact avec la tête
@@ -126,33 +155,41 @@ fr:
       leaving_bench_at_end_of_period: Quitter le banc en fin de période et/ou de match
       leaving_penalty_box: Quitter le banc des punitions
       moving_goal: Déplacer intentionnellement le but de sa position
-      moving_goal_during_breakaway: Déplacer intentionnellement le but de sa position lors d’une échappée
+      moving_goal_during_breakaway: Déplacer intentionnellement le but de sa position
+        lors d’une échappée
       not_going_to_penalty_box: Ne pas se rendre immédiatement au banc des punitions
       physical_aggression_against_official: Agression physique envers un officiel
       playing_with_broken_stick: Jouer avec un bâton brisé, illégal ou obtenu illégalement
-      playing_without_protective_equipment: Participer au jeu sans l’équipement protecteur approprié
+      playing_without_protective_equipment: Participer au jeu sans l’équipement protecteur
+        approprié
       refusing_to_have_equipment_measured: Refus de se soumettre à un mesurage
-      refusing_to_start_play: Refus de se mettre au jeu ou refus de quitter le banc ou la glace
+      refusing_to_start_play: Refus de se mettre au jeu ou refus de quitter le banc
+        ou la glace
       remaining_at_site_of_fight: Demeurer sur les lieux d’une bataille
-      removing_helmet_to_fight: Enlever son casque pour se battre ou inviter un adversaire à se battre
+      removing_helmet_to_fight: Enlever son casque pour se battre ou inviter un adversaire
+        à se battre
       roughing: Rudesse
-      second_fight: Deuxième bataille ou bataille subséquente au cours d’un même arrêt de jeu
+      second_fight: Deuxième bataille ou bataille subséquente au cours d’un même arrêt
+        de jeu
       second_misconduct_penalty: Deuxième punition d’inconduite
       slashing: Coup de bâton
       spearing: Darder
       spitting: Cracher
       team_unsportsmanlike_conduct: Manifestation antisportive d’équipe
-      third_player_entering_fight: Troisième ou autre joueur à intervenir dans une bataille
+      third_player_entering_fight: Troisième ou autre joueur à intervenir dans une
+        bataille
       threatening_an_official: Menacer de frapper ou tenter de frapper un officiel
       throwing_stick: Lancer son bâton ou tout autre objet
       too_many_players_on_ice: Trop de joueurs sur la patinoire
       tripping: Faire trébucher
       unsustained_request_for_equipment_measurement: Demande non justifiée de mesurage
       use_of_mask_as_weapon: Utiliser son protecteur facial comme une arme
-      use_of_rings_as_weapons: Bagues, ruban gommé ou autre matériau sur les mains pour blesser un adversaire
+      use_of_rings_as_weapons: Bagues, ruban gommé ou autre matériau sur les mains
+        pour blesser un adversaire
       verbal_abuse: Abus verbal envers les officiels, conduite antisportive et inconduite
       verbal_discrimination: Se livrer à des insultes ou intimidation de nature discriminatoire
-      wearing_equipment_in_non_regulatory_fashion: Porter un équipement non certifié ou dangereux
+      wearing_equipment_in_non_regulatory_fashion: Porter un équipement non certifié
+        ou dangereux
       wearing_non_certified_equipment: Porter un équipement non certifié ou dangereux
     labels:
       all: Toutes

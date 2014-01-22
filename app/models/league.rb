@@ -32,7 +32,7 @@ class League < ActiveRecord::Base
     League.transaction do
       begin
         Authorization.create!(:user => user, :role => :manager, :authorizable => self)
-        ActivityFeedItem.create!(:message => "#{user.at_name} became a manager of #{name}")
+        Feed::NewLeagueManager.create!(:user => user, :league => self)
       rescue ActiveRecord::RecordInvalid => e
         # If the authorization already exists, fail silently
         raise unless e.message == "Validation failed: User has already been taken"
@@ -48,7 +48,7 @@ class League < ActiveRecord::Base
     League.transaction do
       begin
         Authorization.create!(:user => user, :role => :marker, :authorizable => self)
-        ActivityFeedItem.create!(:message => "#{user.at_name} became a marker of #{name}")
+        Feed::NewLeagueMarker.create!(:user => user, :league => self)
       rescue ActiveRecord::RecordInvalid => e
         # If the authorization already exists, fail silently
         raise unless e.message == "Validation failed: User has already been taken"

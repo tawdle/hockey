@@ -41,6 +41,24 @@ en:
       team: Team
       player: Player
 
+  feed:
+    cancel_game: "%{user} canceled a game between %{visiting_team} and %{home_team}"
+    cancel_goal: "%{user} canceled %{player}'s goal"
+    change_game_time: "%{user} changed the start time for a game between %{visiting_team} and %{home_team}"
+    change_game_location: "%{user} changed the location for a game between %{visiting_team} and %{home_team}"
+    game_started: "The game between %{game.visiting_team.at_name} and %{home_team} started at %{location}"
+    game_ended: "Game over! Final score %{first_team} %{first_team_score} - %{second_team} %{second_team_score}"
+    new_game: "%{user} scheduled a game between %{visiting_team} and %{home_team}"
+    new_goal:
+      solo: "%{player} scored a goal against %{against_team}"
+      one_assist: "%{player} scored a goal against %{against_team}, assisted by %{assist1}"
+      two_assists: "%{player} scored a goal against %{against_team}, assisted by %{assist1} and %{assist2}"
+    new_goalie: "%{player} is in the net for %{team}"
+    new_league_manager: "%{user} became a manager of %{league}"
+    new_league_marker: "%{user} became a marker for %{league}"
+    new_location_manager: "%{user} became a manager of %{location}"
+    new_team_manager: "%{user} became a manager of %{team}"
+
   goalie:
     pulled: Empty net
 

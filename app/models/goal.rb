@@ -83,17 +83,11 @@ class Goal < ActiveRecord::Base
   end
 
   def generate_save_feed_item
-    message = "#{player.feed_name} scored a goal for #{team.at_name} against #{game.opposing_team(team).at_name}"
-    if assisting_players.any?
-      message << ", assisted by "
-      message << assisting_players.collect(&:feed_name).join(" and ")
-    end
-    game.activity_feed_items.create!(:message => message, :game => game)
+    Feed::NewGoal.create!(game: game, player: players[0], player2: players[1], player3: players[2])
   end
 
   def generate_destroy_feed_item
-    message = "#{updater_name} revoked #{player.feed_name}'s goal against #{game.opposing_team(team).at_name}"
-    game.activity_feed_items.create!(:message => message)
+    Feed::CancelGoal.create!(game: game, player: players[0], user: updater) if updater
   end
 
   def team_is_in_game

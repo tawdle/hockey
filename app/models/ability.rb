@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    can :create, ActivityFeedItem do |item|
+    can :create, Feed::UserPost do |item|
       item.creator == user
     end
 

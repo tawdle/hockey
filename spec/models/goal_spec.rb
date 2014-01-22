@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Goal do
   let(:goal) { FactoryGirl.build(:goal, :with_players) }
+  let(:user) { FactoryGirl.build(:user) }
 
   describe "#validations" do
     it "creates a valid object" do
@@ -31,12 +32,11 @@ describe Goal do
     end
 
     let(:action) { goal.save! }
-    let(:count) { 2 }
     it_behaves_like "an action that creates an activity feed item"
   end
   describe "#destroy" do
-    let(:action) { goal.save!; goal.destroy }
-    let(:count) { 3 }
+    let(:setup) { goal.save!; goal.updater = user }
+    let(:action) { goal.destroy }
     it_behaves_like "an action that creates an activity feed item"
   end
 end

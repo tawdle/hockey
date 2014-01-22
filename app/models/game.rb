@@ -352,24 +352,24 @@ class Game < ActiveRecord::Base
   end
 
   def generate_create_feed_item
-    activity_feed_items.build(:message => "#{updater_name} scheduled a game between @#{home_team.name} and @#{visiting_team.name}.")
+    Feed::NewGame.create!(:user => updater, :game => self) if updater
   end
 
   def generate_cancel_feed_item
-    activity_feed_items.create!(:message => "#{updater_name} canceled a game between @#{home_team.name} and @#{visiting_team.name}.")
+    Feed::CancelGame.create!(:user => updater, :game => self) if updater
   end
 
   def generate_update_feed_item
-    activity_feed_items.create!(:message => "#{updater_name} changed the scheduled start time for a game between @#{home_team.name} and @#{visiting_team.name}.") if start_time_changed?
-    activity_feed_items.create!(:message => "#{updater_name} changed the location of a game between @#{home_team.name} and @#{visiting_team.name}.") if location_id_changed?
+    Feed::ChangeGameTime.create!(:user => updater, :game => self) if start_time_changed? && updater
+    Feed::ChangeGameLocation.create!(:user => updater, :game => self) if location_id_changed? && updater
   end
 
   def generate_game_started_feed_item
-    activity_feed_items.create!(:message => "The game between @#{home_team.name} and @#{visiting_team.name} has started.") unless started_at
+    Feed::GameStarted.create!(:game => self) unless started_at
   end
 
   def generate_game_over_feed_item
-    activity_feed_items.create!(:message => "The game between @#{home_team.name} and @#{visiting_team.name} ended.")
+    Feed::GameEnded.create!(:game => self)
   end
 
   def set_next_period

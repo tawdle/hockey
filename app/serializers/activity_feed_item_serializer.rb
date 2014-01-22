@@ -17,6 +17,6 @@ class ActivityFeedItemSerializer < ActiveModel::Serializer
   end
 
   def creator
-    object.creator.try(:name)
+    object.creator.try(:name) if object.respond_to?(:creator)
   end
 end
