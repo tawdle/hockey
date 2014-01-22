@@ -11,6 +11,7 @@
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= yield(:head) %>
+    <%= render "favicons" %>
     <%= render :partial => "analytics" %>
   </head>
   <body>
