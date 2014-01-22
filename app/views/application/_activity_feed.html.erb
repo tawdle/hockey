@@ -32,7 +32,7 @@
             <%= format_message_with_usernames(item.message).html_safe %>
             <% if item.game && !in_game_context %>
               <br />
-              <small><i>from <%= link_to "#{item.game.home_team.name} vs. #{item.game.visiting_team.name}", item.game %></i></small>
+              <small><i>in <%= link_to "#{item.game.home_team.name} vs. #{item.game.visiting_team.name}", item.game %></i></small>
             <% end %>
           </td>
           <td><time class="timeago" datetime="<%= item.created_at.iso8601 %>"><%= distance_of_time_in_words_to_now(item.created_at) %> ago</time></td>
