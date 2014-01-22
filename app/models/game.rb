@@ -100,8 +100,8 @@ class Game < ActiveRecord::Base
   scope :asc, order("start_time ASC")
   scope :desc, order("start_time DESC")
 
-  before_create :generate_create_feed_item
-  before_update :generate_update_feed_item
+  after_create :generate_create_feed_item
+  after_update :generate_update_feed_item
 
   Periods = %w(1 2 3 OT OT2 OT3)
 
