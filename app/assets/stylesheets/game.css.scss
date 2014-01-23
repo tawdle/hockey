@@ -41,7 +41,7 @@ span#game-clock, span#game-period {
               border-radius: $radius;
 }
 
-.score {
+.team-box .score {
   background-color: black;
   color: white;
   padding-left: 10px;
@@ -224,5 +224,11 @@ table.penalties {
 table.games {
   td {
     vertical-align: middle;
+  }
+  .score {
+    font-size: large;
+  }
+  .visitor-name {
+    text-align: right;
   }
 }

@@ -8,7 +8,7 @@
       <th></th>
       <th>Home</th>
       <th></th>
-      <th>Status</th>
+      <th>Period</th>
       <th>Location</th>
       <th></th>
     </tr>
@@ -16,16 +16,18 @@
     <% games.without_deleted.each do |game| %>
       <tr <%= "style='font-weight: bold;" if game.live? %> >
         <td><%= l game.start_time, :format => :game %></td>
-        <td><%= format_team_link(game.visiting_team) %></td>
-        <td><%= image_tag(game.visiting_team.logo_url(:thumbnail)) %></td>
-        <td>
-          <% if game.scheduled? %>
-            <i>vs</i>
-          <% else %>
-            <%= "#{game.visiting_team_score}&nbsp;-&nbsp;#{game.home_team_score}".html_safe %>
+        <td class="visitor-name"><%= format_team_link(game.visiting_team) %></td>
+        <td><%= link_to(image_tag(game.visiting_team.logo_url(:thumbnail)), game.visiting_team) %></td>
+        <td class="score">
+          <%= link_to game do %>
+            <% if game.scheduled? %>
+              <i>vs</i>
+            <% else %>
+              <%= "#{game.visiting_team_score}&nbsp;-&nbsp;#{game.home_team_score}".html_safe %>
+            <% end %>
           <% end %>
         </td>
-        <td><%= image_tag(game.home_team.logo_url(:thumbnail)) %></td>
+        <td><%= link_to(image_tag(game.home_team.logo_url(:thumbnail)), game.home_team) %></td>
         <td><%= format_team_link(game.home_team) %></td>
         <td><%= game.period_text %></td>
         <td>
