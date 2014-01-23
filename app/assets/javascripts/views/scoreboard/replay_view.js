@@ -17,8 +17,22 @@ App.Scoreboard.ReplayView = Backbone.View.extend({
       data: {
         goal: $.extend({}, goal.attributes, { side: App.game.homeOrVisiting(goal.attributes.team_id) })
       },
+      statusCode: {
+        503: function() {
+          console.log("arendad says we're too early; rescheduling");
+          setTimeout(function() {
+            self.goalAdded(goal);
+          }, 1000);
+        },
+        403: function() {
+          console.log("we're not allowed to produce videos; waiting for someone else");
+          setTimeout(function() {
+            self.goalAdded(goal);
+          }, 2000);
+        }
+      },
       error: function(xhr, status, error) {
-        console.log("arenad call returned error: " + error);
+        console.log("arenad call returned error: " + status + " " + error);
       },
       success: function(data) {
         self.processPlaylist(data.playlist);
