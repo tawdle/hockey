@@ -40,6 +40,7 @@ en:
     models:
       team: Team
       player: Player
+      game: Game
 
   feed:
     cancel_game: "%{user} canceled a game between %{visiting_team} and %{home_team}"

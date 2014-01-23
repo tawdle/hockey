@@ -1,5 +1,5 @@
 <% if games.without_deleted.any? %>
-  <h3>Games</h3>
+  <h3><%= Game.model_name.human.pluralize %></h3>
   <table class="games table table-hover">
     <tr>
       <th>Date</th>
@@ -8,7 +8,7 @@
       <th></th>
       <th>Home</th>
       <th></th>
-      <th>Period</th>
+      <th><%= Game.human_attribute_name(:period) %></th>
       <th>Location</th>
       <th></th>
     </tr>

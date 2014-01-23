@@ -16,6 +16,7 @@ fr:
       system_name:
         name: ! '@Name'
     models:
+      game: Partie
       player: Joueur
       team: Équipe
     values:
