@@ -10,4 +10,8 @@ module ApplicationHelper
   def t(key, *args)
     key.nil? || (key.is_a?(String) && key.to_s.ends_with?(".")) ? "" : super
   end
+
+  def title(page_title)
+    content_for(:title) { page_title }
+  end
 end

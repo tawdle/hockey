@@ -1,3 +1,5 @@
+<% title [@player.name, @player.team.name, @player.team.league.name].join(" - ") %>
+
 <h3>Player: <%= @player.name %>
   <%= render partial: "follow_button", locals: { target: @player } %>
 </h3>

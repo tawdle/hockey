@@ -1,3 +1,5 @@
+<% title @league.name %>
+
 <h2>
   <% if @league.logo.present? %>
     <%= cl_image_tag @league.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
