@@ -82,14 +82,14 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
       this.setBackgroundImage("Home_logoCopy", this.homeTeamLogo);
 
       this.$("#pre-game-animation").show().siblings().hide();
-      this.playFromLabel("LogoSAnimation", 5000, function() {
+      this.playFromLabel("LogoSAnimation", 15000, function() {
         this.playFromLabel("VisTakesOver", 5000, function() {
           this.cyclePlayerAnimations("visiting", function() {
             this.playFromLabel("TeamLogoLoop", 5000, function() {
-              this.playFromLabel("HomeTakesOver", 5000, function() {
+              this.playFromLabel("HomeTakesOver", 7000, function() {
                 this.cyclePlayerAnimations("home", function() {
                   this.setBackgroundImage("Visitor_Logo", this.homeTeamLogo); // sic
-                  this.playFromLabel("TeamLogoLoop", 10000, function() {
+                  this.playFromLabel("TeamLogoLoop", 7000, function() {
                     this.trigger("finished", this);
                   });
                 });
@@ -113,7 +113,7 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
           self.setContent("Jerser_Number", "#" + player.get("jersey_number"));
           self.setContent("Player_Name", player.get("name"));
           self.setBackgroundImage("Maxime_Leblond__74", player.get("photo_url"));
-          self.playFromLabel("PlayerAnimation", 5000, showNextPlayer);
+          self.playFromLabel("PlayerAnimation", 7000, showNextPlayer);
         } else {
           next.apply(self, args);
         }
