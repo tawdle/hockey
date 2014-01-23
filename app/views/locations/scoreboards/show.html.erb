@@ -12,10 +12,16 @@
         .edgeLoad-EDGE-278437879 { visibility:hidden; }
     </style>
 <!--Adobe Edge Runtime End-->
+<!--Adobe Edge Runtime-->
+    <script type="text/javascript" charset="utf-8" src="/assets/edge/Complete%20animation_edgePreload.js"></script>
+    <style>
+        .edgeLoad-EDGE-3124127 { visibility:hidden; }
+    </style>
+<!--Adobe Edge Runtime End-->
 
   <%= javascript_tag do %>
     $(function() {
-      App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
+      App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri, :home_team_logo, :visiting_team_logo]).html_safe %>);
       App.players = new App.Players(<%= json_for(@game.players).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
       App.penalties = new App.Penalties(<%= json_for(@game.penalties).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
       App.goals = new App.Goals(<%= json_for(@game.goals.includes(:players)).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
@@ -43,7 +49,7 @@
   <div class="visiting-team one-third text-center">
     <p class="score"></p>
     <p class="team-city"><span><%= @game.visiting_team.city %></span></p>
-    <div class="logo"><%= cl_image_tag @game.visiting_team.logo.url(:medium) %></div>
+    <div class="logo"><%= cl_image_tag @game.visiting_team.logo.url %></div>
     <p class="team-name"><span><%= @game.visiting_team.name %><span></p>
   </div>
 
@@ -79,5 +85,8 @@
 
   <div id="countdown">
     <video src="/assets/videos/countdown.mp4"></video>
+  </div>
+
+  <div id="pre-game-animation" class="EDGE-3124127">
   </div>
 </div>

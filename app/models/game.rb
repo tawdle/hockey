@@ -151,6 +151,14 @@ class Game < ActiveRecord::Base
     AsyncMessaging::FAYE_CONFIG[:uri]
   end
 
+  def home_team_logo
+    home_team.logo_url
+  end
+
+  def visiting_team_logo
+    visiting_team.logo_url
+  end
+
   def live?
     LiveStates.include?(state)
   end
