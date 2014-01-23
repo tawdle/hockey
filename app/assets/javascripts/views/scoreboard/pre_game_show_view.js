@@ -77,6 +77,7 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
       this.setBackgroundImage("Visitor_logo", this.visitingTeamLogo);
       this.setBackgroundImage("Visitor_Logo", this.visitingTeamLogo);
       this.setBackgroundImage("Visitor_logoCopy", this.visitingTeamLogo);
+      this.setBackgroundImage("Visitor_logo_back", this.visitingTeamLogo);
       this.setBackgroundImage("Home_logo", this.homeTeamLogo);
       this.setBackgroundImage("Home_Logo", this.homeTeamLogo);
       this.setBackgroundImage("Home_logoCopy", this.homeTeamLogo);
