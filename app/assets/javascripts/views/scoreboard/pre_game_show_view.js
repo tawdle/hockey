@@ -16,7 +16,7 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
 
   preload: function(urls) {
     this.preloadedImages = this.preloadedImages || [];
-    this.preloadedImages += _.map(this.urls, function(url) {
+    this.preloadedImages += _.map(urls, function(url) {
       var image = new Image();
       image.src = url;
       return image;
