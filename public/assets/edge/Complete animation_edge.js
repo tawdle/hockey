@@ -33,42 +33,42 @@ var symbols = {
             id:'Visitor_logo_back',
             display:'none',
             type:'image',
-            rect:['0','0','1920px','1080px','auto','auto']
-            //fill:["rgba(0,0,0,0)", assetPath + 'Medias/Hawks%20copy.png','0px','0px']
+            rect:['0','0','1920px','1080px','auto','auto'],
+            fill:["rgba(0,0,0,0)", assetPath + 'Medias/Hawks%20copy.png','0px','0px']
          },
          {
             id:'Home_logo',
             type:'image',
-            rect:['0','0','1920px','1080px','auto','auto']
-            //fill:["rgba(0,0,0,0)", assetPath + 'Medias/Bulldogs%20copy.png','0px','0px']
+            rect:['0','0','1920px','1080px','auto','auto'],
+            fill:["rgba(0,0,0,0)", assetPath + 'Medias/Bulldogs%20copy.png','0px','0px']
          },
          {
             id:'Visitor__logo',
             type:'image',
-            rect:['0','0','1920px','1080px','auto','auto']
-            //fill:["rgba(0,0,0,0)", assetPath + 'Medias/Hawks%20copy.png','0px','0px']
+            rect:['0','0','1920px','1080px','auto','auto'],
+            fill:["rgba(0,0,0,0)", assetPath + 'Medias/Hawks%20copy.png','0px','0px']
          },
          {
             id:'Home_logoCopy',
             display:'none',
             type:'image',
             rect:['0','0','1920px','1080px','auto','auto'],
-            //fill:["rgba(0,0,0,0)", assetPath + "Medias/Bulldogs%20copy.png",'0px','0px'],
+            fill:["rgba(0,0,0,0)", assetPath + "Medias/Bulldogs%20copy.png",'0px','0px'],
             transform:[]
          },
          {
             id:'Visitor_logo',
             display:'none',
             type:'image',
-            rect:['0','0','1920px','1080px','auto','auto']
-            //fill:["rgba(0,0,0,0)", assetPath + "Medias/Hawks%20copy.png",'0px','0px']
+            rect:['0','0','1920px','1080px','auto','auto'],
+            fill:["rgba(0,0,0,0)", assetPath + "Medias/Hawks%20copy.png",'0px','0px']
          },
          {
             id:'Maxime_Leblond__74',
             display:'none',
             type:'image',
-            rect:['-499px','23px','1920px','2571px','auto','auto']
-            //fill:["rgba(0,0,0,0)", assetPath + "Medias/Maxime%20Leblond%20743.png",'0px','0px']
+            rect:['-499px','23px','1920px','2571px','auto','auto'],
+            fill:["rgba(0,0,0,0)", assetPath + "Medias/Maxime%20Leblond%20743.png",'0px','0px']
          },
          {
             id:'Jerser_Number',
@@ -100,22 +100,22 @@ var symbols = {
             id:'Visitor_Logo',
             display:'none',
             type:'image',
-            rect:['0','0','1920px','1080px','auto','auto']
-            //fill:["rgba(0,0,0,0)", assetPath + "Medias/Hawks%20copy.png",'0px','0px']
+            rect:['0','0','1920px','1080px','auto','auto'],
+            fill:["rgba(0,0,0,0)", assetPath + "Medias/Hawks%20copy.png",'0px','0px']
          },
          {
             id:'Home_Logo',
             display:'none',
             type:'image',
-            rect:['0','0','1920px','1080px','auto','auto']
-            //fill:["rgba(0,0,0,0)", assetPath + "Medias/Bulldogs%20copy.png",'0px','0px']
+            rect:['0','0','1920px','1080px','auto','auto'],
+            fill:["rgba(0,0,0,0)", assetPath + "Medias/Bulldogs%20copy.png",'0px','0px']
          },
          {
             id:'Visitor_logoCopy',
             display:'none',
             type:'image',
-            rect:['0','0','1920px','1080px','auto','auto']
-            //fill:["rgba(0,0,0,0)", assetPath + "Medias/Hawks%20copy.png",'0px','0px']
+            rect:['0','0','1920px','1080px','auto','auto'],
+            fill:["rgba(0,0,0,0)", assetPath + "Medias/Hawks%20copy.png",'0px','0px']
          }],
          symbolInstances: [
 
