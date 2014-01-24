@@ -7,8 +7,8 @@ class Feed::GameEnded < ActivityFeedItem
     if game.home_team_score > game.visiting_team_score
       first_team = game.home_team.at_name
       first_score = game.home_team_score
-      second_team = game.visting_team.at_name
-      second_score = game.visting_team.at_name
+      second_team = game.visiting_team.at_name
+      second_score = game.visiting_team.at_name
     else
       first_team = game.visiting_team.at_name
       first_score = game.visiting_team_score
