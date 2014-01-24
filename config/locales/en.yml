@@ -1,9 +1,9 @@
-# Sample localization file for English. Add more files in this directory for other locales.
-# See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
-
+---
 en:
   activerecord:
     attributes:
+      game:
+        period: Period
       league:
         classification: "Class"
       location:
@@ -13,10 +13,12 @@ en:
       penalty:
         category: Category
         infraction: Infraction
-      game:
-        period: Period
       system_name:
         name: "@Name"
+    models:
+      team: Team
+      player: Player
+      game: Game
     values:
       goal:
         advantage:
@@ -27,26 +29,20 @@ en:
           three_on_five: "Short-handed: 3 on 5"
       staff_member:
         role:
-          head_coach: Head coach
-          assistant_coach: Assistant coach
-          manager: Manager
-          safety_attendant: Safety Attendant
           abbreviations:
             head_coach: HC
             assistant_coach: AC
             manager: MGR
             safety_attendant: SA
-
-    models:
-      team: Team
-      player: Player
-      game: Game
-
+          assistant_coach: Assistant coach
+          head_coach: Head coach
+          manager: Manager
+          safety_attendant: Safety Attendant
   feed:
     cancel_game: "%{user} canceled a game between %{visiting_team} and %{home_team}"
     cancel_goal: "%{user} canceled %{player}'s goal"
-    change_game_time: "%{user} changed the start time for a game between %{visiting_team} and %{home_team}"
     change_game_location: "%{user} changed the location for a game between %{visiting_team} and %{home_team}"
+    change_game_time: "%{user} changed the start time for a game between %{visiting_team} and %{home_team}"
     game_started: "The game between %{game.visiting_team.at_name} and %{home_team} started at %{location}"
     game_ended: "Game over! Final score %{first_team} %{first_team_score} - %{second_team} %{second_team_score}"
     new_game: "%{user} scheduled a game between %{visiting_team} and %{home_team}"
@@ -59,10 +55,8 @@ en:
     new_league_marker: "%{user} became a marker for %{league}"
     new_location_manager: "%{user} became a manager of %{location}"
     new_team_manager: "%{user} became a manager of %{team}"
-
   goalie:
     pulled: Empty net
-
   league:
     classifications:
       a: "A"
@@ -91,10 +85,8 @@ en:
       college: "College"
       university: "University"
       house: "House"
-
   navigation:
     greeting: Hello
-
   penalties:
     categories:
       minor: "Minor (2 minutes)"
