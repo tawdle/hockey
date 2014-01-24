@@ -20,9 +20,10 @@
 //= require_tree ./models
 //= require_tree ./collections
 //= require_tree ./views
-//= require jquery.timeago
 //= require typeahead
 //= require fastclick
+//= require rails-timeago
+//= require locales/jquery.timeago.fr-short.js
 
 _.templateSettings = {
     interpolate: /\{\{\=(.+?)\}\}/gim,
@@ -30,7 +31,3 @@ _.templateSettings = {
 };
 
 $.timeago.settings.allowFuture = true;
-$(function() {
-  $("time.timeago").timeago();
-});
-

@@ -14,10 +14,10 @@
 <% end %>
 
 <% if @game.started_at %>
-  <p>This game started <time class="timeago" datetime="<%= @game.started_at.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.started_at) %></time>.</p>
+  <p>This game started <%= timeago_tag @game.started_at %>.</p>
 <% end %>
 <% if @game.ended_at %>
-  <p>This game ended <time class="timeago" datetime="<%= @game.ended_at.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.ended_at) %></time>.</p>
+  <p>This game ended <%= timeago_tag @game.ended_at %></time>.</p>
 <% end %>
 
 
@@ -63,7 +63,7 @@
   <%= @game.start_time.to_s(:long) %> at <%= @game.location.name %>
 
   <% if @game.scheduled? %>
-    <p>This game is scheduled to start <time class="timeago" datetime="<%= @game.start_time.iso8601 %>"><%= distance_of_time_in_words_to_now(@game.start_time) %></time>.</p>
+    <p>This game is scheduled to start <%= timeago_tag @game.start_time %>.</p>
     <% if can? :mark, @game %>
       <%= render :partial => "marker_checklist" %>
     <% end %>

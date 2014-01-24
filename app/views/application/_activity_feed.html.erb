@@ -35,7 +35,7 @@
               <small><i>in <%= link_to "#{item.game.home_team.name} vs. #{item.game.visiting_team.name}", item.game %></i></small>
             <% end %>
           </td>
-          <td><time class="timeago" datetime="<%= item.created_at.iso8601 %>"><%= distance_of_time_in_words_to_now(item.created_at) %> ago</time></td>
+          <td><%= timeago_tag item.created_at %></td>
         </tr>
       <% end %>
     </table>

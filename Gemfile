@@ -51,6 +51,7 @@ gem 'prawn'
 gem 'rails-i18n', '~> 3.0.0' # For 3.x
 gem 'state_machine'
 gem 'symbolize'
+gem 'rails-timeago', '~> 2.0'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
