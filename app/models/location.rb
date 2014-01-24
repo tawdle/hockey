@@ -44,8 +44,8 @@ class Location < ActiveRecord::Base
   def declined_invitation_to_manage(user, invitation)
   end
 
-  def current_game
-    games.active.asc.first
+  def game_for_scoreboard
+    games.without_deleted.active.asc.first || games.without_deleted.scheduled.asc.first
   end
 
   private

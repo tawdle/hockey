@@ -3,7 +3,7 @@ class Locations::ScoreboardsController < ApplicationController
 
   def show
     authorize! :view_scoreboard, @location
-    @game = @location.current_game
+    @game = @location.game_for_scoreboard
 
     if @game
       render :layout => "scoreboard"
