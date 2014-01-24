@@ -2,11 +2,11 @@
   <h3><%= Game.model_name.human.pluralize %></h3>
   <table class="games table table-hover">
     <tr>
-      <th>Date</th>
+      <th><%= Game.human_attribute_name(:start_time) %></th>
       <th></th>
-      <th>Visitor</th>
+      <th><%= Game.human_attribute_name(:visiting_team) %></th>
       <th></th>
-      <th>Home</th>
+      <th><%= Game.human_attribute_name(:home_team) %></th>
       <th></th>
       <th><%= Game.human_attribute_name(:period) %></th>
       <th>Location</th>
@@ -29,14 +29,14 @@
         </td>
         <td><%= link_to(image_tag(game.home_team.logo_url(:thumbnail)), game.home_team) %></td>
         <td><%= format_team_link(game.home_team) %></td>
-        <td><%= game.period_text %></td>
+        <td class="period"><%= game.period_text %></td>
         <td>
           <%= link_to game.location.name, game.location %>
           <%= link_to game.location.map_url, :target => "_blank" do %>
             <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank" %>
           <% end %>
         </td>
-        <td style="text-align: right;"><%= link_to "See game", game, :class => "btn" %></td>
+        <td style="text-align: right;"><%= link_to t("games.see_game"), game, :class => "btn" %></td>
       </tr>
     <% end %>
   </table>

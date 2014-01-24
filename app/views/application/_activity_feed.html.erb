@@ -1,16 +1,16 @@
 <% if (current_user && defined?(new_activity_feed_item)) || activity_feed_items.any? %>
-  <h3 class="page-header">Activity Feed</h2>
+  <h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
 
   <% if current_user && defined?(new_activity_feed_item) %>
     <%= form_for(new_activity_feed_item) do |f| %>
       <div class="field pull-left" style="margin-right: 10px;" >
-        <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
+        <%= f.text_field :message, :class => "span4", :placeholder => t("activity_feed.placeholder") %>
       </div>
 
       <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
 
       <div class="actions">
-        <%= f.submit "Post", :class => "btn btn-primary" %>
+        <%= f.submit t("activity_feed.post"), :class => "btn btn-primary" %>
       </div>
     <% end %>
   <% end %>

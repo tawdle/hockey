@@ -3,7 +3,11 @@ fr:
   activerecord:
     attributes:
       game:
+        home_team: Home
+        location: Location
         period: Période
+        start_time: Date
+        visiting_team: Visitor
       league:
         classification: Classe
       location:
@@ -16,6 +20,7 @@ fr:
       system_name:
         name: ! '@Name'
     models:
+      activity_feed_item: Recent Activity
       game: Partie
       player: Joueur
       team: Équipe
@@ -23,10 +28,10 @@ fr:
       goal:
         advantage:
           even: Forces égales
-          five_on_four: ! 'Sup. 5 contre 4'
-          five_on_three: ! 'Sup. 5 contre 3'
-          four_on_five: ! 'Inf. 4 contre 5'
-          three_on_five: ! 'Inf. 3 contre 5'
+          five_on_four: Sup. 5 contre 4
+          five_on_three: Sup. 5 contre 3
+          four_on_five: Inf. 4 contre 5
+          three_on_five: Inf. 3 contre 5
       staff_member:
         role:
           abbreviations:
@@ -38,29 +43,34 @@ fr:
           head_coach: Entraîneur Chef
           manager: Gérant
           safety_attendant: Préposé à la Sécurité
+  activity_feed:
+    placeholder: Enter status message here...
+    post: Post
   feed:
     cancel_game: ! '%{user} a annulé un match entre %{visiting_team} et %{home_team}'
     cancel_goal: ! '%{user} a annulé le but de %{player}'
     change_game_location: ! '%{user} a changé le lieu du matche entre les %{visiting_team}
       et les %{home_team}'
-    change_game_time: ! "%{user} a changé l''heure du match entre les %{visiting_team}
-      et les %{home_team}"
-    game_ended: "Partie terminée! Pointage final %{first_team} %{first_team_score} - %{second_team}
-      %{second_team_score}"
-    game_started: "Le match opposant les %{game.visiting_team.at_name} aux %{home_team}
-      a débuté à %{location}"
+    change_game_time: ! '%{user} a changé l''heure du match entre les %{visiting_team}
+      et les %{home_team}'
+    game_ended: Partie terminée! Pointage final %{first_team} %{first_team_score}
+      - %{second_team} %{second_team_score}
+    game_started: Le match opposant les %{game.visiting_team.at_name} aux %{home_team}
+      a débuté à %{location}
     new_game: ! '%{user} a programmé un match entre les %{visiting_team} et les %{home_team}'
     new_goal:
-      one_assist: ! "%{player} a marqué un but contre les %{against_team}, avec l'aide de
-        %{assist1}"
-      solo: ! "%{player} a marqué un but sans aide contre les %{against_team}"
-      two_assists: ! "%{player} a marqué un but contre les %{against_team}, avec l'aide de
-        %{assist1} et de %{assist2}"
-    new_goalie: ! "%{player} est devant le filet pour %{team}"
-    new_league_manager: ! "%{user} est maintenant gérant(e) de la %{league}"
+      one_assist: ! '%{player} a marqué un but contre les %{against_team}, avec l''aide
+        de %{assist1}'
+      solo: ! '%{player} a marqué un but sans aide contre les %{against_team}'
+      two_assists: ! '%{player} a marqué un but contre les %{against_team}, avec l''aide
+        de %{assist1} et de %{assist2}'
+    new_goalie: ! '%{player} est devant le filet pour %{team}'
+    new_league_manager: ! '%{user} est maintenant gérant(e) de la %{league}'
     new_league_marker: ! '%{user} est maintenant marqueur(e) pour la %{league}'
     new_location_manager: ! '%{user} est maintenant gérant(e) de %{location}'
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
+  games:
+    see_game: See game
   goalie:
     pulled: Filet désert
   league:
@@ -172,8 +182,7 @@ fr:
       spearing: Darder
       spitting: Cracher
       team_unsportsmanlike_conduct: Manifestation antisportive d’équipe
-      third_player_entering_fight: Troisième joueur à intervenir dans une
-        bataille
+      third_player_entering_fight: Troisième joueur à intervenir dans une bataille
       threatening_an_official: Menacer de frapper ou tenter de frapper un officiel
       throwing_stick: Lancer son bâton ou tout autre objet
       too_many_players_on_ice: Trop de joueurs sur la patinoire

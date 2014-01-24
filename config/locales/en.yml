@@ -3,7 +3,11 @@ en:
   activerecord:
     attributes:
       game:
+        home_team: Home
+        location: Location
         period: Period
+        start_time: Date
+        visiting_team: Visitor
       league:
         classification: "Class"
       location:
@@ -16,6 +20,7 @@ en:
       system_name:
         name: "@Name"
     models:
+      activity_feed_item: Recent Activity
       team: Team
       player: Player
       game: Game
@@ -38,6 +43,9 @@ en:
           head_coach: Head coach
           manager: Manager
           safety_attendant: Safety Attendant
+  activity_feed:
+    placeholder: Enter status message here...
+    post: Post
   feed:
     cancel_game: "%{user} canceled a game between %{visiting_team} and %{home_team}"
     cancel_goal: "%{user} canceled %{player}'s goal"
@@ -55,6 +63,8 @@ en:
     new_league_marker: "%{user} became a marker for %{league}"
     new_location_manager: "%{user} became a manager of %{location}"
     new_team_manager: "%{user} became a manager of %{team}"
+  games:
+    see_game: See game
   goalie:
     pulled: Empty net
   league:
