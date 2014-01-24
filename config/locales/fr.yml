@@ -5,12 +5,12 @@ fr:
       game:
         period: Période
       league:
-      location:
-      penalty:
         classification: Classe
+      location:
         address_1: Adresse
         state: Province
         zip: Code postal
+      penalty:
         category: Catégorie
         infraction: Infraction
       system_name:
@@ -22,14 +22,14 @@ fr:
     values:
       goal:
         advantage:
-      staff_member:
-        role:
-          abbreviations:
           even: Forces égales
           five_on_four: ! 'Sup. 5 contre 4'
           five_on_three: ! 'Sup. 5 contre 3'
           four_on_five: ! 'Inf. 4 contre 5'
           three_on_five: ! 'Inf. 3 contre 5'
+      staff_member:
+        role:
+          abbreviations:
             assistant_coach: EA
             head_coach: EC
             manager: Gér
@@ -43,24 +43,25 @@ fr:
     cancel_goal: ! '%{user} a annulé le but de %{player}'
     change_game_location: ! '%{user} a changé le lieu du matche entre les %{visiting_team}
       et les %{home_team}'
-    change_game_time: ! '%{user} a changé l'heure du match entre les %{visiting_team}
-      et les %{home_team}'
-    game_ended: Partie terminée! Pointage final %{first_team} %{first_team_score} - %{second_team}
-      %{second_team_score}
-    game_started: Le match opposant les %{game.visiting_team.at_name} aux %{home_team}
-      a débuté à %{location}
+    change_game_time: ! "%{user} a changé l''heure du match entre les %{visiting_team}
+      et les %{home_team}"
+    game_ended: "Partie terminée! Pointage final %{first_team} %{first_team_score} - %{second_team}
+      %{second_team_score}"
+    game_started: "Le match opposant les %{game.visiting_team.at_name} aux %{home_team}
+      a débuté à %{location}"
     new_game: ! '%{user} a programmé un match entre les %{visiting_team} et les %{home_team}'
-    new_goal: Nouveau but
-      one_assist: ! '%{player} a marqué un but contre les %{against_team}, avec l'aide de
-        %{assist1}'
-      solo: ! '%{player} a marqué un but sans aide contre les %{against_team}'
-      two_assists: ! '%{player} a marqué un but contre les %{against_team}, avec l'aide de
-        %{assist1} et de %{assist2}'
-    new_goalie: ! '%{player} est devant le filet pour %{team}'
-    new_league_manager: ! '%{user} est maintenant gérant(e) de la %{league}'
+    new_goal:
+      one_assist: ! "%{player} a marqué un but contre les %{against_team}, avec l'aide de
+        %{assist1}"
+      solo: ! "%{player} a marqué un but sans aide contre les %{against_team}"
+      two_assists: ! "%{player} a marqué un but contre les %{against_team}, avec l'aide de
+        %{assist1} et de %{assist2}"
+    new_goalie: ! "%{player} est devant le filet pour %{team}"
+    new_league_manager: ! "%{user} est maintenant gérant(e) de la %{league}"
     new_league_marker: ! '%{user} est maintenant marqueur(e) pour la %{league}'
     new_location_manager: ! '%{user} est maintenant gérant(e) de %{location}'
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
+  goalie:
     pulled: Filet désert
   league:
     classifications:
