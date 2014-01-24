@@ -55,7 +55,7 @@ fr:
       et les %{home_team}'
     game_ended: Partie terminée! Pointage final %{first_team} %{first_team_score}
       - %{second_team} %{second_team_score}
-    game_started: Le match opposant les %{game.visiting_team.at_name} aux %{home_team}
+    game_started: Le match opposant les %{visiting_team} aux %{home_team}
       a débuté à %{location}
     new_game: ! '%{user} a programmé un match entre les %{visiting_team} et les %{home_team}'
     new_goal:
