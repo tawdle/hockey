@@ -2,8 +2,9 @@ App.Scoreboard.GameView = Backbone.View.extend({
   name: "GameView",
 
   initialize: function(options) {
+    this.board = options.board;
     this.homeView = new App.Scoreboard.TeamView({
-      model: this.model, 
+      model: this.model,
       el: ".home-team",
       teamId: this.model.get("home_team").id,
       side: "home_team"
@@ -26,10 +27,20 @@ App.Scoreboard.GameView = Backbone.View.extend({
 
     this.listenTo(this.model, "change", this.render);
     this.render();
+
+    this.listenTo(this.board, "available", this.available);
   },
 
   render: function() {
     this.$(".period").html(this.model.get("period_text"));
+  },
+
+  available: function() {
+    var state = this.model.get("state");
+
+    if (["ready", "playing", "paused", "active"].indexOf(state) >= 0) {
+      this.board.enqueue(this);
+    }
   }
 });
 

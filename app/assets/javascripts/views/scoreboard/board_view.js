@@ -1,7 +1,5 @@
 App.Scoreboard.BoardView = Backbone.View.extend({
   initialize: function(options) {
-    this.views = _.object(_.map(options.views, function(view) { return [view.name, view]; }));
-    this.defaultView = options.defaultView || options.views[0];
     this.queue = [];
     this.currentView = null;
     this.$el.children().hide();
@@ -9,17 +7,28 @@ App.Scoreboard.BoardView = Backbone.View.extend({
 
     this.listenTo(App.game, "change:state", this.gameStateChanged);
 
-    var self = this;
-    _.each(this.views, function(view) {
-      self.listenTo(view, "finished", self.onFinished);
-      view.board = self;
-      view.trigger("added", self);
-    });
+    var config = [
+      [App.Scoreboard.GameView, "#game-board"],
+      [App.Scoreboard.GoalAnimationView, "#team-goal-animation"],
+      [App.Scoreboard.ReplayView, "#goal-replay"],
+      [App.Scoreboard.PlayerGoalView, "#player-goal-animation"],
+      [App.Scoreboard.PreGameShowView, "#pre-game-show"]
+    ];
 
-    if (!this.currentView) this.show(this.defaultView);
+    var self = this;
+    this.views = _.object(
+      _.map(config, function(v) {
+        var view = new v[0]( { el: v[1], board: self, model: self.model } );
+        return [view.name, view];
+      })
+    );
+
+    this.trigger("available");
   },
 
   show: function(view) {
+    console.log("got request to show " + view.name);
+
     var current = this.currentView;
 
     if (current == view) return;
@@ -34,30 +43,45 @@ App.Scoreboard.BoardView = Backbone.View.extend({
     view.trigger("shown");
 
     this.currentView = view;
-    if (this.currentView == this.defaultView)
-      this.stopSound();
+    console.log("currentView is now " + this.currentView.name);
   },
 
-  onFinished: function(view) {
+  finished: function(view) {
     if (view == this.currentView) {
       this.showNext();
     }
   },
 
   showNext: function() {
-    this.show(this.queue.shift() || this.defaultView);
+    if (this.queue[0]) {
+      this.show(this.queue.shift());
+    } else {
+      var view = this.currentView;
+      this.trigger("available");
+      if (view && view == this.currentView) { // nobody wants the screen
+        view.trigger("hiding");
+        view.$el.hide();
+        view.trigger("hidden");
+        this.currentView = null;
+      }
+    }
   },
 
   enqueue: function(view) {
-    if (!this.currentView) {
-      this.show(view);
-    } else {
-      this.queue.push(view);
-    }
+    console.log("adding " + view.name + " to queue");
+    this.queue.push(view);
+    var self = this;
+    setTimeout(function() {
+      if (!self.currentView) {
+        console.log("enqueue: nothing showing, so trying next");
+        self.showNext();
+      }
+    }, 1);
   },
 
   reset: function() {
     this.queue = [];
+    this.stopSound();
     this.showNext();
   },
 
@@ -79,9 +103,18 @@ App.Scoreboard.BoardView = Backbone.View.extend({
     }
   },
 
+  fadeOutAndReload: function() {
+    this.$el.animate( { opacity: 0 }, 10000, function() {
+      document.location.reload();
+    });
+  },
+
   gameStateChanged: function(game, state) {
-    if (state == "playing")
+    if (state == "playing") {
       this.stopSound();
+    } else if (state == "completed") {
+      setTimeout(this.fadeOutAndReload.bind(this), 30000);
+    }
   }
 });
 

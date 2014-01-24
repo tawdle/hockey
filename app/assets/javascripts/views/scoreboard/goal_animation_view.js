@@ -2,6 +2,7 @@ App.Scoreboard.GoalAnimationView = Backbone.View.extend({
   name: "GoalAnimationView",
 
   initialize: function(options) {
+    this.board = options.board;
     this.listenTo(this, "showing", this.start);
     this.listenTo(this, "hidden", this.stop);
     this.listenTo(App.goals, "add", this.goalAdded);

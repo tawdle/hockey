@@ -2,6 +2,7 @@ App.Scoreboard.ReplayView = Backbone.View.extend({
   name: "ReplayView",
 
   initialize: function(options) {
+    this.board = options.board;
     this.listenTo(this, "showing", this.start);
     this.listenTo(this, "hidden", this.stop);
     this.playing = false;
@@ -72,7 +73,7 @@ App.Scoreboard.ReplayView = Backbone.View.extend({
   playNextVideo: function() {
     this.currentVideo += 1;
     if (this.currentVideo >= this.playlist.length) {
-      this.trigger("finished", this);
+      this.board.finished(this);
     } else if (this.playing) {
       var video = this.$("video")[this.currentVideo];
       video.currentTime = 0;

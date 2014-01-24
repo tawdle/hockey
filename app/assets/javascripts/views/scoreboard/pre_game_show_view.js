@@ -1,17 +1,46 @@
 App.Scoreboard.PreGameShowView = Backbone.View.extend({
   name: "PreGameShowView",
 
-  initialize: function() {
-    this.listenTo(App.game, "change:state", this.gameStateChanged);
+  initialize: function(options) {
+    this.board = options.board;
+    this.listenTo(this.model, "change:state", this.gameStateChanged);
     this.listenTo(this, "showing", this.start);
     this.listenTo(this, "hidden", this.stop);
     this.countDownMovie = this.$("#countdown video");
     this.countDownMovie[0].addEventListener("ended", this.startAnimation.bind(this));
-    this.listenTo(this, "added", this.added);
+    this.listenTo(this.board, "available", this.available);
     this.homeTeamLogo = App.game.get("home_team_logo");
     this.visitingTeamLogo = App.game.get("visiting_team_logo");
     this.preload([this.homeTeamLogo, this.visitingTeamLogo]);
     this.preload(App.players.map(function(player) { return player.get("photo_url"); }));
+
+    AdobeEdge.bootstrapCallback(this.edgeLoadCallback.bind(this));
+  },
+
+  compId: "EDGE-3124127",
+
+  shouldStart: function() {
+    return !this.played && App.game.get("state") == "ready" && App.game.get("period") === 0;
+  },
+
+  edgeLoadCallback: function(compId) {
+    if (compId == this.compId) {
+      this.edgeLoaded = true;
+      this.endTag();
+    }
+  },
+
+  gameStateChanged: function() {
+    if (this.shouldStart()) {
+      this.board.show(this);
+    }
+  },
+
+  available: function() {
+    if (this.shouldStart()) {
+      this.board.show(this);
+    }
+    return false;
   },
 
   preload: function(urls) {
@@ -21,16 +50,6 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
       image.src = url;
       return image;
     });
-  },
-
-  added: function(board) {
-    board.enqueue(this); // XXX: For testing
-  },
-
-  gameStateChanged: function(game, state) {
-    if (state == "ready" && game.get("period") === 0) {
-      this.board.enqueue(this);
-    }
   },
 
   start: function() {
@@ -52,12 +71,18 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
   showTag: function() {
     if (this.playing) {
       this.$("#bigshot-tag").removeClass("fade").show().siblings().hide();
+      this.waitingForLoad = true;
+      this.endTag();
+    }
+  },
+
+  endTag: function() {
+    if (this.playing && this.waitingForLoad && this.edgeLoaded) {
       var self = this;
       setTimeout(function() {
         this.$("#bigshot-tag").addClass("fade-out");
         setTimeout(function() {
           self.showCountDown();
-          //self.startAnimation(); // XXX: For testing
         }, 6000);
       }, 1000);
     }
@@ -91,7 +116,7 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
                 this.cyclePlayerAnimations("home", function() {
                   this.setBackgroundImage("Visitor_Logo", this.homeTeamLogo); // sic
                   this.playFromLabel("TeamLogoLoop", 7000, function() {
-                    this.trigger("finished", this);
+                    this.board.finished(this);
                   });
                 });
               });
@@ -132,7 +157,7 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
   },
 
   stage: function() {
-    return AdobeEdge.getComposition("EDGE-3124127").getStage();
+    return AdobeEdge.getComposition(this.compId).getStage();
   },
 
   playFromLabel: function(label, duration, next, args) {

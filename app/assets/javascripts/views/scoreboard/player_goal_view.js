@@ -2,6 +2,7 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
   name: "PlayerGoalView",
 
   initialize: function(options) {
+    this.board = options.board;
     this.listenTo(this, "showing", this.start);
     this.listenTo(this, "hidden", this.stop);
     this.listenTo(App.goals, "add", this.goalAdded);
@@ -14,7 +15,7 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
 
     var self = this;
     setTimeout(function() {
-      self.trigger("finished", self);
+      self.board.finished(self);
     }, self.duration);
   },
 
