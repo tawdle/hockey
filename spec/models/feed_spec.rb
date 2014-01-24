@@ -25,6 +25,18 @@ shared_examples "a feed item with a user" do
   end
 end
 
+shared_examples "a feed item with a player" do
+  describe "#validations" do
+    it "requires a player" do
+      item.player = nil
+      item.should_not be_valid
+    end
+  end
+  describe "#message" do
+    it { item.message.should include(item.player.at_name) }
+  end
+end
+
 shared_examples "a feed item with a league" do
   describe "#validations" do
     it "requires a league" do
@@ -106,6 +118,16 @@ module Feed
     end
   end
 
+  describe NewFollowing do
+    let(:item) { FactoryGirl.build(:new_following) }
+    it { item.should be_valid }
+    it_behaves_like "a feed item with a user"
+    it "generates a message" do
+      item.message.should include "is now following"
+      item.message.should include item.user.at_name
+      item.message.should include item.target.at_name
+    end
+  end
   describe NewGame do
     let(:item) { FactoryGirl.build(:new_game) }
     it { item.should be_valid }
@@ -152,6 +174,13 @@ module Feed
     it { item.should be_valid }
     it_behaves_like "a feed item with a user and a league"
     it { item.message.should include 'became a manager' }
+  end
+
+  describe NewPenalty do
+    let(:item) { FactoryGirl.build(:new_penalty) }
+    it { item.should be_valid }
+    it_behaves_like "a feed item with a player"
+    it { item.message.should include "received a penalty" }
   end
 
   describe NewUser do

@@ -30,6 +30,11 @@ FactoryGirl.define do
     game
   end
 
+  factory :new_following, class: Feed::NewFollowing do
+    user
+    target { build(:player) }
+  end
+
   factory :new_game, class: Feed::NewGame do
     user
     game
@@ -58,6 +63,12 @@ FactoryGirl.define do
   factory :new_location_manager, class: Feed::NewLocationManager do
     user
     location
+  end
+
+  factory :new_penalty, class: Feed::NewPenalty do
+    game
+    player
+    penalty
   end
 
   factory :new_team_manager, class: Feed::NewTeamManager do

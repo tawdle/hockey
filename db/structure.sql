@@ -44,7 +44,8 @@ CREATE TABLE activity_feed_items (
     target_id integer,
     player_id integer,
     player2_id integer,
-    player3_id integer
+    player3_id integer,
+    target_name character varying(255)
 );
 
 
@@ -1735,3 +1736,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140121201815');
 INSERT INTO schema_migrations (version) VALUES ('20140121213759');
 
 INSERT INTO schema_migrations (version) VALUES ('20140122010753');
+
+INSERT INTO schema_migrations (version) VALUES ('20140124200616');

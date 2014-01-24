@@ -36,6 +36,7 @@ class Penalty < ActiveRecord::Base
   after_save :broadcast_changes
   after_destroy :update_running_penalties
   after_destroy :broadcast_changes
+  after_create :create_feed_item
 
   attr_accessible :state, :penalizable_type_and_id, :penalizable_id, :penalizable_type, :serving_player_id,
     :period, :category, :game, :elapsed_time, :infraction, :minutes, :action, :penalizable, :team, :team_id
@@ -388,6 +389,11 @@ class Penalty < ActiveRecord::Base
 
   def update_running_penalties
     Penalty.start_eligible_penalties(game) if game.playing?
+  end
+
+  def create_feed_item
+    # XXX This will fail for non-player penalties; let it slide for now
+    Feed::NewPenalty.create(:player => penalizable, :penalty => self, :game => game)
   end
 
   MaxConcurrentPenalties = 2
