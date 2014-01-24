@@ -116,7 +116,9 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
                 this.cyclePlayerAnimations("home", function() {
                   this.setBackgroundImage("Visitor_Logo", this.homeTeamLogo); // sic
                   this.playFromLabel("TeamLogoLoop", 7000, function() {
-                    this.board.finished(this);
+                    this.$el.animate({ opacity: 0 }, 4000, function() {
+                      this.board.finished(this);
+                    }.bind(this));
                   });
                 });
               });
