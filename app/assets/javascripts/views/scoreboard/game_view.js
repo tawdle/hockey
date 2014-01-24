@@ -25,10 +25,15 @@ App.Scoreboard.GameView = Backbone.View.extend({
 
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);
 
+    this.listenTo(this, "showing", this.fadeIn);
     this.listenTo(this.model, "change", this.render);
     this.render();
 
     this.listenTo(this.board, "available", this.available);
+  },
+
+  fadeIn: function() {
+    this.$el.css("opacity", 0).animate({ opacity: 1}, 3000);
   },
 
   render: function() {
