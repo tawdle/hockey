@@ -13,6 +13,7 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
     this.visitingTeamLogo = App.game.get("visiting_team_logo");
     this.preload([this.homeTeamLogo, this.visitingTeamLogo]);
     this.preload(App.players.map(function(player) { return player.get("photo_url"); }));
+    this.listenTo(App.players, "add", this.playerAdded);
 
     AdobeEdge.bootstrapCallback(this.edgeLoadCallback.bind(this));
   },
@@ -50,6 +51,10 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
       image.src = url;
       return image;
     });
+  },
+
+  playerAdded: function(player) {
+    this.preload([player.get("photo_url")]);
   },
 
   start: function() {
