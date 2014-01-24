@@ -22,7 +22,7 @@ class Feed::GameEnded < ActivityFeedItem
   end
 
   def mentioned_objects
-    [game.home_team, game.visiting_team]
+    [game.home_team, game.visiting_team, game.league]
   end
 end
 

@@ -11,7 +11,7 @@ class Feed::NewGame < ActivityFeedItem
   end
 
   def mentioned_objects
-    [user, game.visiting_team, game.home_team]
+    [user, game.visiting_team, game.home_team, game.league]
   end
 end
 
