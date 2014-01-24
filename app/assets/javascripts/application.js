@@ -13,6 +13,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require bootstrap
+//= require fixed-bootstrap-modal
 //= require underscore
 //= require backbone
 //= require backbone.collectionView
