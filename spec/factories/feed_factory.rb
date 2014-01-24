@@ -64,6 +64,10 @@ FactoryGirl.define do
     user
     team
   end
+
+  factory :new_user, class: Feed::NewUser do
+    user
+  end
 end
 
 

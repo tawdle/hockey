@@ -55,8 +55,8 @@ fr:
       et les %{home_team}'
     game_ended: Partie terminée! Pointage final %{first_team} %{first_team_score}
       - %{second_team} %{second_team_score}
-    game_started: Le match opposant les %{visiting_team} aux %{home_team}
-      a débuté à %{location}
+    game_started: Le match opposant les %{visiting_team} aux %{home_team} a débuté
+      à %{location}
     new_game: ! '%{user} a programmé un match entre les %{visiting_team} et les %{home_team}'
     new_goal:
       one_assist: ! '%{player} a marqué un but contre les %{against_team}, avec l''aide
@@ -69,6 +69,7 @@ fr:
     new_league_marker: ! '%{user} est maintenant marqueur(e) pour la %{league}'
     new_location_manager: ! '%{user} est maintenant gérant(e) de %{location}'
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
+    new_user: ! '%{user} just became a BigShot'
   games:
     see_game: See game
   goalie:

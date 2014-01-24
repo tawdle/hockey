@@ -62,6 +62,7 @@ en:
     new_league_manager: "%{user} became a manager of %{league}"
     new_league_marker: "%{user} became a marker for %{league}"
     new_location_manager: "%{user} became a manager of %{location}"
+    new_user: "%{user} just became a BigShot"
     new_team_manager: "%{user} became a manager of %{team}"
   games:
     see_game: See game

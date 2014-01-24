@@ -154,4 +154,10 @@ module Feed
     it { item.message.should include 'became a manager' }
   end
 
+  describe NewUser do
+    let(:item) { FactoryGirl.build(:new_user) }
+    it { item.should be_valid }
+    it_behaves_like "a feed item with a user"
+    it { item.message.should include 'became a BigShot' }
+  end
 end
