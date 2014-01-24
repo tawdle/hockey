@@ -34,9 +34,7 @@
     var Opts = $.extend(defaults, options);
 
     function _debug() {
-      if (!Opts.debug
-      ||  typeof console == 'undefined'
-      ||  typeof console.debug == 'undefined') {
+      if (!Opts.debug ||  typeof console == 'undefined' || typeof console.debug == 'undefined') {
         return;
       }
 
@@ -44,8 +42,7 @@
     }
 
     function _warn() {
-      if (typeof console == 'undefined'
-      ||  typeof console.warn == 'undefined') {
+      if (typeof console == 'undefined' ||  typeof console.warn == 'undefined') {
         return;
       }
 
@@ -53,6 +50,8 @@
     }
 
     function _debug_sizing(prefix, ourText, maxHeight, maxWidth, minFontPixels, maxFontPixels) {
+      return;
+
       function _m(v1, v2) {
         var marker = ' / ';
         if (v1 > v2) {
@@ -76,7 +75,7 @@
     function _sizing(prefix, ourText, func, max, maxHeight, maxWidth, minFontPixels, maxFontPixels) {
       _debug_sizing(prefix + ': ', ourText, maxHeight, maxWidth, minFontPixels, maxFontPixels);
       while (minFontPixels < maxFontPixels - 1) {
-        var fontSize = Math.floor((minFontPixels + maxFontPixels) / 2)
+        var fontSize = Math.floor((minFontPixels + maxFontPixels) / 2);
         ourText.css('font-size', fontSize);
         if (func.call(ourText) <= max) {
           minFontPixels = fontSize;
@@ -97,7 +96,7 @@
     }
 
     this.each(function() {
-      var ourText = $(Opts.innerTag + ':visible:first', this);
+      var ourText = $(Opts.innerTag + ':first', this);
       // Use explicit dimensions when specified
       var maxHeight = Opts.explicitHeight || $(this).height();
       var maxWidth = Opts.explicitWidth || $(this).width();
@@ -112,7 +111,7 @@
 
       var minFontPixels = Opts.minFontPixels;
       var maxFontPixels = Opts.maxFontPixels <= 0 ? maxHeight : Opts.maxFontPixels;
-      var HfontSize = undefined;
+      var HfontSize;
       if (!Opts.widthOnly) {
         HfontSize = _sizing('H', ourText, $.fn.height, maxHeight, maxHeight, maxWidth, minFontPixels, maxFontPixels);
       }
@@ -125,9 +124,7 @@
       }
       _debug('Final: ' + ourText.css('font-size'));
 
-      if (ourText.width()  > maxWidth 
-      || (ourText.height() > maxHeight && !Opts.widthOnly)
-      ) {
+      if (ourText.width()  > maxWidth || (ourText.height() > maxHeight && !Opts.widthOnly)) {
         ourText.css('font-size', oldFontSize);
         if (Opts.fail) {
           Opts.fail(this);
