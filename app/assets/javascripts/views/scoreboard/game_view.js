@@ -33,7 +33,7 @@ App.Scoreboard.GameView = Backbone.View.extend({
   },
 
   fadeIn: function() {
-    this.$el.css("opacity", 0).animate({ opacity: 1}, 3000);
+    this.$el.css("opacity", 0).animate({ opacity: 1}, 500);
   },
 
   render: function() {
