@@ -19,7 +19,7 @@
     </dl>
 
 
-    <% if current_user.manager_of?(@tournament) %>
+    <% if current_user && current_user.manager_of?(@tournament) %>
       <div class="well">
         <h2>Tournament Manager Control Panel</h2>
         <ul>
