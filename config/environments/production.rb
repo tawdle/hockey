@@ -78,4 +78,9 @@ Hockey::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
+  # Cache static assets for 1 year
+  config.static_cache_control = 'public, max-age=31536000'
+
+  # Point to staging cloudfront host
+  config.action_controller.asset_host = 'd2h0w8815spdfe.cloudfront.net'
 end
