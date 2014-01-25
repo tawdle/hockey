@@ -1,10 +1,10 @@
 <div class="hero-unit" style="text-align: right;">
-  <h1 style="text-align: right;">Welcome to BigShot!</h1>
-  <p style="text-align: right;"><i>skate online like the pros</i></p>
+  <h1 style="text-align: right;"><%= t 'welcome.message' %></h1>
+  <p style="text-align: right;"><i><%= t 'welcome.tagline' %> </i></p>
   <br />
   <p>
-    <%= link_to "Log in", new_user_session_path, :class => "btn btn-large btn-primary" %>
-    or <%= link_to "Sign up", new_user_registration_path, :class => "btn btn-large btn-primary" %>
+    <%= link_to t('navigation.sign_in'), new_user_session_path, :class => "btn btn-large btn-primary" %>
+    or <%= link_to t('navigation.sign_up'), new_user_registration_path, :class => "btn btn-large btn-primary" %>
     to get in on the fun.
   </p>
 </div>

@@ -105,7 +105,11 @@ fr:
       senior: Sénior
       university: Universitaire
   navigation:
+    edit_account: Edit account
     greeting: Bonjour
+    sign_in: Log in
+    sign_out: Log out
+    sign_up: Sign up
   penalties:
     categories:
       game_misconduct: Extrême inconduite (expulsion)
@@ -206,3 +210,6 @@ fr:
   time:
     formats:
       game: ! '%e %B %Y - %H:%M %Z'
+  welcome:
+    message: Welcome to BigShot!
+    tagline: skate online like the pros

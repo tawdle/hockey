@@ -100,6 +100,10 @@ en:
       house: "House"
   navigation:
     greeting: Hello
+    sign_in: Log in
+    sign_out: Log out
+    sign_up: Sign up
+    edit_account: Edit account
   penalties:
     categories:
       minor: "Minor (2 minutes)"
@@ -189,3 +193,6 @@ en:
   time:
     formats:
       game: ! "%B %e, %Y %l:%M%p %Z"
+  welcome:
+    message: Welcome to BigShot!
+    tagline: skate online like the pros
