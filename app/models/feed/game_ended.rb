@@ -8,12 +8,12 @@ class Feed::GameEnded < ActivityFeedItem
       first_team = game.home_team.at_name
       first_score = game.home_team_score
       second_team = game.visiting_team.at_name
-      second_score = game.visiting_team.at_name
+      second_score = game.visiting_team_score
     else
       first_team = game.visiting_team.at_name
       first_score = game.visiting_team_score
       second_team = game.home_team.at_name
-      second_score = game.home_team.at_name
+      second_score = game.home_team_score
     end
 
     I18n.t "feed.game_ended",
