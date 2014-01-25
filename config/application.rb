@@ -74,5 +74,8 @@ module Hockey
 
     # See http://makandracards.com/makandra/12807-custom-error-pages-in-rails-3-2
     config.exceptions_app = self.routes
+
+    # For rack-zippy
+    config.middleware.swap(ActionDispatch::Static, Rack::Zippy::AssetServer)
   end
 end
