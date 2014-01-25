@@ -37,7 +37,7 @@ group :development do
 end
 
 group :production do
-  gem 'heroku_rails_deflate'
+  gem 'rack-zippy'
 end
 
 gem 'active_model_serializers'
