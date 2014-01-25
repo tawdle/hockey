@@ -37,7 +37,7 @@ group :development do
 end
 
 group :production do
-  gem 'heroku-deflater'
+  gem 'heroku_rails_deflate'
 end
 
 gem 'active_model_serializers'
