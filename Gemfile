@@ -36,6 +36,10 @@ group :development do
   gem 'webrick', '~> 1.3.1'
 end
 
+group :production do
+  gem 'heroku-deflater'
+end
+
 gem 'active_model_serializers'
 gem 'acts_as_list'
 gem 'bootstrap-sass', '~> 2'
