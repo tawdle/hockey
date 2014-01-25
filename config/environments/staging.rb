@@ -20,6 +20,12 @@ Hockey::Application.configure do
   # Generate digests for assets URLs
   config.assets.digest = true
 
+  # Cache static assets for 1 year
+  config.static_cache_control = 'public, max-age=31536000'
+
+  # Point to staging cloudfront host
+  config.action_controller.asset_host = 'd1f18ka30dqhjr.cloudfront.net'
+
   # Defaults to nil and saved in location specified by config.assets.prefix
   # config.assets.manifest = YOUR_PATH
 
