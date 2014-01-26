@@ -16,28 +16,20 @@
   <% end %>
 
   <% if activity_feed_items.any? %>
-    <table class="table">
-      <tr>
-        <th>Avatar</th>
-        <th>Name</th>
-        <th>Message</th>
-        <th>When</th>
-      </tr>
-
+    <div class="activity-feed">
       <% activity_feed_items.limit(10).each do |item| %>
-        <tr>
-          <td><%= cl_image_tag(item.avatar_url(:thumbnail), :width => 50, :height => 50) %></td>
-          <td><%= format_user_link(item.creator) if item.respond_to?(:creator) %></td>
-          <td>
-            <%= format_message_with_usernames(item.message).html_safe %>
+        <div class="feed-item">
+          <%= cl_image_tag(item.avatar_url(:thumbnail), :width => 50, :height => 50) %>
+          <p>
+            <span class="creator"><%= format_user_link(item.creator) if item.respond_to?(:creator) %></span>
+            <span class="created-at muted"><%= timeago_tag item.created_at %></span>
             <% if item.game && !in_game_context %>
-              <br />
               <small><i>in <%= link_to "#{item.game.home_team.name} vs. #{item.game.visiting_team.name}", item.game %></i></small>
             <% end %>
-          </td>
-          <td><%= timeago_tag item.created_at %></td>
-        </tr>
+          </p>
+          <p><%= format_message_with_usernames(item.message).html_safe %></p>
+        </div>
       <% end %>
-    </table>
+    </div>
   <% end %>
 <% end %>

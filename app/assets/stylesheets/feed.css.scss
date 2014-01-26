@@ -1,0 +1,22 @@
+.feed-item {
+  padding-left: 60px;
+  position: relative;
+  padding-bottom: 15px;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  border-bottom: 1px solid #ccc;
+
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+
+  .creator {
+    font-weight: bold;
+  }
+
+  p {
+    margin-bottom: 2px;
+  }
+}
