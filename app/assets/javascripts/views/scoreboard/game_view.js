@@ -26,10 +26,17 @@ App.Scoreboard.GameView = Backbone.View.extend({
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);
 
     this.listenTo(this, "showing", this.fadeIn);
+    this.listenTo(this, "shown", this.shown);
     this.listenTo(this.model, "change", this.render);
     this.render();
 
     this.listenTo(this.board, "available", this.available);
+  },
+
+  shown: function() {
+    var opts = { debug: true, maxFontPixels: 0, widthOnly: true, explicitWidth: 500 };
+    this.$(".team.name").textfill(opts);
+    this.$(".team.city").textfill(opts);
   },
 
   fadeIn: function() {

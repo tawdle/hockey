@@ -50,7 +50,6 @@
     }
 
     function _debug_sizing(prefix, ourText, maxHeight, maxWidth, minFontPixels, maxFontPixels) {
-      return;
 
       function _m(v1, v2) {
         var marker = ' / ';
