@@ -87,18 +87,18 @@ App.Scoreboard.BoardView = Backbone.View.extend({
 
   playSound: function(audio) {
     this.sound = audio;
-    this.sound.volume = 0;
-    this.sound.currentTime = 0;
-    this.sound.play();
-    $(this.sound).animate( { volume: 1 }, 100); // avoid glitch on restart
+    audio.volume = 0;
+    audio.currentTime = 0;
+    audio.play();
+    $(audio).animate( { volume: 1 }, 100); // avoid glitch on restart
   },
 
   stopSound: function() {
-    var self = this;
-    if (this.sound) {
-      $(this.sound).animate( { volume: 0 }, 1000, function() {
-        self.sound.pause();
-        self.sound.currentTime = 0;
+    var sound = this.sound;
+    if (sound) {
+      $(sound).animate( { volume: 0 }, 1000, function() {
+        sound.pause();
+        sound.currentTime = 0;
       });
     }
   },
