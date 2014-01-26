@@ -188,8 +188,8 @@ class Gamesheets::HockeyQuebec < Prawn::Document
       draw_text(@game.home_team_score, at: [878, 43])
     end
 
-    draw_text(@game.started_at.to_s(:time), at: [780, 8])
-    draw_text(@game.ended_at.to_s(:time), at: [817, 8])
+    draw_text(@game.started_at.to_s(:time), at: [780, 8]) if @game.ended_at
+    draw_text(@game.ended_at.to_s(:time), at: [817, 8]) if @game.ended_at
 
     draw_goalie_stats
 
