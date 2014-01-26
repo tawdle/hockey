@@ -12,6 +12,8 @@
  *= require bootstrap_and_overrides
  */
 
+$red:       #EE1C25;
+
 * {
   box-sizing: border-box;
   -webkit-box-sizing: border-box;
@@ -64,7 +66,7 @@ div.content {
 
   .period-label-and-number {
     bottom: 108px;
-    color: red;
+    color: $red;
     font-size: 60px;
     line-height: 60px;
     font-weight: 600;
@@ -104,7 +106,7 @@ div.content {
     top: 475px;
     height: 305px;
     font-size: 350px;
-    color: red;
+    color: $red;
   }
 
   .city {
