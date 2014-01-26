@@ -42,23 +42,31 @@ div.content {
   .one-third {
     font-size: 14px;
     width: 640px;
+    height: 1080px;
     display: inline-block;
-    padding: 50px;
+    padding: 1px;
     float: left;
     position: relative;
+    text-align: center;
+
+    > div {
+      position: absolute;
+      width: 100%;
+    }
   }
 
   .bigshot-logo {
-    margin-top: 195px;
+    top: 235px;
     img {
       width: 400px;
     }
   }
 
   .period-label-and-number {
-    margin-top: 396px;
+    bottom: 108px;
     color: red;
     font-size: 60px;
+    line-height: 60px;
     font-weight: 600;
 
     .period {
@@ -69,25 +77,23 @@ div.content {
   .team {
     color: #eee;
     white-space: nowrap;
-    text-align: center;
     width: 100%;
-    position: relative;
-    span {
+  }
+
+  .name {
+    top: 110px;
+    height: 63px;
+    text-transform: uppercase;
+
+    div {
       position: absolute;
-      left: 0;
-      bottom: 0;
+      width: 100%;
+      bottom: 0px;
     }
   }
 
-  .team.name {
-    height: 150px;
-    text-transform: uppercase;
-    padding-top: 61px;
-    padding-bottom: 25px;
-  }
-
   .logo {
-    margin-top: 60px;
+    top: 260px;
     height: 300px;
     img {
       width: 350px;
@@ -95,15 +101,23 @@ div.content {
   }
 
   .score {
+    top: 475px;
     height: 305px;
     font-size: 350px;
-    line-height: 250px;
     color: red;
   }
 
   .city {
-    padding-top: 35px;
-    height: 100px;
+    vertical-align: baseline;
+    bottom: 90px;
+    height: 64px;
+    line-height: 64px;
+
+    div {
+      position: absolute;
+      width: 100%;
+      bottom: 0px;
+    }
   }
 }
 

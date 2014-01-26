@@ -41,10 +41,18 @@
 
 <div id="game-board">
   <div class="visiting-team one-third text-center">
-    <div class="team name"><span><%= @game.visiting_team.name %><span></div>
+    <div class="team name">
+      <div>
+        <span><%= @game.visiting_team.name %></span>
+      </div>
+    </div>
     <div class="logo"><%= cl_image_tag @game.visiting_team.logo.url %></div>
     <div class="score"></div>
-    <div class="team city"><span><%= @game.visiting_team.city %></span></div>
+    <div class="team city">
+      <div>
+        <span><%= @game.visiting_team.city %></span>
+      </div>
+    </div>
   </div>
 
   <div class="one-third text-center">
@@ -52,10 +60,10 @@
       <%= image_tag "L_BigShot_RGB.png" %>
     </div>
     <div class="period-label-and-number">
-    <p class="period-label">
+    <div class="period-label">
       <%= t("activerecord.attributes.game.period") %>
       <span class="period"></span>
-    </p>
+    </div>
     </div>
   </div>
 
@@ -63,7 +71,11 @@
     <div class="team name"><span><%= @game.home_team.name %><span></div>
     <div class="logo"><%= cl_image_tag @game.home_team.logo.url %></div>
     <div class="score"></div>
-    <div class="team city"><span><%= @game.home_team.city %></span></div>
+    <div class="team city">
+      <div>
+        <span><%= @game.home_team.city %></span>
+      </div>
+    </div>
   </div>
 </div>
 
