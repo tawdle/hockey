@@ -47,7 +47,7 @@ gem 'devise'
 gem 'delayed_job_active_record'
 gem 'fastclick-rails'
 gem 'figaro'
-gem 'heroku-deflater', :group => :production, :staging
+gem 'heroku-deflater', :group => [:production, :staging]
 gem 'i18n_country_select'
 gem 'prawn'
 gem 'rails-i18n', '~> 3.0.0' # For 3.x
