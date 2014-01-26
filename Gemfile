@@ -49,7 +49,6 @@ gem 'fastclick-rails'
 gem 'figaro'
 gem 'i18n_country_select'
 gem 'prawn'
-gem 'rack-zippy'
 gem 'rails-i18n', '~> 3.0.0' # For 3.x
 gem 'state_machine'
 gem 'symbolize'
