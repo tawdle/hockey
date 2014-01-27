@@ -1,5 +1,19 @@
 <% title [@game.visiting_team.name, @game.visiting_team.city, "vs", @game.home_team.name, @game.home_team.city, @game.location.name, l(@game.start_time, :format => :game)].compact.join(" - ") %>
 
+<% content_for(:head) do %>
+  <%= javascript_include_tag AsyncMessaging::FAYE_CONFIG[:script] %>
+<% end %>
+
+<%= javascript_tag do %>
+  $(function() {
+    App.translations =  <%= I18n.t(".").to_json.html_safe %>;
+    App.periods = <%= Game::Periods.to_json.html_safe %>;
+    App.feedItems = new App.FeedItems(<%= json_for(@game.activity_feed_items).html_safe %>, {gameId: <%= @game.id %>});
+    App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
+    App.gameSummaryView = new App.GameSummaryView({ model: App.game, el: ".game-summary" });
+  });
+<% end %>
+
 <h1><%= @game.visiting_team.name %> vs <%= @game.home_team.name %>
   <% if can? :mark, @game %>
     <%= link_to "Mark this game", marker_game_path(@game), :class => "btn btn-primary" %>

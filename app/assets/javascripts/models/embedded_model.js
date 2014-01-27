@@ -24,7 +24,9 @@ App.EmbeddedModel = Backbone.Model.extend({
     for (var model in models) {
       a = attrs[model];
       if (a) {
-        if (models[model] instanceof Backbone.Collection) {
+        if (models[model] === undefined) {
+          delete attrs[model];
+        } else if (models[model] instanceof Backbone.Collection) {
           models[model].set(a);
           delete attrs[model];
         } else {
