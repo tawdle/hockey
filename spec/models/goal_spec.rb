@@ -32,11 +32,13 @@ describe Goal do
     end
 
     let(:action) { goal.save! }
+    let(:type) { Feed::NewGoal }
     it_behaves_like "an action that creates an activity feed item"
   end
   describe "#destroy" do
-    let(:setup) { goal.save!; goal.updater = user }
+    let(:setup) { goal.updater = user }
     let(:action) { goal.destroy }
+    let(:type) { Feed::CancelGoal }
     it_behaves_like "an action that creates an activity feed item"
   end
 end

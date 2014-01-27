@@ -23,9 +23,10 @@ describe Feed::UserPost do
     let(:user_post) { FactoryGirl.build(:feed_user_post, :message => "OMG! #{user.at_name} just checked #{player.at_name} into the boards!") }
 
     it "should extract mentions" do
+      reference = user_post
       expect {
         user_post.save!
-      }.to change { Mention.count }.by(2)
+      }.to change { user_post.mentions.count }.from(0).to(2)
       user_post.reload.mentions.count.should == 2
     end
   end

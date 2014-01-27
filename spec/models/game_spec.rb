@@ -147,7 +147,7 @@ describe Game do
 
   describe "actions that create an activity feed item" do
     let(:game) { FactoryGirl.build(:game) }
-    let(:user) { FactoryGirl.build(:user) }
+    let(:user) { FactoryGirl.create(:user) }
     let(:saved_game) { FactoryGirl.create(:game) }
     let(:new_start_time) { 3.weeks.from_now }
     let(:new_location) { FactoryGirl.create(:location) }
@@ -155,23 +155,24 @@ describe Game do
     describe "#create" do
       let(:setup) { game.updater = user }
       let(:action) { game.save! }
+      let(:type) { Feed::NewGame }
       it_behaves_like "an action that creates an activity feed item"
     end
 
     describe "#update start_time" do
-      let(:setup) { reference = saved_game }
       let(:action) { saved_game.update_attributes(:start_time => new_start_time, :updater => user) }
+      let(:type) { Feed::ChangeGameTime }
       it_behaves_like "an action that creates an activity feed item"
     end
 
     describe "#update location" do
-      let(:setup) { reference = saved_game }
       let(:action) { saved_game.update_attributes(:location => new_location, :updater => user) }
+      let(:type) { Feed::ChangeGameLocation }
       it_behaves_like "an action that creates an activity feed item"
     end
 
     describe "#update start_time AND location" do
-      let(:setup) { reference = saved_game }
+      let(:setup) { reference = [saved_game, new_location, user] }
       let(:action) { saved_game.update_attributes(:start_time => new_start_time, :location => new_location, :updater => user) }
       let(:count) { 2 }
       it_behaves_like "an action that creates an activity feed item"

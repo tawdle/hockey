@@ -42,6 +42,7 @@ describe League do
       }.to change { league.managers.count }.by(1)
     end
     let(:action) { league.accepted_invitation_to_manage(user, invitation) }
+    let(:type) { Feed::NewLeagueManager }
     it_behaves_like "an action that creates an activity feed item"
     context "with an already-existing authorization" do
       let!(:authorization) { FactoryGirl.create(:authorization, :user => user, :role => :manager, :authorizable => league) }
@@ -74,6 +75,7 @@ describe League do
       end
     end
     let(:action) { league.accepted_invitation_to_mark(user, invitation) }
+    let(:type) { Feed::NewLeagueMarker }
     it_behaves_like "an action that creates an activity feed item"
   end
   it_behaves_like "a model that implements soft delete"

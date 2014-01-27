@@ -40,11 +40,10 @@ describe Team do
       team.reload.managers.should include(user)
     end
 
-    it "should generate an activity feed item" do
-      expect {
-        team.accepted_invitation_to_manage(user, invitation)
-      }.to change { ActivityFeedItem.count }.by(1)
-    end
+    let(:setup) { reference = [team, user, invitation] }
+    let(:action) { team.accepted_invitation_to_manage(user, invitation) }
+    it_behaves_like "an action that creates an activity feed item"
+
     context "with an already-existing authorization" do
       let!(:authorization) { FactoryGirl.create(:authorization, :user => user, :role => :manager, :authorizable => team) }
 

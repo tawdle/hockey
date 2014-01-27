@@ -31,6 +31,7 @@ describe GameGoalie do
       let(:previous_game_goalie) { FactoryGirl.create(:game_goalie, :game => game, :start_time => -5) }
 
       describe "#create" do
+        let(:setup) { reference = [game_goalie, previous_game_goalie] }
         let(:action) { game_goalie.save! }
 
         it "caps the previous one when creating a new one" do
