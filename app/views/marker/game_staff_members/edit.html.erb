@@ -11,7 +11,7 @@
   <h3>Which staff members from <%= @team.name %> are present at this game?</h3>
 <% end %>
 
-<%= form_for(@game, :url => game_game_staff_members_path(@game, :team => @home_or_visiting), :remote => request.xhr?) do |f| %>
+<%= form_for(@game, :url => marker_game_game_staff_members_path(@game, :team => @home_or_visiting), :remote => request.xhr?) do |f| %>
 
   <table class="staff-members">
     <% @team.staff_members.each do |staff| %>
@@ -47,7 +47,7 @@
 
 <% unless request.xhr? %>
   <div>
-    <%= link_to "Add new staff member", new_game_game_staff_members_path(@game, :team => @home_or_visiting) %>
+    <%= link_to "Add new staff member", new_marker_game_game_staff_members_path(@game, :team => @home_or_visiting) %>
   </div>
   <div>
     <%= link_to "Back", @game %>

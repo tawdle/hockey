@@ -1,4 +1,4 @@
-class GoalsController < ApplicationController
+class Marker::GoalsController < ApplicationController
   load_and_authorize_resource :game
   load_and_authorize_resource :except => [:new, :create]
 
@@ -42,7 +42,7 @@ class GoalsController < ApplicationController
     @goal.destroy
 
     respond_to do |format|
-      format.html { redirect_to game_goals_url(@game), notice: 'Goal was removed.' }
+      format.html { redirect_to @game, notice: 'Goal was removed.' }
       format.json { head :no_content }
     end
   end

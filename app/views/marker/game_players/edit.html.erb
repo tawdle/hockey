@@ -14,7 +14,7 @@
   <h3>Which players from <%= @team.name %> are playing in this game?</h3>
 <% end %>
 
-<%= form_for(@game, :url => game_roster_path(@game, :team => @home_or_visiting), :remote => request.xhr?) do |f| %>
+<%= form_for(@game, :url => marker_game_roster_path(@game, :team => @home_or_visiting), :remote => request.xhr?) do |f| %>
 
   <table class="players">
     <% @team.players.each do |player| %>
@@ -47,7 +47,7 @@
 
 <% unless request.xhr? %>
   <div>
-    <%= link_to "Add new player", new_game_roster_path(@game, :team => @home_or_visiting) %>
+    <%= link_to "Add new player", new_marker_game_roster_path(@game, :team => @home_or_visiting) %>
   </div>
   <div>
     <%= link_to "Back", @game %>

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GoalsController do
+describe Marker::GoalsController do
   let(:league) { FactoryGirl.create(:league, :with_marker) }
   let(:marker) { league.markers.first }
   let(:team) { FactoryGirl.create(:team, :with_players, :league => league) }

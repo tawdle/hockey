@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GameOfficialsController do
+describe Marker::GameOfficialsController do
   let(:game) { FactoryGirl.create(:game) }
   let(:league) { game.home_team.league }
   let(:officials) { FactoryGirl.create_list(:official, 3, :league => league) }
@@ -19,7 +19,7 @@ describe GameOfficialsController do
       it "works" do
         do_request
         response.should be_success
-        response.should render_template("edit")
+        response.should render_template("marker/game_officials/edit")
       end
     end
 
@@ -30,7 +30,7 @@ describe GameOfficialsController do
       it "works" do
         expect {
           do_request
-          response.should redirect_to(game)
+          response.should redirect_to marker_game_path(game)
         }.to change { game.reload.game_officials.count }.from(0).to(3)
       end
     end

@@ -9,7 +9,7 @@ App.Goals = Backbone.Collection.extend({
   },
 
   url: function() {
-    return "/games/" + this.gameId + "/goals";
+    return "/marker/games/" + this.gameId + "/goals";
   }
 
 });

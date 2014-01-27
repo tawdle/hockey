@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GamePlayersController do
+describe Marker::GamePlayersController do
   let(:game) { FactoryGirl.create(:game) }
   let(:player) { FactoryGirl.create(:player, :team => game.home_team) }
 

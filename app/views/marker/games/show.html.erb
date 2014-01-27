@@ -1,0 +1,258 @@
+<%= javascript_tag do %>
+  $(function() {
+    App.translations =  <%= I18n.t(".").to_json.html_safe %>;
+    App.players = new App.Players(<%= json_for(@game.players).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
+    App.staffMembers = new Backbone.Collection(<%= json_for(@game.game_staff_members).html_safe %>)
+    App.goals = new App.Goals(<%= json_for(@game.goals).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
+    App.infractions = <%= Penalty::Codes.to_json.html_safe %>;
+    App.periods = <%= Game::Periods.to_json.html_safe %>;
+    App.feedItems = new App.FeedItems(<%= json_for(@game.activity_feed_items).html_safe %>, {gameId: <%= @game.id %>});
+    App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
+    App.penalties = new App.Penalties(<%= json_for(@game.penalties).html_safe %>, <%= {gameId: @game.id}.to_json.html_safe %>);
+    App.markerView = new App.Marker.MarkerView({ model: App.game, el: ".content" });
+  });
+<% end %>
+
+<% if @game.live? %>
+  <% if can? :mark, @game %>
+    <div id="game-status" style="text-align: center;">
+      <p class="active">The period has ended. Press <i class="icon-check"></i> when marking for the period is complete.</p>
+      <p class="ready">The game is ready to go. Press <i class="icon-play"></i> to start.</p>
+      <p class="playing">This game is playing. Press <i class="icon-pause"></i> to pause the game clock.</p>
+      <p class="paused">This game is paused. Press <i class="icon-play"></i> to resume.</p>
+      <p class="finished">This game has ended. When you have completed recording all items, press: <%= link_to "Complete Game", complete_marker_game_path(@game), :class => "btn", :method => :post %> </p>
+    </div>
+  <% end %>
+
+  <div id="start-stop-clock">
+    <% if can? :mark, @game %>
+      <a href="#" class="btn btn-large add-penalty" title="Add Penalty"><i class="icon-flag icon-2x"></i></a>
+      <%= link_to "<i class='icon-check icon-2x'></i>".html_safe, "#", :id => "game-activate", :class => "btn btn-large btn-success" %>
+      <%= link_to "<i class='icon-play icon-2x'></i>".html_safe, "#", :id => "game-start", :class => "btn btn-large btn-success" %>
+      <%= link_to "<i class='icon-pause icon-2x'></i>".html_safe, "#", :id => "game-pause", :class => "btn btn-large btn-warning" %>
+    <% end %>
+
+    <span id="game-period" class="label"></span>
+    <span id="game-clock" class="label"></span>
+    <%= link_to "<i class='icon-stop icon-2x'></i>".html_safe, "#", :id => "game-stop", :class => "btn btn-large btn-danger" if can? :mark, @game %>
+  </div>
+
+  <div class="row-fluid">
+    <%= render :partial => "team_box", :locals => {:team => @game.visiting_team, :home_or_visiting => :visiting } %>
+    <%= render :partial => "team_box", :locals => {:team => @game.home_team, :home_or_visiting => :home } %>
+  </div>
+
+<% elsif %>
+
+  <h2>
+    <%= link_to @game.visiting_team.name, @game.visiting_team %>
+    <i>vs</i>
+    <%= link_to @game.home_team.name, @game.home_team %>
+  </h2>
+
+  <p><em>Playing in <%= link_to @game.league.name, @game.league %></em></p>
+
+  <%= @game.start_time.to_s(:long) %> at <%= @game.location.name %>
+
+  <% if @game.scheduled? %>
+    <p>This game is scheduled to start <%= timeago_tag @game.start_time %>.</p>
+    <% if can? :mark, @game %>
+      <%= render :partial => "marker_checklist" %>
+    <% end %>
+  <% elsif @game.canceled? %>
+    <p>This game has been canceled.</p>
+  <% elsif @game.completed? %>
+    <p>This game is over.</p>
+  <% end %>
+<% end %>
+
+<div class="well">
+  <h2>Activity Feed</h2>
+
+  <% if current_user %>
+    <%= form_for(Feed::UserPost.new(:game => @game), :remote => true) do |f| %>
+      <div class="field pull-left" style="margin-right: 10px;" >
+        <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
+      </div>
+
+      <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
+
+      <div class="actions">
+        <%= f.submit "Post", :class => "btn btn-primary" %>
+      </div>
+    <% end %>
+  <% end %>
+
+  <table id="feed-items" class="table">
+    <thead>
+      <tr>
+        <th>Avatar</th>
+        <th>Name</th>
+        <th>Message</th>
+        <th>When</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</div>
+
+<div class="clock-editor modal hide" data-backdrop="static" tabindex="-1">
+  <div class="modal-header"><h3>Adjust game clock</h3></div>
+  <div class="modal-body">
+    <form class="form-inline">
+      <input id="clock-minutes" type="number"></input>
+      <label for="clock-minutes">Minutes</label>
+      <input id="clock-seconds" type="number"></input>
+      <label for="clock-seconds">Seconds</label>
+  </div>
+
+  <div class="modal-footer">
+    <%= link_to "Cancel", "#", :class => "cancel" %>
+    <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+  </div>
+</div>
+
+<div class="penalty-editor modal hide" data-backdrop="static" tabindex="-1">
+  <div class="modal-header"><h3><i class="icon-flag"></i> <span class="title"><%= t "penalty.editor.title" %></span></h3></div>
+  <div class="modal-body">
+    <form>
+
+      <fieldset>
+        <legend><%= Team.model_name.human %></legend>
+        <div class="penalty-team">
+          <label class="radio">
+            <input type="radio" id="penalty-team-<%= @game.home_team_id %>" value="<%= @game.home_team_id %>" name="penalty[team_id]"></input>
+            <%= @game.home_team.name %>
+          </label>
+          <label class="radio">
+            <input type="radio" id="penalty-team-<%= @game.visiting_team_id %>" value="<%= @game.visiting_team_id %>" name="penalty[team_id]" ></input>
+            <%= @game.visiting_team.name %>
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><%= Player.model_name.human %></legend>
+        <div class="penalty-player">
+          <div id="penalty-players-team-<%= @game.home_team_id %>"></div>
+          <div id="penalty-players-team-<%= @game.visiting_team_id %>"></div>
+        </div>
+        <select class="other-player"></select>
+        <div>
+          <label class="checkbox">
+            <input type="checkbox" class="served-by-other-player"></input>
+            Served by another player
+          </label>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <div class="penalty-serving-player">
+          <div class="home-team"></div>
+          <div class="visiting-team"></div>
+        </div>
+      </fieldset>
+
+      <fieldset>
+        <legend><%= Penalty.human_attribute_name(:category) %></legend>
+        <div class="penalty-category">
+          <select>
+            <%= options_for_select(Penalty::Codes.keys.map {|category| [t(category, :scope => "penalties.categories"), category] }) %>
+          </select>
+        </div>
+      </fieldset>
+
+      <fieldset class="clearfix">
+        <legend><%= Penalty.human_attribute_name(:infraction) %></fieldset>
+        <div class="penalty-infraction">
+          <div class="penalty-infraction-radios">
+            <% abbr = t("penalties.infractions.abbreviations") %>
+            <% Penalty::Codes[:minor][:common].keys.each do |id| %>
+              <input id="penalty-infraction-radio-<%= id %>" type="radio" name="penalty[infraction]" value="<%= id %>"></input>
+              <label for="penalty-infraction-radio-<%= id %>" class="btn"><%= abbr[id] || t(id, :scope => "penalties.infractions") %></label>
+            <% end %>
+          </div>
+
+          <div>
+            <select></select>
+          </div>
+        </div>
+      </fieldset>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <%= link_to "Cancel", "#", :class => "cancel" %>
+    <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+  </div>
+</div>
+
+<script type="text/html" id="feed-item">
+<td><img src="{{= avatar_thumbnail_url }}" height="50" width="50"></td>
+<td>{{= creator }}</td>
+<td>{{= message }}</td>
+<td><time class="timeago" datetime="{{= created_at }}"></time></td>
+</script>
+
+<% content_for(:head) do %>
+  <%= javascript_include_tag AsyncMessaging::FAYE_CONFIG[:script] %>
+<% end %>
+
+<script type="text/html" id="penalty-view">
+<td>{{= App.periods[period] }}</td>
+<td>{{= App.displaySeconds(elapsed_time) }}</td>
+<td>{{= (penalizable_type == "Player" ? App.players.get(penalizable_id).get("jersey_number") : penalizable_type == "Team" ? "Bench" : penalizable_type == "StaffMember" ? "Coach" : "") + (serving_player_id ? "<br><i>" + App.players.get(serving_player_id).get("jersey_number") + "</i>" : "") }}</td>
+<td class="infraction">{{= App.translations.penalties.infractions[infraction] + " - " + App.translations.penalties.categories[category] }}</td>
+<td style="white-space: nowrap">
+  <span class="timer" style="white-space: nowrap"></span>
+  <%= link_to "#", :class => "edit btn btn-small" do %>
+    <i class="icon-edit"></i>
+  <% end %>
+  <%= link_to "#", :class => "delete btn btn-small btn-danger" do %>
+    <i class="icon-remove"></i>
+  <% end %>
+</td>
+</script>
+
+<script type="text/html" id="goal-view">
+<td>{{= App.periods[period] }}</td>
+<td>{{= App.displaySeconds(elapsed_time) }}</td>
+<td>{{= players.join("<br>") }}</td>
+<td>
+  <%= link_to "#", :class => "edit btn btn-small" do %>
+    <i class="icon-edit"></i>
+  <% end %>
+  <%= link_to "#", :class => "delete btn btn-small btn-danger" do %>
+    <i class="icon-remove"></i>
+  <% end %>
+</td>
+</script>
+
+<script type="text/html" id="penalty-player-radio">
+<input id="penalty-player-radio-{{= serving ? "serving-" : ""}}{{= id }}" type="radio" name="penalty[{{= serving ? 'serving_player_id' : 'player_id' }}]" value="{{= id }}"></input>
+  <label for="penalty-player-radio-{{= serving ? "serving-": ""}}{{= id }}" class="btn">{{= jersey_number }}</label>
+</script>
+
+<script type="text/html" id="goal-player-radio">
+<input id="goal-player-radio-{{= role }}-{{= id }}" type="radio" name="penalty[{{= role}}_id]" value="{{= id }}"></input>
+  <label for="goal-player-radio-{{= role }}-{{= id }}" class="btn">{{= jersey_number }}</label>
+</script>
+
+<script type="text/html" id="player-checkbox">
+  <tr>
+    <input name="game[game_players_attributes][{{= id }}][player_id]" value="{{= id }}" type="hidden" />
+    <td>
+      <label class="checkbox inline" for="player_{{= id }}">
+        <input id="player_{{= id }}" name="game[game_players_attributes][{{= id }}][selected]" type="checkbox" checked="checked" value="true" />
+        {{= name_and_number }}
+      </label>
+    </td>
+    <td>
+      <select id="game_player_select_{{= id }}" name="game[game_players_attributes][{{= id }}][role]" value="player">
+        <% Player::Roles.each do |role| %>
+          <option value="<%= role %>"><%= role.to_s.humanize %></options>
+        <% end %>
+      </select>
+    </td>
+  </tr>
+</script>
+

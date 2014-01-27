@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe PenaltiesController do
+describe Marker::PenaltiesController do
   let(:penalty) { FactoryGirl.create(:penalty) }
   let(:game) { penalty.game }
 

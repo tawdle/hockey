@@ -1,4 +1,4 @@
-class GameStaffMembersController < ApplicationController
+class Marker::GameStaffMembersController < ApplicationController
   load_and_authorize_resource :game
   before_filter :load_home_or_visiting
   before_filter :load_team
@@ -12,7 +12,7 @@ class GameStaffMembersController < ApplicationController
     game_staff_member = @game.game_staff_members.build(:role => @staff_member.role, :staff_member => @staff_member)
     respond_to do |format|
       if game_staff_member.save
-        format.html { redirect_to @game, notice: 'Staff member was successfully created.' }
+        format.html { redirect_to marker_game_path(@game), notice: 'Staff member was successfully created.' }
         format.json { render json: @staff_member, status: :created, location: @game }
       else
         format.html { render action: "new" }
@@ -27,7 +27,7 @@ class GameStaffMembersController < ApplicationController
   def update
     respond_to do |format|
       if @game.update_attributes(fix_params[:game])
-        format.html { redirect_to @game, notice: 'Game staff member list was successfully updated.' }
+        format.html { redirect_to marker_game_path(@game), notice: 'Game staff member list was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

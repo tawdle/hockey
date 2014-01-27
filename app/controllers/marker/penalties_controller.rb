@@ -1,4 +1,4 @@
-class PenaltiesController < ApplicationController
+class Marker::PenaltiesController < ApplicationController
   load_and_authorize_resource :game
   load_and_authorize_resource :except => [:create]
 

@@ -1,4 +1,4 @@
-class GameOfficialsController < ApplicationController
+class Marker::GameOfficialsController < ApplicationController
   load_and_authorize_resource :game
   before_filter :load_game_officials
 
@@ -12,7 +12,7 @@ class GameOfficialsController < ApplicationController
     respond_to do |format|
       begin
         if @game.update_attributes(params[:game])
-          format.html { redirect_to @game, notice: 'Game officials were succesfully updated.' }
+          format.html { redirect_to marker_game_path(@game), notice: 'Game officials were succesfully updated.' }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }

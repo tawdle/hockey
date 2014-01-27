@@ -9,7 +9,7 @@ App.Penalties = Backbone.Collection.extend({
   },
 
   url: function() {
-    return "/games/" + this.gameId + "/penalties";
+    return "/marker/games/" + this.gameId + "/penalties";
   },
 
   comparator: function(penalty) {

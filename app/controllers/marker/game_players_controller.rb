@@ -1,4 +1,4 @@
-class GamePlayersController < ApplicationController
+class Marker::GamePlayersController < ApplicationController
   load_and_authorize_resource :game
   before_filter :load_home_or_visiting
   before_filter :load_team
@@ -23,7 +23,7 @@ class GamePlayersController < ApplicationController
 
     respond_to do |format|
       if @player.save && @game.players << @player
-        format.html { redirect_to edit_game_roster_path(@game, :team => @home_or_visiting), notice: 'Player was successfully added.' }
+        format.html { redirect_to edit_marker_game_roster_path(@game, :team => @home_or_visiting), notice: 'Player was successfully added.' }
         format.json { render json: @game, status: :created, location: @game }
       else
         format.html { render action: "new" }
@@ -39,7 +39,7 @@ class GamePlayersController < ApplicationController
   def update
     respond_to do |format|
       if @game.update_attributes(fix_params[:game])
-        format.html { redirect_to @game, notice: 'Game roster was successfully updated.' }
+        format.html { redirect_to marker_game_path(@game), notice: 'Game roster was successfully updated.' }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

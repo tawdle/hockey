@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe GameStaffMembersController do
+describe Marker::GameStaffMembersController do
   let(:game) { FactoryGirl.create(:game) }
   let(:staff_member) { FactoryGirl.create(:staff_member, :team => game.home_team) }
   let(:league) { game.home_team.league }
@@ -74,7 +74,7 @@ describe GameStaffMembersController do
 
       it "redirects back to the game" do
         do_request
-        response.should redirect_to(game)
+        response.should redirect_to marker_game_path(game)
       end
 
       context "with an existing staff member" do

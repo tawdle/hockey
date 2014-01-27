@@ -1,4 +1,4 @@
-class GameGoaliesController < ApplicationController
+class Marker::GameGoaliesController < ApplicationController
   load_and_authorize_resource :game
   before_filter :load_team
 

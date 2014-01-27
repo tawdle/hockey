@@ -35,7 +35,7 @@ App.Game = App.EmbeddedModel.extend({
   },
 
   url: function() {
-    return "/games/" + this.id;
+    return "/marker/games/" + this.id;
   },
 
   perform: function(action, data) {

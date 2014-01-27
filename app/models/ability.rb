@@ -19,7 +19,7 @@ class Ability
     end
 
     can [:mark, :activate, :complete, :pause, :start, :finish, :sync, :update_clock], Game do |game|
-      user.marker_of?(game.league)
+      user.marker_of?(game.league) && !game.completed?
     end
 
     can :manage, GameGoalie do |game_goalie|
