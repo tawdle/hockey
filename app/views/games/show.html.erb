@@ -35,9 +35,7 @@
       <%= link_to "View gamesheet", game_path(@game, :format => :pdf), :class => "btn" %>
     <% end %>
   </p>
-<% end %>
-
-<% if @game.started_at %>
+<% elsif @game.started_at %>
   <p>This game started <%= timeago_tag @game.started_at %>.</p>
 <% end %>
 
