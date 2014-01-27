@@ -34,6 +34,11 @@ class LogoUploader < CarrierWave::Uploader::Base
     cloudinary_transformation :radius => 5
   end
 
+  version :large do
+    resize_to_fit(200, 200)
+    cloudinary_transformation :radius => 5
+  end
+
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   # For Rails 3.1+ asset pipeline compatibility:

@@ -1,20 +1,64 @@
 <% title [@game.visiting_team.name, @game.visiting_team.city, "vs", @game.home_team.name, @game.home_team.city, @game.location.name, l(@game.start_time, :format => :game)].compact.join(" - ") %>
 
-<h1><%= @game.visiting_team.name %> vs <%= @game.home_team.name %></h1>
-<p><%= l @game.start_time, :format => :game %></p>
-<p><%= @game.location.name %></p>
+<h1><%= @game.visiting_team.name %> vs <%= @game.home_team.name %>
+  <% if can? :mark, @game %>
+    <%= link_to "Mark this game", marker_game_path(@game), :class => "btn btn-primary" %>
+  <% end %>
+</h1>
+<p>
+  <%= l @game.start_time, :format => :game %>
+  <% if @game.start_time > DateTime.now %>
+    (<%= timeago_tag @game.start_time %>)
+  <% end %>
+  <br />
+  <%= @game.location.name %>
+</p>
 
-<% if @game.started_at %>
-  <p>This game started <%= timeago_tag @game.started_at %>.</p>
-<% end %>
+
 <% if @game.ended_at %>
   <p>This game ended <%= timeago_tag @game.ended_at %></time>.</p>
+<% elsif @game.started_at %>
+  <p>This game started <%= timeago_tag @game.started_at %>.</p>
 <% end %>
 
 <% if @game.completed? %>
   <%= link_to "View gamesheet", game_path(@game, :format => :pdf), :class => "btn" %>
 <% end %>
 
-<% if can? :mark, @game %>
-  <%= link_to "Mark this game", marker_game_path(@game), :class => "btn btn-primary" %>
-<% end %>
+<div class="well well-large" style="text-align: center;">
+  <div class="game-summary">
+    <div class="period"><%= @game.completed? ? "Final" : "#{t('activerecord.attributes.game.period')} #{@game.period_text}" %></div>
+    <div class="visiting-team">
+      <div class="name-block">
+        <div class="team-name"><%= @game.visiting_team.name %></div>
+        <div><%= @game.visiting_team.city %></div>
+        <div><%= format_team_link(@game.visiting_team) %></div>
+      </div>
+      <%= cl_image_tag(@game.visiting_team.logo_url(:large)) %>
+    </div>
+
+    <div class="score">
+      <% if @game.live? || @game.completed? %>
+        <%= @game.visiting_team_score %> - <%= @game.home_team_score %>
+      <% else %>
+        VS
+      <% end %>
+    </div>
+
+    <div class="home-team">
+      <%= cl_image_tag(@game.home_team.logo_url(:large)) %>
+      <div class="name-block">
+        <div class="team-name"><%= @game.home_team.name %></div>
+        <div><%= @game.home_team.city %></div>
+        <div><%= format_team_link(@game.home_team) %></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="clearfix"></div>
+
+<%= render :partial => "activity_feed", :locals => {:activity_feed_items => @game.activity_feed_items, :new_activity_feed_item => Feed::UserPost.new(:game => @game), :in_game_context => true } %>
+
+
+
