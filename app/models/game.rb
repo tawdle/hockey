@@ -58,7 +58,7 @@ class Game < ActiveRecord::Base
   belongs_to :clock, :class_name => "Timer", :dependent => :destroy
   belongs_to :marker, :class_name => "User"
 
-  has_many :activity_feed_items, :dependent => :destroy, :order => :created_at, :inverse_of => :game, :limit => 5
+  has_many :activity_feed_items, :dependent => :destroy, :order => :created_at, :inverse_of => :game, :limit => 20
   has_many :goals, :inverse_of => :game, :dependent => :destroy
   has_many :penalties, :inverse_of => :game, :dependent => :destroy
   has_many :game_players, :inverse_of => :game, :dependent => :destroy
