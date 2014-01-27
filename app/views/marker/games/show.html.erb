@@ -66,35 +66,23 @@
   <% end %>
 <% end %>
 
-<div class="well">
-  <h2>Activity Feed</h2>
+<h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
 
-  <% if current_user %>
-    <%= form_for(Feed::UserPost.new(:game => @game), :remote => true) do |f| %>
-      <div class="field pull-left" style="margin-right: 10px;" >
-        <%= f.text_field :message, :class => "span4", :placeholder => "Enter status message here..." %>
-      </div>
+<% if current_user %>
+  <%= form_for(Feed::UserPost.new(:game => @game), :remote => true) do |f| %>
+    <div class="field pull-left" style="margin-right: 10px;" >
+      <%= f.text_field :message, :class => "span4", :placeholder => t("activity_feed.placeholder") %>
+    </div>
 
-      <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
+    <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
 
-      <div class="actions">
-        <%= f.submit "Post", :class => "btn btn-primary" %>
-      </div>
-    <% end %>
+    <div class="actions">
+      <%= f.submit t("activity_feed.post"), :class => "btn btn-primary" %>
+    </div>
   <% end %>
+<% end %>
 
-  <table id="feed-items" class="table">
-    <thead>
-      <tr>
-        <th>Avatar</th>
-        <th>Name</th>
-        <th>Message</th>
-        <th>When</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
+<ul id="feed-items"></ul>
 
 <div class="clock-editor modal hide" data-backdrop="static" tabindex="-1">
   <div class="modal-header"><h3>Adjust game clock</h3></div>
@@ -187,10 +175,14 @@
 </div>
 
 <script type="text/html" id="feed-item">
-<td><img src="{{= avatar_thumbnail_url }}" height="50" width="50"></td>
-<td>{{= creator }}</td>
-<td>{{= message }}</td>
-<td><time class="timeago" datetime="{{= created_at }}"></time></td>
+  <div class="feed-item">
+    <img src="{{= avatar_thumbnail_url }}" height="50" width="50">
+    <p>
+      <span class="creator">{{= creator }}</span>
+      <span class="created-at muted"><time class="timeago" datetime="{{= created_at }}"></span>
+    </p>
+    <p>{{= message }}</p>
+  </div>
 </script>
 
 <% content_for(:head) do %>

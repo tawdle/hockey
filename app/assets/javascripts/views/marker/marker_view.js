@@ -35,7 +35,7 @@ App.Marker.MarkerView = Backbone.View.extend({
     "click #game-activate" : "activate",
     "click #game-clock" : "adjustClock",
     "click a.add-penalty" : "addPenalty",
-    "ajax:success #new_activity_feed_item" : "clearMessageText",
+    "ajax:success #new_feed_user_post" : "clearMessageText",
     "click .swap" : "swapTeamBoxes"
   },
 
@@ -76,7 +76,7 @@ App.Marker.MarkerView = Backbone.View.extend({
   },
 
   clearMessageText: function() {
-    this.$("#activity_feed_item_message").val("");
+    this.$("#feed_user_post_message").val("");
   },
 
   swapElements: function(elements) {
