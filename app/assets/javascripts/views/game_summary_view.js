@@ -15,7 +15,7 @@ App.GameSummaryView = Backbone.View.extend({
       this.period.html("");
     } else {
       this.score.html("" + this.model.get("visiting_team").score + " - " + this.model.get("home_team").score);
-      this.period.html(App.translations.activerecord.attributes.game.period + " " + this.model.get("period_text"));
+      this.period.html(state == "completed" ? "Final" : App.translations.activerecord.attributes.game.period + " " + this.model.get("period_text"));
     }
   }
 });
