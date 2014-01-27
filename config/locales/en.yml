@@ -68,6 +68,12 @@ en:
     new_team_manager: "%{user} became a manager of %{team}"
   games:
     see_game: See game
+    periods:
+    - 1
+    - 2
+    - 3
+    - OT
+    - SO
   goalie:
     pulled: Empty net
   league:

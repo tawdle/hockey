@@ -73,6 +73,12 @@ fr:
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
     new_user: ! '%{user} just became a BigShot'
   games:
+    periods:
+    - 1
+    - 2
+    - 3
+    - OT
+    - SO
     see_game: See game
   goalie:
     pulled: Filet désert

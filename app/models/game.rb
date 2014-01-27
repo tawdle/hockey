@@ -103,7 +103,7 @@ class Game < ActiveRecord::Base
   after_create :generate_create_feed_item
   after_update :generate_update_feed_item
 
-  Periods = %w(1 2 3 OT OT2 OT3)
+  Periods = I18n.t("games.periods")
 
   LiveStates = %w(ready active playing paused finished)
 
