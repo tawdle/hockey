@@ -33,6 +33,7 @@ class ActivityFeedItem < ActiveRecord::Base
   end
 
   scope :for_game, lambda {|game| where(:game_id => game.id) }
+  scope :system, where("type != 'Feed::UserPost'")
 
   def avatar_url(version_name = nil)
    User.new.avatar_url(version_name)
