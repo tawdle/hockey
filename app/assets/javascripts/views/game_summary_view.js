@@ -4,7 +4,24 @@ App.GameSummaryView = Backbone.View.extend({
     this.period = this.$(".period");
 
     this.listenTo(this.model, "change", this.render);
+
+    this.feedItemsView = new Backbone.CollectionView({
+      el: "#feed-items",
+      collection: App.feedItems,
+      modelView: App.FeedItemView,
+      emptyListCaption: "There are no activity feed items yet for this game."
+    });
+    this.feedItemsView.render();
+
     this.render();
+  },
+
+  events: {
+    "ajax:success #new_feed_user_post" : "clearMessageText"
+  },
+
+  clearMessageText: function() {
+    this.$("#feed_user_post_message").val("");
   },
 
   render: function() {

@@ -5,8 +5,6 @@ App.FeedItemView = Backbone.View.extend({
     this.listenTo(this.model, "remove", this.remove);
   },
 
-  tagName: "tr",
-
   events: {
   },
 
