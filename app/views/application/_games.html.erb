@@ -4,7 +4,7 @@
 <% end %>
 </h3>
 
-<% if games.without_delete.any? %>
+<% if games.without_deleted.any? %>
   <table class="games table table-hover">
     <tr>
       <th><%= Game.human_attribute_name(:start_time) %></th>
