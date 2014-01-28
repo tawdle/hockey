@@ -9,82 +9,51 @@
 </h2>
 <%= format_team_link(@league) %><%= render :partial => "follow_button", :locals => { :target => @league } %>
 
-<h3>Managers
-  <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league) %>
-</h3>
+<div class="row">
+  <div class="column span4">
+    <h3>Managers
+      <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league) %>
+    </h3>
 
-<%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
+    <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
+  </div>
 
-<h3>Markers
-  <%= link_to 'invite', new_invitation_path(:predicate => :mark, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league)  %>
-</small>
-</h3>
+  <div class="column span4">
+    <h3>Markers
+      <%= link_to 'invite', new_invitation_path(:predicate => :mark, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league)  %>
+    </small>
+    </h3>
 
-<%= @league.markers.collect {|marker| format_user_link(marker) }.join(", ").html_safe || "(none)" %>
+    <%= @league.markers.collect {|marker| format_user_link(marker) }.join(", ").html_safe || "(none)" %>
+  </div>
 
-<h3 class="page-header">Current Games</h3>
+  <div class="column span4">
+    <h3>Officials</h3>
 
-<table class="table table-hover">
-  <tr>
-    <th>Status</th>
-    <th>When</th>
-    <th>Home Team</th>
-    <th><i>vs</i></th>
-    <th>Visting Team</th>
-    <th>Location</th>
-    <th>Score</th>
-    <th />
-  </tr>
-
-  <% @league.games.scheduled_or_active.asc.each do |game| %>
-    <tr>
-      <td><%= link_to game.state.humanize, game %></td>
-      <td><%= l game.start_time, :format => :game %></td>
-      <td><%= link_to game.home_team.name, game.home_team %></td>
-      <td></td>
-      <td><%= link_to game.visiting_team.name, game.visiting_team %></td>
-      <td>
-        <%= link_to game.location.name, game.location %>
-        <%= link_to game.location.map_url, :target => "_blank" do %>
-          <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank" %>
+    <table class="table table-hover">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @league.officials.each do |official| %>
+          <tr>
+            <td><%= link_to official.name, league_official_path(@league, official) %>
+            <td><%= link_to "Edit", edit_league_official_path(@league, official) if can? :edit, official %></td>
+            <td><%= link_to "Remove", league_official_path(@league, official), :method => :delete, :data => { confirm: 'Remove this official?' } if can? :destroy, official %>
+          </tr>
         <% end %>
-      </td>
-      <td><%= "#{game.home_team_score} - #{game.visiting_team_score}" if game.active? %></td>
-      <td>
-        <%= link_to "Change", edit_league_game_path(@league, game), :class => "btn" if game.scheduled? && can?(:edit, game) %>
-        <%= link_to "Cancel", league_game_path(@league, game), method: :delete, data: { confirm: 'Are you sure you want to cancel this game?' }, class: "btn" if (game.scheduled? && can?(:destroy, game)) %>
-      </td>
-    </tr>
-  <% end %>
-</table>
+      </tbody>
+    </table>
 
-<h3 class="page-header">Past Games</h3>
+    <%= link_to "New Official", new_league_official_path(@league), :class => "btn" if can? :create, Invitation.new(:target => @league) %>
+  </div>
+</div>
 
-<table class="table table-hover">
-  <tr>
-    <th>When</th>
-    <th>Home Team</th>
-    <th><i>vs</i></th>
-    <th>Visting Team</th>
-    <th>Location</th>
-    <th>Score</th>
-  </tr>
-
-  <% @league.games.finished.desc.each do |game| %>
-    <tr>
-      <td><%= l game.start_time, :format => :game %></td>
-      <td><%= game.home_team.name %></td>
-      <td></td>
-      <td><%= game.visiting_team.name %></td>
-      <td><%= game.location.name %></td>
-      <td><%= link_to "#{game.home_team_score} - #{game.visiting_team_score}", game_path(game, :format => :pdf)  %></td>
-    </tr>
-  <% end %>
-</table>
-
-
-
-<%= link_to "Schedule a New Game", new_league_game_path(@league), :class => "btn" if can? :create, @league.games.build %>
+<% new_game_path = new_league_game_path(@league) if can? :create, @league.games.build %>
+<%= render :partial => "games", :locals => { :games => @league.games.order("start_time asc"), :new_game_path => new_game_path} %>
 
 <h3>Teams</h3>
 
@@ -107,27 +76,5 @@
 </table>
 
 <%= link_to "New Team", new_league_team_path(@league), :class => "btn" %>
-
-<h3>Officials</h3>
-
-<table class="table table-hover">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @league.officials.each do |official| %>
-      <tr>
-        <td><%= link_to official.name, league_official_path(@league, official) %>
-        <td><%= link_to "Edit", edit_league_official_path(@league, official) if can? :edit, official %></td>
-        <td><%= link_to "Remove", league_official_path(@league, official), :method => :delete, :data => { confirm: 'Remove this official?' } if can? :destroy, official %>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
-
-<%= link_to "New Official", new_league_official_path(@league), :class => "btn" %>
 
 <%= link_to 'Back', leagues_path %>

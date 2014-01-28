@@ -1,5 +1,9 @@
 <% if games.without_deleted.any? %>
-  <h3><%= Game.model_name.human.pluralize %></h3>
+  <h3><%= Game.model_name.human.pluralize %>
+    <% if defined?(new_game_path) %>
+      <%= link_to "Schedule a new game", new_game_path, :class => "btn" %>
+    <% end %>
+  </h3>
   <table class="games table table-hover">
     <tr>
       <th><%= Game.human_attribute_name(:start_time) %></th>
