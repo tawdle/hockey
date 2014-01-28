@@ -3,11 +3,11 @@ fr:
   activerecord:
     attributes:
       game:
-        home_team: Home
+        home_team: Local
         location: Location
         period: Période
         start_time: Date
-        visiting_team: Visitor
+        visiting_team: Visiteur
       league:
         classification: Classe
       location:
@@ -20,7 +20,7 @@ fr:
       system_name:
         name: ! '@Name'
     models:
-      activity_feed_item: Recent Activity
+      activity_feed_item: Activité récente
       game: Partie
       player: Joueur
       team: Équipe
@@ -39,13 +39,13 @@ fr:
             head_coach: EC
             manager: Gér
             safety_attendant: PS
-          assistant_coach: Entraîneur Adjoint
-          head_coach: Entraîneur Chef
+          assistant_coach: Entraîneur adjoint
+          head_coach: Entraîneur chef
           manager: Gérant
-          safety_attendant: Préposé à la Sécurité
+          safety_attendant: Préposé à la sécurité
   activity_feed:
-    placeholder: Enter status message here...
-    post: Post
+    placeholder: Entrez votre statut ici...
+    post: Publier
   feed:
     cancel_game: ! '%{user} a annulé un match entre %{visiting_team} et %{home_team}'
     cancel_goal: ! '%{user} a annulé le but de %{player}'
@@ -69,9 +69,9 @@ fr:
     new_league_manager: ! '%{user} est maintenant gérant(e) de la %{league}'
     new_league_marker: ! '%{user} est maintenant marqueur(e) pour la %{league}'
     new_location_manager: ! '%{user} est maintenant gérant(e) de %{location}'
-    new_penalty: ! '%{player} received a penalty: %{penalty}'
+    new_penalty: ! '%{player} a écopé d''une punition: %{penalty}'
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
-    new_user: ! '%{user} just became a BigShot'
+    new_user: ! '%{user} est maintenant un membre BigShot'
   games:
     periods:
     - 1
@@ -79,7 +79,7 @@ fr:
     - 3
     - OT
     - SO
-    see_game: See game
+    see_game: Voir la partie
   goalie:
     pulled: Filet désert
   league:
@@ -111,11 +111,11 @@ fr:
       senior: Sénior
       university: Universitaire
   navigation:
-    edit_account: Edit account
+    edit_account: Modifier mon profil
     greeting: Bonjour
-    sign_in: Log in
-    sign_out: Log out
-    sign_up: Sign up
+    sign_in: Connexion
+    sign_out: Déconnexion
+    sign_up: Inscris-toi!
   penalties:
     categories:
       game_misconduct: Extrême inconduite (expulsion)
@@ -210,12 +210,12 @@ fr:
       wearing_non_certified_equipment: Porter un équipement dangereux
     labels:
       all: Toutes
-      completed: Terminé
-      current: Actuel
+      completed: Complétées
+      current: Courantes
       other: Autres
   time:
     formats:
       game: ! '%e %B %Y - %H:%M %Z'
   welcome:
-    message: Welcome to BigShot!
-    tagline: skate online like the pros
+    message: Bienvenue sur BigShot!
+    tagline: Découvre la star en toi
