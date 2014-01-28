@@ -20,7 +20,7 @@ fr:
       system_name:
         name: ! '@Name'
     models:
-      activity_feed_item: Activité récente
+      activity_feed_item: Activités récentes
       game: Partie
       player: Joueur
       team: Équipe
