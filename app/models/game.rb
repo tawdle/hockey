@@ -152,11 +152,11 @@ class Game < ActiveRecord::Base
   end
 
   def home_team_logo
-    home_team.logo_url
+    home_team.alpha_logo_url
   end
 
   def visiting_team_logo
-    visiting_team.logo_url
+    visiting_team.alpha_logo_url
   end
 
   def live?

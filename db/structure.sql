@@ -767,7 +767,8 @@ CREATE TABLE teams (
     updated_at timestamp without time zone NOT NULL,
     logo character varying(255),
     deleted_at timestamp without time zone,
-    city character varying(255)
+    city character varying(255),
+    alpha_logo character varying(255)
 );
 
 
@@ -1738,3 +1739,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140121213759');
 INSERT INTO schema_migrations (version) VALUES ('20140122010753');
 
 INSERT INTO schema_migrations (version) VALUES ('20140124200616');
+
+INSERT INTO schema_migrations (version) VALUES ('20140129161624');

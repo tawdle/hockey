@@ -42,6 +42,17 @@
     <%= f.file_field :logo %>
   </div>
 
+  <%= f.hidden_field :alpha_logo_cache %>
+
+  <div class="field">
+    <% if @team.alpha_logo.present? %>
+      <%= cl_image_tag @team.alpha_logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
+    <% end %>
+
+    <%= f.label :alpha_logo %>
+    <%= f.file_field :alpha_logo %>
+  </div>
+
   <div class="actions">
     <%= f.submit :class => "btn btn-primary" %>
   </div>

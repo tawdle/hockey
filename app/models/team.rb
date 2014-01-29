@@ -17,7 +17,7 @@ class Team < ActiveRecord::Base
   end
 
   attr_accessor :manager
-  attr_accessible :name, :logo_cache, :logo, :manager, :league, :city
+  attr_accessible :name, :logo_cache, :logo, :alpha_logo_cache, :alpha_logo, :manager, :league, :city
 
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
 
@@ -46,6 +46,7 @@ class Team < ActiveRecord::Base
   end
 
   mount_uploader :logo, LogoUploader
+  mount_uploader :alpha_logo, LogoUploader
 
   private
 
