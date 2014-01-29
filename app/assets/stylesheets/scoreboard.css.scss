@@ -59,9 +59,10 @@ div.content {
   }
 
   .bigshot-logo {
-    top: 235px;
+    top: 40px;
     img {
       width: 400px;
+      -webkit-filter: drop-shadow(3px -3px 1px rgba(255, 255, 255, .3));
     }
   }
 
