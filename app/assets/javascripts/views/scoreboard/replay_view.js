@@ -14,7 +14,7 @@ App.Scoreboard.ReplayView = Backbone.View.extend({
 
     $.ajax({
       type: "POST",
-      url: "http://localhost:4000" + "/games/" + App.game.id + "/goals",
+      url: "http://bigshot-beaupre.local:4000" + "/games/" + App.game.id + "/goals",
       data: {
         goal: $.extend({}, goal.attributes, { side: App.game.homeOrVisiting(goal.attributes.team_id) })
       },
