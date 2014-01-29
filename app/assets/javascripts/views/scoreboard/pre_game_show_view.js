@@ -7,7 +7,7 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
     this.listenTo(this, "showing", this.start);
     this.listenTo(this, "hidden", this.stop);
     this.countDownMovie = this.$("#countdown video");
-    this.countDownMovie[0].addEventListener("ended", this.startAnimation.bind(this));
+    //this.countDownMovie[0].addEventListener("ended", this.startAnimation.bind(this));
     this.countDownMovie[0].addEventListener("canplaythrough", this.endTag.bind(this));
     this.listenTo(this.board, "available", this.available);
     this.homeTeamLogo = App.game.get("home_team_logo");
@@ -90,9 +90,13 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
 
   showCountDown: function() {
     if (this.playing) {
+      var self = this;
       this.$("#countdown").show().siblings().hide();
       this.countDownMovie[0].currentTime = 0;
       this.countDownMovie[0].play();
+      setTimeout(function() {
+        self.startAnimation();
+      }, 24100);
     }
   },
 
