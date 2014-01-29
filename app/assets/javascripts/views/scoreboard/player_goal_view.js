@@ -11,12 +11,29 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
   duration: 10000, // msec
 
   start: function() {
-    this.stage().play(0);
-
+    var index = -1;
+    var playerIds = this.goal.get("player_ids");
     var self = this;
-    setTimeout(function() {
-      self.board.finished(self);
-    }, self.duration);
+
+    function showNextPlayer() {
+      index += 1;
+      if (index >= playerIds.length) {
+        self.board.finished(self);
+        return;
+      }
+
+      var player = App.players.get(playerIds[index]),
+          name = player.get("name"),
+          number = player.get("jersey_number"),
+          photoUrl = player.get("photo_url");
+      $("#player-goal-animation_Player_Name").html(name);
+      $("#player-goal-animation_Maxime_Leblond__74Copy").css("background-image", "url(" + photoUrl + ")");
+      $("#player-goal-animation_Jerser_Number").html("#" + number);
+      self.stage().play(0);
+      setTimeout(showNextPlayer, self.duration);
+    }
+
+    showNextPlayer();
   },
 
   stop: function() {
@@ -31,13 +48,6 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
   },
 
   goalCompleted: function() {
-    var player = App.players.get(this.goal.get("player_ids")[0]);
-    var name = player.get("name");
-    var number = player.get("jersey_number");
-    var photoUrl = player.get("photo_url");
-    $("#player-goal-animation_Player_Name").html(name);
-    $("#player-goal-animation_Maxime_Leblond__74Copy").css("background-image", "url(" + photoUrl + ")");
-    $("#player-goal-animation_Jerser_Number").html("#" + number);
     this.board.show(this);
   },
 
