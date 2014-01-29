@@ -26,6 +26,8 @@ App.Marker.MarkerView = Backbone.View.extend({
     this.feedItemsView.render();
     this.timerOnSound = new Audio("/assets/sounds/timer_on.wav");
     this.timerOffSound = new Audio("/assets/sounds/timer_off.wav");
+
+    $(document).on("keypress", this.keyPressed.bind(this));
   },
 
   events: {
@@ -95,6 +97,20 @@ App.Marker.MarkerView = Backbone.View.extend({
   swapTeamBoxes: function(e) {
     e.preventDefault();
     this.swapElements(this.$(".team-box"));
+  },
+
+  keyPressed: function(e) {
+    if (e.which == 32) {
+      var state = this.model.get("state");
+      if (state == "ready" || state == "paused") {
+        this.start(e);
+        return false;
+      } else if (state == "playing") {
+        this.pause(e);
+        return false;
+      }
+    }
+    return true;
   },
 
   render: function() {
