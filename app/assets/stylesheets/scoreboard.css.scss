@@ -123,14 +123,3 @@ div.content {
     }
   }
 }
-
-#bigshot-tag {
-  height: 1080px;
-  background: image-url("bigshot-logo.png") no-repeat center center;
-
-  &.fade-out {
-    opacity: 0;
-    -webkit-transition: opacity 2s 3s ease;
-    transition: opacity 2s 3s ease;
-  }
-}

@@ -8,6 +8,7 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
     this.listenTo(this, "hidden", this.stop);
     this.countDownMovie = this.$("#countdown video");
     this.countDownMovie[0].addEventListener("ended", this.startAnimation.bind(this));
+    this.countDownMovie[0].addEventListener("canplaythrough", this.endTag.bind(this));
     this.listenTo(this.board, "available", this.available);
     this.homeTeamLogo = App.game.get("home_team_logo");
     this.visitingTeamLogo = App.game.get("visiting_team_logo");
@@ -59,7 +60,7 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
 
   start: function() {
     this.playing = true;
-    this.countDownMovie.load();
+    this.countDownMovie[0].load();
     this.showTag();
   },
 
@@ -75,21 +76,15 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
 
   showTag: function() {
     if (this.playing) {
-      this.$("#bigshot-tag").removeClass("fade").show().siblings().hide();
+      this.$("#bigshot-tag").show().siblings().hide();
       this.waitingForLoad = true;
       this.endTag();
     }
   },
 
   endTag: function() {
-    if (this.playing && this.waitingForLoad && this.edgeLoaded) {
-      var self = this;
-      setTimeout(function() {
-        this.$("#bigshot-tag").addClass("fade-out");
-        setTimeout(function() {
-          self.showCountDown();
-        }, 6000);
-      }, 1000);
+    if (this.playing && this.waitingForLoad && this.countDownMovie[0].readyState > 3 && this.edgeLoaded) {
+      this.showCountDown();
     }
   },
 
