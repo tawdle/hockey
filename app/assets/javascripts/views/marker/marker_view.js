@@ -100,7 +100,8 @@ App.Marker.MarkerView = Backbone.View.extend({
   },
 
   keyPressed: function(e) {
-    if (e.which == 32) {
+    var tag = e.target.tagName.toLowerCase();
+    if (tag != 'input' && tag != 'textarea' && e.which == 32) {
       var state = this.model.get("state");
       if (state == "ready" || state == "paused") {
         this.start(e);
