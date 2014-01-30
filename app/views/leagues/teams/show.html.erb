@@ -1,7 +1,7 @@
 <% title [@team.name, @team.city, @team.league.name].compact.join(" - ") %>
-<div class="row">
+<div class="row team-show">
 
-  <div class="column span9">
+  <div class="span9">
     <div class="team-name-block">
       <% if @team.alpha_logo.present? %>
         <%= cl_image_tag @team.alpha_logo_url(:large), :alt => "team logo" %>
@@ -14,16 +14,58 @@
       </div>
       <div><%= format_team_link(@team) %></div>
       <%= @team.city %><br>
-      <div class="byline"><em>a member of <%= link_to @team.league.name, @team.league %><em></div>
+      <div class="byline"><em>a member of <%= link_to @team.league.name, @team.league %></em></div>
     </div>
+
+    <br />
+
+    <h3>Players</h3>
+
+    <table class="table table-hover">
+      <tr>
+        <th>Photo</th>
+        <th>Name</th>
+        <th style="width: 20px;">#</th>
+        <th>Profile</th>
+        <th>Role</th>
+        <th></th>
+      </tr>
+
+      <% @team.players.each do |player| %>
+        <tr>
+        <td><%= cl_image_tag(player.photo_url(:thumbnail)) %></td>
+        <td><%= player.name %></td>
+        <td><%= player.jersey_number %></td>
+        <td><%= format_player_link(player) %></td>
+        <td><%= player.role.to_s.humanize %></td>
+        <td>
+          <%= link_to 'Edit', edit_player_path(player) %>
+          <%= link_to 'Remove', player, method: :delete, data: { confirm: 'Are you sure?' } %>
+        </td>
+      </tr>
+    <% end %>
+    </table>
+
+    <br />
+
+    <%= link_to 'Add Player', new_team_player_path(@team), :class => "btn" if can? :create, Player.new(:team => @team) %>
+
+    <br />
+
+    <% if Game.for_team(@team).scheduled_or_active.any? %>
+      <%= render :partial => "games", :locals => { :games => Game.for_team(@team).scheduled_or_active } %>
+    <% end %>
+
+    <%= render :partial => "activity_feed", :locals => {:activity_feed_items => @team.activity_feed_items, :in_game_context => false } %>
+
   </div>
 
-  <div class="column span3">
+  <div class="span3">
     <div class="row well">
       <h4>Managers
         <% if can?(:create, Invitation.new(:target => @team)) %>
           <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @team.to_param, :target_type => "Team"), :class => "btn btn-small" %>
-        <% end %>
+      <% end %>
       </h4>
 
       <%= @team.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
@@ -38,70 +80,5 @@
   </div>
 </div>
 
-
-<h3>Players</h3>
-
-<table class="table table-hover">
-  <tr>
-    <th>Photo</th>
-    <th>Name</th>
-    <th style="width: 20px;">#</th>
-    <th>Profile</th>
-    <th>Role</th>
-    <th></th>
-  </tr>
-
-  <% @team.players.each do |player| %>
-    <tr>
-      <td><%= cl_image_tag(player.photo_url(:thumbnail)) %></td>
-      <td><%= player.name %></td>
-      <td><%= player.jersey_number %></td>
-      <td><%= format_player_link(player) %></td>
-      <td><%= player.role.to_s.humanize %></td>
-      <td>
-        <%= link_to 'Edit', edit_player_path(player) %>
-        <%= link_to 'Remove', player, method: :delete, data: { confirm: 'Are you sure?' } %>
-      </td>
-    </tr>
-  <% end %>
-</table>
-
-<br />
-
-<%= link_to 'Add Player', new_team_player_path(@team), :class => "btn" if can? :create, Player.new(:team => @team) %>
-
-<br />
-
-<% if Game.for_team(@team).scheduled_or_active.any? %>
-
-  <h3 class="page-header">Current Games</h3>
-
-  <table class="table table-hover">
-    <tr>
-      <th>Status</th>
-      <th><i>vs</i></th>
-      <th>When</th>
-      <th>Where</th>
-      <th>Score</th>
-    </tr>
-
-    <% Game.for_team(@team).scheduled_or_active.asc.each do |game| %>
-      <tr>
-        <td><%= link_to game.state.humanize, game %></td>
-        <td><%= link_to game.opposing_team(@team).name, game.opposing_team(@team) %></td>
-        <td><%= l game.start_time, :format => :game %></td>
-        <td>
-          <%= link_to game.location.name, game.location %>
-          <%= link_to game.location.map_url, :target => "_blank" do %>
-            <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank" %>
-          <% end %>
-        </td>
-        <td><%= "#{game.score_for(@team)} - #{game.score_for_opposing_team(@team)}" if game.active? %></td>
-      </tr>
-    <% end %>
-  </table>
-<% end %>
-
-<%= render :partial => "activity_feed", :locals => {:activity_feed_items => @team.activity_feed_items, :in_game_context => false } %>
 
 <%= link_to 'Back', league_path(@team.league) %>

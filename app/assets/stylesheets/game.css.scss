@@ -296,3 +296,23 @@ table.games {
     font-weight: bold;
   }
 }
+
+.team-show {
+  table {
+    width: 95%;
+  }
+}
+.team-name-block {
+  img {
+    float: left;
+  }
+  .team-name {
+    padding-left: 120px;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 40px;
+    form {
+      margin-bottom: 10px;
+    }
+  }
+}
