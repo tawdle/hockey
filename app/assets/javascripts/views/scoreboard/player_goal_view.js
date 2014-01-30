@@ -8,17 +8,19 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
     this.listenTo(App.goals, "add", this.goalAdded);
   },
 
-  duration: 10000, // msec
+  duration: 7000, // msec
 
   start: function() {
+    console.log("pgv: starting with primary = " + this.showPrimary);
     var index = -1;
     var playerIds = this.goal.get("player_ids");
     var self = this;
 
     function showNextPlayer() {
       index += 1;
-      if (index >= playerIds.length) {
+      if (index >= (self.showPrimary ? 1 : playerIds.length)) {
         self.board.finished(self);
+        self.showPrimary = false;
         return;
       }
 
@@ -29,6 +31,7 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
       $("#player-goal-animation_Player_Name").html(name);
       $("#player-goal-animation_Maxime_Leblond__74Copy").css("background-image", "url(" + photoUrl + ")");
       $("#player-goal-animation_Jerser_Number").html("#" + number);
+      console.log("pgv: showing for player " + player.id);
       self.stage().play(0);
       setTimeout(showNextPlayer, self.duration);
     }
@@ -48,6 +51,7 @@ App.Scoreboard.PlayerGoalView = Backbone.View.extend({
   },
 
   goalCompleted: function() {
+    this.showPrimary = true;
     this.board.show(this);
   },
 

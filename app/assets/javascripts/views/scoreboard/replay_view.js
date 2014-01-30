@@ -60,6 +60,7 @@ App.Scoreboard.ReplayView = Backbone.View.extend({
     this.playing = true;
     this.currentVideo = -1;
     this.playNextVideo();
+    this.board.enqueue(this.board.views.PlayerGoalView);
   },
 
   stop: function() {
