@@ -10,7 +10,7 @@ class Player < ActiveRecord::Base
   belongs_to :user
   symbolize :role, :in => Roles
   attr_accessor :username_or_email, :creator, :email, :photo_cache, :kiosk_password_matches
-  attr_accessible :team, :username_or_email, :creator, :jersey_number, :name, :role, :photo, :photo_cache, :user_id, :kiosk_password_matches
+  attr_accessible :team, :username_or_email, :creator, :jersey_number, :name, :role, :photo, :photo_cache, :user_id, :kiosk_password_matches, :email
 
   validates_presence_of :team
   validates_presence_of :name
