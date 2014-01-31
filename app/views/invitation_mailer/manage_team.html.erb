@@ -1,12 +1,12 @@
-<p>Hello!</p>
+<p>Bonjour!</p>
 
-<p><%= @invitation.creator.name %> has invited you to manage the team <%= @invitation.target.name %>. </p>
+<p><%= @invitation.creator.name %> vous invite à vous identifier comme gérant(e) des <%= @invitation.target.name %>. </p>
 
-<p>Click the link below to create an account and accept <%= @invitation.creator.name %>'s invitation.<p>
+<p>Cliquez sur ce lien pour accepter l'invitation de <%= @invitation.creator.name %>.<p>
 
-<%= link_to "I accept!", accept_invitation_url(@invitation) %>
+<%= link_to "J'accepte!", accept_invitation_url(@invitation) %>
 
-<p>If this link doesn't work, cut and paste the following link into your browser:<p>
+<p>Si ce lien ne fonctionne pas, copiez et coller ce lien dans la barre de navigation de votre fureteur:<p>
 
 <%= accept_invitation_url(@invitation) %>
 
