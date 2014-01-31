@@ -73,6 +73,7 @@ fr:
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
     new_user: ! '%{user} est maintenant un membre BigShot'
   games:
+    highlights: Faits Saillants
     periods:
     - 1
     - 2

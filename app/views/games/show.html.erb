@@ -72,6 +72,14 @@
 
 <div class="clearfix"></div>
 
+
+<% if current_user && @game.vimeo_id %>
+  <h2><%= t("games.highlights") %></h2>
+  <iframe src="//player.vimeo.com/video/<%= @game.vimeo_id %>" width="500" height="281"
+    frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+  </iframe>
+<% end %>
+
 <h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
 
 <% if current_user %>

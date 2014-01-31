@@ -322,7 +322,8 @@ CREATE TABLE games (
     ended_at timestamp without time zone,
     deleted_at timestamp without time zone,
     marker_id integer,
-    period_durations json
+    period_durations json,
+    vimeo_id character varying(255)
 );
 
 
@@ -1741,3 +1742,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140122010753');
 INSERT INTO schema_migrations (version) VALUES ('20140124200616');
 
 INSERT INTO schema_migrations (version) VALUES ('20140129161624');
+
+INSERT INTO schema_migrations (version) VALUES ('20140131151055');

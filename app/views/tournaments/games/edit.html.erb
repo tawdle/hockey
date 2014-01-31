@@ -25,6 +25,11 @@
     <%= f.datetime_select :start_time, { :default => DateTime.now.at_beginning_of_hour + 7.days, :start_year => DateTime.now.year}, { :class => "span1" } %>
   </div>
 
+  <div class="field">
+    <%= f.label :vimeo_id %>
+    <%= f.text_field :vimeo_id %>
+  </div>
+
   <div class="actions">
     <%= f.submit :class => "btn btn-primary" %>
   </div>

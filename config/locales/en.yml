@@ -67,6 +67,7 @@ en:
     new_user: "%{user} just became a BigShot"
     new_team_manager: "%{user} became a manager of %{team}"
   games:
+    highlights: Game Highlights
     see_game: See game
     periods:
     - 1
