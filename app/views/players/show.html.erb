@@ -4,6 +4,8 @@
   <%= render partial: "follow_button", locals: { target: @player } %>
 </h3>
 
+<%= format_player_link(@player) %>
+
 <h4>Team: <%= format_team_link(@player.team) %></h4>
 
 <div>
@@ -17,6 +19,8 @@
 <% else %>
   <p>This player belongs to <%= format_user_link(@player.user) %>.</p>
 <% end %>
+
+<%= render :partial => "activity_feed", :locals => { :activity_feed_items => ActivityFeedItem.for(@player), :in_game_context => false } %>
 
 <% link_to "Edit", edit_player_path(@player), :class => "btn" if can?(:edit, @player) %>
 
