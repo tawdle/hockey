@@ -16,7 +16,9 @@ class GamePlayer < ActiveRecord::Base
   scope :nongoalies, where("game_players.role <> 'goalie'")
   scope :sorted, joins(:player).order("lpad(players.jersey_number, #{Player::MaxJerseyNumberLength}, '0'), players.name")
 
-  attr_accessible :player_id, :role
+  attr_accessible :player_id, :role, :player_attributes
+
+  accepts_nested_attributes_for :player
 
   private
 
