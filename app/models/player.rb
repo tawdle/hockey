@@ -50,8 +50,6 @@ class Player < ActiveRecord::Base
     super(options.merge(:methods => [:at_name, :name_and_number]))
   end
 
-  private
-
   def accepted_invitation_to_claim(user, invitation)
     self.user = user
     save!
@@ -60,6 +58,8 @@ class Player < ActiveRecord::Base
   def declined_invitation_to_claim(user, invitation)
     # Whatevs
   end
+
+  private
 
   def provided_username_or_email
     username_match = /^\@(.*)$/.match(username_or_email)
@@ -85,11 +85,13 @@ class Player < ActiveRecord::Base
   end
 
   def user_is_invited?
-    email.present?
+    email.present? && user.nil?
   end
 
   def send_invitation
-    Invitation.create!(:creator => creator, :target => self, :predicate => :claim, :email => email)
+    unless Invitation.create(:creator => creator, :target => self, :predicate => :claim, :email => email)
+      self.errors.add(:email, "failed to create invitation")
+    end
   end
 
   def kiosk_password

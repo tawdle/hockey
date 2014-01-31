@@ -36,7 +36,7 @@ class PlayersController < ApplicationController
 
   def update
     respond_to do |format|
-      if @player.update_attributes(params[:player])
+      if @player.update_attributes(params[:player].merge(creator: current_user))
         format.html { redirect_to @player.team, notice: 'Player was successfully updated.' }
         format.json { head :no_content }
       else
