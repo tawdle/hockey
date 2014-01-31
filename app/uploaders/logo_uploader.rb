@@ -22,6 +22,10 @@ class LogoUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
+  def public_id
+    [Rails.env.production? ? nil : Rails.env, mounted_as, model.class.name, model.id.to_s].compact.join("-").downcase
+  end
+
   process :convert => 'png'
 
   version :thumbnail do
