@@ -46,7 +46,7 @@ class Team < ActiveRecord::Base
   end
 
   mount_uploader :logo, LogoUploader
-  mount_uploader :alpha_logo, LogoUploader
+  mount_uploader :alpha_logo, AlphaLogoUploader
 
   private
 
