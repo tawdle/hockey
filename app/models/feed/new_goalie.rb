@@ -7,7 +7,7 @@ class Feed::NewGoalie < ActivityFeedItem
   validates_presence_of :game
 
   def message
-    I18n.t "feed.new_goalie", player: player.at_name, team: player.team.at_name
+    I18n.t "feed.new_goalie", player: player.feed_name, team: player.team.at_name
   end
 
   def mentioned_objects

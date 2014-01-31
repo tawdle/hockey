@@ -10,9 +10,9 @@ class Feed::NewGoal < ActivityFeedItem
 
   def message
     opts = {
-      player: player.at_name,
-      assist1: player2.try(:at_name),
-      assist2: player3.try(:at_name),
+      player: player.feed_name,
+      assist1: player2.try(:feed_name),
+      assist2: player3.try(:feed_name),
       for_team: player.team.at_name,
       against_team: game.opposing_team(player.team).at_name
     }

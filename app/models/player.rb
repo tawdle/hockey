@@ -31,7 +31,7 @@ class Player < ActiveRecord::Base
   end
 
   def feed_name
-    "#{name} ##{jersey_number} (#{at_name})"
+    "#{name} (#{at_name})"
   end
 
   def name_and_number
