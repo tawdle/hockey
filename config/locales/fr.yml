@@ -72,6 +72,9 @@ fr:
     new_penalty: ! '%{player} a écopé d''une punition: %{penalty}'
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
     new_user: ! '%{user} est maintenant un membre BigShot'
+  follow:
+    start_following: Devenir fan
+    stop_following: Ne plus être fan
   games:
     ended: This game ended %{end_time}.
     highlights: Faits Saillants

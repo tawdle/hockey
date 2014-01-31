@@ -66,6 +66,9 @@ en:
     new_penalty: "%{player} received a penalty: %{penalty}"
     new_user: "%{user} just became a BigShot"
     new_team_manager: "%{user} became a manager of %{team}"
+  follow:
+    start_following: "Become a fan"
+    stop_following: "Stop being a fan"
   games:
     highlights: Game Highlights
     see_game: See game
