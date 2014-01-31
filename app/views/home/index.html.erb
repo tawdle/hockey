@@ -1,3 +1,18 @@
+<div class="alert alert-block alert-info">
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <h4>Attention!</h4>
+  <p>
+  Les joueurs du <b>Tournoi Bantam de Beaupré</b> doivent s'identifier <b>en personne</b>
+  au kiosque de BigShot dans le hall de l'aréna pour <b>s'enregistrer</b>. Cette mesure vise
+  à s'assurer qu'eux seuls puissent prendre possession du compte correspondant à leur
+  profil de joueur.
+  </p>
+
+  <p>
+  Si vous êtes <b>parent ou ami</b> d'un joueur, vous pouvez vous inscrire en ligne et <b>devenir son fan</b>.
+  </p>
+</div>
+
 <% if current_user %>
   <%= render :partial => "invitations" %>
   <%= render :partial => "games", :locals => {:games => Game.recent } %>
