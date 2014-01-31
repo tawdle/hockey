@@ -73,6 +73,7 @@ fr:
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
     new_user: ! '%{user} est maintenant un membre BigShot'
   games:
+    ended: This game ended %{end_time}.
     highlights: Faits Saillants
     periods:
     - 1
@@ -81,6 +82,7 @@ fr:
     - OT
     - SO
     see_game: Voir la partie
+    started: This game started %{start_time}
   goalie:
     pulled: Filet désert
   league:

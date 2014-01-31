@@ -32,13 +32,13 @@
 
 
 <% if @game.ended_at %>
-  <p>This game ended <%= timeago_tag @game.ended_at %>.
+  <p><%= t("games.ended", { :end_time => timeago_tag(@game.ended_at)}).html_safe %>
     <% if @game.completed? %>
       <%= link_to "View gamesheet", game_path(@game, :format => :pdf), :class => "btn" %>
     <% end %>
   </p>
 <% elsif @game.started_at %>
-  <p>This game started <%= timeago_tag @game.started_at %>.</p>
+  <p><%= t("games.started", { :start_time => timeago_tag(@game.started_at)}).html_safe %></p>
 <% end %>
 
 <div class="well well-large" style="text-align: center;">

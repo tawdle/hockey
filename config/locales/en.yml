@@ -69,6 +69,8 @@ en:
   games:
     highlights: Game Highlights
     see_game: See game
+    started: This game started %{start_time}.
+    ended: This game ended %{end_time}.
     periods:
     - 1
     - 2
