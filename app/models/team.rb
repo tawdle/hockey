@@ -25,6 +25,10 @@ class Team < ActiveRecord::Base
     SystemName.find_by_name_and_nameable_type(name, "Team").try(:nameable)
   end
 
+  def full_name
+    [name, city].compact.join(" - ")
+  end
+
   def managers
     User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class, :authorizable_id => self.id})
   end
