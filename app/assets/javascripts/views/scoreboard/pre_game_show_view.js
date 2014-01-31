@@ -145,7 +145,7 @@ App.Scoreboard.PreGameShowView = Backbone.View.extend({
           self.setContent("Jerser_Number", "#" + player.get("jersey_number"));
           self.setContent("Player_Name", player.get("name"));
           self.setBackgroundImage("Maxime_Leblond__74", player.get("photo_url"));
-          self.playFromLabel("PlayerAnimation", 7000, showNextPlayer);
+          self.playFromLabel("PlayerAnimation", 5000, showNextPlayer);
         } else {
           next.apply(self, args);
         }
