@@ -99,6 +99,7 @@ class Game < ActiveRecord::Base
   scope :finished, where(:state => :completed)
   scope :asc, order("start_time ASC")
   scope :desc, order("start_time DESC")
+  scope :not_canceled, where("state <> 'canceled'")
 
   after_create :generate_create_feed_item
   after_update :generate_update_feed_item

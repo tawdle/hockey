@@ -4,7 +4,7 @@
 <% end %>
 </h3>
 
-<% if games.without_deleted.any? %>
+<% if games.without_deleted.not_canceled.any? %>
   <table class="games table table-hover">
     <tr>
       <th><%= Game.human_attribute_name(:start_time) %></th>
@@ -18,7 +18,7 @@
       <th></th>
     </tr>
 
-    <% games.without_deleted.each do |game| %>
+    <% games.without_deleted.not_canceled.each do |game| %>
       <tr <%= "style='font-weight: bold;" if game.live? %> >
       <td><%= l game.start_time, :format => :game %></td>
       <td class="visitor-name"><%= format_team_link(game.visiting_team) %></td>
