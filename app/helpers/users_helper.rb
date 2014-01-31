@@ -28,17 +28,18 @@ module UsersHelper
 
   def format_message_with_usernames(msg)
     username_matches = msg.scan(Mention::NameOrPlayerPattern)
-      if username_matches
-        username_matches = username_matches.flatten
-        msg = msg.clone
-        username_matches.each do |username|
-          if username.include?("#")
-            msg.gsub!("@#{username}", format_playername_link(username))
-          else
-            msg.gsub!("@#{username}", format_username_link(username))
-          end
+    if username_matches
+      username_matches = username_matches.flatten
+      msg = msg.clone
+      username_matches.each do |username|
+        at_name = Regexp.escape("@#{username}")
+        if username.include?("#")
+          msg.gsub!(/#{at_name}\b/, format_playername_link(username))
+        else
+          msg.gsub!(/#{at_name}\b/, format_username_link(username))
         end
       end
+    end
     msg
   end
 end
