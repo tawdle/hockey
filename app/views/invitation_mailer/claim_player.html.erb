@@ -1,13 +1,14 @@
-<p>Hello!</p>
+<p>Bonjour!</p>
 
-<p><%= @invitation.creator.name %> has invited you to claim ownership of player known as <%= @invitation.target.name %> (#<%= @invitation.target.jersey_number %>) for <%= @invitation.target.team.name %>. </p>
+<p><%= @invitation.creator.name %> vous invite à confirmer que vous êtes bien <%= @invitation.target.name %> (#<%= @invitation.target.jersey_number %>) des <%= @invitation.target.team.name %>. </p>
 
-<p>Click the link below to create an account and accept <%= @invitation.creator.name %>'s invitation.<p>
+<p>Cliquez sur le lien suivant pour accepter l'invitation de <%= @invitation.creator.name %><p>
 
-<%= link_to "I accept!", accept_invitation_url(@invitation) %>
+<%= link_to "J'accepte!", accept_invitation_url(@invitation) %>
 
-<p>If this link doesn't work, cut and paste the following link into your browser:<p>
+<p>Si ce lien ne fonctionne pas, copiez et coller ce lien dans la barre de navigation de votre fureteur:<p>
 
 <%= accept_invitation_url(@invitation) %>
+
 
 
