@@ -21,7 +21,7 @@
       <p class="playing">This game is playing. Press <i class="icon-pause"></i> to pause the game clock.</p>
       <p class="paused">This game is paused. Press <i class="icon-play"></i> to resume.</p>
       <p class="finished">This game has ended. When you have completed recording all items, press: <%= link_to "Complete Game", complete_marker_game_path(@game), :class => "btn", :method => :post %>
-        <%= link_to "Joueur du match", "#", :class => "mvp-button" %>
+        <%= link_to "Joueur du match", "#", :class => "btn mvp-button" %>
       </p>
     </div>
   <% end %>
