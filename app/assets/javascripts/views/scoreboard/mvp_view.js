@@ -7,6 +7,7 @@ App.Scoreboard.MVPView = Backbone.View.extend({
     this.listenTo(this, "hidden", this.stop);
     this.listenTo(App.game, "change:visiting_team_mvp_id", this.visitingMVPChanged);
     this.listenTo(App.game, "change:home_team_mvp_id", this.homeMVPChanged);
+    this.listenTo(App.game, "change:state", this.stateChanged);
   },
 
   duration: 30000,
@@ -21,6 +22,10 @@ App.Scoreboard.MVPView = Backbone.View.extend({
     this.showMVP(App.game.get("home_team_mvp_id"));
   },
 
+
+  stateChanged: function() {
+    this.board.finished(this);
+  },
 
   showMVP: function(player_id) {
     var self = this;
