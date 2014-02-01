@@ -203,7 +203,7 @@ table.penalties {
   max-height: 100%;
 }
 
-.modal.penalty-editor {
+.modal.penalty-editor, .mvp-editor {
   position: fixed;
   top: 20px;
   left: 20px;
@@ -313,6 +313,32 @@ table.games {
     line-height: 40px;
     form {
       margin-bottom: 10px;
+    }
+  }
+}
+
+.mvp-editor {
+  .home-players, .visiting-players {
+    font-size: 0px;
+
+    input {
+      display: none;
+    }
+
+    label {
+      margin-bottom: 10px;
+      font-weight: bold;
+      font-size: 24px;
+      line-height: 44px;
+      min-width: 44px;
+      min-height: 44px;
+      padding: 10px;
+    }
+
+    input:checked + label {
+      background-image: none;
+      background-color: #0044CC;
+      color: white;
     }
   }
 }

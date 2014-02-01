@@ -50,7 +50,7 @@ App.Scoreboard.GameView = Backbone.View.extend({
   available: function() {
     var state = this.model.get("state");
 
-    if (["ready", "playing", "paused", "active"].indexOf(state) >= 0) {
+    if (["ready", "playing", "paused", "active", "finished"].indexOf(state) >= 0) {
       this.board.enqueue(this);
     }
   }

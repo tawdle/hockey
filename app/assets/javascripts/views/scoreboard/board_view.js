@@ -12,7 +12,8 @@ App.Scoreboard.BoardView = Backbone.View.extend({
       [App.Scoreboard.GoalAnimationView, "#team-goal-animation"],
       [App.Scoreboard.ReplayView, "#goal-replay"],
       [App.Scoreboard.PlayerGoalView, "#player-goal-animation"],
-      [App.Scoreboard.PreGameShowView, "#pre-game-show"]
+      [App.Scoreboard.PreGameShowView, "#pre-game-show"],
+      [App.Scoreboard.MVPView, "#mvp-animation"]
     ];
 
     var self = this;

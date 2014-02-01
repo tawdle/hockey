@@ -25,6 +25,7 @@ Hockey::Application.routes.draw do
         post :complete
         post :sync
         put :update_clock
+        put :set_mvp
       end
     end
   end

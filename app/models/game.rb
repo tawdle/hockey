@@ -57,6 +57,8 @@ class Game < ActiveRecord::Base
   belongs_to :location
   belongs_to :clock, :class_name => "Timer", :dependent => :destroy
   belongs_to :marker, :class_name => "User"
+  belongs_to :home_team_mvp, :class_name => "Player"
+  belongs_to :visiting_team_mvp, :class_name => "Player"
 
   has_many :activity_feed_items, :dependent => :destroy, :order => :created_at, :inverse_of => :game, :limit => 20
   has_many :goals, :inverse_of => :game, :dependent => :destroy
@@ -88,13 +90,13 @@ class Game < ActiveRecord::Base
   attr_accessible :status, :home_team, :home_team_id, :visiting_team, :visiting_team_id, :location, :location_id,
     :start_time, :updater, :player_ids, :period_durations, :period_minutes, :game_players_attributes,
     :referee_ids, :linesman_ids, :game_staff_members_attributes, :number, :current_period_duration,
-    :vimeo_id
+    :vimeo_id, :home_team_mvp_id, :visiting_team_mvp_id
   attr_readonly :home_team, :home_team_id, :visiting_team, :visiting_team_id
 
   scope :for_team, lambda {|team| where("home_team_id = ? or visiting_team_id = ?", team.id, team.id) }
   scope :scheduled, where(:state => :scheduled)
   scope :due, lambda { where("start_time < ?", DateTime.now) }
-  scope :active, where(:state => [:active, :paused, :ready, :playing])
+  scope :active, where(:state => [:active, :paused, :ready, :playing, :finished])
   scope :upcoming, lambda { where("start_time > ?", DateTime.now) }
   scope :scheduled_or_active, where(:state => [:scheduled, :active])
   scope :finished, where(:state => :completed)

@@ -11,6 +11,7 @@ App.Marker.MarkerView = Backbone.View.extend({
     this.visitingView = new App.Marker.TeamBoxView({ el: "#visiting-team", teamId: this.model.get("visiting_team").id, side: "visiting_team" });
     this.penaltyEditor = new App.Marker.PenaltyEditor({el: this.$(".penalty-editor")});
     this.clockEditor = new App.Marker.ClockEditor({el: this.$(".clock-editor"), model: this.model });
+    this.mvpEditor = new App.Marker.MVPEditor({el: this.$(".mvp-editor"), model: this.model });
 
     this.listenTo(this.model, "change", this.render);
     setInterval(function() { App.dispatcher.trigger("clockTick"); }.bind(this), 500);
@@ -38,7 +39,8 @@ App.Marker.MarkerView = Backbone.View.extend({
     "click #game-clock" : "adjustClock",
     "click a.add-penalty" : "addPenalty",
     "ajax:success #new_feed_user_post" : "clearMessageText",
-    "click .swap" : "swapTeamBoxes"
+    "click .swap" : "swapTeamBoxes",
+    "click .mvp-button" : "editMVP"
   },
 
   start: function(e) {
@@ -112,6 +114,11 @@ App.Marker.MarkerView = Backbone.View.extend({
       }
     }
     return true;
+  },
+
+  editMVP: function(e) {
+    e.preventDefault();
+    this.mvpEditor.edit();
   },
 
   render: function() {

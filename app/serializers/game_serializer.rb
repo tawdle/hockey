@@ -1,5 +1,5 @@
 class GameSerializer < ActiveModel::Serializer
-  attributes :id, :state, :home_team, :visiting_team, :period_text, :period
+  attributes :id, :state, :home_team, :visiting_team, :period_text, :period, :home_team_mvp_id, :visiting_team_mvp_id
   has_one :clock
   has_many :players
   has_many :goals

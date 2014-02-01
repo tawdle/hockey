@@ -91,4 +91,28 @@ class Marker::GamesController < ApplicationController
       end
     end
   end
+
+  def set_mvp
+    player_id = params[:game] && params[:game][:mvp_player_id].try(:to_i)
+    if player_id && @game.game_players.map(&:player_id).include?(player_id)
+      player = Player.find(player_id)
+      team = player.team
+      if team == @game.home_team
+        @game.home_team_mvp = player
+      else
+        @game.visiting_team_mvp = player
+      end
+    end
+
+    respond_to do |format|
+      if @game.save
+        @game.broadcast_changes
+        format.html { redirect_to @game, notice: 'Game MVP was successfully updated.' }
+        format.json { head :no_content }
+      else
+        format.html { render action: "edit" }
+        format.json { render json: @game.errors, status: :unprocessable_entity }
+      end
+    end
+  end
 end
