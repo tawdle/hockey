@@ -88,7 +88,7 @@ fr:
     started: This game started %{start_time}
   goalie:
     pulled: Filet désert
-  invitations:
+  invitation_mailer:
     claim_player:
       subject: Invitation to Claim Player
     manage_league:

@@ -82,7 +82,7 @@ en:
     - SO
   goalie:
     pulled: Empty net
-  invitations:
+  invitation_mailer:
     manage_league:
       subject: "Invitation to Manage League"
     mark_league:
