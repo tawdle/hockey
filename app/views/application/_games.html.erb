@@ -8,6 +8,7 @@
   <table class="games table table-hover">
     <tr>
       <th><%= Game.human_attribute_name(:start_time) %></th>
+      <th>#</th>
       <th></th>
       <th><%= Game.human_attribute_name(:visiting_team) %></th>
       <th></th>
@@ -19,8 +20,9 @@
     </tr>
 
     <% games.without_deleted.not_canceled.each do |game| %>
-      <tr <%= "style='font-weight: bold;" if game.live? %> >
+      <tr class="<%= game.state %>">
       <td><%= l game.start_time, :format => :game %></td>
+      <td><%= game.number %></td>
       <td class="visitor-name"><%= format_team_link(game.visiting_team) %></td>
       <td><%= link_to(image_tag(game.visiting_team.logo_url(:thumbnail)), game.visiting_team) %></td>
       <td class="score">

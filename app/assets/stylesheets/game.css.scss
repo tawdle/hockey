@@ -223,6 +223,12 @@ table.penalties {
 }
 
 table.games {
+  white-space: nowrap;
+
+  .active, .paused, .ready, .playing, .finished {
+    font-weight: bold;
+  }
+
   td {
     vertical-align: middle;
   }
@@ -235,6 +241,10 @@ table.games {
   }
   .visitor-name {
     text-align: right;
+  }
+
+  .map-icon {
+    vertical-align: bottom;
   }
 }
 
