@@ -12,16 +12,3 @@
 
 <p><%= accept_invitation_url(@invitation) %></p>
 
-<p>Hello!</p>
-
-<p><%= @invitation.creator.name %> has identified you as being responsible for
-  <%= @invitation.target.name %>. </p>
-
-<p>Click the link below accept <%= @invitation.creator.name %>'s invitation and create a free account
-  to manage your facility at BigShot.<p>
-
-<p><%= link_to "I accept!", accept_invitation_url(@invitation) %></p>
-
-<p>If the link above doesn't work, please copy and paste the following line into your browser:</p>
-
-<p><%= accept_invitation_url(@invitation) %>
