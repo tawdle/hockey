@@ -43,7 +43,10 @@
           <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank" %>
       <% end %>
       </td>
-      <td style="text-align: right;"><%= link_to t("games.see_game"), game, :class => "btn" %></td>
+      <td style="text-align: right;">
+        <%= link_to t("games.see_game"), game, :class => "btn" %>
+        <%= link_to(t("Edit game"), edit_path.call(game), :class => "btn") if defined?(edit_path) && can?(:edit, game) %>
+      </td>
     </tr>
   <% end %>
   </table>

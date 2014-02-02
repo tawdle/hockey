@@ -1,30 +1,6 @@
 <h2><%= @tournament.name %> - Games</h2>
 
-<%= render :partial => "games", :locals => {:games => @tournament.games } %>
+<%= render :partial => "games", :locals => {:games => @tournament.games, :edit_path => proc {|game| edit_tournament_game_path(@tournament, game) }} %>
 <%= link_to "Schedule a New Game", new_tournament_game_path(@tournament), :class => "btn" %>
-
-<h3 class="page-header">Past Games</h3>
-
-<table class="table table-hover">
-  <tr>
-    <th>When</th>
-    <th>Home Team</th>
-    <th><i>vs</i></th>
-    <th>Visting Team</th>
-    <th>Location</th>
-    <th>Score</th>
-  </tr>
-
-  <% @tournament.games.finished.desc.each do |game| %>
-    <tr>
-      <td><%= l game.start_time, :format => :game %></td>
-      <td><%= game.home_team.name %></td>
-      <td></td>
-      <td><%= game.visiting_team.name %></td>
-      <td><%= game.location.name %></td>
-      <td><%= link_to "#{game.home_team_score} - #{game.visiting_team_score}", game_path(game, :format => :pdf) %></td>
-    </tr>
-  <% end %>
-</table>
 
 <%= link_to "Back", @tournament %>
