@@ -41,7 +41,7 @@ class Gamesheets::HockeyQuebec < Prawn::Document
   end
 
   def draw_goals(team, x)
-    goals = @game.goals.for_team(team).limit(23)
+    goals = @game.goals.for_team(team).order("period, elapsed_time asc").limit(23)
     translate(x, 538) do
       goals.each_with_index do |goal, index|
         translate(0, -index * 18) do
