@@ -15,13 +15,13 @@ class InvitationMailer < ActionMailer::Base
   def manage_league(invitation)
     @invitation = invitation
 
-    mail to: @invitation.email, subject: "Invitation to Manage League"
+    mail to: @invitation.email
   end
 
   def mark_league(invitation)
     @invitation = invitation
 
-    mail to: @invitation.email, subject: "Invitation to become Marker for League"
+    mail to: @invitation.email
   end
 
   # Subject can be set in your I18n file at config/locales/en.yml
@@ -32,37 +32,31 @@ class InvitationMailer < ActionMailer::Base
   def manage_team(invitation)
     @invitation = invitation
 
-    mail to: @invitation.email, subject: "Invitation to Manage Team"
-  end
-
-  def join_team(invitation)
-    @invitation = invitation
-
-    mail to: @invitation.email, subject: "Invitation to Join Team"
+    mail to: @invitation.email
   end
 
   def claim_player(invitation)
     @invitation = invitation
 
-    mail to: @invitation.email, subject: "Invitation to Claim Player"
+    mail to: @invitation.email
   end
 
   def manage_location(invitation)
     @invitation = invitation
 
-    mail to: @invitation.email, subject: "Invitation to Manage Location"
+    mail to: @invitation.email
   end
 
   def manage_tournament(invitation)
     @invitation = invitation
 
-    mail to: @invitation.email, subject: "Invitation to Manage Tournament"
+    mail to: @invitation.email
   end
 
   def mark_tournament(invitation)
     @invitation = invitation
 
-    mail to: @invitation.email, subject: "Invitation to become Marker for Tournament"
+    mail to: @invitation.email
   end
 
 end

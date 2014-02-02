@@ -82,6 +82,22 @@ en:
     - SO
   goalie:
     pulled: Empty net
+  invitations:
+    manage_league:
+      subject: "Invitation to Manage League"
+    mark_league:
+      subject: "Invitation to become Marker for League"
+    manage_team:
+      subject: "Invitation to Manage Team"
+    claim_player:
+      subject: "Invitation to Claim Player"
+    manage_location:
+      subject: "Invitation to Manage Location"
+    manage_tournament:
+      subject: "Invitation to Manage Tournament"
+    mark_tournament:
+      subject: "Invitation to become Marker for Tournament"
+
   league:
     classifications:
       a: "A"
