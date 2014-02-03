@@ -12,6 +12,6 @@ class StaffMember < ActiveRecord::Base
   symbolize :role, :in => Roles
 
   def name_and_role
-    "#{name} (#{role.to_s.humanize})"
+    "#{name} (#{I18n.t(role, :scope => 'activerecord.values.staff_member.role')})"
   end
 end
