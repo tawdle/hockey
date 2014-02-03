@@ -33,17 +33,20 @@
 
       <% @team.players.each do |player| %>
         <tr>
-        <td><%= cl_image_tag(player.photo_url(:thumbnail)) %></td>
-        <td><%= player.name %></td>
-        <td><%= player.jersey_number %></td>
-        <td><%= format_player_link(player) %></td>
-        <td><%= player.role.to_s.humanize %></td>
-        <td>
-          <%= link_to 'Edit', edit_player_path(player) %>
-          <%= link_to 'Remove', player, method: :delete, data: { confirm: 'Are you sure?' } %>
-        </td>
-      </tr>
-    <% end %>
+          <td><%= link_to player do %>
+            <%= cl_image_tag(player.photo_url(:thumbnail)) %>
+          <% end %>
+          </td>
+          <td><%= player.name %></td>
+          <td><%= player.jersey_number %></td>
+          <td><%= format_player_link(player) %></td>
+          <td><%= player.role.to_s.humanize %></td>
+          <td>
+            <%= link_to 'Edit', edit_player_path(player) %>
+            <%= link_to 'Remove', player, method: :delete, data: { confirm: 'Are you sure?' } %>
+          </td>
+        </tr>
+      <% end %>
     </table>
 
     <br />
