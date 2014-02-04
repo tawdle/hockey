@@ -13,7 +13,7 @@ class InvitationsController < ApplicationController
   end
 
   def create
-    @invitation = Invitation.new(params[:invitation].merge(:creator => current_user))
+    @invitation = Invitation.new(params[:invitation].merge(:creator => current_user, :language => I18n.locale))
     authorize! :create, @invitation
 
     respond_to do |format|

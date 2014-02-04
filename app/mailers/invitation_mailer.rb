@@ -1,4 +1,6 @@
 class InvitationMailer < ActionMailer::Base
+  DEFAULT_LANGUAGE = 'fr'
+
   def self.format_address(email, display_name)
     address = Mail::Address.new(email)
     address.display_name = display_name
@@ -7,56 +9,39 @@ class InvitationMailer < ActionMailer::Base
 
   default from: format_address("mailer@bigshot.io", "BigShot.io")
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.invitations.manage_league.subject
-  #
-  def manage_league(invitation)
+  def send_localized_mail(invitation)
     @invitation = invitation
+    I18n.with_locale(@invitation.creator.language || DEFAULT_LANGUAGE) do
+      mail to: @invitation.email
+    end
+  end
 
-    mail to: @invitation.email
+  def manage_league(invitation)
+    send_localized_mail(invitation)
   end
 
   def mark_league(invitation)
-    @invitation = invitation
-
-    mail to: @invitation.email
+    send_localized_mail(invitation)
   end
 
-  # Subject can be set in your I18n file at config/locales/en.yml
-  # with the following lookup:
-  #
-  #   en.invitations.manage_team.subject
-  #
   def manage_team(invitation)
-    @invitation = invitation
-
-    mail to: @invitation.email
+    send_localized_mail(invitation)
   end
 
   def claim_player(invitation)
-    @invitation = invitation
-
-    mail to: @invitation.email
+    send_localized_mail(invitation)
   end
 
   def manage_location(invitation)
-    @invitation = invitation
-
-    mail to: @invitation.email
+    send_localized_mail(invitation)
   end
 
   def manage_tournament(invitation)
-    @invitation = invitation
-
-    mail to: @invitation.email
+    send_localized_mail(invitation)
   end
 
   def mark_tournament(invitation)
-    @invitation = invitation
-
-    mail to: @invitation.email
+    send_localized_mail(invitation)
   end
 
 end

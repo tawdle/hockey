@@ -429,7 +429,8 @@ CREATE TABLE invitations (
     target_type character varying(255),
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    user_id integer
+    user_id integer,
+    language character varying(255)
 );
 
 
@@ -1748,3 +1749,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140129161624');
 INSERT INTO schema_migrations (version) VALUES ('20140131151055');
 
 INSERT INTO schema_migrations (version) VALUES ('20140201175406');
+
+INSERT INTO schema_migrations (version) VALUES ('20140204210623');
