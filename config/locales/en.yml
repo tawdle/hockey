@@ -32,6 +32,12 @@ en:
           even:          "Even"
           four_on_five:  "Short-handed: 4 on 5"
           three_on_five: "Short-handed: 3 on 5"
+      player:
+        role:
+          player: Player
+          goalie: Goalie
+          captain: Captain
+          assistant_captain: Assistant Captain
       staff_member:
         role:
           abbreviations:
@@ -82,6 +88,9 @@ en:
     - SO
   goalie:
     pulled: Empty net
+  invitation:
+    header: Send an invitation
+    prompt: "Please enter the email address or @username of the person you'd like to invite to %{predicate} %{target_name}."
   invitation_mailer:
     manage_league:
       subject: "Invitation to Manage League"
@@ -218,6 +227,17 @@ en:
       current: Current
       completed: Completed
       other: Other
+  player:
+    belongs_to_html: This player belongs to %{user}.
+    claim:
+      prompt_html: Is this you? Click here to %{claim} this player for your account.
+      button: Claim
+    invite_claim:
+      prompt_html: Do you know this player? %{invite} them to own this player.
+      button: Invite
+    invitation_sent: Invited
+  team:
+    add_player: Add Player
   time:
     formats:
       game: ! "%B %e, %Y %l:%M%p %Z"

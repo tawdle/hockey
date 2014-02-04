@@ -1,6 +1,6 @@
-<h2>Create an invitation</h2>
+<h2><%= t("invitation.header") %></h2>
 
-<p>Please enter the email address or @username of the person you'd like to invite to <%= @invitation.predicate %> <%= @invitation.target.name %>.</p>
+<p><%= t("invitation.prompt", {:predicate => @invitation.predicate, :target_name => @invitation.target.name }) %></p>
 
 <%= form_for @invitation do |f| %>
   <% if @invitation.errors.any? %>
@@ -20,6 +20,9 @@
     <%= f.hidden_field :predicate, :value => @invitation.predicate %>
     <%= f.hidden_field :target_id, :value => @invitation.target.to_param %>
     <%= f.hidden_field :target_type, :value => @invitation.target.class.to_s %>
+    <% if params[:back_to] %>
+      <%= hidden_field_tag :back_to, params[:back_to] %>
+    <% end %>
   </div>
   <div class="actions">
     <%= f.submit :class => "btn btn-primary" %>

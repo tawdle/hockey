@@ -21,13 +21,18 @@
 
     <h3>Players</h3>
 
+    <% show_user = current_user && current_user.manager_of?(@team) %>
+
     <table class="table table-hover">
       <tr>
         <th>Photo</th>
-        <th>Name</th>
         <th style="width: 20px;">#</th>
+        <th>Name</th>
         <th>Profile</th>
         <th>Role</th>
+        <% if show_user %>
+          <th>User</th>
+        <% end %>
         <th></th>
       </tr>
 
@@ -37,10 +42,21 @@
             <%= cl_image_tag(player.photo_url(:thumbnail)) %>
           <% end %>
           </td>
-          <td><%= player.name %></td>
-          <td><%= player.jersey_number %></td>
+          <td><%= link_to player.jersey_number, player %></td>
+          <td><%= link_to player.name, player %></td>
           <td><%= format_player_link(player) %></td>
-          <td><%= player.role.to_s.humanize %></td>
+          <td><%= t(player.role, :scope => "activerecord.values.player.role") %></td>
+          <% if show_user %>
+            <td>
+              <% if player.user %>
+                <%= format_user_link(player.user) %>
+              <% elsif Invitation.pending.for_target(player).any? %>
+                <span class="text-success"><i class="icon-check"></i> <%= t("player.invitation_sent") %></span>
+              <% else %>
+                <%= invitation_button(:claim, player, {:label => t("player.invite_claim.button"), :back_to => team_path(@team) }) %>
+              <% end %>
+            </td>
+          <% end %>
           <td>
             <%= link_to 'Edit', edit_player_path(player) %>
             <%= link_to 'Remove', player, method: :delete, data: { confirm: 'Are you sure?' } %>
@@ -51,7 +67,7 @@
 
     <br />
 
-    <%= link_to 'Add Player', new_team_player_path(@team), :class => "btn" if can? :create, Player.new(:team => @team) %>
+    <%= link_to t("team.add_player"), new_team_player_path(@team), :class => "btn" if can? :create, Player.new(:team => @team) %>
 
     <br />
 
@@ -76,7 +92,7 @@
 
     <div class="row well">
       <h4>Staff Members
-        <%= link_to "Edit", team_staff_members_path(@team), :class => "btn btn-small" if can? :update, @team.staff_members.build %>
+        <%= link_to "Edit", team_staff_members_path(@team), :class => "btn btn-small" if can? :update, @team %>
       </h4>
       <p> <%= @team.staff_members.sort_by {|sm| StaffMember::Roles.index(sm.role) }.collect(&:name_and_role).join(", ") || "<em>none</em>".html_safe %> </p>
     </div>

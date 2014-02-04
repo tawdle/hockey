@@ -39,9 +39,15 @@ class Ability
     end
 
     can :create, Invitation do |invitation|
-      user.admin? ||
-      user.manager_of?(invitation.target) ||
-      (invitation.target.is_a?(Team) && user.manager_of?(invitation.target.league))
+      target = invitation.target
+      case target
+      when League, Tournament, Location
+        user.admin? || user.manager_of?(target)
+      when Player
+        user.manager_of?(target.team)
+      when Team
+        user.manager_of?(target.league)
+      end
     end
 
     can [:accept, :decline], Invitation do |invitation|

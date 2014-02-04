@@ -23,6 +23,7 @@ class Invitation < ActiveRecord::Base
 
   scope :pending, where(:state => :pending)
   scope :for_user, lambda {|user| where("email = ? OR user_id = ?", user.email, user.id) }
+  scope :for_target, lambda {|target| where(:target_id => target.id, :target_type => target.class.name) }
 
   def accept!(accepting_user)
     Invitation.transaction do

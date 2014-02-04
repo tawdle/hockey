@@ -2,7 +2,7 @@ class InvitationsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource :except => [:new, :create]
 
-  Target_classes = [League, Team, Location, Tournament]
+  Target_classes = [League, Team, Location, Tournament, Player]
 
   def new
     target_class = params[:target_type] && params[:target_type].constantize
@@ -18,7 +18,7 @@ class InvitationsController < ApplicationController
 
     respond_to do |format|
       if @invitation.save
-        format.html { redirect_to @invitation.target, notice: "Your invitation to #{@invitation.try(:user).try(:at_name) || @invitation.email} has been sent." }
+        format.html { redirect_to params[:back_to] || @invitation.target, notice: "Your invitation to #{@invitation.try(:user).try(:at_name) || @invitation.email} has been sent." }
       else
         format.html { render action: "new" }
       end

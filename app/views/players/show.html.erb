@@ -12,12 +12,18 @@
   <%= cl_image_tag(@player.photo.url(:small)) %>
 </div>
 
-<% if !@player.user %>
-  <% if current_user %>
-    <p>Is this you? Click here to <%= link_to "Claim", new_player_claims_path(@player), :class => "btn btn-small" %> this player for your account.</p>
+<% if @player.user %>
+  <p><%= t("player.belongs_to_html", { :user => format_user_link(@player.user) }) %></p>
+<% elsif current_user %>
+  <% if can?(:create, Invitation.new(:target => @player)) %>
+    <p>
+      <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, t("player.invite_claim.button")) }) %>
+    </p>
+  <% else %>
+    <p>
+      <%= t("player.claim.prompt_html", { :claim => link_to(t("player.claim.button"), new_player_claims_path(@player), :class => "btn btn-small") } ) %>
+    </p>
   <% end %>
-<% else %>
-  <p>This player belongs to <%= format_user_link(@player.user) %>.</p>
 <% end %>
 
 <%= render :partial => "activity_feed", :locals => { :activity_feed_items => ActivityFeedItem.for(@player), :in_game_context => false } %>

@@ -32,6 +32,12 @@ fr:
           five_on_three: Sup. 5 contre 3
           four_on_five: Inf. 4 contre 5
           three_on_five: Inf. 3 contre 5
+      player:
+        role:
+          assistant_captain: Assistant Captain
+          captain: Captain
+          goalie: Goalie
+          player: Player
       staff_member:
         role:
           abbreviations:
@@ -88,6 +94,10 @@ fr:
     started: This game started %{start_time}
   goalie:
     pulled: Filet désert
+  invitation:
+    header: Send an invitation
+    prompt: Please enter the email address or @username of the person you'd like to
+      invite to %{predicate} %{target_name}.
   invitation_mailer:
     claim_player:
       subject: Invitation to Claim Player
@@ -234,6 +244,17 @@ fr:
       completed: Complétées
       current: Courantes
       other: Autres
+  player:
+    belongs_to_html: This player belongs to %{user}.
+    claim:
+      button: Claim
+      prompt_html: Is this you? Click here to %{claim} this player for your account.
+    invitation_sent: Invited
+    invite_claim:
+      button: Invite
+      prompt_html: Do you know this player? %{invite} them to own this player.
+  team:
+    add_player: Add Player
   time:
     formats:
       game: ! '%e %B %Y - %H:%M %Z'
