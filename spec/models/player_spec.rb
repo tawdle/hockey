@@ -80,7 +80,7 @@ describe Player do
           player.should be_valid
         end
         it "sends an invitation" do
-          Invitation.should_receive(:create!)
+          Invitation.should_receive(:create)
           player.save!
         end
       end
@@ -90,7 +90,7 @@ describe Player do
           player.should be_valid
         end
         it "sends an invitation" do
-          Invitation.should_receive(:create!)
+          Invitation.should_receive(:create)
           player.save!
         end
       end
