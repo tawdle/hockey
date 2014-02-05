@@ -1,8 +1,1 @@
-<p>Hello!</p>
-
-<p><%= @invitation.creator.name %> has invited you to manage the league <%= @invitation.target.name %>. </p>
-
-<p>Click the link below to create an account and accept <%= @invitation.creator.name %>'s invitation.<p>
-
-<%= link_to "I accept!", accept_invitation_url(@invitation) %>
-
+<p><%= @invitation.creator.name %> has invited you to manage your league, <%= @invitation.target.name %>, online with BigShot. </p>

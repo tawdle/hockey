@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hello!</p>
+
+    <%= yield %>
+
+    <p>Click on the link below to accept <%= @invitation.creator.name %>'s invitation.<p>
+
+    <%= link_to "I accept!", accept_invitation_url(@invitation) %>
+
+    <p>If the link above doesn't work, copy and paste the link below into your browser's address bar:<p>
+
+    <%= accept_invitation_url(@invitation) %>
+  </body>
+</html>

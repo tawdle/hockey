@@ -1,9 +1,2 @@
-<p>Hello!</p>
-
 <p><%= @invitation.creator.name %> has invited you to become an offical marker for the 
   tournament <%= @invitation.target.name %>. </p>
-
-<p>Click the link below to create an account and accept <%= @invitation.creator.name %>'s invitation.<p>
-
-<%= link_to "I accept!", accept_invitation_url(@invitation) %>
-

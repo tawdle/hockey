@@ -11,7 +11,7 @@ class InvitationMailer < ActionMailer::Base
 
   def send_localized_mail(invitation)
     @invitation = invitation
-    I18n.with_locale(@invitation.creator.language || DEFAULT_LANGUAGE) do
+    I18n.with_locale(@invitation.language || DEFAULT_LANGUAGE) do
       mail to: @invitation.email
     end
   end

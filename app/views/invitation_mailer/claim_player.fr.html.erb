@@ -1,15 +1,3 @@
-<p>Bonjour!</p>
-
-<p><%= @invitation.creator.name %> vous invite à confirmer que vous êtes bien <%= @invitation.target.name %> (#<%= @invitation.target.jersey_number %>) des <%= @invitation.target.team.name %>. </p>
-
-<p>Cliquez sur le lien suivant pour accepter l'invitation de <%= @invitation.creator.name %><p>
-
-<%= link_to "J'accepte!", accept_invitation_url(@invitation) %>
-
-<p>Si ce lien ne fonctionne pas, copiez et coller ce lien dans la barre de navigation de votre fureteur:<p>
-
-<%= accept_invitation_url(@invitation) %>
-
-
-
+<p><%= @invitation.creator.name %> vous invite à confirmer que vous êtes bien
+<%= @invitation.target.name %> (#<%= @invitation.target.jersey_number %>) des <%= @invitation.target.team.name %>. </p>
 
