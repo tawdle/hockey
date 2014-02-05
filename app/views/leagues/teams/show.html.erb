@@ -19,7 +19,9 @@
 
     <br />
 
-    <h3>Players</h3>
+    <h3>Players
+      <%= link_to t("team.add_player"), new_team_player_path(@team), :class => "btn" if can? :create, Player.new(:team => @team) %>
+    </h3>
 
     <% show_user = current_user && current_user.manager_of?(@team) %>
 
@@ -67,7 +69,6 @@
 
     <br />
 
-    <%= link_to t("team.add_player"), new_team_player_path(@team), :class => "btn" if can? :create, Player.new(:team => @team) %>
 
     <br />
 
