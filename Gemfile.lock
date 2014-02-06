@@ -194,6 +194,8 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0.0)
       websocket (~> 1.0.4)
+    shoulda-matchers (2.5.0)
+      activesupport (>= 3.0.0)
     sprockets (2.2.2)
       hike (~> 1.2)
       multi_json (~> 1.0)
@@ -250,6 +252,7 @@ DEPENDENCIES
   rails_12factor
   rspec-rails (~> 2.0)
   sass-rails (~> 3.2.3)
+  shoulda-matchers
   state_machine
   symbolize
   uglifier (>= 1.0.3)
