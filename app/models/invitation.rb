@@ -7,7 +7,7 @@ class Invitation < ActiveRecord::Base
   symbolize :predicate, :in => [:manage, :join, :claim, :mark]
 
   attr_accessor :username_or_email
-  attr_accessible :creator, :predicate, :target, :target_id, :target_type, :email, :username_or_email, :user
+  attr_accessible :creator, :predicate, :target, :target_id, :target_type, :email, :username_or_email, :user, :language
 
   validate :provided_username_or_email, :if => :username_or_email?
   validates_presence_of :email, :unless => :username_or_email?
