@@ -17,7 +17,7 @@
 <% elsif current_user %>
   <% if can?(:create, Invitation.new(:target => @player)) %>
     <p>
-      <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, t("player.invite_claim.button")) }) %>
+    <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, :opts => {:label => t("player.invite_claim.button") }) }) %>
     </p>
   <% else %>
     <p>
