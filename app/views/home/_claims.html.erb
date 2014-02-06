@@ -1,0 +1,13 @@
+<% if PlayerClaim.waiting_for_approval_by(current_user).any? %>
+  <div class="player-claims">
+    <% PlayerClaim.waiting_for_approval_by(current_user).each do |player_claim| %>
+      <div class="alert alert-info">
+        <a class="close" href="#" data-dismiss="alert">&#215;</a>
+        You have a player claim waiting to be approved from <%= format_user_link(player_claim.creator) %>.
+        <%= link_to "See claim", player_claim_path(player_claim.player, player_claim), :class => "btn btn-small pull-right" %>
+      </div>
+    <% end %>
+  </div>
+<% end %>
+
+

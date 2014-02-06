@@ -35,7 +35,12 @@ Hockey::Application.routes.draw do
   end
 
   resources :players, :only => [:show, :edit, :update, :destroy] do
-    resource :claims, :only => [:new, :create], :controller => "players/claims"
+    resources :claims, :only => [:show, :new, :create], :controller => "players/claims" do
+      member do
+        post :approve
+        post :deny
+      end
+    end
   end
 
   resources :teams, :only => [:index, :show, :edit, :update, :destroy], :controller => "leagues/teams" do

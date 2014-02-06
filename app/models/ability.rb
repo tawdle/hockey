@@ -94,6 +94,13 @@ class Ability
       user.manager_of?(player.team) || user.marker_of?(player.league)
     end
 
+    can [:read, :approve, :deny], PlayerClaim do |player_claim|
+      user.manager_of?(player_claim.player.team)
+    end
+
+    can :create, PlayerClaim do |player_claim|
+      user.persisted?
+    end
 
     can :read, Team
 

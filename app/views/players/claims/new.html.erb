@@ -1,7 +1,7 @@
 <h1>Claim Player</h1>
 
 <% if @kiosk %>
-  <p>You can claim this user immediately. Simply have an authorized Bigshot representative enter their approval password below.</p>
+  <p>You can claim this user immediately. Simply have an authorized BigShot representative enter their approval password below.</p>
 
   <%= form_tag(player_claims_path(@player)) do %>
     <% if @player.errors.any? %>
@@ -26,6 +26,9 @@
   <% end %>
 
 <% else %>
-  <p>Kiosk mode is not currently enabled. Please try again later.</p>
+  <p>Before we can complete your claim of this player, we must first get the approval of your team manager. Click the button below to start the process.</p>
+
+  <%= button_to "Claim this player", player_claims_path(@player), :class => "btn btn-primary" %>
+  <%= link_to "Cancel", @player %>
 <% end %>
 

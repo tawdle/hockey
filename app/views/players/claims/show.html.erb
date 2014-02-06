@@ -1,0 +1,31 @@
+<h1>Player Claim Request</h1>
+
+<h4>The player being claimed</h4>
+
+<dl class="dl-horizontal">
+  <dt>Team</dt>
+  <dd><%= format_team_link(@team) %></dd>
+  <dt>Player<dt>
+  <dd><%= @player.name_and_number %></dd>
+</dl>
+
+<h4>The user making the claim</h4>
+
+<dl class="dl-horizontal">
+  <dt>Name</dt>
+  <dd><%= @creator.name %></dd>
+  <dt>@Name</dt>
+  <dd><%= format_user_link(@creator) %></dd>
+  <dt>Email address</dt>
+  <dd><%= @creator.email %></dd>
+</dl>
+
+<p>Please confirm that the <b>email address shown above matches your records for this player</b>. If it does, please
+approve this request by pressing the button below. If you are uncertain, deny the request and speak to the player in
+person to clarify.</p>
+
+<div>
+  <%= link_to "Approve", approve_player_claim_path(@player, @player_claim), :method => :post, :class => "btn btn-primary" %>
+  <%= link_to "Deny", deny_player_claim_path(@player, @player_claim), :method => :post, :class => "btn btn-danger" %>
+</div>
+

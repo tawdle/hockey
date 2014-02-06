@@ -236,6 +236,13 @@ en:
       prompt_html: Do you know this player? %{invite} them to own this player.
       button: Invite
     invitation_sent: Invited
+  player_claim_mailer:
+    created:
+      subject: A player claim requires your approval
+    approved:
+      subject: Your player claim has been approved
+    denied:
+      subject: Your player claim has been denied
   team:
     add_player: Add Player
   time:

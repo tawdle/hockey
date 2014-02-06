@@ -650,6 +650,40 @@ ALTER SEQUENCE penalties_id_seq OWNED BY penalties.id;
 
 
 --
+-- Name: player_claims; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE player_claims (
+    id integer NOT NULL,
+    creator_id integer,
+    player_id integer,
+    manager_id integer,
+    state character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: player_claims_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE player_claims_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: player_claims_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE player_claims_id_seq OWNED BY player_claims.id;
+
+
+--
 -- Name: players; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1031,6 +1065,13 @@ ALTER TABLE ONLY penalties ALTER COLUMN id SET DEFAULT nextval('penalties_id_seq
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY player_claims ALTER COLUMN id SET DEFAULT nextval('player_claims_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY players ALTER COLUMN id SET DEFAULT nextval('players_id_seq'::regclass);
 
 
@@ -1218,6 +1259,14 @@ ALTER TABLE ONLY officials
 
 ALTER TABLE ONLY penalties
     ADD CONSTRAINT penalties_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: player_claims_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY player_claims
+    ADD CONSTRAINT player_claims_pkey PRIMARY KEY (id);
 
 
 --
@@ -1751,3 +1800,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140131151055');
 INSERT INTO schema_migrations (version) VALUES ('20140201175406');
 
 INSERT INTO schema_migrations (version) VALUES ('20140204210623');
+
+INSERT INTO schema_migrations (version) VALUES ('20140205180619');
