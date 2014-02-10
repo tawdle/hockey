@@ -30,6 +30,7 @@
   <br />
   <%= @game.location.name %>
   <br />
+  <%= @game.number.present? ? "##{@game.number}" : "" %>
   in <%= format_team_link(@game.league) %>
 </p>
 
