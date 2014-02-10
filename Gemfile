@@ -48,7 +48,6 @@ gem 'carrierwave'
 gem 'cloudinary'
 gem 'devise'
 gem 'delayed_job_active_record'
-gem 'exception_notification', :group => [:production, :staging]
 gem 'fastclick-rails'
 gem 'figaro'
 gem 'heroku-deflater', :group => [:production, :staging]
