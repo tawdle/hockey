@@ -84,8 +84,10 @@ Hockey::Application.configure do
   # with SQLite, MySQL, and PostgreSQL)
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
-  Hockey::Application.config.middleware.use ExceptionNotifier,
-    :email_prefix => "[staging] ",
-    :sender_address => %{"CancelMoose" <notifier@bigshot.io>},
-    :exception_recipients => %w{exceptions@bigshot.io}
+  config.middleware.use ExceptionNotification::Rack,
+    :email =>  {
+      :email_prefix => "[Staging] ",
+      :sender_address => %{"CancelMoose" <notifier@bigshot.io>},
+      :exception_recipients => %w{exceptions@bigshot.io}
+    }
 end
