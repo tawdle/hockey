@@ -9,6 +9,8 @@ class League < ActiveRecord::Base
   has_many :teams, :dependent => :destroy, :conditions => { deleted_at: nil }
   has_many :officials, :conditions => { deleted_at: nil }
   has_many :authorizations, :as => :authorizable, :dependent => :destroy
+  has_many :mentions, :as => :mentionable
+  has_many :activity_feed_items, :through => :mentions
   attr_accessible :name, :logo, :logo_cache, :division, :classification
   symbolize :classification, :in => Classifications, :allow_nil => true
   symbolize :division, :in => Divisions
