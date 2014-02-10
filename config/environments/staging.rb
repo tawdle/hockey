@@ -85,7 +85,7 @@ Hockey::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   Hockey::Application.config.middleware.use ExceptionNotifier,
-    :email_prefix => "[Staging] ",
+    :email_prefix => "[staging] ",
     :sender_address => %{"CancelMoose" <notifier@bigshot.io>},
     :exception_recipients => %w{exceptions@bigshot.io}
 end

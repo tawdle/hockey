@@ -84,8 +84,10 @@ Hockey::Application.configure do
   # Point to staging cloudfront host
   config.action_controller.asset_host = 'd2h0w8815spdfe.cloudfront.net'
 
-  Hockey::Application.config.middleware.use ExceptionNotifier,
-    :email_prefix => "[Production] ",
-    :sender_address => %{"CancelMoose" <notifier@bigshot.io>},
-    :exception_recipients => %w{exceptions@bigshot.io}
+  config.middleware.use ExceptionNotification::Rack,
+    :email =>  {
+      :email_prefix => "[Production] ",
+      :sender_address => %{"CancelMoose" <notifier@bigshot.io>},
+      :exception_recipients => %w{exceptions@bigshot.io}
+    }
 end
