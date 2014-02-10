@@ -30,16 +30,7 @@
       </div>
     <% end %>
 
-    <h3>
-      Teams
-      <%= link_to("<span class='icon-edit'>".html_safe, edit_tournament_teams_path(@tournament), :class => "btn") if can? :edit, @tournament %>
-      </h3>
-      <ul>
-        <% @tournament.teams.each do |team| %>
-          <li><%= team.name %></li>
-      <% end %>
-      </ul>
-    </div>
+  </div>
 
 
   <div class="span4">
@@ -47,9 +38,7 @@
       <h3 class="page-header">Managers <%= link_to("+", new_invitation_path(:predicate => :manage, :target_id => @tournament.to_param, :target_type => "Tournament"), :class => "btn") if can?(:manage, @tournament) %></h3>
       <%= @tournament.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
     </div>
-  </div>
 
-  <div class="span4">
     <div class="well" style="margin-top: 10px;">
       <h3 class="page-header">Markers <%= link_to("+", new_invitation_path(:predicate => :mark, :target_id => @tournament.to_param, :target_type => "Tournament"), :class => "btn") if can?(:manage, @tournament) %></h3>
       <%= @tournament.markers.collect {|marker| format_user_link(marker) }.join(", ").html_safe %>
@@ -59,6 +48,37 @@
 </div>
 
 <div class="clearfix"></div>
+
+<% cols = [:name, :rank,
+           :num_victories, :num_defeats, :num_overtime_and_shootout_defeats,
+           :performance_points, :franc_jeu_points, :points,
+           :num_goals_scored, :num_goals_yielded, :differential, :percentage,
+           :num_penalties, :penalty_minutes, :num_ejections] %>
+<% stats = @tournament.teams.map {|team| Stats::Team.new(team, @tournament.games) }.sort_by {|obj| obj.points }.reverse %>
+
+<h3>
+  Teams
+  <%= link_to("<span class='icon-edit'>".html_safe, edit_tournament_teams_path(@tournament), :class => "btn") if can? :edit, @tournament %>
+</h3>
+
+<table class="team-stats table table-striped table-bordered">
+  <%= format_header(cols, "stats.teams") %>
+
+  <tbody>
+    <% stats.each_with_index do |stat, index| %>
+      <%= format_row(stat, cols) do |method, stat|
+          case method
+          when :rank
+            index + 1
+          when :name
+            link_to(image_tag(stat.team.logo_url(:thumbnail)), stat.team) +
+              link_to(content_tag(:div, content_tag(:div, stat.team.name) + content_tag(:div, stat.team.city)), stat.team)
+          end
+        end
+      %>
+    <% end %>
+  </tbody>
+</table>
 
 <div style="margin-top: 10px;">
   <%= link_to "Back", :back %>

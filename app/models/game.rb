@@ -100,6 +100,7 @@ class Game < ActiveRecord::Base
   scope :upcoming, lambda { where("start_time > ?", DateTime.now) }
   scope :scheduled_or_active, where(:state => [:scheduled, :active])
   scope :finished, where(:state => :completed)
+  scope :completed, where(:state => :completed)
   scope :asc, order("start_time ASC")
   scope :desc, order("start_time DESC")
   scope :not_canceled, where("state <> 'canceled'")
@@ -195,19 +196,21 @@ class Game < ActiveRecord::Base
     score_for(opposing_team(team))
   end
 
-  def score_board
-    data = goals.group(:period, :team_id).order(:period).select("period, team_id, count(*)").all
-    results = {}
-    teams.each do |team|
-      results[team.name] = Game::Periods.map do |period|
-        data.find {|d| d.team_id == team.id && d.period == period }.try(:count).try(:to_i) || 0
-      end
-    end
-    results[:total] = Game::Periods.map do |period|
-      data.select {|d| d.period == period }.sum {|d| d.count.to_i }
-    end
+  Franc_Jeu_Max_Minutes_For_Division = {
+    novice: 8,
+    atom: 10,
+    pee_wee: 12,
+    bantam: 16,
+    midget: 20,
+    junior: 22
+  }
 
-    Hash[results.map {|k,v| [k, v.append(v.sum)] }]
+  def division
+    league.division
+  end
+
+  def franc_jeu_points_for(team)
+    penalties.for_team(team).sum(:minutes) <= Franc_Jeu_Max_Minutes_For_Division[division] ? 1 : 0
   end
 
   def period_text

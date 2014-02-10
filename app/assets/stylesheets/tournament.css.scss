@@ -1,0 +1,16 @@
+table.team-stats {
+  td.name {
+    white-space: nowrap;
+    overflow: hidden;
+    min-width: 300px;
+
+    img {
+      float: left;
+      margin-right: 10px;
+    }
+  }
+
+  td {
+    vertical-align: middle;
+  }
+}
