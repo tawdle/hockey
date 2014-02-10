@@ -24,6 +24,7 @@ en:
       team: Team
       player: Player
       game: Game
+      tournament: Tournament
     values:
       goal:
         advantage:

@@ -24,6 +24,7 @@ fr:
       game: Partie
       player: Joueur
       team: Équipe
+      tournament: Tournoi
     values:
       goal:
         advantage:
