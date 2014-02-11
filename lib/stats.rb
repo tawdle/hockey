@@ -85,7 +85,7 @@ module Stats
     end
 
     def ejections
-      penalties.where(:category => [:miscoundt, :game_misconduct, :match])
+      penalties.where(:category => [:misconduct, :game_misconduct, :match])
     end
 
     [:games_played, :victories, :overtime_victories, :shootout_victories,
