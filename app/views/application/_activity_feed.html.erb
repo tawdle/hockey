@@ -23,7 +23,7 @@
           <p>
             <span class="creator"><%= format_user_link(item.creator) if item.respond_to?(:creator) %></span>
             <span class="created-at muted"><%= timeago_tag item.created_at %></span>
-            <% if item.game && !in_game_context %>
+            <% if item.game && !(defined?(in_game_context) && in_game_context) %>
               <small><i>in <%= link_to "#{item.game.home_team.name} vs. #{item.game.visiting_team.name}", item.game %></i></small>
             <% end %>
           </p>
