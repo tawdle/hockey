@@ -9,6 +9,8 @@ class Player < ActiveRecord::Base
   belongs_to :team
   belongs_to :user
   has_many :claims, :class_name => "PlayerClaim"
+  has_many :followings, :as => :followable
+  has_many :followers, :through => :followings, :source => :user
   symbolize :role, :in => Roles
   attr_accessor :username_or_email, :creator, :email, :photo_cache, :kiosk_password_matches
   attr_accessible :team, :username_or_email, :creator, :jersey_number, :name, :role, :photo, :photo_cache, :user_id, :kiosk_password_matches, :email
@@ -58,6 +60,10 @@ class Player < ActiveRecord::Base
 
   def declined_invitation_to_claim(user, invitation)
     # Whatevs
+  end
+
+  def accepted_invitation_to_follow(user, invitation)
+    self.followers << user
   end
 
   private

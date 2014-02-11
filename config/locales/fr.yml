@@ -102,6 +102,8 @@ fr:
   invitation_mailer:
     claim_player:
       subject: Invitation to Claim Player
+    follow_player:
+      subject: Invitation to Become a Fan
     manage_league:
       subject: Invitation to Manage League
     manage_location:
@@ -254,6 +256,8 @@ fr:
     invite_claim:
       button: Invite
       prompt_html: Do you know this player? %{invite} them to own this player.
+    invite_fan:
+      button: Invite a fan
   player_claim_mailer:
     approved:
       subject: Your player claim has been approved

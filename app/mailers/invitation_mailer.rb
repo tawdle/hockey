@@ -16,6 +16,10 @@ class InvitationMailer < ActionMailer::Base
     end
   end
 
+  def follow_player(invitation)
+    send_localized_mail(invitation)
+  end
+
   def manage_league(invitation)
     send_localized_mail(invitation)
   end

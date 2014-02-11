@@ -95,6 +95,21 @@ describe InvitationMailer do
     end
   end
 
+  describe "#follow_player" do
+    let(:target) { FactoryGirl.build(:player) }
+    let(:mail) { InvitationMailer.follow_player(invitation) }
+
+    it "renders the headers" do
+      mail.subject.should eq(t("invitation_mailer.follow_player.subject", :locale => locale))
+      mail.to.should eq([invitation.email])
+      mail.from.should eq(["mailer@bigshot.io"])
+    end
+
+    it "renders the body" do
+      mail.body.encoded.should match(t("navigation.greeting", :locale => locale))
+    end
+  end
+
   describe "#claim_player" do
     let(:target) { FactoryGirl.build(:player) }
     let(:mail) { InvitationMailer.claim_player(invitation) }

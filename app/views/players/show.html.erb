@@ -26,6 +26,10 @@
   <% end %>
 <% end %>
 
+<% if current_user %>
+  <%= invitation_button(:follow, @player, {:label => t("player.invite_fan.button") }) %>
+<% end %>
+
 <%= render :partial => "activity_feed", :locals => { :activity_feed_items => ActivityFeedItem.for(@player), :in_game_context => false } %>
 
 <% link_to "Edit", edit_player_path(@player), :class => "btn" if can?(:edit, @player) %>

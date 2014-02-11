@@ -44,7 +44,12 @@ class Ability
       when League, Tournament, Location
         user.admin? || user.manager_of?(target)
       when Player
-        user.manager_of?(target.team)
+        case invitation.predicate
+        when :claim
+          user.manager_of?(target.team)
+        when :follow
+          user.persisted?
+        end
       when Team
         user.manager_of?(target.league)
       end
