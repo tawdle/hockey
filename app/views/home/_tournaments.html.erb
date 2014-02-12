@@ -1,0 +1,24 @@
+<h3><%= Tournament.model_name.human.pluralize %></h3>
+
+<% if tournaments.without_deleted.any? %>
+  <table class="tournaments table table-hover">
+    <tr>
+      <th><%= League.human_attribute_name(:division) %></th>
+      <th><%= League.human_attribute_name(:class) %></th>
+      <th><%= League.human_attribute_name(:name) %></th>
+      <th><%= SystemName.human_attribute_name(:name) %></th>
+      <th><%= Tournament.human_attribute_name(:dates) %></th>
+    </tr>
+
+    <% tournaments.without_deleted.each do |tournament| %>
+        <tr>
+          <td><%= t(tournament.division, :scope => "league.divisions") %></td>
+          <td><%= t(tournament.classification, :scope => "league.classifications") %></td>
+          <td><%= link_to tournament.name, tournament %></td>
+          <td><%= format_team_link(tournament) %> <%= render :partial => "follow_button", :locals => {:target => tournament } %></td>
+          <td><%= l tournament.start_date if tournament.start_date %> - <%= l tournament.end_date if tournament.end_date %></td>
+        </tr>
+    <% end %>
+  </table>
+<% end %>
+
