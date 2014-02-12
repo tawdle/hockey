@@ -22,6 +22,8 @@ module StatsHelper
   def format_number(num)
     if num.respond_to?(:nan?) && num.nan?
       "-"
+    elsif num == 0
+      "-"
     else
       num.to_s
     end
