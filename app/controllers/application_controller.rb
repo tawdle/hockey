@@ -4,9 +4,21 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale
   around_filter :user_time_zone, :if => :current_user
+  after_filter :store_location
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, :alert => exception.message
+  end
+
+  def store_location
+    if (!request.fullpath.match("/users") &&
+        !request.xhr?) # don't store ajax calls
+    session[:previous_url] = request.fullpath
+    end
+  end
+
+  def after_sign_in_path_for(resource)
+    session[:previous_url] || root_path
   end
 
   def user_time_zone(&block)
