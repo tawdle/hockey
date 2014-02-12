@@ -18,7 +18,7 @@ class League < ActiveRecord::Base
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
 
   validates_presence_of :name
-  validates_uniqueness_of :name
+  validates_uniqueness_of :name, :scope => [:classification, :division]
 
   mount_uploader :logo, LogoUploader
 
