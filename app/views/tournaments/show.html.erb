@@ -10,37 +10,6 @@
     <%= t("league.divisions.#{@tournament.division}") %> <%= t("league.classifications.#{@tournament.classification}") %>
     <%= format_team_link(@tournament) %><%= render :partial => "follow_button", :locals => {:target => @tournament } %>
 
-
-  </div>
-
-
-  <div class="span4">
-    <% if current_user && current_user.manager_of?(@tournament) %>
-      <div class="well">
-        <h3>Control Panel</h3>
-        <ul>
-          <li><%= link_to "Manage Teams", edit_tournament_teams_path(@tournament) %></li>
-          <li><%= link_to "Manage Officials", tournament_officials_path(@tournament) %></li>
-          <li><%= link_to "Manage Games", tournament_games_path(@tournament) %></li>
-        </ul>
-      </div>
-    <% end %>
-
-    <div class="well" style="margin-top: 10px;">
-      <h3 class="page-header">Managers <%= link_to("+", new_invitation_path(:predicate => :manage, :target_id => @tournament.to_param, :target_type => "Tournament"), :class => "btn") if can?(:manage, @tournament) %></h3>
-      <%= @tournament.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
-    </div>
-
-    <div class="well" style="margin-top: 10px;">
-      <h3 class="page-header">Markers <%= link_to("+", new_invitation_path(:predicate => :mark, :target_id => @tournament.to_param, :target_type => "Tournament"), :class => "btn") if can?(:manage, @tournament) %></h3>
-      <%= @tournament.markers.collect {|marker| format_user_link(marker) }.join(", ").html_safe %>
-    </div>
-  </div>
-
-</div>
-
-<div class="clearfix"></div>
-
 <%
     cols = [:name, :rank,
             :num_games_played, :num_victories, :num_defeats, :num_overtime_and_shootout_defeats,
@@ -79,6 +48,39 @@
   </tbody>
 </table>
 
+
+
+  </div>
+
+
+  <div class="span4">
+    <% if current_user && current_user.manager_of?(@tournament) %>
+      <div class="well">
+        <h3>Control Panel</h3>
+        <ul>
+          <li><%= link_to "Manage Teams", edit_tournament_teams_path(@tournament) %></li>
+          <li><%= link_to "Manage Officials", tournament_officials_path(@tournament) %></li>
+          <li><%= link_to "Manage Games", tournament_games_path(@tournament) %></li>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="well" style="margin-top: 10px;">
+      <h3 class="page-header">Managers <%= link_to("+", new_invitation_path(:predicate => :manage, :target_id => @tournament.to_param, :target_type => "Tournament"), :class => "btn") if can?(:manage, @tournament) %></h3>
+      <%= @tournament.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
+    </div>
+
+    <div class="well" style="margin-top: 10px;">
+      <h3 class="page-header">Markers <%= link_to("+", new_invitation_path(:predicate => :mark, :target_id => @tournament.to_param, :target_type => "Tournament"), :class => "btn") if can?(:manage, @tournament) %></h3>
+      <%= @tournament.markers.collect {|marker| format_user_link(marker) }.join(", ").html_safe %>
+    </div>
+  </div>
+
+</div>
+
+<div class="clearfix"></div>
+
+<%= render :partial => "games", :locals => {:games => @tournament.games } %>
 
 <%= render :partial => "activity_feed", :locals => {:activity_feed_items => @tournament.activity_feed_items } %>
 
