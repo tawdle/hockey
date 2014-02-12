@@ -4,7 +4,9 @@
 <% end %>
 </h3>
 
-<% if games.without_deleted.not_canceled.any? %>
+<% games = games.without_deleted.not_canceled %>
+
+<% if games.any? %>
   <table class="games table table-hover">
     <tr>
       <th><%= Game.human_attribute_name(:start_time) %></th>
@@ -19,7 +21,8 @@
       <th></th>
     </tr>
 
-    <% games.without_deleted.not_canceled.each do |game| %>
+    <% games = games.reverse if defined?(reverse) %>
+    <% games.each do |game| %>
       <tr class="<%= game.state %>">
       <td><%= l game.start_time, :format => :game %></td>
       <td><%= game.number %></td>

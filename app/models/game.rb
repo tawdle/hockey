@@ -344,8 +344,24 @@ class Game < ActiveRecord::Base
   end
 
   def self.recent
-    where("start_time between ? and ?", 1.week.ago, 2.weeks.from_now).
-      order("games.start_time asc")
+    order("games.start_time desc").limit(25)
+  end
+
+  def self.for_user(user)
+    id = user.id
+      joins("inner join teams on teams.id in (home_team_id, visiting_team_id)").
+      joins("left join players on players.id = teams.id").
+      joins("left join authorizations a1 on a1.authorizable_id = teams.id and a1.authorizable_type = 'Team'").
+      joins("left join authorizations a2 on a2.authorizable_id = games.league_id and a2.authorizable_type = 'League'").
+      joins("left join authorizations a3 on a3.authorizable_id = games.location_id and a3.authorizable_type = 'Location'").
+      joins("left join followings f1 on f1.followable_id = players.id and f1.followable_type = 'Player'").
+      joins("left join followings f2 on f2.followable_id in (home_team_id, visiting_team_id)").
+      joins("left join followings f3 on f3.followable_id = games.league_id and f3.followable_type = 'League'").
+      joins("left join followings f4 on f4.followable_id = games.location_id and f4.followable_type = 'Location'").
+      joins("left join followings f5 on f5.followable_id = players.user_id and f5.followable_type = 'User'").
+      where("players.user_id = ? or a1.user_id = ? or a2.user_id = ? or a3.user_id = ? or f1.user_id = ? or f2.user_id = ? or f3.user_id = ? or f4.user_id = ? or f5.user_id = ?",
+            id, id, id, id, id, id, id, id, id).
+      group("games.id")
   end
 
   private
