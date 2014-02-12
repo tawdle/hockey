@@ -11,6 +11,8 @@ class Player < ActiveRecord::Base
   has_many :claims, :class_name => "PlayerClaim"
   has_many :followings, :as => :followable
   has_many :followers, :through => :followings, :source => :user
+  has_many :game_players
+  has_many :games, :through => :game_players
   symbolize :role, :in => Roles
   attr_accessor :username_or_email, :creator, :email, :photo_cache, :kiosk_password_matches
   attr_accessible :team, :username_or_email, :creator, :jersey_number, :name, :role, :photo, :photo_cache, :user_id, :kiosk_password_matches, :email
