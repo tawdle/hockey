@@ -92,6 +92,8 @@ fr:
     - OT
     - SO
     see_game: Voir la partie
+    show:
+      sign_in_to_view_html: ! '%{sign_in} to view'
     started: This game started %{start_time}
   goalie:
     pulled: Filet désert

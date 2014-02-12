@@ -79,11 +79,17 @@
 <div class="clearfix"></div>
 
 
-<% if current_user && @game.vimeo_id.present? %>
+<% if @game.vimeo_id.present? %>
   <h2><%= t("games.highlights") %></h2>
-  <iframe src="//player.vimeo.com/video/<%= @game.vimeo_id %>" width="500" height="281"
-    frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
-  </iframe>
+  <% if current_user %>
+    <iframe src="//player.vimeo.com/video/<%= @game.vimeo_id %>" width="500" height="281"
+      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+    </iframe>
+  <% else %>
+    <div class="video-poster" onclick="document.location='<%= new_user_session_path %>'">
+      <p><%= t(".sign_in_to_view_html", :sign_in => link_to(t('navigation.sign_in'), new_user_session_path)) %></p>
+    </div>
+  <% end %>
 <% end %>
 
 <h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>

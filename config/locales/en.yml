@@ -77,6 +77,8 @@ en:
     start_following: "Become a fan"
     stop_following: "Stop being a fan"
   games:
+    show:
+      sign_in_to_view_html: ! '%{sign_in} to view'
     highlights: Game Highlights
     see_game: See game
     started: This game started %{start_time}.
