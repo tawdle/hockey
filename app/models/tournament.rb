@@ -6,4 +6,12 @@ class Tournament < League
   def eligible_leagues
     League.where(:division => division, :classification => classification).where("id <> ?", id)
   end
+
+  def start_date
+    games.minimum(:start_time).try(:to_date)
+  end
+
+  def end_date
+    games.maximum(:start_time).try(:to_date)
+  end
 end
