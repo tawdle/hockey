@@ -7,10 +7,20 @@ table.team-stats {
     img {
       float: left;
       margin-right: 10px;
+      width: 75px;
     }
   }
 
   td {
     vertical-align: middle;
+  }
+
+  th:not(.name) {
+    text-align: right;
+  }
+
+  td:not(.name) {
+    width: 20px;
+    text-align: right;
   }
 }

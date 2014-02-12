@@ -41,12 +41,14 @@
 
 <div class="clearfix"></div>
 
-<% cols = [:name, :rank,
-           :num_victories, :num_defeats, :num_overtime_and_shootout_defeats,
-           :performance_points, :franc_jeu_points, :points,
-           :num_goals_scored, :num_goals_yielded, :differential, :percentage,
-           :num_penalties, :penalty_minutes, :num_ejections] %>
-<% stats = @tournament.teams.map {|team| Stats::Team.new(team, @tournament.games) }.sort_by {|obj| obj.points }.reverse %>
+<%
+    cols = [:name, :rank,
+            :num_games_played, :num_victories, :num_defeats, :num_overtime_and_shootout_defeats,
+            :num_goals_scored, :num_goals_yielded, :points]
+    stats = @tournament.teams.map {|team| Stats::Team.new(team, @tournament.games) }.sort_by {|obj| obj.points }.reverse
+    last_points = 0
+    last_rank = 1
+%>
 
 <h3>
   <%= t("activerecord.models.team").pluralize %>
@@ -61,13 +63,18 @@
       <%= format_row(stat, cols) do |method, stat|
           case method
           when :rank
-            index + 1
+            if stat.points == last_points
+              last_rank
+            else
+              last_rank = index + 1
+            end
           when :name
             link_to(image_tag(stat.team.logo_url(:thumbnail)), stat.team) +
               link_to(content_tag(:div, content_tag(:div, stat.team.name) + content_tag(:div, stat.team.city)), stat.team)
           end
         end
       %>
+      <% last_points = stat.points %>
     <% end %>
   </tbody>
 </table>
