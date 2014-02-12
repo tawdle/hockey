@@ -10,6 +10,7 @@ fr:
         visiting_team: Visiteur
       league:
         classification: Classe
+        division: Division
       location:
         address_1: Adresse
         state: Province

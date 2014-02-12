@@ -10,6 +10,7 @@ en:
         visiting_team: Visitor
       league:
         classification: "Class"
+        division: Division
       location:
         address_1: "Address"
         state: "State/Province/Region"
