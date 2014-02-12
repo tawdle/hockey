@@ -4,12 +4,13 @@
   <div class="span8">
     <h3>
       <%= Tournament.model_name.human %> - <%= @tournament.name %>
+      <small>
+        <%= t("league.divisions.#{@tournament.division}") %> <%= t("league.classifications.#{@tournament.classification}") %>
+      </small>
       <%= link_to "<span class='icon-edit'>".html_safe, edit_tournament_path(@tournament), :class => "btn" if can? :edit, @tournament %>
     </h3>
 
-    <%= t("league.divisions.#{@tournament.division}") %> <%= t("league.classifications.#{@tournament.classification}") %>
     <%= format_team_link(@tournament) %><%= render :partial => "follow_button", :locals => {:target => @tournament } %>
-
 <%
     cols = [:name, :rank,
             :num_games_played, :num_victories, :num_defeats, :num_overtime_and_shootout_defeats,
