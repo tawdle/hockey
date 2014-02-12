@@ -256,8 +256,8 @@ en:
       num_defeats: L
       num_ejections: Ejections
       num_games_played: Games Played
-      num_goals_scored: Goals
-      num_goals_yielded: Yielded
+      num_goals_scored: G
+      num_goals_yielded: GA
       num_overtime_and_shootout_defeats: OTL
       num_overtime_defeats: OT Losses
       num_overtime_victories: OT Wins

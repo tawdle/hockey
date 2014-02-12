@@ -61,7 +61,7 @@ module Stats
       yielded = goals_yielded.count
       scored + yielded == 0 ?
         Float::NAN :
-        100.0 * scored / (scored + yielded)
+        (1000.0 * scored / (scored + yielded)).to_i / 10.0
     end
 
     def performance_points

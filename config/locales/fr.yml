@@ -269,19 +269,19 @@ fr:
     teams:
       differential: Diff
       franc_jeu_points: FJ
-      name: Team
-      num_defeats: L
+      name: Équipe
+      num_defeats: D
       num_ejections: Ejections
       num_games_played: Games Played
-      num_goals_scored: Goals
-      num_goals_yielded: Yielded
-      num_overtime_and_shootout_defeats: OTL
+      num_goals_scored: B
+      num_goals_yielded: BC
+      num_overtime_and_shootout_defeats: DP
       num_overtime_defeats: OT Losses
       num_overtime_victories: OT Wins
-      num_penalties: Pen
+      num_penalties: Pun
       num_shootout_defeats: SO Losses
       num_shootout_victories: SO Wins
-      num_victories: W
+      num_victories: V
       penalty_minutes: PIM
       percentage: ! '%'
       performance_points: PP
