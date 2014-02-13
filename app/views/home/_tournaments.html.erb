@@ -4,7 +4,6 @@
   <table class="tournaments table table-hover">
     <tr>
       <th><%= League.human_attribute_name(:division) %></th>
-      <th><%= League.human_attribute_name(:class) %></th>
       <th><%= League.human_attribute_name(:name) %></th>
       <th><%= SystemName.human_attribute_name(:name) %></th>
       <th><%= Tournament.human_attribute_name(:dates) %></th>
@@ -12,10 +11,10 @@
 
     <% tournaments.without_deleted.sort_by {|t| [t.division, t.classification, t.name]}.each do |tournament| %>
         <tr>
-          <td><%= t(tournament.division, :scope => "league.divisions") %></td>
-          <td><%= t(tournament.classification, :scope => "league.classifications") %></td>
+          <td class="division"><%= t(tournament.division, :scope => "league.divisions") %>
+              <%= t(tournament.classification, :scope => "league.classifications") %></td>
           <td><%= link_to tournament.name, tournament %></td>
-          <td><%= format_team_link(tournament) %> <%= render :partial => "follow_button", :locals => {:target => tournament } %></td>
+          <td><%= format_team_link(tournament) %></td>
           <td><%= l tournament.start_date if tournament.start_date %> - <%= l tournament.end_date if tournament.end_date %></td>
         </tr>
     <% end %>
