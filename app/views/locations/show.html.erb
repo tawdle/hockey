@@ -48,6 +48,8 @@
 
 <div class="clearfix"></div>
 
+<%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.for(@location) } %>
+
 <% if can? :view_scoreboard, @location %>
   <%= link_to "View Scoreboard", location_scoreboard_path(@location) %>
 <% end %>
