@@ -9,10 +9,6 @@ class ActivityFeedItem < ActiveRecord::Base
 
   default_scope order("created_at desc")
 
-  UserIdsForFollowedUsers = "SELECT followings.followable_id
-                             FROM followings
-                             WHERE followings.user_id = ? AND followings.followable_type = 'User'"
-
   def self.for_user(user)
     id = user.id
     joins("left outer join mentions on mentions.activity_feed_item_id = activity_feed_items.id").
@@ -24,12 +20,11 @@ class ActivityFeedItem < ActiveRecord::Base
   end
 
   def self.for(obj)
-    if obj.is_a?(User)
+    case obj
+    when User
       joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
-        where("creator_id = ? OR
-               creator_id IN (#{UserIdsForFollowedUsers}) OR
-               (mentions.mentionable_id = ? AND mentions.mentionable_type = ?)",
-              obj.id, obj.id, obj.id, obj.class.name)
+        joins("left outer join followings f1 on f1.followable_id = mentions.mentionable_id and f1.followable_type = mentions.mentionable_type").
+        where("creator_id = ? or f1.user_id = ?", obj.id, obj.id);
     else
       joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
         where(mentions: { mentionable_id: obj.id, mentionable_type: obj.class.name })

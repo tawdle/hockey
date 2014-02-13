@@ -22,4 +22,6 @@
   </ul>
 <% end %>
 
+<%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.for(@user) } %>
+
 <%= link_to("Edit", edit_user_path(@user), :class => "btn") if can? :edit, @user %>
