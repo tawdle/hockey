@@ -83,7 +83,7 @@
 
 <div class="clearfix"></div>
 
-<%= render :partial => "games", :locals => {:games => @tournament.games.order(:start_time) } %>
+<%= render :partial => "games", :locals => {:games => @tournament.games.order(:start_time), :show_game_number => true } %>
 
 <%= render :partial => "activity_feed", :locals => {:activity_feed_items => @tournament.activity_feed_items } %>
 

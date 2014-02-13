@@ -10,9 +10,11 @@
   <table class="games table table-hover">
     <tr>
       <th><%= Game.human_attribute_name(:start_time) %></th>
-      <th>#</th>
       <th></th>
       <th><%= Game.human_attribute_name(:visiting_team) %></th>
+      <% if defined?(show_game_number) %>
+        <th>#</th>
+      <% end %>
       <th></th>
       <th><%= Game.human_attribute_name(:home_team) %></th>
       <th></th>
