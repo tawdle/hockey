@@ -1,5 +1,5 @@
 <h3><%= Game.model_name.human.pluralize %>
-<% if defined?(new_game_path) %>
+<% if defined?(new_game_path) && new_game_path.present? %>
     <%= link_to "Schedule a new game", new_game_path, :class => "btn" %>
 <% end %>
 </h3>
