@@ -1,27 +1,40 @@
-<h2 class="page-header">User Profile</h2>
+<div class="row">
+  <div class="span8">
 
-<%= cl_image_tag(@user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px;") %>
+    <h2 class="page-header">User Profile</h2>
 
-<%= @user.name %>
+    <%= cl_image_tag(@user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px;") %>
 
-<%= render :partial => "follow_button", :locals => {:target => @user } %>
+    <%= @user.name %>
+    <br />
+    <%= format_user_link(@user) %>
 
-<div class="clearfix"></div>
+    <%= render :partial => "follow_button", :locals => {:target => @user } %>
 
-<% if @user.authorizations.any? && (current_user && (@user == current_user || current_user.admin?))  %>
-  <h2>Your authorizations</h2>
-  <ul>
-    <% @user.authorizations.each do |auth| %>
-      <li>
-        You are a <%= auth.role %>
-        <% if auth.authorizable %>
-          of <%= link_to auth.authorizable.name, auth.authorizable %>
-        <% end %>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
+    <div class="clearfix"></div>
+
+    <%= link_to("Edit", edit_user_path(@user), :class => "btn") if can? :edit, @user %>
+  </div>
+  <div class="span4">
+    <%= render :partial => "followers", :locals => {:target => @user } %>
+    <div class="well">
+      <% if @user.authorizations.any? && (current_user && (@user == current_user || current_user.admin?))  %>
+        <h3>Authorizations</h3>
+        <ul>
+          <% @user.authorizations.each do |auth| %>
+            <li>
+              <%= auth.role %>
+              <% if auth.authorizable %>
+                of <%= link_to auth.authorizable.name, auth.authorizable %>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      <% end %>
+    </div>
+
+
+  </div>
+</div>
 
 <%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.for(@user) } %>
-
-<%= link_to("Edit", edit_user_path(@user), :class => "btn") if can? :edit, @user %>

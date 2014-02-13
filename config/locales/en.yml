@@ -77,6 +77,8 @@ en:
   follow:
     start_following: "Become a fan"
     stop_following: "Stop being a fan"
+  followers:
+    header: ! "%{name}''s Fans"
   games:
     show:
       sign_in_to_view_html: ! '%{sign_in} to view'

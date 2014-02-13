@@ -1,38 +1,42 @@
 <% title [@player.name, @player.team.name, @player.team.league.name].join(" - ") %>
 
-<h3>Player: <%= @player.name %>
-  <%= render partial: "follow_button", locals: { target: @player } %>
-</h3>
+<div class="row">
+  <div class="span8">
 
-<%= format_player_link(@player) %>
+    <h3>Player: <%= @player.name %>
+      <%= render partial: "follow_button", locals: { target: @player } %>
+    </h3>
 
-<h4>Team: <%= format_team_link(@player.team) %></h4>
+    <%= format_player_link(@player) %>
 
-<div>
-  <%= cl_image_tag(@player.photo.url(:small)) %>
+    <h4>Team: <%= format_team_link(@player.team) %></h4>
+
+    <div>
+      <%= cl_image_tag(@player.photo.url(:small)) %>
+    </div>
+
+    <% if @player.user %>
+      <p><%= t("player.belongs_to_html", { :user => format_user_link(@player.user) }) %></p>
+    <% elsif current_user %>
+      <% if can?(:create, Invitation.new(:target => @player)) %>
+        <p>
+        <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, :opts => {:label => t("player.invite_claim.button") }) }) %>
+        </p>
+      <% else %>
+        <p>
+          <%= t("player.claim.prompt_html", { :claim => link_to(t("player.claim.button"), new_player_claim_path(@player), :class => "btn btn-small") } ) %>
+        </p>
+      <% end %>
+    <% end %>
+
+    <%= render :partial => "games", :locals => { :games => @player.games } %>
+
+    <%= render :partial => "activity_feed", :locals => { :activity_feed_items => ActivityFeedItem.for(@player) } %>
+
+    <% link_to "Edit", edit_player_path(@player), :class => "btn" if can?(:edit, @player) %>
+  </div>
+
+  <div class="span4">
+    <%= render :partial => "followers", :locals => {:target => @player } %>
+  </div>
 </div>
-
-<% if @player.user %>
-  <p><%= t("player.belongs_to_html", { :user => format_user_link(@player.user) }) %></p>
-<% elsif current_user %>
-  <% if can?(:create, Invitation.new(:target => @player)) %>
-    <p>
-    <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, :opts => {:label => t("player.invite_claim.button") }) }) %>
-    </p>
-  <% else %>
-    <p>
-      <%= t("player.claim.prompt_html", { :claim => link_to(t("player.claim.button"), new_player_claim_path(@player), :class => "btn btn-small") } ) %>
-    </p>
-  <% end %>
-<% end %>
-
-<% if current_user %>
-  <%= invitation_button(:follow, @player, {:label => t("player.invite_fan.button") }) %>
-<% end %>
-
-<%= render :partial => "games", :locals => { :games => @player.games } %>
-
-<%= render :partial => "activity_feed", :locals => { :activity_feed_items => ActivityFeedItem.for(@player) } %>
-
-<% link_to "Edit", edit_player_path(@player), :class => "btn" if can?(:edit, @player) %>
-

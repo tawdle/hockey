@@ -83,6 +83,8 @@ fr:
   follow:
     start_following: Devenir fan
     stop_following: Ne plus être fan
+  followers:
+    header: ! '%{name}''s Fans'
   games:
     ended: This game ended %{end_time}.
     highlights: Faits Saillants

@@ -55,6 +55,8 @@
 
 
   <div class="span4">
+    <%= render :partial => "followers", :locals => {:target => @tournament } %>
+
     <% if current_user && current_user.manager_of?(@tournament) %>
       <div class="well">
         <h3>Control Panel</h3>

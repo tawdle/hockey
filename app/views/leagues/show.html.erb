@@ -1,81 +1,87 @@
 <% title @league.name %>
 
-<h2>
-  <% if @league.logo.present? %>
-    <%= cl_image_tag @league.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
-  <% end %>
-  <%= @league.name %>
-  <%= link_to 'Edit', edit_league_path(@league), class: "btn btn-small" if can? :edit, @league %>
-</h2>
-<%= format_team_link(@league) %><%= render :partial => "follow_button", :locals => { :target => @league } %>
-
 <div class="row">
-  <div class="column span4">
-    <h3>Managers
-      <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league) %>
-    </h3>
+  <div class="span8">
+    <h2>
+      <% if @league.logo.present? %>
+        <%= cl_image_tag @league.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
+    <% end %>
+      <%= @league.name %>
+      <%= link_to 'Edit', edit_league_path(@league), class: "btn btn-small" if can? :edit, @league %>
+    </h2>
+    <%= format_team_link(@league) %><%= render :partial => "follow_button", :locals => { :target => @league } %>
 
-    <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
-  </div>
-
-  <div class="column span4">
-    <h3>Markers
-      <%= link_to 'invite', new_invitation_path(:predicate => :mark, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league)  %>
-    </small>
-    </h3>
-
-    <%= @league.markers.collect {|marker| format_user_link(marker) }.join(", ").html_safe || "(none)" %>
-  </div>
-
-  <div class="column span4">
-    <h3>Officials</h3>
+    <h3>Teams</h3>
 
     <table class="table table-hover">
-      <thead>
+      <tr>
+        <th style="width: 50px;">Logo</th>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+      </tr>
+
+      <% @league.teams.each do |team| %>
         <tr>
-          <th>Name</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <% @league.officials.each do |official| %>
-          <tr>
-            <td><%= link_to official.name, league_official_path(@league, official) %>
-            <td><%= link_to "Edit", edit_league_official_path(@league, official) if can? :edit, official %></td>
-            <td><%= link_to "Remove", league_official_path(@league, official), :method => :delete, :data => { confirm: 'Remove this official?' } if can? :destroy, official %>
-          </tr>
-        <% end %>
-      </tbody>
+        <td><%= cl_image_tag team.logo_url(:thumbnail), :height => 50, :width => 50 if team.logo.present? %></td>
+        <td><%= link_to team.name, team %></td>
+        <td><%= link_to 'Edit', edit_team_path(team) if can? :edit, team %></td>
+        <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, team %></td>
+      </tr>
+    <% end %>
     </table>
 
-    <%= link_to "New Official", new_league_official_path(@league), :class => "btn" if can? :create, Invitation.new(:target => @league) %>
+    <%= link_to "New Team", new_league_team_path(@league), :class => "btn" %>
+  </div>
+
+  <div class="column span4">
+    <%= render :partial => "followers", :locals => {:target => @league } %>
+
+    <div class="well">
+      <h3>Managers
+        <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league) %>
+      </h3>
+
+      <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
+    </div>
+
+    <div class="well">
+      <h3>Markers
+        <%= link_to 'invite', new_invitation_path(:predicate => :mark, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-small" if can? :create, Invitation.new(:target => @league)  %>
+      </small>
+      </h3>
+
+      <%= @league.markers.collect {|marker| format_user_link(marker) }.join(", ").html_safe || "(none)" %>
+    </div>
+
+    <div class="well">
+      <h3>Officials</h3>
+
+      <table class="table table-hover">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @league.officials.each do |official| %>
+            <tr>
+              <td><%= link_to official.name, league_official_path(@league, official) %>
+              <td><%= link_to "Edit", edit_league_official_path(@league, official) if can? :edit, official %></td>
+              <td><%= link_to "Remove", league_official_path(@league, official), :method => :delete, :data => { confirm: 'Remove this official?' } if can? :destroy, official %>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+
+      <%= link_to "New Official", new_league_official_path(@league), :class => "btn" if can? :create, Invitation.new(:target => @league) %>
+    </div>
   </div>
 </div>
 
 <% new_game_path = new_league_game_path(@league) if can? :create, @league.games.build %>
 <%= render :partial => "games", :locals => { :games => @league.games.order("start_time asc"), :new_game_path => new_game_path} %>
-
-<h3>Teams</h3>
-
-<table class="table table-hover">
-  <tr>
-    <th style="width: 50px;">Logo</th>
-    <th>Name</th>
-    <th></th>
-    <th></th>
-  </tr>
-
-  <% @league.teams.each do |team| %>
-    <tr>
-      <td><%= cl_image_tag team.logo_url(:thumbnail), :height => 50, :width => 50 if team.logo.present? %></td>
-      <td><%= link_to team.name, team %></td>
-      <td><%= link_to 'Edit', edit_team_path(team) if can? :edit, team %></td>
-      <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, team %></td>
-    </tr>
-  <% end %>
-</table>
-
-<%= link_to "New Team", new_league_team_path(@league), :class => "btn" %>
 
 <%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.for(@league) } %>
 

@@ -81,7 +81,8 @@
   </div>
 
   <div class="span3">
-    <div class="row well">
+    <%= render :partial => "followers", :locals => {:target => @team } %>
+    <div class="well">
       <h4>Managers
         <% if can?(:create, Invitation.new(:target => @team)) %>
           <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @team.to_param, :target_type => "Team"), :class => "btn btn-small" %>
@@ -91,7 +92,7 @@
       <%= @team.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
     </div>
 
-    <div class="row well">
+    <div class="well">
       <h4>Staff Members
         <%= link_to "Edit", team_staff_members_path(@team), :class => "btn btn-small" if can? :update, @team %>
       </h4>
