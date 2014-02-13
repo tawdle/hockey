@@ -10,7 +10,7 @@
       <th><%= Tournament.human_attribute_name(:dates) %></th>
     </tr>
 
-    <% tournaments.without_deleted.each do |tournament| %>
+    <% tournaments.without_deleted.sort_by {|t| [t.division, t.classification, t.name]}.each do |tournament| %>
         <tr>
           <td><%= t(tournament.division, :scope => "league.divisions") %></td>
           <td><%= t(tournament.classification, :scope => "league.classifications") %></td>
