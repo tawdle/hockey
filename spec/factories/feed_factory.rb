@@ -1,6 +1,11 @@
 require 'factory_girl'
 
 FactoryGirl.define do
+  factory :user_post, class: Feed::UserPost do
+    creator { FactoryGirl.build(:user) }
+    message { "Hi, mom!" }
+  end
+
   factory :cancel_game, class: Feed::CancelGame do
     user
     game

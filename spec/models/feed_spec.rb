@@ -64,6 +64,11 @@ shared_examples "a feed item with a user and a league" do
 end
 
 module Feed
+  describe UserPost do
+    let(:item) { FactoryGirl.build(:user_post) }
+    it { item.should be_valid }
+  end
+
   describe CancelGame do
     let(:item) { FactoryGirl.build(:cancel_game) }
     it { item.should be_valid }

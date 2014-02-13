@@ -13,14 +13,18 @@ class ActivityFeedItem < ActiveRecord::Base
                              FROM followings
                              WHERE followings.user_id = ? AND followings.followable_type = 'User'"
 
+  def self.for_user(user)
+    id = user.id
+    joins("left outer join mentions on mentions.activity_feed_item_id = activity_feed_items.id").
+      joins("left outer join followings f1 on f1.followable_id = mentions.mentionable_id and f1.followable_type = mentions.mentionable_type").
+      joins("left outer join followings f2 on f2.followable_id = creator_id and f2.followable_type = 'User'").
+      joins("left outer join players on mentions.mentionable_type = 'Player' and mentions.mentionable_id = players.id").
+      where("activity_feed_items.creator_id = ? or f1.user_id = ? or f2.user_id = ? or (mentions.mentionable_type = 'User' and mentions.mentionable_id = ?) or players.user_id = ?",
+            id, id, id, id, id);
+  end
+
   def self.for(obj)
     if obj.is_a?(User)
-      # XXX: This needs some attention now that mentionable/followable have been introduced.
-      # Can't I just do this as a 3-way join (activity_feed_item to mentions to followings)?
-      # Find activity feeed items that
-      # (1) were created by user or
-      # (2) were created by someone this user follows or
-      # (3) mention this user or
       joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
         where("creator_id = ? OR
                creator_id IN (#{UserIdsForFollowedUsers}) OR
