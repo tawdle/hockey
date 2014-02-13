@@ -1,16 +1,5 @@
 <% if current_user %>
-  <%= render :partial => "invitations" %>
-  <%= render :partial => "claims" %>
-  <%= render :partial => "tournaments", :locals => {:tournaments => Tournament } %>
-  <%= render :partial => "games", :locals => {:games => Game.for_user(current_user).recent, :reverse => true } %>
-  <%= render :partial => "admin" if current_user.admin? %>
-  <%= render :partial => "teams_managed" %>
-  <%= render :partial => "locations" %>
-  <%= render :partial => "leagues_managed" %>
-  <%= render :partial => "activity_feed", :locals => {:new_activity_feed_item => Feed::UserPost.new, :activity_feed_items => ActivityFeedItem.for_user(current_user), :in_game_context => false } %>
+  <%= render :partial => "logged_in" %>
 <% else %>
-  <%= render :partial => "welcome" %>
-  <%= render :partial => "tournaments", :locals => {:tournaments => Tournament } %>
-  <%= render :partial => "games", :locals => {:games => Game.recent, :reverse => true } %>
-  <%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.system_generated.limit(20), :in_game_context => false } %>
+  <%= render :partial => "logged_out" %>
 <% end %>

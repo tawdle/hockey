@@ -1,0 +1,4 @@
+<%= render :partial => "welcome" %>
+<%= render :partial => "tournaments", :locals => {:tournaments => Tournament } %>
+<%= render :partial => "games", :locals => {:games => Game.recent, :reverse => true } %>
+<%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.system_generated.limit(20), :in_game_context => false } %>

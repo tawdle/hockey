@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="span8">
+    <%= render :partial => "invitations" %>
+    <%= render :partial => "claims" %>
+    <%= render :partial => "tournaments", :locals => {:tournaments => Tournament } %>
+  </div>
+  <div class="span4">
+    <%= render :partial => "admin" if current_user.admin? %>
+    <%= render :partial => "teams_managed" %>
+    <%= render :partial => "locations" %>
+    <%= render :partial => "leagues_managed" %>
+  </div>
+</div>
+
+<%= render :partial => "games", :locals => {:games => Game.for_user(current_user).recent, :reverse => true } %>
+<%= render :partial => "activity_feed", :locals => {:new_activity_feed_item => Feed::UserPost.new, :activity_feed_items => ActivityFeedItem.for_user(current_user), :in_game_context => false } %>
