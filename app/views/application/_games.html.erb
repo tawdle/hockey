@@ -27,17 +27,19 @@
     <% games.each do |game| %>
       <tr class="<%= game.state %>">
       <td><%= l game.start_time, :format => :game %></td>
-      <td><%= game.number %></td>
+      <% if defined?(show_game_number) %>
+        <td><%= game.number %></td>
+      <% end %>
       <td class="visitor-name"><%= format_team_link(game.visiting_team) %></td>
       <td><%= link_to(image_tag(game.visiting_team.logo_url(:thumbnail)), game.visiting_team) %></td>
       <td class="score">
         <%= link_to game do %>
           <% if game.scheduled? %>
-          <i>vs</i>
-      <% else %>
-          <%= "#{game.visiting_team_score}&nbsp;-&nbsp;#{game.home_team_score}".html_safe %>
-      <% end %>
-      <% end %>
+            <i>vs</i>
+          <% else %>
+            <%= "#{game.visiting_team_score}&nbsp;-&nbsp;#{game.home_team_score}".html_safe %>
+          <% end %>
+        <% end %>
       </td>
       <td><%= link_to(image_tag(game.home_team.logo_url(:thumbnail)), game.home_team) %></td>
       <td><%= format_team_link(game.home_team) %></td>
