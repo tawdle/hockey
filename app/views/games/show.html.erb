@@ -50,11 +50,13 @@
     <div class="period"><%= @game.completed? ? "Final" : "#{t('activerecord.attributes.game.period')} #{@game.period_text}" %></div>
     <div class="visiting-team">
       <div class="name-block">
-        <div class="team-name"><%= @game.visiting_team.name %></div>
-        <div><%= @game.visiting_team.city %></div>
+        <%= link_to @game.visiting_team do %>
+          <div class="team-name"><%= @game.visiting_team.name %></div>
+          <div><%= @game.visiting_team.city %></div>
+        <% end %>
         <div><%= format_team_link(@game.visiting_team) %></div>
       </div>
-      <%= cl_image_tag(@game.visiting_team.logo_url(:large)) %>
+      <%= link_to cl_image_tag(@game.visiting_team.logo_url(:large)), @game.visiting_team %>
     </div>
 
     <div class="score">
@@ -66,10 +68,12 @@
     </div>
 
     <div class="home-team">
-      <%= cl_image_tag(@game.home_team.logo_url(:large)) %>
+      <%= link_to cl_image_tag(@game.home_team.logo_url(:large)), @game.home_team %>
       <div class="name-block">
-        <div class="team-name"><%= @game.home_team.name %></div>
-        <div><%= @game.home_team.city %></div>
+        <%= link_to @game.home_team do %>
+          <div class="team-name"><%= @game.home_team.name %></div>
+          <div><%= @game.home_team.city %></div>
+        <% end %>
         <div><%= format_team_link(@game.home_team) %></div>
       </div>
     </div>
