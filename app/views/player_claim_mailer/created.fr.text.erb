@@ -1,9 +1,13 @@
-Utilisateur <%= @creator.name %> a demandé la propriété du joueur <%= @player.name_and_number %> de votre équipe <%= @team.name %>. 
+Bonjour!
 
-L'adresse e-mail fournie par cet utilisateur est <%= @creator.email %>. Vous devez approuver cette demande seulement si cette adresse correspond à vos dossiers. 
+<%= @creator.name %> a demandé l'identité du joueur <%= @player.name_and_number %> de votre équipe <%= @team.name %>. 
+
+L'adresse couriel fournie par cet utilisateur est <%= @creator.email %>. Vous devez approuver cette demande seulement si cette adresse correspond à vos dossiers. 
 
 Si l'adresse ne correspond pas à vos dossiers, cette demande peut être une erreur, et vous devez refuser la demande. 
 
-Pour afficher la demande et approuver ou nier, couper et coller le lien suivant dans la barre d'adresse de votre navigateur: 
+Pour vérifier la demande et approuver ou nier, cliquez sur le lien suivant.
 
 <%= player_claim_url(@player, @player_claim) %>
+
+Si ce lien ne fonctionne pas, copiez et collez ce lien dans la barre de navigation de votre fureteur.

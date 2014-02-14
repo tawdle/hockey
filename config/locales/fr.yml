@@ -106,21 +106,21 @@ fr:
       invite to %{predicate} %{target_name}.
   invitation_mailer:
     claim_player:
-      subject: Invitation to Claim Player
+      subject: Invitation pour réclamer votre profil de joueur
     follow_player:
-      subject: Invitation to Become a Fan
+      subject: Invitation pour devenir un fan
     manage_league:
-      subject: Invitation to Manage League
+      subject: Invitation pour gérer votre ligue
     manage_location:
-      subject: Invitation to Manage Location
+      subject: Invitation pour gérer votre arena
     manage_team:
-      subject: Invitation to Manage Team
+      subject: Invitation pour gérer votre équipe
     manage_tournament:
-      subject: Invitation to Manage Tournament
+      subject: Invitation pour gérer votre tournoi
     mark_league:
-      subject: Invitation to become Marker for League
+      subject: Invitation pour devenir un marqueur pour la ligue
     mark_tournament:
-      subject: Invitation to become Marker for Tournament
+      subject: Invitation pour devenir un marqueur pour le tournoi
   league:
     classifications:
       a: A
