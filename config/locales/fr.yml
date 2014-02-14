@@ -265,7 +265,7 @@ fr:
       button: Invite a fan
   player_claim_mailer:
     approved:
-      subject: Your player claim has been approved
+      subject: Votre réclamation de joueur BigShot est approvée
     created:
       subject: A player claim requires your approval
     denied:

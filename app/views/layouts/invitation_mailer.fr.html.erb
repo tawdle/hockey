@@ -8,11 +8,11 @@
 
     <%= yield %>
 
-    <p>Cliquez sur le lien suivant pour accepter l'invitation de <%= @invitation.creator.name %><p>
+    <p>Cliquez sur le lien suivant pour accepter l'invitation de <%= @invitation.creator.name %>.<p>
 
     <%= link_to "J'accepte!", accept_invitation_url(@invitation) %>
 
-    <p>Si ce lien ne fonctionne pas, copiez et coller ce lien dans la barre de navigation de votre fureteur:<p>
+    <p>Si ce lien ne fonctionne pas, copiez et collez ce lien dans la barre de navigation de votre fureteur:<p>
 
     <%= accept_invitation_url(@invitation) %>
   </body>
