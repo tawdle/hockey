@@ -96,6 +96,13 @@
   <% end %>
 <% end %>
 
+<% if current_user.try(:admin?) %>
+  <%= form_for(@game, :html => {:class => "form-inline"}) do |f| %>
+    <%= f.text_field :vimeo_id %>
+    <%= f.submit "Set Vimeo code", :class => "btn btn-primary" %>
+  <% end %>
+<% end %>
+
 <h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
 
 <% if current_user %>

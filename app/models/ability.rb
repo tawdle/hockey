@@ -15,7 +15,7 @@ class Ability
     can :read, Game
 
     can [:create, :update, :destroy], Game do |game|
-      user.manager_of?(game.league)
+      user.manager_of?(game.league) || user.admin?
     end
 
     can [:mark, :activate, :complete, :pause, :start, :finish, :sync, :update_clock, :set_mvp], Game do |game|

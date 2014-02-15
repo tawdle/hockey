@@ -6,8 +6,7 @@ Hockey::Application.routes.draw do
 
   resources :followings, :only => [:create, :destroy]
 
-  resources :games, :only => :show do
-  end
+  resources :games, :only => [:show, :update]
 
   namespace :marker do
     resources :games, :only => :show do
