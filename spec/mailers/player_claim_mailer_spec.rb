@@ -6,7 +6,7 @@ describe PlayerClaimMailer do
     let(:mail) { described_class.created(player_claim) }
 
     it "should include the right subject" do
-      mail.subject.should == t("player_claim_mailer.created.subject")
+      mail.subject.should == t("player_claim_mailer.created.subject", :locale => :fr)
     end
 
     it "should be addressed to the team managers" do
@@ -19,7 +19,7 @@ describe PlayerClaimMailer do
     let(:mail) { described_class.approved(player_claim) }
 
     it "should include the right subject" do
-      mail.subject.should == t("player_claim_mailer.approved.subject")
+      mail.subject.should == t("player_claim_mailer.approved.subject", :locale => :fr)
     end
 
     it "should be addressed to the creator" do
@@ -32,7 +32,7 @@ describe PlayerClaimMailer do
     let(:mail) { described_class.denied(player_claim) }
 
     it "should include the right subject" do
-      mail.subject.should == t("player_claim_mailer.denied.subject")
+      mail.subject.should == t("player_claim_mailer.denied.subject", :locale => :fr)
     end
 
     it "should be addressed to the creator" do

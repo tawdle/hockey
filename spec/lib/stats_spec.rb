@@ -109,7 +109,7 @@ describe Stats::Team do
       its(:percentage) { should == 50 }
     end
     context "with no goals" do
-      its(:percentage) { should be_NAN }
+      its(:percentage) { should be_nan }
     end
   end
 

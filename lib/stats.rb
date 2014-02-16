@@ -5,7 +5,7 @@ module Stats
 
     def initialize(team, games)
       self.team = team
-      self.games = games.for_team(team).completed.includes(:goals, :penalties)
+      self.games = games.for_team(team).includes(:goals, :penalties)
     end
 
     def game_ids
