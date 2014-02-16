@@ -101,20 +101,28 @@ en:
   invitation_mailer:
     follow_player:
       subject: "Invitation to Become a Fan"
+      message: ! "%{creator_name} has invited you to become a fan of the BigShot player known as %{target_name} (#%{jersey_number} of %{team_name})."
     manage_league:
       subject: "Invitation to Manage League"
+      message: ! "%{creator_name} has invited you to manage your league, %{target_name}, online with BigShot."
     mark_league:
       subject: "Invitation to become Marker for League"
+      message: ! "%{creator_name} has invited you to become an official marker for the league %{target_name}."
     manage_team:
       subject: "Invitation to Manage Team"
+      message: ! "%{creator_name} has invited you to manage the team %{target_name}."
     claim_player:
       subject: "Invitation to Claim Player"
+      message: ! "%{creator_name} has invited you to claim ownership of the player known as %{target_name} (#%{jersey_number}) of %{team_name}."
     manage_location:
       subject: "Invitation to Manage Location"
+      message: ! "%{creator_name} has invited you to become a manager of %{target_name}."
     manage_tournament:
       subject: "Invitation to Manage Tournament"
+      message: ! "%{creator_name} has invited you to manage the tournament %{target_name}."
     mark_tournament:
       subject: "Invitation to become Marker for Tournament"
+      message: ! "%{creator_name} has invited you to become an official marker for the tournament %{target_name}."
 
   league:
     classifications:

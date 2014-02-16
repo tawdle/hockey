@@ -3,11 +3,12 @@ require "spec_helper"
 describe InvitationMailer do
 
   let(:locale) { "fr" }
-  let(:invitation) { FactoryGirl.build(:invitation, :target => target, :code => "foo", :language => locale) }
+  let(:invitation) { FactoryGirl.build(:invitation, :predicate => predicate, :target => target, :code => "foo", :language => locale) }
+  let(:mail) { InvitationMailer.invite(invitation) }
 
   describe "manage_league" do
     let(:target) { FactoryGirl.build(:league) }
-    let(:mail) { InvitationMailer.manage_league(invitation) }
+    let(:predicate) { :manage }
 
     it "renders the headers" do
       mail.subject.should eq(t("invitation_mailer.manage_league.subject", :locale => locale))
@@ -22,7 +23,7 @@ describe InvitationMailer do
 
   describe "mark_league" do
     let(:target) { FactoryGirl.build(:league) }
-    let(:mail) { InvitationMailer.mark_league(invitation) }
+    let(:predicate) { :mark }
 
     it "renders the headers" do
       mail.subject.should eq(t("invitation_mailer.mark_league.subject", :locale => locale))
@@ -37,7 +38,7 @@ describe InvitationMailer do
 
   describe "mark_tournament" do
     let(:target) { FactoryGirl.build(:tournament) }
-    let(:mail) { InvitationMailer.mark_tournament(invitation) }
+    let(:predicate) { :mark }
 
     it "renders the headers" do
       mail.subject.should eq(t("invitation_mailer.mark_tournament.subject", :locale => locale))
@@ -52,7 +53,7 @@ describe InvitationMailer do
 
   describe "manage_location" do
     let(:target) { FactoryGirl.build(:location) }
-    let(:mail) { InvitationMailer.manage_location(invitation) }
+    let(:predicate) { :manage }
 
     it "renders the headers" do
       mail.subject.should eq(t("invitation_mailer.manage_location.subject", :locale => locale))
@@ -67,7 +68,7 @@ describe InvitationMailer do
 
   describe "manage_team" do
     let(:target) { FactoryGirl.build(:team) }
-    let(:mail) { InvitationMailer.manage_team(invitation) }
+    let(:predicate) { :manage }
 
     it "renders the headers" do
       mail.subject.should eq(t("invitation_mailer.manage_team.subject", :locale => locale))
@@ -82,7 +83,7 @@ describe InvitationMailer do
 
   describe "manage_tournament" do
     let(:target) { FactoryGirl.build(:tournament) }
-    let(:mail) { InvitationMailer.manage_tournament(invitation) }
+    let(:predicate) { :manage }
 
     it "renders the headers" do
       mail.subject.should eq(t("invitation_mailer.manage_tournament.subject", :locale => locale))
@@ -97,7 +98,7 @@ describe InvitationMailer do
 
   describe "#follow_player" do
     let(:target) { FactoryGirl.build(:player) }
-    let(:mail) { InvitationMailer.follow_player(invitation) }
+    let(:predicate) { :follow }
 
     it "renders the headers" do
       mail.subject.should eq(t("invitation_mailer.follow_player.subject", :locale => locale))
@@ -112,7 +113,7 @@ describe InvitationMailer do
 
   describe "#claim_player" do
     let(:target) { FactoryGirl.build(:player) }
-    let(:mail) { InvitationMailer.claim_player(invitation) }
+    let(:predicate) { :claim }
 
     it "renders the headers" do
       mail.subject.should eq(t("invitation_mailer.claim_player.subject", :locale => locale))

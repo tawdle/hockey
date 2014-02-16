@@ -9,43 +9,23 @@ class InvitationMailer < ActionMailer::Base
 
   default from: format_address("mailer@bigshot.io", "BigShot.io")
 
-  def send_localized_mail(invitation)
+  def invite(invitation)
     @invitation = invitation
-    I18n.with_locale(@invitation.language || DEFAULT_LANGUAGE) do
-      mail to: @invitation.email
+    I18n.with_locale(invitation.language || DEFAULT_LANGUAGE) do
+      opts = case invitation.target
+             when Player
+               { :creator_name => invitation.creator.name,
+                 :target_name => invitation.target.name,
+                 :jersey_number => invitation.target.jersey_number,
+                 :team_name => invitation.target.team.name }
+             else
+               {:creator_name => invitation.creator.name,
+                :target_name => invitation.target.name}
+             end
+
+      scope = "invitation_mailer.#{invitation.predicate}_#{invitation.target.class.name.downcase}"
+      @message = I18n.t(:message, opts.merge(:scope => scope))
+      mail to: @invitation.email, subject: I18n.t(:subject, :scope => scope)
     end
   end
-
-  def follow_player(invitation)
-    send_localized_mail(invitation)
-  end
-
-  def manage_league(invitation)
-    send_localized_mail(invitation)
-  end
-
-  def mark_league(invitation)
-    send_localized_mail(invitation)
-  end
-
-  def manage_team(invitation)
-    send_localized_mail(invitation)
-  end
-
-  def claim_player(invitation)
-    send_localized_mail(invitation)
-  end
-
-  def manage_location(invitation)
-    send_localized_mail(invitation)
-  end
-
-  def manage_tournament(invitation)
-    send_localized_mail(invitation)
-  end
-
-  def mark_tournament(invitation)
-    send_localized_mail(invitation)
-  end
-
 end
