@@ -99,9 +99,21 @@ en:
     header: Send an invitation
     prompt: "Please enter the email address or @username of the person you'd like to invite to %{predicate} %{target_name}."
   invitation_mailer:
+    follow_league:
+      subject: "Invitation to Become a Fan"
+      message: ! "%{creator_name} has invited you to become a fan of %{target_name}."
     follow_player:
       subject: "Invitation to Become a Fan"
       message: ! "%{creator_name} has invited you to become a fan of the BigShot player known as %{target_name} (#%{jersey_number} of %{team_name})."
+    follow_team:
+      subject: "Invitation to Become a Fan"
+      message: ! "%{creator_name} has invited you to become a fan of %{target_name}."
+    follow_tournament:
+      subject: "Invitation to Become a Fan"
+      message: ! "%{creator_name} has invited you to become a fan of %{target_name}."
+    follow_user:
+      subject: "Invitation to Become a Fan"
+      message: ! "%{creator_name} has invited you to become a fan of %{target_name}."
     manage_league:
       subject: "Invitation to Manage League"
       message: ! "%{creator_name} has invited you to manage your league, %{target_name}, online with BigShot."

@@ -82,7 +82,7 @@ describe Invitation do
 
     it "emails the invitations" do
       invitations.each do |message, invitation|
-        InvitationMailer.should_receive(message).with(invitation).and_return(mail)
+        InvitationMailer.should_receive(:invite).with(invitation).and_return(mail)
         invitation.save!
       end
     end

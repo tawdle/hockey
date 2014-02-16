@@ -7,10 +7,16 @@ module Followable
     accepts_nested_attributes_for :system_name
     validates_presence_of :system_name
     after_initialize :set_nameable
+    has_many :followings, :as => :followable
+    has_many :followers, :through => :followings, :source => :user
   end
 
   def at_name
     "@#{system_name.name}"
+  end
+
+  def accepted_invitation_to_follow(user, invitation)
+    self.followers << user
   end
 
   private

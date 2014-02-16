@@ -107,28 +107,47 @@ fr:
       invite to %{predicate} %{target_name}.
   invitation_mailer:
     claim_player:
-      message: ! "%{creator_name} vous invite à confirmer que vous êtes bien %{target_name} (#%{jersey_number}) des %{team_name}."
+      message: ! '%{creator_name} vous invite à confirmer que vous êtes bien %{target_name}
+        (#%{jersey_number}) des %{team_name}.'
       subject: Invitation pour réclamer votre profil de joueur
+    follow_league:
+      message: ! '%{creator_name} has invited you to become a fan of %{target_name}.'
+      subject: Invitation pour devenir un fan
     follow_player:
-      message: ! "%{creator_name} vous invite a devenir un fan de %{target_name} (#%{jersey_number}) de l'equipe des %{team_name} sur le site BigShot."
+      message: ! '%{creator_name} vous invite a devenir un fan de %{target_name} (#%{jersey_number})
+        de l''equipe des %{team_name} sur le site BigShot.'
+      subject: Invitation pour devenir un fan
+    follow_team:
+      message: ! '%{creator_name} has invited you to become a fan of %{target_name}.'
+      subject: Invitation pour devenir un fan
+    follow_tournament:
+      message: ! '%{creator_name} has invited you to become a fan of %{target_name}.'
+      subject: Invitation pour devenir un fan
+    follow_user:
+      message: ! '%{creator_name} has invited you to become a fan of %{target_name}.'
       subject: Invitation pour devenir un fan
     manage_league:
-      message: ! '%{creator_name} vous invite à gérer en ligne votre ligue %{target_name} avec BigShot.'
+      message: ! '%{creator_name} vous invite à gérer en ligne votre ligue %{target_name}
+        avec BigShot.'
       subject: Invitation pour gérer votre ligue
     manage_location:
       message: ! '%{creator_name} vous a identifié comme responsable de %{target_name}.'
       subject: Invitation pour gérer votre arena
     manage_team:
-      message: ! '%{creator_name} vous invite à vous identifier comme gérant(e) des %{target_name}.'
+      message: ! '%{creator_name} vous invite à vous identifier comme gérant(e) des
+        %{target_name}.'
       subject: Invitation pour gérer votre équipe
     manage_tournament:
-      message: ! '%{creator_name} vous invite à gérer en ligne votre tournoi %{target_name} avec BigShot.'
+      message: ! '%{creator_name} vous invite à gérer en ligne votre tournoi %{target_name}
+        avec BigShot.'
       subject: Invitation pour gérer votre tournoi
     mark_league:
-      message: ! '%{creator_name} vous a invité a devenir un marqueur officiel pour le ligue %{target_name}.'
+      message: ! '%{creator_name} vous a invité a devenir un marqueur officiel pour
+        le ligue %{target_name}.'
       subject: Invitation pour devenir un marqueur pour la ligue
     mark_tournament:
-      message: ! '%{creator_name} vous a invité a devenir un marqueur officiel pour le tournoi %{target_name}.'
+      message: ! '%{creator_name} vous a invité a devenir un marqueur officiel pour
+        le tournoi %{target_name}.'
       subject: Invitation pour devenir un marqueur pour le tournoi
   league:
     classifications:

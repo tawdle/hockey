@@ -39,19 +39,18 @@ class Ability
     end
 
     can :create, Invitation do |invitation|
-      target = invitation.target
-      case target
-      when League, Tournament, Location
-        user.admin? || user.manager_of?(target)
-      when Player
-        case invitation.predicate
-        when :claim
+      if invitation.predicate == :follow
+        user.persisted?
+      else
+        target = invitation.target
+        case target
+        when League, Tournament, Location
+          user.admin? || user.manager_of?(target)
+        when Player
           user.manager_of?(target.team)
-        when :follow
-          user.persisted?
+        when Team
+          user.manager_of?(target.league)
         end
-      when Team
-        user.manager_of?(target.league)
       end
     end
 
