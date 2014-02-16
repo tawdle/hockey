@@ -4,7 +4,7 @@ en:
     attributes:
       game:
         home_team: Home
-        location: Location
+        location: Arena
         period: Period
         start_time: Date
         visiting_team: Visitor
@@ -83,7 +83,8 @@ en:
     show:
       sign_in_to_view_html: ! '%{sign_in} to view'
     highlights: Game Highlights
-    see_game: See game
+    edit_game: Edit
+    see_game: View
     started: This game started %{start_time}.
     ended: This game ended %{end_time}.
     periods:

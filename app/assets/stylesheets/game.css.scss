@@ -223,14 +223,15 @@ table.penalties {
 }
 
 table.games {
-  white-space: nowrap;
-
   .active, .paused, .ready, .playing, .finished {
     font-weight: bold;
   }
 
   td {
     vertical-align: middle;
+  }
+  .start-time {
+    white-space: nowrap;
   }
   .score {
     font-size: large;

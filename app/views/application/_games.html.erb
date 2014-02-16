@@ -9,29 +9,35 @@
 <% if games.any? %>
   <table class="games table table-hover">
     <tr>
-      <th><%= Game.human_attribute_name(:start_time) %></th>
-      <th></th>
-      <th><%= Game.human_attribute_name(:visiting_team) %></th>
+      <th class="start-time"><%= Game.human_attribute_name(:start_time) %></th>
       <% if defined?(show_game_number) %>
         <th>#</th>
       <% end %>
+      <% unless defined?(compact) %>
+        <th></th>
+      <% end %>
+      <th><%= Game.human_attribute_name(:visiting_team) %></th>
       <th></th>
       <th><%= Game.human_attribute_name(:home_team) %></th>
-      <th></th>
-      <th><%= Game.human_attribute_name(:period) %></th>
-      <th>Location</th>
+      <% unless defined?(compact) %>
+        <th></th>
+      <% end %>
+      <th>P</th>
+      <th><%= Game.human_attribute_name(:location) %></th>
       <th></th>
     </tr>
 
     <% games = games.reverse if defined?(reverse) %>
     <% games.each do |game| %>
       <tr class="<%= game.state %>">
-      <td><%= l game.start_time, :format => :game %></td>
+      <td class="start-time"><%= l(game.start_time, :format => :game).html_safe %></td>
       <% if defined?(show_game_number) %>
         <td><%= game.number %></td>
       <% end %>
-      <td class="visitor-name"><%= format_team_link(game.visiting_team) %></td>
-      <td><%= link_to(image_tag(game.visiting_team.logo_url(:thumbnail)), game.visiting_team) %></td>
+      <% unless defined?(compact) %>
+        <td class="visitor-name"><%= format_team_link(game.visiting_team) %></td>
+      <% end %>
+      <td><%= link_to(image_tag(game.visiting_team.logo_url(:thumbnail), :alt => game.visiting_team.full_name, :title => game.visiting_team.full_name), game.visiting_team) %></td>
       <td class="score">
         <%= link_to game do %>
           <% if game.scheduled? %>
@@ -41,18 +47,24 @@
           <% end %>
         <% end %>
       </td>
-      <td><%= link_to(image_tag(game.home_team.logo_url(:thumbnail)), game.home_team) %></td>
-      <td><%= format_team_link(game.home_team) %></td>
+      <td><%= link_to(image_tag(game.home_team.logo_url(:thumbnail), :alt => game.home_team.full_name, :title => game.home_team.full_name), game.home_team) %></td>
+      <% unless defined?(compact) %>
+        <td><%= format_team_link(game.home_team) %></td>
+      <% end %>
       <td class="period"><%= game.period_text %></td>
       <td>
-        <%= link_to game.location.name, game.location %>
-        <%= link_to game.location.map_url, :target => "_blank" do %>
-          <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank" %>
-      <% end %>
+        <% if defined?(compact) %>
+          <%= link_to image_tag("google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank", :alt => game.location.name, :title => game.location.name), game.location %>
+        <% else %>
+          <%= link_to game.location.name, game.location %>
+          <%= link_to game.location.map_url, :target => "_blank" do %>
+            <%= image_tag "google-maps-icon-blank.svg", :class => "map-icon", :target => "_blank" %>
+          <% end %>
+        <% end %>
       </td>
       <td style="text-align: right;">
-        <%= link_to t("games.see_game"), game, :class => "btn" %>
-        <%= link_to(t("Edit game"), edit_path.call(game), :class => "btn") if defined?(edit_path) && can?(:edit, game) %>
+        <%= link_to t("games.see_game"), game, :class => "btn btn-mini" %>
+        <%= link_to(t("games.edit_game"), edit_path.call(game), :class => "btn btn-mini") if defined?(edit_path) && can?(:edit, game) %>
       </td>
     </tr>
   <% end %>

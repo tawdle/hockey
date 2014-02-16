@@ -11,45 +11,48 @@
     </h3>
 
     <%= format_team_link(@tournament) %><%= render :partial => "follow_button", :locals => {:target => @tournament } %>
-<%
-    cols = [:name, :rank,
-            :num_games_played, :num_victories, :num_defeats, :num_overtime_and_shootout_defeats,
-            :num_goals_scored, :num_goals_yielded, :points]
-    stats = @tournament.teams.map {|team| Stats::Team.new(team, @tournament.games) }.sort_by {|obj| obj.points }.reverse
-    last_points = 0
-    last_rank = 1
-%>
 
-<h3>
-  <%= t("activerecord.models.team").pluralize %>
-  <%= link_to("<span class='icon-edit'>".html_safe, edit_tournament_teams_path(@tournament), :class => "btn") if can? :edit, @tournament %>
-</h3>
+    <%
+        cols = [:name, :rank,
+                :num_games_played, :num_victories, :num_defeats, :num_overtime_and_shootout_defeats,
+                :num_goals_scored, :num_goals_yielded, :points]
+        stats = @tournament.teams.map {|team| Stats::Team.new(team, @tournament.games) }.sort_by {|obj| obj.points }.reverse
+        last_points = 0
+        last_rank = 1
+    %>
 
-<table class="team-stats table table-striped table-bordered">
-  <%= format_header(cols, "stats.teams") %>
+    <h3>
+      <%= t("activerecord.models.team").pluralize %>
+      <%= link_to("<span class='icon-edit'>".html_safe, edit_tournament_teams_path(@tournament), :class => "btn") if can? :edit, @tournament %>
+    </h3>
 
-  <tbody>
-    <% stats.each_with_index do |stat, index| %>
-      <%= format_row(stat, cols) do |method, stat|
-          case method
-          when :rank
-            if stat.points == last_points
-              last_rank
-            else
-              last_rank = index + 1
+    <table class="team-stats table table-striped table-bordered">
+      <%= format_header(cols, "stats.teams") %>
+
+      <tbody>
+        <% stats.each_with_index do |stat, index| %>
+          <%= format_row(stat, cols) do |method, stat|
+              case method
+              when :rank
+                if stat.points == last_points
+                  last_rank
+                else
+                  last_rank = index + 1
+                end
+              when :name
+                link_to(image_tag(stat.team.logo_url(:thumbnail)), stat.team) +
+                  link_to(content_tag(:div, content_tag(:div, stat.team.name) + content_tag(:div, stat.team.city)), stat.team)
+              end
             end
-          when :name
-            link_to(image_tag(stat.team.logo_url(:thumbnail)), stat.team) +
-              link_to(content_tag(:div, content_tag(:div, stat.team.name) + content_tag(:div, stat.team.city)), stat.team)
-          end
-        end
-      %>
-      <% last_points = stat.points %>
-    <% end %>
-  </tbody>
-</table>
+          %>
+          <% last_points = stat.points %>
+        <% end %>
+      </tbody>
+    </table>
 
-
+    <%= render :partial => "games", :locals => {:games => @tournament.games.order(:start_time),
+                                                :show_game_number => true,  :compact => true,
+                                                :edit_path => proc {|game| edit_tournament_game_path(@tournament, game) }  } %>
 
   </div>
 
@@ -82,8 +85,6 @@
 </div>
 
 <div class="clearfix"></div>
-
-<%= render :partial => "games", :locals => {:games => @tournament.games.order(:start_time), :show_game_number => true } %>
 
 <%= render :partial => "activity_feed", :locals => {:activity_feed_items => @tournament.activity_feed_items } %>
 

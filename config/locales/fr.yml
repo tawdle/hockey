@@ -4,7 +4,7 @@ fr:
     attributes:
       game:
         home_team: Local
-        location: Location
+        location: Arena
         period: Période
         start_time: Date
         visiting_team: Visiteur
@@ -86,6 +86,7 @@ fr:
   followers:
     header: ! '%{name}''s Fans'
   games:
+    edit_game: Modifier
     ended: This game ended %{end_time}.
     highlights: Faits Saillants
     periods:
@@ -94,7 +95,7 @@ fr:
     - 3
     - OT
     - SO
-    see_game: Voir la partie
+    see_game: Voir
     show:
       sign_in_to_view_html: ! '%{sign_in} to view'
     started: This game started %{start_time}
@@ -296,7 +297,7 @@ fr:
     add_player: Add Player
   time:
     formats:
-      game: ! '%e %B %Y - %H:%M %Z'
+      game: ! '%d/%m/%Y - %H:%M %Z'
   welcome:
     message: Bienvenue sur BigShot!
     tagline: Découvre la star en toi
