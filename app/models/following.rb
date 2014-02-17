@@ -16,6 +16,10 @@ class Following < ActiveRecord::Base
     find_by_followable_id_and_followable_type_and_user_id(followable.id, followable.class.name, user.id)
   end
 
+  def self.followables_for(user)
+    where(:user_id => user).map(&:followable)
+  end
+
   private
 
   def user_is_not_followable

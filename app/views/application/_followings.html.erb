@@ -1,0 +1,15 @@
+<% targets = Following.followables_for(user) %>
+
+<div class="well">
+  <h3><%= t("followings.header", :name => user.name) %><%= " (#{targets.count})" if targets.any? %></h3>
+
+  <div class="followings-box">
+    <% targets.each do |target| %>
+      <% image_url = (target.respond_to?(:avatar_url) && target.avatar_url(:thumbnail)) ||
+        (target.respond_to?(:logo_url) && target.logo_url(:thumbnail)) ||
+        (target.respond_to?(:photo_url) && target.photo_url(:thumbnail)) ||
+        image_path("fallback/avatar_thumbnail.png") %>
+      <%= link_to(image_tag(image_url, :alt => target.name, :title => target.name), target) %>
+    <% end %>
+  </div>
+</div>

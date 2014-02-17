@@ -85,6 +85,8 @@ fr:
     stop_following: Ne plus être fan
   followers:
     header: ! '%{name}''s Fans'
+  followings:
+    header: ! '%{name} is a fan of'
   games:
     edit_game: Modifier
     ended: This game ended %{end_time}.

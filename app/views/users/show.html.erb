@@ -14,9 +14,12 @@
     <div class="clearfix"></div>
 
     <%= link_to("Edit", edit_user_path(@user), :class => "btn") if can? :edit, @user %>
+
+    <%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.for(@user) } %>
   </div>
   <div class="span4">
     <%= render :partial => "followers", :locals => {:target => @user } %>
+    <%= render :partial => "followings", :locals => {:user => @user } %>
     <div class="well">
       <% if @user.authorizations.any? && (current_user && (@user == current_user || current_user.admin?))  %>
         <h3>Authorizations</h3>
@@ -37,4 +40,3 @@
   </div>
 </div>
 
-<%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.for(@user) } %>
