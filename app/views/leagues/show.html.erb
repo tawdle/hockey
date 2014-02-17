@@ -81,7 +81,7 @@
 </div>
 
 <% new_game_path = new_league_game_path(@league) if can? :create, @league.games.build %>
-<%= render :partial => "games", :locals => { :games => @league.games.order("start_time asc"), :new_game_path => new_game_path, :edit_path => { proc {|game| edit_league_game_path(@league, game) } } %>
+<%= render :partial => "games", :locals => { :games => @league.games.order("start_time asc"), :new_game_path => new_game_path, :edit_path => proc {|game| edit_league_game_path(@league, game)  } } %>
 
 <%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.for(@league) } %>
 
