@@ -96,7 +96,7 @@
       <h4>Staff Members
         <%= link_to "Edit", team_staff_members_path(@team), :class => "btn btn-small" if can? :update, @team %>
       </h4>
-      <p> <%= @team.staff_members.sort_by {|sm| StaffMember::Roles.index(sm.role) }.collect(&:name_and_role).join(", ") || "<em>none</em>".html_safe %> </p>
+      <p> <%= @team.staff_members.sort_by {|sm| StaffMember::Roles.index(sm.role) || 0}.collect(&:name_and_role).join(", ") || "<em>none</em>".html_safe %> </p>
     </div>
   </div>
 </div>
