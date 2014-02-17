@@ -1,7 +1,7 @@
 <% targets = Following.followables_for(user) %>
 
 <div class="well">
-  <h3><%= t("followings.header", :name => user.name) %><%= " (#{targets.count})" if targets.any? %></h3>
+  <h3><%= t(user == current_user ? "self_header" : "header", :scope => "followings", :name => user.name) %><%= " (#{targets.count})" if targets.any? %></h3>
 
   <div class="followings-box">
     <% targets.each do |target| %>

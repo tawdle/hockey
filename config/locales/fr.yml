@@ -84,9 +84,11 @@ fr:
     start_following: Devenir fan
     stop_following: Ne plus être fan
   followers:
-    header: ! '%{name}''s Fans'
+    header: ! '%{name}''s fans'
+    self_header: Your fans
   followings:
     header: ! '%{name} is a fan of'
+    self_header: You are a fan of
   games:
     edit_game: Modifier
     ended: This game ended %{end_time}.

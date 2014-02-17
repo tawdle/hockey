@@ -6,6 +6,8 @@
   </div>
   <div class="span4">
     <%= render :partial => "admin" if current_user.admin? %>
+    <%= render :partial => "followers", :locals => {:target => current_user } %>
+    <%= render :partial => "followings", :locals => {:user => current_user } %>
     <%= render :partial => "teams_managed" %>
     <%= render :partial => "locations" %>
     <%= render :partial => "leagues_managed" %>
