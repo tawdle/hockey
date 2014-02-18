@@ -1,6 +1,7 @@
 class ActivityFeedItem < ActiveRecord::Base
   belongs_to :game, :inverse_of => :activity_feed_items
   has_many :mentions, :dependent => :destroy, :inverse_of => :activity_feed_item
+  has_many :videos, :foreign_key => :feed_item_id, :conditions => {:deleted_at => nil }
 
   attr_accessible :game, :game_id
 

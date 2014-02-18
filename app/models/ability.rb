@@ -139,6 +139,14 @@ class Ability
       user.admin?
     end
 
+    can :read, Video do
+      user.persisted?
+    end
+
+    can :destroy, Video do
+      user.admin?
+    end
+
     # Define abilities for the passed in user here. For example:
     #
     #   user ||= User.new # guest user (not logged in)

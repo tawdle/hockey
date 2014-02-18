@@ -306,6 +306,9 @@ en:
   time:
     formats:
       game: ! "%B %e, %Y %l:%M%p %Z"
+  videos:
+    show:
+      header: Goal!
   welcome:
     message: Welcome to BigShot!
     tagline: skate online like the pros

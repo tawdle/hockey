@@ -1,5 +1,6 @@
 class ActivityFeedItemSerializer < ActiveModel::Serializer
   attributes :id, :avatar_thumbnail_url, :creator, :message, :created_at
+  has_many :videos
 
   def avatar_thumbnail_url
     object.avatar_url(:thumbnail)

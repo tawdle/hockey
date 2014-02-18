@@ -953,7 +953,8 @@ CREATE TABLE videos (
     file_key character varying(255),
     thumb_key character varying(255),
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -1867,3 +1868,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140204210623');
 INSERT INTO schema_migrations (version) VALUES ('20140205180619');
 
 INSERT INTO schema_migrations (version) VALUES ('20140218192507');
+
+INSERT INTO schema_migrations (version) VALUES ('20140218233522');

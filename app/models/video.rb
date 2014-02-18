@@ -1,4 +1,6 @@
 class Video < ActiveRecord::Base
+  include SoftDelete
+
   belongs_to :feed_item, :class_name => "ActivityFeedItem"
   belongs_to :goal
 
@@ -10,11 +12,19 @@ class Video < ActiveRecord::Base
   attr_accessible :file_key, :thumb_key, :goal_id, :feed_item_id
 
   def thumb_url
-    bucket.objects[thumb_key].public_url
+    bucket.objects[thumb_key].public_url.to_s
   end
 
   def file_url
-    bucket.objects[file_key].url_for(:read, :expires => 10.minutes)
+    bucket.objects[file_key].url_for(:read, :expires => 10.minutes).to_s
+  end
+
+  def file_height
+    file_width * 9 / 16
+  end
+
+  def file_width
+    960
   end
 
   private

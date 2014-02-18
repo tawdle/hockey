@@ -77,6 +77,8 @@ Hockey::Application.routes.draw do
     end
   end
 
+  resources :videos, :only => [:show, :destroy]
+
   match 'typeahead/get_users' => 'typeahead#get_users'
 
   namespace :admin do

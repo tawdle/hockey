@@ -329,6 +329,9 @@ fr:
   time:
     formats:
       game: ! '%d/%m/%Y - %H:%M %Z'
+  videos:
+    show:
+      header: Goal!
   welcome:
     message: Bienvenue sur BigShot!
     tagline: Découvre la star en toi

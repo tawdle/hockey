@@ -1,0 +1,32 @@
+<h2><%= t(".header") %></h2>
+
+<div class="well well-large video-box">
+  <h3>
+    <%= link_to @goal.players[0].name_and_number, @goal.player %> scores goal for <%= link_to @goal.player.team.name, @goal.player.team %>
+    <% if @goal.players.length > 1 %>
+      assisted by <%= link_to @goal.players[1].name_and_number %>
+    <% end %>
+    <% if can? :destroy, @video %>
+      <small>
+        <%= link_to "Destroy", @video, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini" %>
+      </small>
+    <% end %>
+    <% if @goal.players.length > 2 %>
+      and <%= link_to @goal.players[2].name_and_number %>
+    <% end %>
+  </h3>
+
+  <video src="<%= @video.file_url %>" controls style="height: <%= @video.file_height %>px; width: <%= @video.file_width %>px;" oncanplaythrough="javascript:this.play();"></video>
+
+  <div class="metadata">
+    <%= Game.human_attribute_name(:period) %> <%= Game::Periods[@goal.period] %> <%= Timer.to_hms(@goal.elapsed_time) %>
+    <br />
+    <%= link_to @game.visiting_team.full_name, @game.visiting_team %> vs. <%= link_to @game.home_team.full_name, @game.home_team %> <%= link_to t("games.see_game"), @game, :class => "btn btn-mini" %>
+    <br />
+    <%= @game.number.present? ? "##{@game.number}" : "" %> in <%= format_team_link(@game.league) %>
+    <br />
+    <%= l @game.start_time, :format => :game %>
+    <br />
+    <%= format_team_link(@game.location) %>
+  </div>
+</div>

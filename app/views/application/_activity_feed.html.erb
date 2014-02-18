@@ -19,7 +19,7 @@
     <div class="activity-feed">
       <% activity_feed_items.limit(10).each do |item| %>
         <div class="feed-item">
-          <%= cl_image_tag(item.avatar_url(:thumbnail), :width => 50, :height => 50) %>
+          <%= cl_image_tag(item.avatar_url(:thumbnail), :class => "avatar", :width => 50, :height => 50) %>
           <p>
             <span class="creator"><%= format_user_link(item.creator) if item.respond_to?(:creator) %></span>
             <span class="created-at muted"><%= timeago_tag item.created_at %></span>
@@ -28,6 +28,13 @@
             <% end %>
           </p>
           <p><%= format_message_with_usernames(item.message).html_safe %></p>
+          <% if item.videos.any? %>
+            <p class="videos">
+              <% item.video.each do |video| %>
+                <%= link_to(image_tag(video.thumb_url), video) %>
+              <% end %>
+            </p>
+          <% end %>
         </div>
       <% end %>
     </div>

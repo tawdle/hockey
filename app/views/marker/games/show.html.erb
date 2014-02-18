@@ -194,14 +194,16 @@
 
 <script type="text/html" id="feed-item">
   <div class="feed-item">
-    <img src="{{= avatar_thumbnail_url }}" height="50" width="50">
+    <img src="{{= avatar_thumbnail_url }}" height="50" width="50" class="avatar">
     <p>
       <span class="creator">{{= creator }}</span>
       <span class="created-at muted"><time class="timeago" datetime="{{= created_at }}"></span>
     </p>
     <p>{{= message }}</p>
+    <p class="videos">{{ _.each(videos, function(video) { }}<a href="{{= video.show_url }}"><img src="{{= video.thumb_url }}"></a> {{ }); }}</p>
   </div>
 </script>
+
 
 <% content_for(:head) do %>
   <%= javascript_include_tag AsyncMessaging::FAYE_CONFIG[:script] %>
