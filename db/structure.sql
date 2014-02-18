@@ -943,6 +943,40 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
+-- Name: videos; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE videos (
+    id integer NOT NULL,
+    goal_id integer,
+    feed_item_id integer,
+    file_key character varying(255),
+    thumb_key character varying(255),
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: videos_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE videos_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: videos_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE videos_id_seq OWNED BY videos.id;
+
+
+--
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1115,6 +1149,13 @@ ALTER TABLE ONLY timers ALTER COLUMN id SET DEFAULT nextval('timers_id_seq'::reg
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY videos ALTER COLUMN id SET DEFAULT nextval('videos_id_seq'::regclass);
 
 
 --
@@ -1323,6 +1364,14 @@ ALTER TABLE ONLY timers
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: videos_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY videos
+    ADD CONSTRAINT videos_pkey PRIMARY KEY (id);
 
 
 --
@@ -1620,6 +1669,20 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 
 
 --
+-- Name: index_videos_on_feed_item_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_videos_on_feed_item_id ON videos USING btree (feed_item_id);
+
+
+--
+-- Name: index_videos_on_goal_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_videos_on_goal_id ON videos USING btree (goal_id);
+
+
+--
 -- Name: invitations_unique; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1802,3 +1865,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140201175406');
 INSERT INTO schema_migrations (version) VALUES ('20140204210623');
 
 INSERT INTO schema_migrations (version) VALUES ('20140205180619');
+
+INSERT INTO schema_migrations (version) VALUES ('20140218192507');

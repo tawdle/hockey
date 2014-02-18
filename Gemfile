@@ -2,6 +2,7 @@ source 'https://rubygems.org'
 
 ruby '1.9.3'
 
+gem 'nokogiri'
 gem 'rails', '3.2.13'
 
 # Bundle edge Rails instead:
@@ -42,6 +43,7 @@ end
 
 gem 'active_model_serializers'
 gem 'acts_as_list'
+gem 'aws-sdk'
 gem 'bootstrap-sass', '~> 2'
 gem 'cancan'
 gem 'carrierwave'
