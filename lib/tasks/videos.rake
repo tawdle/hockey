@@ -17,7 +17,8 @@ namespace :videos do
       end
       feed_item = Feed::NewGoal.where(:game_id => goal.game_id).where("created_at between ? and ?", goal.created_at - 1.second, goal.created_at + 1.second).first
       unless feed_item
-        puts "Warning: couldn't find related feed item for goal ID=#{goal_id}"
+        puts "Error: couldn't find related feed item for goal ID=#{goal_id}"
+        next
       end
 
       thumb_key = object.key.sub("video-inbox", "thumbs").sub(/\.mp4$/, ".png")
