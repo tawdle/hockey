@@ -15,7 +15,7 @@ namespace :videos do
         puts "Error: couldn't find goal with ID=#{goal_id}"
         next
       end
-      feed_item = Feed::NewGoal.where(:game_id => goal.game_id).where("created_at between ? and ?", goal.created_at - 1.second, goal.created_at + 1.second).first
+      feed_item = Feed::NewGoal.unscoped.where(:game_id => goal.game_id).order("abs(extract(epoch from('#{goal.created_at}'::timestamp - created_at)))").first
       unless feed_item
         puts "Error: couldn't find related feed item for goal ID=#{goal_id}"
         next
