@@ -2,21 +2,15 @@
 
 <div class="well well-large video-box">
   <h3>
-    <%= link_to @goal.players[0].name_and_number, @goal.player %> scores goal for <%= link_to @goal.player.team.name, @goal.player.team %>
-    <% if @goal.players.length > 1 %>
-      assisted by <%= link_to @goal.players[1].name_and_number %>
-    <% end %>
+    <%= format_message_with_usernames(@video.feed_item.message).html_safe %>
     <% if can? :destroy, @video %>
       <small>
         <%= link_to "Destroy", @video, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini" %>
       </small>
     <% end %>
-    <% if @goal.players.length > 2 %>
-      and <%= link_to @goal.players[2].name_and_number %>
-    <% end %>
   </h3>
 
-  <video src="<%= @video.file_url %>" controls style="height: <%= @video.file_height %>px; width: <%= @video.file_width %>px;" oncanplaythrough="javascript:this.play();"></video>
+  <video src="<%= @video.file_url %>" controls autoplay style="height: <%= @video.file_height %>px; width: <%= @video.file_width %>px;"></video>
 
   <div class="metadata">
     <%= Game.human_attribute_name(:period) %> <%= Game::Periods[@goal.period] %> <%= Timer.to_hms(@goal.elapsed_time) %>
