@@ -21,7 +21,7 @@ namespace :videos do
         next
       end
 
-      thumb_key = object.key.sub("video-inbox", "thumbs").sub(/\.mp4$/, ".png")
+      thumb_key = object.key.sub("video-inbox", "thumbs").sub(/\.(mp4|mov)$/, ".png")
       unless bucket.objects[thumb_key].exists?
         puts "Error: couldn't find matching thumbnail '#{thumb_key}'"
         next
