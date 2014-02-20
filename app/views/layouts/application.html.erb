@@ -20,6 +20,27 @@
     <%= render :partial => "analytics" %>
   </head>
   <body>
+    <% if use_facebook %>
+      <div id="fb-root"></div>
+      <script>
+        window.fbAsyncInit = function() {
+          FB.init({
+            appId      : '501253019996420',
+            status     : true,
+            xfbml      : true
+          });
+        };
+
+        (function(d, s, id){
+           var js, fjs = d.getElementsByTagName(s)[0];
+           if (d.getElementById(id)) {return;}
+           js = d.createElement(s); js.id = id;
+           js.src = "//connect.facebook.net/<%= { fr: "fr_CA", en: "en_US" }[I18n.locale] %>/all.js";
+           fjs.parentNode.insertBefore(js, fjs);
+         }(document, 'script', 'facebook-jssdk'));
+      </script>
+    <% end %>
+
     <header class="navbar navbar-fixed-top">
       <nav class="navbar-inner">
         <div class="container">

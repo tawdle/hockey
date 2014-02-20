@@ -12,6 +12,10 @@
 
   <video src="<%= @video.file_url %>" controls autoplay style="height: <%= @video.file_height %>px; width: <%= @video.file_width %>px;"></video>
 
+  <div class="share-links">
+    <div class="fb-share-button" data-type="box_count" <%= "data-href=https://bigshot.io/videos/1" if Rails.env.development? %>></div>
+  </div>
+
   <div class="metadata">
     <%= Game.human_attribute_name(:period) %> <%= Game::Periods[@goal.period] %> <%= Timer.to_hms(@goal.elapsed_time) %>
     <br />

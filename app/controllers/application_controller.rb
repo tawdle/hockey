@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
   around_filter :user_time_zone, :if => :current_user
   after_filter :store_location
+  helper_method :use_facebook
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, :alert => exception.message
@@ -34,6 +35,12 @@ class ApplicationController < ActionController::Base
 
     I18n.locale = (I18n::available_locales.include? extracted_locale.to_sym) ?
       extracted_locale : I18n.default_locale
+  end
+
+  protected
+
+  def use_facebook
+    false
   end
 
   private

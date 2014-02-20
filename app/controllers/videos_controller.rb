@@ -10,4 +10,10 @@ class VideosController < ApplicationController
     @video.destroy
     redirect_to @video.goal.game, :notice => "The video has been deleted"
   end
+
+  private
+
+  def use_facebook
+    true
+  end
 end
