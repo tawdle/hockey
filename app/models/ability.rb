@@ -113,8 +113,8 @@ class Ability
       league && user.manager_of?(league)
     end
 
-    can [:edit, :update], Team do |team|
-      user.manager_of?(team) || user.manager_of?(team.league)
+    can :update, Team do |team|
+      user.manager_of?(team.league)
     end
 
     can :destroy, Team do |team|
