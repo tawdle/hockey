@@ -1,6 +1,6 @@
 <h2><%= t("invitation.header") %></h2>
 
-<p><%= t("invitation.prompt", {:predicate => @invitation.predicate, :target_name => @invitation.target.name }) %></p>
+<p><%= t("invitation.prompt", {:predicate => t(@invitation.predicate, :scope => "invitation.predicates"), :target_name => @invitation.target.name }) %></p>
 
 <%= form_for @invitation do |f| %>
   <% if @invitation.errors.any? %>

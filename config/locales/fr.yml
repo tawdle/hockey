@@ -107,6 +107,11 @@ fr:
     pulled: Filet désert
   invitation:
     header: Envoyer une invitation
+    predicates:
+      claim: réclamer la propriété de
+      follow: devenir fan de
+      manage: être gérant de
+      mark: être marqueur officiel pour
     prompt: Entrez SVP l'adresse e-mail ou le @nom de la personne que vous souhaitez
       inviter à %{predicate} %{target_name}.
   invitation_mailer:
