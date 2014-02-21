@@ -354,18 +354,20 @@ table.games {
   }
 }
 
-.video-poster {
-  position: relative;
-  width: 500px;
-  height: 280px;
-  color: #ccc;
-  background: black image-url("bigshot-logo.png") no-repeat center;
-  cursor: pointer;
-  p {
-    position: absolute;
-    text-align: center;
-    bottom: 10px;
-    width: 100%;
+.game-highlights {
+  .video-poster {
+    position: relative;
+    width: 500px;
+    height: 280px;
+    color: #ccc;
+    background: black image-url("bigshot-logo.png") no-repeat center;
+    cursor: pointer;
+    p {
+      position: absolute;
+      text-align: center;
+      bottom: 10px;
+      width: 100%;
+    }
   }
 }
 

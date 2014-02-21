@@ -83,25 +83,27 @@
 <div class="clearfix"></div>
 
 
-<% if @game.vimeo_id.present? %>
-  <h2><%= t("games.highlights") %></h2>
-  <% if current_user %>
-    <iframe src="//player.vimeo.com/video/<%= @game.vimeo_id %>" width="500" height="281"
-      frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
-    </iframe>
-  <% else %>
-    <div class="video-poster" onclick="document.location='<%= new_user_session_path %>'">
-      <p><%= t(".sign_in_to_view_html", :sign_in => link_to(t('navigation.sign_in'), new_user_session_path)) %></p>
-    </div>
+<div class="game-highlights">
+  <% if @game.vimeo_id.present? %>
+    <h2><%= t("games.highlights") %></h2>
+    <% if current_user %>
+      <iframe src="//player.vimeo.com/video/<%= @game.vimeo_id %>" width="500" height="281"
+        frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
+      </iframe>
+    <% else %>
+      <div class="video-poster" onclick="document.location='<%= new_user_session_path %>'">
+        <p><%= t(".sign_in_to_view_html", :sign_in => link_to(t('navigation.sign_in'), new_user_session_path)) %></p>
+      </div>
+    <% end %>
   <% end %>
-<% end %>
 
-<% if current_user.try(:admin?) %>
-  <%= form_for(@game, :html => {:class => "form-inline"}) do |f| %>
-    <%= f.text_field :vimeo_id %>
-    <%= f.submit "Set Vimeo code", :class => "btn btn-primary" %>
+  <% if current_user.try(:admin?) %>
+    <%= form_for(@game, :html => {:class => "form-inline"}) do |f| %>
+      <%= f.text_field :vimeo_id %>
+      <%= f.submit "Set Vimeo code", :class => "btn btn-primary" %>
+    <% end %>
   <% end %>
-<% end %>
+</div>
 
 <h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
 

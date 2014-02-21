@@ -1,8 +1,73 @@
 .video-box {
   text-align: center;
   .metadata {
-    text-align: left;
-    margin: 10px 80px;
+    .name-block, .team {
+      display: inline-block;
+    }
+    img {
+      vertical-align: top;
+      margin-left: 5px;
+      margin-right: 5px;
+    }
+    .visiting .name-block {
+      text-align: right;
+    }
+    .vs {
+      display: inline-block;
+      vertical-align: top;
+      line-height: 40px;
+      font-size: 20px;
+    }
+  }
+  video, .video-poster {
+    width: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .video-poster {
+    position: relative;
+    cursor: pointer;
+    min-height: 100px;
+    .poster {
+    }
+    .logo-overlay {
+      background: transparent image-url("bigshot-logo.png") no-repeat center;
+      background-size: 30%;
+      position: absolute;
+      top: 0;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 100;
+    }
+    p {
+      color: white;
+      position: absolute;
+      text-align: center;
+      font-size: 20px;
+      font-weight: bold;
+      bottom: 0; 
+      width: 100%;
+      background-color: black;
+      opacity: .6;
+      padding-top: 10px;
+      padding-bottom: 10px;
+      margin-bottom: 0;
+    }
+  }
+  .share-links {
+    margin-left: 0;
+    margin-top: 10px;
+    display: inline-block;
+    li {
+      display: inline;
+      list-display-style: none;
+    }
+    .fb-share-button {
+      position: relative;
+      top: -6px;
+    }
   }
 }
+
 

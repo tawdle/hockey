@@ -19,6 +19,10 @@ class Video < ActiveRecord::Base
     bucket.objects[file_key].url_for(:read, :expires => 10.minutes).to_s
   end
 
+  def poster_url
+    bucket.objects[poster_key].public_url.to_s
+  end
+
   def file_height
     file_width * 9 / 16
   end

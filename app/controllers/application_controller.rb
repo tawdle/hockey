@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
   around_filter :user_time_zone, :if => :current_user
   after_filter :store_location
   helper_method :use_facebook
+  helper_method :use_twitter
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, :alert => exception.message
@@ -40,6 +41,10 @@ class ApplicationController < ActionController::Base
   protected
 
   def use_facebook
+    false
+  end
+
+  def use_twitter
     false
   end
 

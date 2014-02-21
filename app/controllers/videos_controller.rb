@@ -16,4 +16,8 @@ class VideosController < ApplicationController
   def use_facebook
     true
   end
+
+  def use_twitter
+    true
+  end
 end
