@@ -2,11 +2,9 @@ class InvitationsController < ApplicationController
   before_filter :authenticate_user!
   load_and_authorize_resource :except => [:new, :create]
 
-  Target_classes = [League, Team, Location, Tournament, Player]
-
   def new
     target_class = params[:target_type] && params[:target_type].constantize
-    raise "unexpected value '#{target_class}' for parameter target_type" unless Target_classes.include?(target_class)
+    raise "unexpected value '#{target_class}' for parameter target_type" unless Invitation::Target_classes.include?(target_class)
     target = target_class.find(params[:target_id].to_i)
     @invitation = Invitation.new(:creator => current_user, :predicate => params[:predicate], :target => target)
     authorize! :create, @invitation

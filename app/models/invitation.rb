@@ -9,11 +9,14 @@ class Invitation < ActiveRecord::Base
   attr_accessor :username_or_email
   attr_accessible :creator, :predicate, :target, :target_id, :target_type, :email, :username_or_email, :user, :language
 
+  Target_classes = [League, Team, Location, Tournament, Player, User]
+
   validate :provided_username_or_email, :if => :username_or_email?
   validates_presence_of :email, :unless => :username_or_email?
   validates_presence_of :creator
   validates_presence_of :target
   validates_uniqueness_of :email, :scope => [:predicate, :target_id, :target_type]
+  validates_inclusion_of :target_type, :in => Target_classes.map(&:name)
 
   # XXX: Validate email addresss
 
