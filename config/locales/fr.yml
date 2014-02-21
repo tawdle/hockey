@@ -4,7 +4,7 @@ fr:
     attributes:
       game:
         home_team: Local
-        location: Arena
+        location: Aréna
         period: Période
         start_time: Date
         visiting_team: Visiteur
@@ -36,10 +36,10 @@ fr:
           three_on_five: Inf. 3 contre 5
       player:
         role:
-          assistant_captain: Assistant Captain
-          captain: Captain
-          goalie: Goalie
-          player: Player
+          assistant_captain: Assistant
+          captain: Capitaine
+          goalie: Gardien
+          player: Joueur
       staff_member:
         role:
           abbreviations:
@@ -57,7 +57,7 @@ fr:
   feed:
     cancel_game: ! '%{user} a annulé un match entre %{visiting_team} et %{home_team}'
     cancel_goal: ! '%{user} a annulé le but de %{player}'
-    change_game_location: ! '%{user} a changé le lieu du matche entre les %{visiting_team}
+    change_game_location: ! '%{user} a changé le lieu du match entre les %{visiting_team}
       et les %{home_team}'
     change_game_time: ! '%{user} a changé l''heure du match entre les %{visiting_team}
       et les %{home_team}'
@@ -65,7 +65,7 @@ fr:
       - %{second_team} %{second_team_score}
     game_started: Le match opposant les %{visiting_team} aux %{home_team} a débuté
       à %{location}
-    new_following: ! '%{user} is now following %{target}'
+    new_following: ! '%{user} est maintenant fan de %{target}'
     new_game: ! '%{user} a programmé un match entre les %{visiting_team} et les %{home_team}'
     new_goal:
       one_assist: ! '%{player} a marqué un but contre les %{against_team}, avec l''aide
@@ -84,14 +84,14 @@ fr:
     start_following: Devenir fan
     stop_following: Ne plus être fan
   followers:
-    header: ! '%{name}''s fans'
-    self_header: Your fans
+    header: Fans de %{name}
+    self_header: Vos fans
   followings:
-    header: ! '%{name} is a fan of'
+    header: ! '%{name} est fan de'
     self_header: You are a fan of
   games:
     edit_game: Modifier
-    ended: This game ended %{end_time}.
+    ended: Cette partie s'est terminée à %{end_time}.
     highlights: Faits Saillants
     periods:
     - 1
@@ -106,29 +106,29 @@ fr:
   goalie:
     pulled: Filet désert
   invitation:
-    header: Send an invitation
-    prompt: Please enter the email address or @username of the person you'd like to
-      invite to %{predicate} %{target_name}.
+    header: Envoyer une invitation
+    prompt: Entrez SVP l'adresse e-mail ou le @nom de la personne que vous souhaitez
+      inviter à %{predicate} %{target_name}.
   invitation_mailer:
     claim_player:
       message: ! '%{creator_name} vous invite à confirmer que vous êtes bien %{target_name}
         (#%{jersey_number}) des %{team_name}.'
       subject: Invitation pour réclamer votre profil de joueur
     follow_league:
-      message: ! '%{creator_name} has invited you to become a fan of %{target_name}.'
+      message: ! '%{creator_name} vous invite à devenir fan de %{target_name}.'
       subject: Invitation pour devenir un fan
     follow_player:
-      message: ! '%{creator_name} vous invite a devenir un fan de %{target_name} (#%{jersey_number})
+      message: ! '%{creator_name} vous invite a devenir fan de %{target_name} (#%{jersey_number})
         de l''equipe des %{team_name} sur le site BigShot.'
       subject: Invitation pour devenir un fan
     follow_team:
-      message: ! '%{creator_name} has invited you to become a fan of %{target_name}.'
+      message: ! '%{creator_name} vous invite à devenir fan de l''équipe %{target_name}.'
       subject: Invitation pour devenir un fan
     follow_tournament:
-      message: ! '%{creator_name} has invited you to become a fan of %{target_name}.'
+      message: ! '%{creator_name} vous invite à devenir fan de %{target_name}.'
       subject: Invitation pour devenir un fan
     follow_user:
-      message: ! '%{creator_name} has invited you to become a fan of %{target_name}.'
+      message: ! '%{creator_name} vous invite à devenir fan de %{target_name}.'
       subject: Invitation pour devenir un fan
     manage_league:
       message: ! '%{creator_name} vous invite à gérer en ligne votre ligue %{target_name}
@@ -136,7 +136,7 @@ fr:
       subject: Invitation pour gérer votre ligue
     manage_location:
       message: ! '%{creator_name} vous a identifié comme responsable de %{target_name}.'
-      subject: Invitation pour gérer votre arena
+      subject: Invitation pour gérer votre aréna
     manage_team:
       message: ! '%{creator_name} vous invite à vous identifier comme gérant(e) des
         %{target_name}.'
@@ -146,13 +146,13 @@ fr:
         avec BigShot.'
       subject: Invitation pour gérer votre tournoi
     mark_league:
-      message: ! '%{creator_name} vous a invité a devenir un marqueur officiel pour
-        le ligue %{target_name}.'
-      subject: Invitation pour devenir un marqueur pour la ligue
+      message: ! '%{creator_name} vous invite à devenir marqueur officiel pour la
+        ligue %{target_name}.'
+      subject: Invitation pour devenir marqueur officiel
     mark_tournament:
-      message: ! '%{creator_name} vous a invité a devenir un marqueur officiel pour
-        le tournoi %{target_name}.'
-      subject: Invitation pour devenir un marqueur pour le tournoi
+      message: ! '%{creator_name} vous invite à devenir marqueur officiel pour le
+        tournoi %{target_name}.'
+      subject: Invitation pour devenir marqueur officiel
   league:
     classifications:
       a: A
@@ -285,23 +285,23 @@ fr:
       current: Courantes
       other: Autres
   player:
-    belongs_to_html: This player belongs to %{user}.
+    belongs_to_html: Ce joueur appartient à %{user}.
     claim:
-      button: Claim
-      prompt_html: Is this you? Click here to %{claim} this player for your account.
-    invitation_sent: Invited
+      button: réclamer
+      prompt_html: Est-ce vous? Cliquez ici pour %{claim} réclamer ce joueur.
+    invitation_sent: Invitation envoyée
     invite_claim:
-      button: Invite
-      prompt_html: Do you know this player? %{invite} them to own this player.
+      button: Invitez-le
+      prompt_html: Connaissez-vous ce joueur? %{invite} à joindre BigShot.
     invite_fan:
-      button: Invite a fan
+      button: Invitez un fan
   player_claim_mailer:
     approved:
-      subject: Votre réclamation de joueur BigShot est approvée
+      subject: Votre réclamation de joueur BigShot est approuvée
     created:
-      subject: A player claim requires your approval
+      subject: Un joueur de votre équipe a été réclamé
     denied:
-      subject: Your player claim has been denied
+      subject: Votre réclamation de joueur BigShot a été rejetée
   stats:
     teams:
       differential: Diff
@@ -313,11 +313,11 @@ fr:
       num_goals_scored: B
       num_goals_yielded: BC
       num_overtime_and_shootout_defeats: DP
-      num_overtime_defeats: OT Losses
-      num_overtime_victories: OT Wins
+      num_overtime_defeats: DP
+      num_overtime_victories: VP
       num_penalties: Pun
-      num_shootout_defeats: SO Losses
-      num_shootout_victories: SO Wins
+      num_shootout_defeats: DTB
+      num_shootout_victories: VTB
       num_victories: V
       penalty_minutes: PIM
       percentage: ! '%'
@@ -325,13 +325,14 @@ fr:
       points: Pts
       rank: ! '#'
   team:
-    add_player: Add Player
+    add_player: Ajoutez un joueur
   time:
     formats:
       game: ! '%d/%m/%Y - %H:%M %Z'
   videos:
     show:
-      header: Goal!
+      header: But!
+      sign_in_to_view: Connectez-vous pour visionner
   welcome:
     message: Bienvenue sur BigShot!
     tagline: Découvre la star en toi

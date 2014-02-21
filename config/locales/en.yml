@@ -309,6 +309,7 @@ en:
   videos:
     show:
       header: Goal!
+      sign_in_to_view: Click to sign in and view
   welcome:
     message: Welcome to BigShot!
     tagline: skate online like the pros
