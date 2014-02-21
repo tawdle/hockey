@@ -30,7 +30,7 @@
           <p><%= format_message_with_usernames(item.message).html_safe %></p>
           <% if item.videos.any? %>
             <p class="videos">
-              <% item.video.each do |video| %>
+              <% item.videos.each do |video| %>
                 <%= link_to(image_tag(video.thumb_url), video) %>
               <% end %>
             </p>
