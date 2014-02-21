@@ -9,13 +9,19 @@ namespace :videos do
         puts "Error: couldn't extract goal_id from key #{object.key}"
         next
       end
+
       goal_id = match[1].to_i
       goal = Goal.find_by_id(goal_id)
       unless goal
         puts "Error: couldn't find goal with ID=#{goal_id}"
         next
       end
-      feed_item = Feed::NewGoal.unscoped.where(:game_id => goal.game_id).order("abs(extract(epoch from('#{goal.created_at}'::timestamp - created_at)))").first
+
+      feed_item = Feed::NewGoal.
+        where(:game_id => goal.game_id).
+        where("created_at between ? and ?",
+              goal.updated_at - 1.second,
+              goal.updated_at + 1.second).first
       unless feed_item
         puts "Error: couldn't find related feed item for goal ID=#{goal_id}"
         next
@@ -26,6 +32,7 @@ namespace :videos do
         puts "Error: couldn't find matching thumbnail '#{thumb_key}'"
         next
       end
+
       new_key = object.key.sub("video-inbox", "videos")
       if Video.where(:file_key => new_key).any?
         puts "Warning: updating already-existing video '#{new_key}'"
@@ -36,6 +43,7 @@ namespace :videos do
           next
         end
       end
+
       object.move_to(new_key)
     end
   end
