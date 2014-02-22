@@ -1,9 +1,9 @@
 ---
 fr:
   actions:
-    confirm: Are you sure?
-    edit: Edit
-    remove: Remove
+    confirm: Êtes-vous certain(e)?
+    edit: Modifier
+    remove: Supprimer
   activerecord:
     attributes:
       game:
@@ -23,26 +23,26 @@ fr:
         category: Catégorie
         infraction: Infraction
       player:
-        jersey_number: Jersey Number
-        name: Name
+        jersey_number: Numéro
+        name: Nom
         photo: Photo
-        role: Role
+        role: Rôle
       system_name:
         name: ! '@Name'
     models:
       activity_feed_item: Activités récentes
       game: Partie
       player: Joueur
-      staff_member: Staff Member
+      staff_member: Membres du personnel
       team: Équipe
       tournament: Tournoi
-      user: User
+      user: Usager
     values:
       authorization:
         role:
-          admin: Admin
-          manager: Manager
-          marker: Marker
+          admin: Administrateur
+          manager: Gérant
+          marker: Marqueur
       goal:
         advantage:
           even: Forces égales
@@ -123,7 +123,7 @@ fr:
     pulled: Filet désert
   home:
     teams_managed:
-      teams_you_manage: Teams you manage
+      teams_you_manage: Équipes que vous gérez
   invitation:
     header: Envoyer une invitation
     predicates:
@@ -208,7 +208,7 @@ fr:
   leagues:
     teams:
       show:
-        a_member_of_html: a member of %{league_link}
+        a_member_of_html: Membre de %{league_link}
   navigation:
     back_html: ! '&larr; Back'
     edit_account: Modifier mon profil
@@ -333,8 +333,8 @@ fr:
       subject: Votre réclamation de joueur BigShot a été rejetée
   players:
     edit:
-      header: Edit player
-      submit: Update player
+      header: Modifier ce joueur
+      submit: Sauvegarder
   stats:
     teams:
       differential: Diff
@@ -368,4 +368,4 @@ fr:
       sign_in_to_view: Connectez-vous pour visionner
   welcome:
     message: Bienvenue sur BigShot!
-    tagline: Découvre la star en toi
+    tagline: Sois-ta propre supervedette
