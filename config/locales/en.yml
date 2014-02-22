@@ -120,7 +120,7 @@ en:
       teams_you_manage: Teams you manage
   invitation:
     header: Send an invitation
-    prompt: "Please enter the email address or @username of the person you'd like to invite to %{predicate} %{target_name}."
+    prompt: "Please enter the email address of the person you'd like to invite to %{predicate} %{target_name}."
     predicates:
       manage: become a manager of
       mark: become an official marker for
