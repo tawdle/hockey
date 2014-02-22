@@ -30,7 +30,6 @@
         <th><%= Player.human_attribute_name(:photo) %></th>
         <th style="width: 20px;">#</th>
         <th><%= Player.human_attribute_name(:name) %></th>
-        <th><%= SystemName.human_attribute_name(:name) %></th>
         <th><%= Player.human_attribute_name(:role) %></th>
         <% if show_user %>
           <th><%= User.model_name.human %></th>
@@ -46,7 +45,6 @@
           </td>
           <td><%= link_to player.jersey_number, player %></td>
           <td><%= link_to player.name, player %></td>
-          <td><%= format_player_link(player) %></td>
           <td><%= t(player.role, :scope => "activerecord.values.player.role") %></td>
           <% if show_user %>
             <td>
