@@ -8,7 +8,8 @@ class PlayerClaimMailer < ActionMailer::Base
   default from: format_address("mailer@bigshot.io", "BigShot.io")
 
   def created(player_claim)
-    send_localized_mail(player_claim, player_claim.player.team.managers)
+    team = player_claim.player.team
+    send_localized_mail(player_claim, team.managers.presence || team.league.managers.presence || User.admins)
   end
 
   def approved(player_claim)
@@ -20,7 +21,7 @@ class PlayerClaimMailer < ActionMailer::Base
   end
 
   private
-  
+
   DEFAULT_LANGUAGE = 'fr'
 
   def send_localized_mail(player_claim, to_users)

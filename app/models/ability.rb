@@ -99,7 +99,7 @@ class Ability
     end
 
     can [:read, :approve, :deny], PlayerClaim do |player_claim|
-      user.manager_of?(player_claim.player.team)
+      user.manager_of?(player_claim.player.team) || user.manager_of?(player_claim.player.team.league) || user.admin?
     end
 
     can :create, PlayerClaim do |player_claim|
