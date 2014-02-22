@@ -58,8 +58,8 @@
             </td>
           <% end %>
           <td>
-            <%= link_to t("actions.edit"), edit_player_path(player) %>
-            <%= link_to t("actions.remove"), player, method: :delete, data: { confirm: t("actions.confirm") } %>
+            <%= link_to t("actions.edit"), edit_player_path(player) if can? :edit, player %>
+            <%= link_to t("actions.remove"), player, method: :delete, data: { confirm: t("actions.confirm") } if can? :delete, player %>
           </td>
         </tr>
       <% end %>
