@@ -33,11 +33,19 @@ namespace :videos do
         next
       end
 
+      poster_key = object.key.sub("video-inbox", "posters").sub(/\.(mp4|mov)$/, ".png")
+      unless bucket.objects[poster_key].exists?
+        puts "Error: couldn't find matching poster '#{poster_key}'"
+        next
+      end
+
       new_key = object.key.sub("video-inbox", "videos")
       if Video.where(:file_key => new_key).any?
         puts "Warning: updating already-existing video '#{new_key}'"
       else
-        video = Video.create(:file_key => new_key, :thumb_key => thumb_key, :goal_id => goal_id, :feed_item_id => feed_item.id)
+        video = Video.create(:file_key => new_key, :thumb_key => thumb_key,
+                             :poster_key => poster_key, :goal_id => goal_id,
+                             :feed_item_id => feed_item.id)
         unless video
           puts "Error: failed to create video object: #{video.errors}"
           next
