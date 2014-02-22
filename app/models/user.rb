@@ -39,6 +39,8 @@ class User < ActiveRecord::Base
       :authorizable_id => authorizable.id).count > 0 }
   end
 
+  scope :admins, joins(:authorizations).where(:authorizations => {:role => :admin } )
+
   def name
     super || cached_system_name
   end
