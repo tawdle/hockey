@@ -1,5 +1,9 @@
 ---
 en:
+  actions:
+    confirm: ! 'Are you sure?'
+    edit: Edit
+    remove: Remove
   activerecord:
     attributes:
       game:
@@ -18,6 +22,11 @@ en:
       penalty:
         category: Category
         infraction: Infraction
+      player:
+        jersey_number: Jersey Number
+        name: Name
+        role: Role
+        photo: Photo
       system_name:
         name: "@Name"
     models:
@@ -25,8 +34,15 @@ en:
       team: Team
       player: Player
       game: Game
+      staff_member: Staff Member
       tournament: Tournament
+      user: User
     values:
+      authorization:
+        role:
+          manager: Manager
+          marker: Marker
+          admin: Admin
       goal:
         advantage:
           five_on_three: "Powerplay: 5 on 3"
@@ -99,6 +115,9 @@ en:
     - SO
   goalie:
     pulled: Empty net
+  home:
+    teams_managed:
+      teams_you_manage: Teams you manage
   invitation:
     header: Send an invitation
     prompt: "Please enter the email address or @username of the person you'd like to invite to %{predicate} %{target_name}."
@@ -173,7 +192,12 @@ en:
       college: "College"
       university: "University"
       house: "House"
+  leagues:
+    teams:
+      show:
+        a_member_of_html: ! 'a member of %{league_link}'
   navigation:
+    back_html: ! '&larr; Back'
     greeting: Hello
     sign_in: Log in
     sign_out: Log out
@@ -276,6 +300,10 @@ en:
     invite_fan:
       button: Invite a fan
     invitation_sent: Invited
+  players:
+    edit:
+      header: Edit player
+      submit: Update player
   player_claim_mailer:
     created:
       subject: A player claim requires your approval

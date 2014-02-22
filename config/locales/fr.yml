@@ -1,5 +1,9 @@
 ---
 fr:
+  actions:
+    confirm: Are you sure?
+    edit: Edit
+    remove: Remove
   activerecord:
     attributes:
       game:
@@ -18,15 +22,27 @@ fr:
       penalty:
         category: Catégorie
         infraction: Infraction
+      player:
+        jersey_number: Jersey Number
+        name: Name
+        photo: Photo
+        role: Role
       system_name:
         name: ! '@Name'
     models:
       activity_feed_item: Activités récentes
       game: Partie
       player: Joueur
+      staff_member: Staff Member
       team: Équipe
       tournament: Tournoi
+      user: User
     values:
+      authorization:
+        role:
+          admin: Admin
+          manager: Manager
+          marker: Marker
       goal:
         advantage:
           even: Forces égales
@@ -105,6 +121,9 @@ fr:
     started: This game started %{start_time}
   goalie:
     pulled: Filet désert
+  home:
+    teams_managed:
+      teams_you_manage: Teams you manage
   invitation:
     header: Envoyer une invitation
     predicates:
@@ -186,7 +205,12 @@ fr:
       secondary: Secondaire
       senior: Sénior
       university: Universitaire
+  leagues:
+    teams:
+      show:
+        a_member_of_html: a member of %{league_link}
   navigation:
+    back_html: ! '&larr; Back'
     edit_account: Modifier mon profil
     greeting: Bonjour
     sign_in: Connexion
@@ -307,6 +331,10 @@ fr:
       subject: Un joueur de votre équipe a été réclamé
     denied:
       subject: Votre réclamation de joueur BigShot a été rejetée
+  players:
+    edit:
+      header: Edit player
+      submit: Update player
   stats:
     teams:
       differential: Diff
