@@ -100,7 +100,7 @@ fr:
     start_following: Devenir fan
     stop_following: Ne plus être fan
   followers:
-    header: Fans de %{name}
+    header: Fans
     self_header: Vos fans
   followings:
     header: ! '%{name} est fan de'

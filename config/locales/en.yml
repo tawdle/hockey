@@ -94,7 +94,7 @@ en:
     start_following: "Become a fan"
     stop_following: "Stop being a fan"
   followers:
-    header: ! "%{name}'s fans"
+    header: Fans
     self_header: Your fans
   followings:
     header: ! "%{name} is a fan of"
