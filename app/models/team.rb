@@ -1,6 +1,7 @@
 class Team < ActiveRecord::Base
   include SoftDelete
   include Followable
+  include PgSearch
 
   after_create :set_manager
   belongs_to :league
@@ -11,6 +12,8 @@ class Team < ActiveRecord::Base
 
   validates_presence_of :name
   validates_presence_of :league
+
+  multisearchable :against => [:name, :city]
 
   def activity_feed_items
     ActivityFeedItem.for(self)
