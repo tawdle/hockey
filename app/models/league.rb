@@ -1,6 +1,7 @@
 class League < ActiveRecord::Base
   include SoftDelete
   include Followable
+  include PgSearch
 
   Divisions = %w(prenovice initiation novice atom pee_wee bantam midget intermediate juvenile secondary junior major_junior other_junior adult_recreational senior college university house).map(&:to_sym)
   Classifications = %w(a b c aa bb cc aaa).map(&:to_sym)
@@ -21,6 +22,8 @@ class League < ActiveRecord::Base
   validates_uniqueness_of :name, :scope => [:classification, :division]
 
   mount_uploader :logo, LogoUploader
+
+  multisearchable :against => [:name, :classification, :division]
 
   def managers
     User.joins(:authorizations).where(:authorizations => {:role => :manager, :authorizable_type => self.class.base_class, :authorizable_id => self.id})

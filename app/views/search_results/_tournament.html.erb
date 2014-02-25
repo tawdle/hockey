@@ -1,0 +1,9 @@
+<div>
+  <%= image_tag tournament.logo_url(:thumbnail) %>
+  <%= tournament.name %>
+  <%= t(tournament.classification, :scope => "league.classifications") if tournament.classification.present? %>
+  <%= t(tournament.division, :scope => "league.divisions") if tournament.division.present? %>
+  <%= format_team_link(tournament) %>
+</div>
+
+

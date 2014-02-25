@@ -1,6 +1,7 @@
 class Location < ActiveRecord::Base
   include SoftDelete
   include Followable
+  include PgSearch
 
   has_many :authorizations, :as => :authorizable
   has_many :games
@@ -16,6 +17,12 @@ class Location < ActiveRecord::Base
   validates_presence_of :country
 
   scope :managed_by, lambda {|user| joins(:authorizations).where(:authorizations => {:user_id => user.id, :role => :manager }) }
+
+  multisearchable :against => [:name, :address_1, :city, :state]
+
+  def photo_url(size=nil)
+    ActionController::Base.helpers.asset_path(["fallback/location", size].compact.join("_") + ".png")
+  end
 
   def map_url
     "https://www.google.com/maps/?#{url_encoded_address(:q)}"

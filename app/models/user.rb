@@ -1,4 +1,5 @@
 class User < ActiveRecord::Base
+  include PgSearch
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -27,6 +28,8 @@ class User < ActiveRecord::Base
   after_create :create_feed_item
 
   accepts_nested_attributes_for :system_name
+
+  multisearchable :against => [:name, :cached_system_name]
 
   # Add helpers for authorizations
   Authorization::GlobalRoles.each do |role|

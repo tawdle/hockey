@@ -1,0 +1,11 @@
+<div>
+  <%= image_tag(location.photo_url(:thumbnail)) %>
+  <%= location.name %>
+  <%= location.address_1 %>
+  <%= location.address_2 %>
+  <%= location.city %>
+  <%= location.state %>
+  <%= location.country %>
+  <%= format_team_link(location) %>
+</div>
+
