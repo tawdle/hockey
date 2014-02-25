@@ -1,7 +1,5 @@
 <div>
-  <%= image_tag league.logo_url(:thumbnail) %>
-  <%= league.name %>
-  <%= league.division %>
-  <%= league.classification %>
-  <%= format_team_link(location) %>
+  <%= image_tag user.avatar_url(:thumbnail) %>
+  <%= user.name if user.name.present? %>
+  <%= format_user_link(user) %>
 </div>
