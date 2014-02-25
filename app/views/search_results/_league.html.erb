@@ -1,8 +1,13 @@
-<div>
-  <%= image_tag league.logo_url(:thumbnail) %>
-  <%= league.name %>
-  <%= t(league.classification, :scope => "league.classifications") if league.classification.present? %>
-  <%= t(league.division, :scope => "league.divisions") if league.division.present? %>
-  <%= format_team_link(league) %>
+<%= link_to(image_tag(league.logo_url(:thumbnail)), league) %>
+<div class="meta">
+  <%
+    title = [league.name]
+    title << t(league.division, :scope => "league.divisions") if league.division.present?
+    title << t(league.classification, :scope => "league.classifications") if league.classification.present?
+  %>
+  <div class="title"><%= link_to title.compact.join(" - "), league %></div>
+  <div class="link">
+    <%= format_team_link(league) %>
+  </div>
 </div>
 

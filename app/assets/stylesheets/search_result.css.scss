@@ -1,0 +1,17 @@
+.search-results {
+  .result {
+    padding: 10px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+    .meta {
+      display: inline-block;
+      .title {
+        font-weight: bold;
+      }
+    }
+    img {
+      vertical-align: top;
+      margin-right: 10px;
+    }
+  }
+}

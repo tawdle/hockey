@@ -1,11 +1,11 @@
-<div>
-  <%= image_tag(location.photo_url(:thumbnail)) %>
-  <%= location.name %>
-  <%= location.address_1 %>
-  <%= location.address_2 %>
-  <%= location.city %>
-  <%= location.state %>
-  <%= location.country %>
-  <%= format_team_link(location) %>
+<%= link_to image_tag(location.photo_url(:thumbnail)), location %>
+<div class="meta">
+  <div class="title"><%= link_to location.name, location %></div>
+  <div><%= location.address_1 %></div>
+  <div><%= location.address_2 %></div>
+  <div><%= [location.city, location.state, location.country].compact.join(", ") %></div>
+  <div class="link">
+    <%= format_team_link(location) %>
+  </div>
 </div>
 

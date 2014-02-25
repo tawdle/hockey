@@ -1,6 +1,6 @@
-<div>
-  <%= image_tag(team.logo_url(:thumbnail)) %>
-  <%= team.name %>
-  <%= team.city %>
-  <%= format_team_link(team) %>
+<%= link_to(image_tag(team.logo_url(:thumbnail)), team) %>
+<div class="meta">
+  <div class="title"><%= link_to team.name, team %></div>
+  <div><%= team.city %></div>
+  <div class="link"><%= format_team_link(team) %></div>
 </div>

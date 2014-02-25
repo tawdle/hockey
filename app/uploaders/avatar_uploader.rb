@@ -33,6 +33,11 @@ class AvatarUploader < CarrierWave::Uploader::Base
     cloudinary_transformation :radius => 10
   end
 
+  version :small do
+    resize_to_fit(100, 100)
+    cloudinary_transformation :radius => 10
+  end
+
   # Provide a default URL as a default if there hasn't been a file uploaded:
   # def default_url
   #   # For Rails 3.1+ asset pipeline compatibility:

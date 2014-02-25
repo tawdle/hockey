@@ -1,5 +1,5 @@
-<div>
-  <%= image_tag user.avatar_url(:thumbnail) %>
-  <%= user.name if user.name.present? %>
-  <%= format_user_link(user) %>
+<%= link_to(image_tag(user.avatar_url(:small)), user) %>
+<div class="meta">
+  <div class="title"><%= link_to user.name, user %></div>
+  <div class="link"><%= format_user_link(user) %></div>
 </div>
