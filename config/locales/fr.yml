@@ -131,8 +131,8 @@ fr:
       follow: devenir fan de
       manage: être gérant de
       mark: être marqueur officiel pour
-    prompt: Entrez SVP l'adresse e-mail de la personne que vous souhaitez
-      inviter à %{predicate} %{target_name}.
+    prompt: Entrez SVP l'adresse e-mail de la personne que vous souhaitez inviter
+      à %{predicate} %{target_name}.
   invitation_mailer:
     claim_player:
       message: ! '%{creator_name} vous invite à confirmer que vous êtes bien %{target_name}
@@ -335,6 +335,12 @@ fr:
     edit:
       header: Modifier ce joueur
       submit: Sauvegarder
+  search_results:
+    index:
+      no_results: Sorry! We found no results for your search.
+      placeholder: Search for players, teams...
+      search: Recherche
+      title: Résultats
   stats:
     teams:
       differential: Diff

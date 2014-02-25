@@ -56,6 +56,7 @@ gem 'figaro'
 gem 'heroku-deflater', :group => [:production, :staging]
 gem 'i18n_country_select'
 gem 'prawn'
+gem 'pg_search'
 gem 'rails-i18n', '~> 3.0.0' # For 3.x
 gem 'rails_12factor', :group => [:production, :staging]
 gem 'state_machine'

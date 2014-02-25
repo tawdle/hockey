@@ -2,6 +2,7 @@ require 'active_support/inflector'
 
 class Player < ActiveRecord::Base
   include SoftDelete
+  include PgSearch
 
   Roles = [:player, :goalie, :captain, :assistant_captain]
   MaxJerseyNumberLength = 4
@@ -30,6 +31,8 @@ class Player < ActiveRecord::Base
   after_save :send_invitation, :if => :user_is_invited?
 
   mount_uploader :photo, PhotoUploader
+
+  multisearchable :against => [:name, :jersey_number]
 
   def league
     team.league

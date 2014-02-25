@@ -311,6 +311,12 @@ en:
       subject: Your player claim has been approved
     denied:
       subject: Your player claim has been denied
+  search_results:
+    index:
+      no_results: Sorry! We found no results for your search.
+      placeholder: Search for players, teams...
+      search: Search
+      title: Results
   stats:
     teams:
       differential: Diff
