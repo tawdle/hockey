@@ -3,7 +3,7 @@
 <div class="well">
   <h3><%= t(current_user == target ? "self_header" : "header", :scope => "followers", :name => target.name) %>
     <% if followers.any? %>
-      <%= "(#{followers.count})" %>
+      <span class="badge"><%= followers.count %></span>
     <% end %>
   </h3>
 
