@@ -20,7 +20,29 @@
   </div>
 
   <% if current_user %>
-    <video src="<%= @video.file_url %>" controls autoplay></video>
+    <div class="video-container">
+      <video src="<%= @video.file_url %>" preload></video>
+      <div class="play-button"></div>
+    </div>
+    <%= javascript_tag do %>
+      $(function() {
+        var started = false;
+        $("video").click(function() {
+          this.play();
+          $(this).off("click");
+          $(this).attr("controls", true);
+          $(".play-button").hide();
+          started = true;
+          return false;
+        });
+        $("video").on("canplaythrough", function() {
+          if (!started) {
+            $(".play-button").show();
+            started = true;
+          }
+        });
+      });
+    <% end %>
   <% else %>
     <div class="video-poster" onclick="document.location='<%= new_user_session_path %>'">
       <div class="logo-overlay"></div>
