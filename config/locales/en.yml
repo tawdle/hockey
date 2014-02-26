@@ -301,6 +301,13 @@ en:
       button: Invite a fan
     invitation_sent: Invited
   players:
+    claims:
+      new:
+        header: Claim Player
+        prompt: ! 'Before we can complete your claim of this player, we must
+         first get the approval of your team manager. Click the button below
+         to start the process.'
+        button: Claim this player
     edit:
       header: Edit player
       submit: Update player

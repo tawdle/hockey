@@ -332,6 +332,12 @@ fr:
     denied:
       subject: Votre réclamation de joueur BigShot a été rejetée
   players:
+    claims:
+      new:
+        button: Claim this player
+        header: Claim Player
+        prompt: Before we can complete your claim of this player, we must first get
+          the approval of your team manager. Click the button below to start the process.
     edit:
       header: Modifier ce joueur
       submit: Sauvegarder
