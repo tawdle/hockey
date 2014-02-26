@@ -68,7 +68,7 @@ class Player < ActiveRecord::Base
   end
 
   def accepted_invitation_to_follow(user, invitation)
-    self.followers << user
+    self.followers << user unless self.followers.include?(user)
   end
 
   private
