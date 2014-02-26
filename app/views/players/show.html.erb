@@ -22,11 +22,10 @@
         <p>
         <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, :opts => {:label => t("player.invite_claim.button") }) }) %>
         </p>
-      <% else %>
-        <p>
-          <%= t("player.claim.prompt_html", { :claim => link_to(t("player.claim.button"), new_player_claim_path(@player), :class => "btn btn-small") } ) %>
-        </p>
       <% end %>
+      <p>
+        <%= t("player.claim.prompt_html", { :claim => link_to(t("player.claim.button"), new_player_claim_path(@player), :class => "btn btn-small") } ) %>
+      </p>
     <% end %>
 
     <%= render :partial => "games", :locals => { :games => @player.games } %>
