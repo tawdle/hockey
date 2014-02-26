@@ -91,7 +91,7 @@ en:
     new_user: "%{user} just became a BigShot"
     new_team_manager: "%{user} became a manager of %{team}"
   follow:
-    start_following: "Become a fan"
+    start_following: I'm a fan
     stop_following: "Stop being a fan"
   followers:
     header: Fans
