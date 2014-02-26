@@ -122,6 +122,12 @@ fr:
   goalie:
     pulled: Filet désert
   home:
+    orientation:
+      header: Welcome!
+      message_html: <p>Seems like you're new here. To get the most of your BigShot
+        experience, we suggest that you become a fan of a player or team. It's
+        easy. Just use the search box at the top of the page to find something that
+        you like, then click the <strong>I'm a fan</strong> button.</p>
     teams_managed:
       teams_you_manage: Équipes que vous gérez
   invitation:
