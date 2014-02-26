@@ -24,6 +24,10 @@ class Location < ActiveRecord::Base
     ActionController::Base.helpers.asset_path(["fallback/location", size].compact.join("_") + ".png")
   end
 
+  def logo_url(size=nil)
+    photo_url(size)
+  end
+
   def map_url
     "https://www.google.com/maps/?#{url_encoded_address(:q)}"
   end
