@@ -49,6 +49,8 @@ gem 'cancan'
 gem 'carrierwave'
 gem 'cloudinary'
 gem 'devise'
+gem 'devise-i18n'
+gem 'devise-i18n-views'
 gem 'delayed_job_active_record'
 gem 'exception_notification', :group => [:production, :staging]
 gem 'fastclick-rails'
