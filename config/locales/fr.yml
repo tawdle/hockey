@@ -29,6 +29,11 @@ fr:
         role: Rôle
       system_name:
         name: ! '@Name'
+      user:
+        email: Email address
+        name: Full name
+        password: Password
+        password_confirmation: Password confirmation
     models:
       activity_feed_item: Activités récentes
       game: Partie
