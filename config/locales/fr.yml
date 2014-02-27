@@ -30,10 +30,10 @@ fr:
       system_name:
         name: ! '@Name'
       user:
-        email: Email address
-        name: Full name
-        password: Password
-        password_confirmation: Password confirmation
+        email: Adresse e-mail
+        name: Nom complet
+        password: Mot de passe
+        password_confirmation: Confirmation du mot de passe
     models:
       activity_feed_item: Activités récentes
       game: Partie
@@ -73,7 +73,7 @@ fr:
           manager: Gérant
           safety_attendant: Préposé à la sécurité
   activity_feed:
-    placeholder: Entrez votre statut ici...
+    placeholder: Entrer votre statut ici...
     post: Publier
   feed:
     cancel_game: ! '%{user} a annulé un match entre %{visiting_team} et %{home_team}'
@@ -109,7 +109,7 @@ fr:
     self_header: Vos fans
   followings:
     header: ! '%{name} est fan de'
-    self_header: You are a fan of
+    self_header: Vous êtes fan de
   games:
     edit_game: Modifier
     ended: Cette partie s'est terminée à %{end_time}.
@@ -122,17 +122,17 @@ fr:
     - SO
     see_game: Voir
     show:
-      sign_in_to_view_html: ! '%{sign_in} to view'
-    started: This game started %{start_time}
+      sign_in_to_view_html: ! '%{sign_in} pour visionner'
+    started: Cette partie a débuté à %{start_time}
   goalie:
     pulled: Filet désert
   home:
     orientation:
-      header: Welcome!
-      message_html: <p>Seems like you're new here. To get the most of your BigShot
-        experience, we suggest that you become a fan of a player or team. It's easy.
-        Just use the search box at the top of the page to find something that you
-        like, then click the <strong>I'm a fan</strong> button.</p>
+      header: Bienvenue!
+      message_html: <p>Vous semblez être nouveaux ici. Pour profiter à plein de l'expérience
+        BigShot, nous vous suggérons d'utiliser la barre de recherche au haut de la
+        page pour trouver vos joueurs et équipes préférés. Puis cliquez sur <strong>Devenir
+        fan</strong> button.</p>
     teams_managed:
       teams_you_manage: Équipes que vous gérez
   invitation:
@@ -154,13 +154,14 @@ fr:
       subject: Invitation pour devenir un fan
     follow_player:
       message: ! '%{creator_name} vous invite a devenir fan de %{target_name} (#%{jersey_number})
-        de l''equipe des %{team_name} sur le site BigShot.'
+        de l''equipe des %{team_name} sur le réseau BigShot.'
       subject: Invitation pour devenir un fan
     follow_team:
-      message: ! '%{creator_name} vous invite à devenir fan de l''équipe %{target_name}.'
+      message: ! '%{creator_name} vous invite à devenir fan de l''équipe %{target_name}
+        sur le réseau BigShot.'
       subject: Invitation pour devenir un fan
     follow_tournament:
-      message: ! '%{creator_name} vous invite à devenir fan de %{target_name}.'
+      message: ! '%{creator_name} vous invite à devenir fan du %{target_name}.'
       subject: Invitation pour devenir un fan
     follow_user:
       message: ! '%{creator_name} vous invite à devenir fan de %{target_name}.'
@@ -328,7 +329,7 @@ fr:
     belongs_to_html: Ce joueur appartient à %{user}.
     claim:
       button: réclamer
-      prompt_html: Est-ce vous? Cliquez ici pour %{claim} réclamer ce joueur.
+      prompt_html: Est-ce vous? Cliquez ici pour %{claim} ce joueur.
     invitation_sent: Invitation envoyée
     invite_claim:
       button: Invitez-le
@@ -345,17 +346,18 @@ fr:
   players:
     claims:
       new:
-        button: Claim this player
-        header: Claim Player
-        prompt: Before we can complete your claim of this player, we must first get
-          the approval of your team manager. Click the button below to start the process.
+        button: Réclamer ce joueur
+        header: Réclamer ce joueur
+        prompt: Avant d'accepter votre demande, nous devons d'abord obtenir l'approbation
+          du gérant de votre équipe. Cliquer pour démarrer le processus.
     edit:
       header: Modifier ce joueur
       submit: Sauvegarder
   search_results:
     index:
-      no_results: Sorry! We found no results for your search.
-      placeholder: Search for players, teams...
+      no_results: Désolé! Nous n'avons trouvé aucun résultat correspondant à votre
+        recherche.
+      placeholder: Rechercher des joueurs, des équipes...
       search: Recherche
       title: Résultats
   stats:
@@ -381,7 +383,7 @@ fr:
       points: Pts
       rank: ! '#'
   team:
-    add_player: Ajoutez un joueur
+    add_player: Ajouter un joueur
   time:
     formats:
       game: ! '%d/%m/%Y - %H:%M %Z'
