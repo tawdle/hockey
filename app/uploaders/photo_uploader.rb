@@ -30,7 +30,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
 
   version :thumbnail do
     resize_to_fit(100, 100)
-    cloudinary_transformation :radius => 10
+    cloudinary_transformation :radius => 10, :crop => :thumb, :gravity => :face
   end
 
   version :small do
