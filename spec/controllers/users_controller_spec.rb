@@ -1,6 +1,57 @@
+# encoding: utf-8
+
 require 'spec_helper'
 
 describe UsersController do
+  context "without a signed in user" do
+    describe "#email_available" do
+      let(:user) { FactoryGirl.create(:user) }
+
+      def do_request(email)
+        post :email_available, :format => :json, :user => {:email => email }
+      end
+
+      context "with an already existing address" do
+        let(:email) { "  #{user.email.upcase}  " }
+        it "returns false" do
+          do_request(email)
+          response.body.should == "false"
+        end
+      end
+
+      context "with a new address" do
+        let(:email) { "foofoofoo@foo.com" }
+        it "returns true" do
+          do_request(email)
+          response.body.should == "true"
+        end
+      end
+    end
+
+    describe "#system_name_available" do
+      let!(:system_name) { FactoryGirl.create(:system_name, :name => "Éric") }
+
+      def do_request(name)
+        post :system_name_available, :format => :json, :user => {:system_name_attributes => { :name => name } }
+      end
+
+      context "with an already existing name" do
+        let(:name) { "  eric " }
+        it "returns false" do
+          do_request(name)
+          response.body.should == "false"
+        end
+      end
+      context "with a new name" do
+        let(:name) { "Érica" }
+        it "returns true" do
+          do_request(name)
+          response.body.should == "true"
+        end
+      end
+    end
+  end
+
   context "with a signed in user" do
     let(:user) { FactoryGirl.create(:user) }
     let(:other_user) { FactoryGirl.create(:user) }

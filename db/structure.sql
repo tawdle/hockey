@@ -1715,7 +1715,7 @@ CREATE INDEX index_teams_tournaments_on_tournament_id ON teams_tournaments USING
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
-CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
+CREATE UNIQUE INDEX index_users_on_email ON users USING btree (lower((email)::text));
 
 
 --
@@ -1941,3 +1941,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140224232141');
 INSERT INTO schema_migrations (version) VALUES ('20140224233906');
 
 INSERT INTO schema_migrations (version) VALUES ('20140225203239');
+
+INSERT INTO schema_migrations (version) VALUES ('20140228210023');

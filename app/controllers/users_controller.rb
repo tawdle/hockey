@@ -35,7 +35,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if email
-        format.json { render json: User.where(:email => email).none? }
+        format.json { render json: User.where("lower(email) = ?", email.strip.downcase).none? }
       else
         format.json { render json: false }
       end
@@ -47,7 +47,7 @@ class UsersController < ApplicationController
 
     respond_to do |format|
       if name
-        format.json { render json: SystemName.where(:name => name.downcase).none? }
+        format.json { render json: SystemName.where("lower(unaccent(name)) = unaccent(?)", name.strip.downcase).none? }
       else
         format.json { render json: false }
       end
