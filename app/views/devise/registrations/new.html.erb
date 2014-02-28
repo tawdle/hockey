@@ -29,16 +29,9 @@
       },
       errorClass: "error help-inline",
       success: function(label, input) {
-        label.html('Looks good!').addClass("help-inline");
+        label.html('<%= t("registrations.new.validation.looks_good") %>').addClass("help-inline");
       },
-      messages: {
-        "user[email]": {
-          remote: "This email address is already taken."
-        },
-        "user[system_name_attributes][name]": {
-          remote: "This username is already taken."
-        }
-      }
+      messages: <%= raw I18n.t("registrations.new.validation.messages").to_json %>
     });
     if ($("form#new_user").valid()) {
       $("#user_system_name_attributes_name").focus();

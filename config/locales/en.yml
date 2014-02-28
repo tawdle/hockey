@@ -335,6 +335,22 @@ en:
   registrations:
     new:
       choose_username: Choose your username
+      validation:
+        looks_good: ! 'Looks good!'
+        messages:
+          user[name]:
+            required: Please enter your full name.
+          user[email]:
+            email: Please enter a valid email address.
+            remote: This email address is already taken.
+            required: Please enter your email address.
+          user[password]:
+            minlength: Passwords must have at least 8 characters.
+            required: Please create a password for your account.
+          user[system_name_attributes][name]:
+            minlength: Usernames must have at least 3 characters.
+            remote: This username is already taken.
+            required: Please choose a username.
   search_results:
     index:
       no_results: Sorry! We found no results for your search.
