@@ -70,12 +70,16 @@ Hockey::Application.routes.draw do
     resource :teams, :only => [:edit, :update], :controller => "tournaments/teams"
   end
 
-  devise_for :users
+  devise_for :users, :controllers => {:registrations => "users/registrations" }
 
 
   resources :users, :only => [:show, :edit, :update] do
     member do
       get :impersonate
+    end
+    collection do
+      post :system_name_available
+      post :email_available
     end
   end
 

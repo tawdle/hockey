@@ -75,6 +75,9 @@ en:
   activity_feed:
     placeholder: Enter status message here...
     post: Post
+  application:
+    mini_sign_up:
+      header: Want to be a BigShot? Join now.
   feed:
     cancel_game: "%{user} canceled a game between %{visiting_team} and %{home_team}"
     cancel_goal: "%{user} canceled %{player}'s goal"
@@ -329,6 +332,9 @@ en:
       subject: Your player claim has been approved
     denied:
       subject: Your player claim has been denied
+  registrations:
+    new:
+      choose_username: Choose your username
   search_results:
     index:
       no_results: Sorry! We found no results for your search.

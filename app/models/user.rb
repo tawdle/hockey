@@ -71,6 +71,22 @@ class User < ActiveRecord::Base
     end
   end
 
+  def suggested_username
+    return nil if name.nil? || name.length < 3
+    base = name.gsub(/[^A-Za-z\d\-_\u00C0-\u017F]/i, "")
+    return nil if base.length < 3
+    [base, "#{base}#{rand(10) + 1}",
+     "#{base}#{rand(100) + 1}",
+     "#{base}{#rand(1000) + 1}"].
+    find {|username| SystemName.where(:name => username.downcase).none? }
+  end
+
+  def name=(name)
+    super
+    init_system_name
+    system_name.name ||= suggested_username if new_record?
+  end
+
   private
 
   def init_system_name

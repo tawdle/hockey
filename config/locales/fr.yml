@@ -75,6 +75,9 @@ fr:
   activity_feed:
     placeholder: Entrer votre statut ici...
     post: Publier
+  application:
+    mini_sign_up:
+      header: Want to be a BigShot? Join now.
   feed:
     cancel_game: ! '%{user} a annulé un match entre %{visiting_team} et %{home_team}'
     cancel_goal: ! '%{user} a annulé le but de %{player}'
@@ -353,6 +356,9 @@ fr:
     edit:
       header: Modifier ce joueur
       submit: Sauvegarder
+  registrations:
+    new:
+      choose_username: Choose your username
   search_results:
     index:
       no_results: Désolé! Nous n'avons trouvé aucun résultat correspondant à votre

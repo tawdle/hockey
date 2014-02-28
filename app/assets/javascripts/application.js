@@ -25,6 +25,7 @@
 //= require fastclick
 //= require rails-timeago
 //= require locales/jquery.timeago.fr-short.js
+//= require jquery.validate
 
 _.templateSettings = {
     interpolate: /\{\{\=(.+?)\}\}/gim,

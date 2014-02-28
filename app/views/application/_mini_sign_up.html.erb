@@ -1,0 +1,23 @@
+<h3><%= t(".header") %></h3>
+
+<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
+  <%= devise_error_messages! %>
+
+  <div>
+    <%= f.text_field :name, :placeholder => t("activerecord.attributes.user.name") %>
+  </div>
+
+  <div>
+    <%= f.email_field :email, :placeholder => t("activerecord.attributes.user.email") %>
+  </div>
+
+  <div>
+    <%= f.password_field :password, :placeholder => t("activerecord.attributes.user.password") %>
+  </div>
+
+  <%= f.hidden_field :mini, :value => true %>
+
+  <div><%= f.submit t('.sign_up', :default => "Sign up"), :class => "btn btn-primary" %></div>
+<% end %>
+
+
