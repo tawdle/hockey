@@ -134,6 +134,9 @@ en:
         then click the <strong>I'm a fan</strong> button.</p>
     teams_managed:
       teams_you_manage: Teams you manage
+    welcome:
+      header: Welcome to BigShot!
+      tagline: Your social network for amateur and recreational sports
   invitation:
     header: Send an invitation
     prompt: "Please enter the email address of the person you'd like to invite to %{predicate} %{target_name}."
@@ -391,6 +394,3 @@ en:
     show:
       header: Goal!
       sign_in_to_view: Click to sign in and view
-  welcome:
-    message: Welcome to BigShot!
-    tagline: skate online like the pros

@@ -140,6 +140,9 @@ fr:
         fan</strong> button.</p>
     teams_managed:
       teams_you_manage: Équipes que vous gérez
+    welcome:
+      header: Bienvenue sur BigShot!
+      tagline: Votre réseau social pour les sports amateurs et de loisirs
   invitation:
     header: Envoyer une invitation
     predicates:
@@ -415,6 +418,3 @@ fr:
     show:
       header: But!
       sign_in_to_view: Connectez-vous pour visionner
-  welcome:
-    message: Bienvenue sur BigShot!
-    tagline: Sois-ta propre supervedette
