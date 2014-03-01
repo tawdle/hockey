@@ -28,11 +28,12 @@
       </p>
     <% end %>
 
+    <%= link_to "Edit", edit_player_path(@player), :class => "btn" if can?(:edit, @player) %>
+
     <%= render :partial => "games", :locals => { :games => @player.games } %>
 
     <%= render :partial => "activity_feed", :locals => { :activity_feed_items => ActivityFeedItem.for(@player) } %>
 
-    <% link_to "Edit", edit_player_path(@player), :class => "btn" if can?(:edit, @player) %>
   </div>
 
   <div class="span4">
