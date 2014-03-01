@@ -78,6 +78,8 @@ en:
   application:
     mini_sign_up:
       header: Want to be a BigShot? Join now.
+    mini_sign_in:
+      header: Already a BigShot? Sign in.
   feed:
     cancel_game: "%{user} canceled a game between %{visiting_team} and %{home_team}"
     cancel_goal: "%{user} canceled %{player}'s goal"

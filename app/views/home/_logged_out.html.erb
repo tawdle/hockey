@@ -1,4 +1,14 @@
 <%= render :partial => "welcome" %>
-<%= render :partial => "tournaments", :locals => {:tournaments => Tournament } %>
-<%= render :partial => "games", :locals => {:games => Game.recent, :reverse => true } %>
-<%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.system_generated.limit(20), :in_game_context => false } %>
+
+<div class="row">
+  <div class="span6">
+    <div class="well">
+      <%= render :partial => "mini_sign_up" %>
+    </div>
+  </div>
+  <div class="span6">
+    <div class="well" style="min-height: 230px;" >
+      <%= render :partial => "mini_sign_in" %>
+    </div>
+  </div>
+</div>

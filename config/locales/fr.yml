@@ -76,6 +76,8 @@ fr:
     placeholder: Entrer votre statut ici...
     post: Publier
   application:
+    mini_sign_in:
+      header: Already a BigShot? Sign in.
     mini_sign_up:
       header: Want to be a BigShot? Join now.
   feed:
