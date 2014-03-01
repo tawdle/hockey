@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
 
   mount_uploader :avatar, AvatarUploader
 
+  strip_attributes
+
   after_initialize :init_system_name
   before_update :update_mentions, :if => :cached_system_name_changed?
   before_create :cache_name

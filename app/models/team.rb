@@ -10,6 +10,8 @@ class Team < ActiveRecord::Base
   has_many :authorizations, :as => :authorizable, :dependent => :destroy
   has_many :staff_members, :inverse_of => :team, :conditions => { deleted_at: nil }
 
+  strip_attributes
+
   validates_presence_of :name
   validates_presence_of :league
 

@@ -18,6 +18,8 @@ class Player < ActiveRecord::Base
   attr_accessor :username_or_email, :creator, :email, :photo_cache, :kiosk_password_matches
   attr_accessible :team, :username_or_email, :creator, :jersey_number, :name, :role, :photo, :photo_cache, :user_id, :kiosk_password_matches, :email
 
+  strip_attributes
+
   validates_presence_of :team
   validates_presence_of :name
   validates_length_of :jersey_number, :minimum => 1, :maximum => MaxJerseyNumberLength

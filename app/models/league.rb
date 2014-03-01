@@ -23,6 +23,8 @@ class League < ActiveRecord::Base
 
   mount_uploader :logo, LogoUploader
 
+  strip_attributes
+
   multisearchable :against => [:name, :classification, :division]
 
   def managers
