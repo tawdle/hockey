@@ -1,43 +1,46 @@
 <% title [@location.name, @location.city, @location.state].compact.join(" - ") %>
 
 <div class="row">
-  <div class="span9">
-    <div class="pull-left">
-      <a href="<%= @location.map_url %>" target="_blank">
-        <%= image_tag(@location.map_image_url, :style => "width: 200px; height: 200px; border: 1px solid grey; margin-right: 10px;") %>
-      </a>
+  <div class="span8">
+    <div class="well">
+      <div class="pull-left">
+        <a href="<%= @location.map_url %>" target="_blank">
+          <%= image_tag(@location.map_image_url, :style => "width: 200px; height: 200px; border: 1px solid grey; margin-right: 10px;") %>
+        </a>
+      </div>
+
+      <address>
+        <strong style="font-variant: small-caps; font-size: 120%;"><%= @location.name %></strong><br>
+        <%= format_team_link(@location) %><%= render :partial => "follow_button", :locals => { :target => @location }%><br>
+        <%= @location.address_1 %><br>
+        <% if @location.address_2.present? %>
+          <%= @location.address_2 %><br>
+        <% end %>
+        <%= @location.city %>, <%= @location.state %> &nbsp; <%= @location.zip %><br>
+        <%= t(@location.country, :scope => :countries) %><br>
+        <br>
+
+        <% if @location.telephone.present? %>
+          <%= link_to @location.telephone, "tel:#{@location.telephone}" %><br>
+        <% end %>
+
+        <% if @location.email.present? %>
+          <%= link_to @location.email, "mailto:#{@location.email}", :target => "_blank" %><br>
+        <% end %>
+
+        <% if @location.website.present? %>
+          <%= link_to @location.website, @location.website, :target => "_blank" %><br>
+        <% end %>
+
+      </address>
+
+      <%= link_to "Edit", edit_location_path(@location), :class => "btn" if can? :edit, @location %>
     </div>
-
-    <address>
-      <strong style="font-variant: small-caps; font-size: 120%;"><%= @location.name %></strong><br>
-      <%= format_team_link(@location) %><%= render :partial => "follow_button", :locals => { :target => @location }%><br>
-      <%= @location.address_1 %><br>
-      <% if @location.address_2.present? %>
-        <%= @location.address_2 %><br>
-      <% end %>
-      <%= @location.city %>, <%= @location.state %> &nbsp; <%= @location.zip %><br>
-      <%= t(@location.country, :scope => :countries) %><br>
-      <br>
-
-      <% if @location.telephone.present? %>
-        <%= link_to @location.telephone, "tel:#{@location.telephone}" %><br>
-      <% end %>
-
-      <% if @location.email.present? %>
-        <%= link_to @location.email, "mailto:#{@location.email}", :target => "_blank" %><br>
-      <% end %>
-
-      <% if @location.website.present? %>
-        <%= link_to @location.website, @location.website, :target => "_blank" %><br>
-      <% end %>
-
-    </address>
-
-    <%= link_to "Edit", edit_location_path(@location), :class => "btn" if can? :edit, @location %>
   </div>
 
 
-  <div class="span3">
+  <div class="span4">
+    <%= render :partial => "mini_sign_up" unless current_user %>
     <%= render :partial => "followers", :locals => {:target => @location } %>
     <div class="well" style="margin-top: 10px;">
       <h3 class="page-header">Managers <%= link_to("+", new_invitation_path(:predicate => :manage, :target_id => @location.to_param, :target_type => "Location"), :class => "btn") if can?(:manage, @location) %></h3>

@@ -2,8 +2,7 @@
 
 <div class="row">
   <div class="span8">
-    <h3>
-      <%= Tournament.model_name.human %> - <%= @tournament.name %>
+    <h3><%= @tournament.name %>
       <small>
         <%= t("league.divisions.#{@tournament.division}") %> <%= t("league.classifications.#{@tournament.classification}") %>
       </small>
@@ -58,6 +57,7 @@
 
 
   <div class="span4">
+    <%= render :partial => "mini_sign_up" unless current_user %>
     <%= render :partial => "followers", :locals => {:target => @tournament } %>
 
     <% if current_user && current_user.manager_of?(@tournament) %>

@@ -16,6 +16,7 @@
     <%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.for(@user) } %>
   </div>
   <div class="span4">
+    <%= render :partial => "mini_sign_up" unless current_user %>
     <%= render :partial => "followers", :locals => {:target => @user } %>
     <%= render :partial => "followings", :locals => {:user => @user } %>
     <div class="well">
