@@ -24,8 +24,7 @@ class ActivityFeedItem < ActiveRecord::Base
     case obj
     when User
       joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
-        joins("left outer join followings f1 on f1.followable_id = mentions.mentionable_id and f1.followable_type = mentions.mentionable_type").
-        where("creator_id = ? or f1.user_id = ?", obj.id, obj.id);
+        where("creator_id = ? or (mentions.mentionable_id = ? and mentions.mentionable_type = 'User')", obj.id, obj.id);
     else
       joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
         where(mentions: { mentionable_id: obj.id, mentionable_type: obj.class.name })
