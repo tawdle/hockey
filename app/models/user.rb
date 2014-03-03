@@ -27,6 +27,7 @@ class User < ActiveRecord::Base
   after_initialize :init_system_name
   before_update :update_mentions, :if => :cached_system_name_changed?
   before_create :cache_name
+  before_create :set_language
   after_create :create_feed_item
 
   accepts_nested_attributes_for :system_name
@@ -109,5 +110,9 @@ class User < ActiveRecord::Base
 
   def create_feed_item
     Feed::NewUser.create!(:user => self)
+  end
+
+  def set_language
+    self.language ||= I18n.locale
   end
 end
