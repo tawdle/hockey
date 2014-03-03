@@ -15,7 +15,7 @@ class ApplicationController < ActionController::Base
   def store_location
     if (!request.fullpath.match("/users") &&
         !request.xhr?) # don't store ajax calls
-    session[:previous_url] = request.fullpath
+      session[:previous_url] = request.fullpath
     end
   end
 
