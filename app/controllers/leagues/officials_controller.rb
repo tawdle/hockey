@@ -14,7 +14,7 @@ class Leagues::OfficialsController < ApplicationController
 
     respond_to do |wants|
       if @official.save
-        flash[:notice] = 'Official was successfully created.'
+        flash[:notice] = t("controllers.leagues.officials.create.success")
         wants.html { redirect_to(@league) }
         wants.xml  { render :xml => @official, :status => :created, :location => @league }
       else
@@ -30,7 +30,7 @@ class Leagues::OfficialsController < ApplicationController
   def update
     respond_to do |wants|
       if @official.update_attributes(params[:official])
-        flash[:notice] = 'Official was successfully updated.'
+        flash[:notice] = t("controllers.leagues.officials.update.success")
         wants.html { redirect_to(@league) }
         wants.xml  { head :ok }
       else
@@ -44,7 +44,7 @@ class Leagues::OfficialsController < ApplicationController
     @official.destroy
 
     respond_to do |wants|
-      flash[:notice] = 'Official was successfully removed.'
+      flash[:notice] = t("controllers.leagues.officials.destroy.success")
       wants.html { redirect_to(@league) }
       wants.xml  { head :ok }
     end

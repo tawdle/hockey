@@ -80,6 +80,116 @@ en:
       header: Want to be a BigShot? Join now.
     mini_sign_in:
       header: Already a BigShot? Sign in.
+  controllers:
+    admin:
+      kiosks:
+        create:
+          success: Kiosk mode has been enabled
+        destroy:
+          success: Kiosk mode has been disabled
+    feed:
+      user_posts:
+        create:
+          success: Your update has been posted.
+          failure: Your update has been rejected.
+    followings:
+      create:
+        success: ! 'You are now a fan of %{name}.'
+        failure: Unable to make you a fan.
+      destroy:
+        success: ! 'You are no longer a fan of %{name}.'
+        failure: Unable to stop being a fan.
+    games:
+      update:
+        success: Game was successfully updated.
+    invitations:
+      create:
+        success: ! 'Your invitation to %{name} has been sent.'
+    leagues:
+      create:
+        success: League was successfully created.
+      update:
+        success: League was successfully updated.
+      destroy:
+        success: League was successfully deleted.
+      games:
+        create:
+          success: Game was successfully scheduled.
+        update:
+          success: Game was successfully updated.
+        destroy:
+          success: Game was successfully canceled.
+          failure: Unable to cancel game.
+      officials:
+        create:
+          success: Official was successfully created.
+        update:
+          success: Official was successfully updated.
+        destroy:
+          success: Official was successfully removed.
+      teams:
+        create:
+          success: Team was successfully created.
+        update:
+          success: Team was successfully updated.
+        destroy:
+          success: Team was successfully deleted.
+    locations:
+      create:
+        success: Location was successfully created.
+      update:
+        success: Location was successfully updated.
+    marker:
+      game_goalies:
+        pulled: Goalie was successfully pulled.
+        changed: Goalie was successfully changed.
+      game_officials:
+        update:
+          success: Game officials were succesfully updated.
+          failure: Each official may only be listed once.
+      game_players:
+        create:
+          success: Player was successfully added.
+        update:
+          success: Game roster was successfully updated.
+      game_staff_members:
+        create:
+          success: Staff member was successfully created.
+        update:
+          success: Game staff member list was successfully updated.
+    players:
+      claims:
+        kiosk_create: You have successfully claimed this player.
+        create: Your claim has been created. We'll email you when your manager responds.
+        approve: You have successfully approved this claim.
+        deny: You have successfully denied this claim.
+      create: ! '%{name} was successfully added as a team player.'
+      update: Player was successfully updated.
+      destroy: ! '%{name} was successfully removed from the team.'
+    staff_members:
+      create: Staff member was successfully created.
+      update: Staff member was successfully updated.
+      destroy: Staff member was successfully deleted.
+    tournaments:
+      games:
+        create: Game was successfully scheduled.
+        update: Game was successfully updated.
+        destroy: Game was successfully canceled.
+      officials:
+        create: Official was successfully created.
+        update: Official was successfuly updated.
+        destroy: Official was successfully destroyed.
+      teams:
+        update: List of teams in tournament was successfully updated.
+      create: Tournament was successfully created.
+      upate: Tournament was successfully updated.
+      destroy: Tournament was successfully deleted.
+    users:
+      update: Your profile was successfully updated.
+      impersonate: You are now impersonating %{name}.
+    videos:
+      destroy: The video has been removed.
+
   feed:
     cancel_game: "%{user} canceled a game between %{visiting_team} and %{home_team}"
     cancel_goal: "%{user} canceled %{player}'s goal"

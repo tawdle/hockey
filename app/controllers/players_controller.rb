@@ -21,7 +21,7 @@ class PlayersController < ApplicationController
 
     respond_to do |format|
       if @player.save
-        format.html { redirect_to @team, notice: "#{@player.at_name} was successfully added as a team player." }
+        format.html { redirect_to @team, notice: t("controllers.playes.create", :name => @player.name) }
         format.json { render json: @player, status: :created, location: @player }
       else
         format.html { render action: "new" }
@@ -37,7 +37,7 @@ class PlayersController < ApplicationController
   def update
     respond_to do |format|
       if @player.update_attributes(params[:player].merge(creator: current_user))
-        format.html { redirect_to @player.team, notice: 'Player was successfully updated.' }
+        format.html { redirect_to @player.team, notice: t('controllers.players.update') }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -51,7 +51,7 @@ class PlayersController < ApplicationController
     @player.destroy
 
     respond_to do |format|
-      format.html { redirect_to @player.team, notice: "#{@player.at_name} was successfully removed from the team." }
+      format.html { redirect_to @player.team, notice: t("controllers.players.destroy", :name => @player.name) }
       format.json { head :no_content }
     end
   end

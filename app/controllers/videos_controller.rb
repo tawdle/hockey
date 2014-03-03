@@ -8,7 +8,7 @@ class VideosController < ApplicationController
 
   def destroy
     @video.destroy
-    redirect_to @video.goal.game, :notice => "The video has been deleted"
+    redirect_to @video.goal.game, :notice => t("controllers.videos.destroy")
   end
 
   private

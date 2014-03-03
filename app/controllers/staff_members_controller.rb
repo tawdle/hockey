@@ -19,7 +19,7 @@ class StaffMembersController < ApplicationController
 
     respond_to do |format|
       if @staff_member.save
-        format.html { redirect_to team_staff_members_path(@team), notice: 'Staff member was successfully created.' }
+        format.html { redirect_to team_staff_members_path(@team), notice: t("controllers.staff_members.create") }
         format.json { render json: @staff_member, status: :created, location: @team }
       else
         format.html { render action: "new" }
@@ -32,7 +32,7 @@ class StaffMembersController < ApplicationController
   def update
     respond_to do |format|
       if @staff_member.update_attributes(params[:staff_member])
-        format.html { redirect_to team_staff_members_path(@team), notice: 'Staff member was successfully updated.' }
+        format.html { redirect_to team_staff_members_path(@team), notice: t("controllers.staff_members.update") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -45,7 +45,7 @@ class StaffMembersController < ApplicationController
     @staff_member.destroy
 
     respond_to do |format|
-      format.html { redirect_to team_staff_members_path(@team), notice: 'Staff member was successfully deleted.' }
+      format.html { redirect_to team_staff_members_path(@team), notice: t("controllers.staff_members.destroy") }
       format.json { head :no_content }
     end
   end

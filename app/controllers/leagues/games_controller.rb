@@ -13,7 +13,7 @@ class Leagues::GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to league_path(@league), notice: 'Game was successfully scheduled.' }
+        format.html { redirect_to league_path(@league), notice: t("controllers.leagues.games.create.success") }
         format.json { render json: @game, status: :created, location: @game }
       else
         format.html { render action: "new" }
@@ -28,7 +28,7 @@ class Leagues::GamesController < ApplicationController
   def update
     respond_to do |format|
       if @game.update_attributes(params[:game].merge(:updater => current_user))
-        format.html { redirect_to @league, notice: 'Game was successfully updated.' }
+        format.html { redirect_to @league, notice: t("controllers.leagues.games.update.success") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -41,10 +41,10 @@ class Leagues::GamesController < ApplicationController
     respond_to do |format|
       @game.updater = current_user
       if @game.cancel
-        format.html { redirect_to :back, notice: 'Game was successfully canceled.' }
+        format.html { redirect_to :back, notice: t("controllers.leagues.games.destroy.success") }
         format.json { head :no_content }
       else
-        format.html { redirect_to :back, alert: 'Unable to cancel game.' }
+        format.html { redirect_to :back, alert: t("controllers.leagues.games.destroy.failure") }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end
     end

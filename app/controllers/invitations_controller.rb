@@ -16,7 +16,7 @@ class InvitationsController < ApplicationController
 
     respond_to do |format|
       if @invitation.save
-        format.html { redirect_to params[:back_to] || @invitation.target, notice: "Your invitation to #{@invitation.try(:user).try(:at_name) || @invitation.email} has been sent." }
+        format.html { redirect_to params[:back_to] || @invitation.target, notice: t("controllers.invitations.create.success", :name => @invitation.try(:user).try(:at_name) || @invitation.email) }
       else
         format.html { render action: "new" }
       end

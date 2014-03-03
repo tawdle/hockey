@@ -16,7 +16,7 @@ class Tournaments::GamesController < ApplicationController
 
     respond_to do |format|
       if @game.save
-        format.html { redirect_to tournament_games_path(@tournament), notice: 'Game was successfully scheduled.' }
+        format.html { redirect_to tournament_games_path(@tournament), notice: t("controllers.tournaments.games.create") }
         format.json { render json: @game, status: :created, location: @game }
       else
         format.html { render action: "new" }
@@ -31,7 +31,7 @@ class Tournaments::GamesController < ApplicationController
   def update
     respond_to do |format|
       if @game.update_attributes(params[:game].merge(:updater => current_user))
-        format.html { redirect_to tournament_games_path(@tournament), notice: 'Game was successfully updated.' }
+        format.html { redirect_to tournament_games_path(@tournament), notice: t("controllers.tournaments.games.create") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }
@@ -44,7 +44,7 @@ class Tournaments::GamesController < ApplicationController
     respond_to do |format|
       @game.updater = current_user
       if @game.cancel
-        format.html { redirect_to :back, notice: 'Game was successfully canceled.' }
+        format.html { redirect_to :back, notice: t("controllers.tournaments.games.destroy") }
         format.json { head :no_content }
       else
         format.html { redirect_to :back, alert: 'Unable to cancel game.' }

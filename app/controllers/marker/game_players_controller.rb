@@ -23,7 +23,7 @@ class Marker::GamePlayersController < ApplicationController
 
     respond_to do |format|
       if @player.save && @game.players << @player
-        format.html { redirect_to edit_marker_game_roster_path(@game, :team => @home_or_visiting), notice: 'Player was successfully added.' }
+        format.html { redirect_to edit_marker_game_roster_path(@game, :team => @home_or_visiting), notice: t("controllers.marker.game_players.create.success") }
         format.json { render json: @game, status: :created, location: @game }
       else
         format.html { render action: "new" }
@@ -39,7 +39,7 @@ class Marker::GamePlayersController < ApplicationController
   def update
     respond_to do |format|
       if @game.update_attributes(fix_params[:game])
-        format.html { redirect_to marker_game_path(@game), notice: 'Game roster was successfully updated.' }
+        format.html { redirect_to marker_game_path(@game), notice: t("controllers.marker.game_players.update.success") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

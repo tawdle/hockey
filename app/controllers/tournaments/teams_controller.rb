@@ -7,7 +7,7 @@ class Tournaments::TeamsController < ApplicationController
   def update
     respond_to do |format|
       if @tournament.update_attributes(params[:tournament])
-        format.html { redirect_to @tournament, notice: 'Tournament team list was successfully updated.' }
+        format.html { redirect_to @tournament, notice: t("controllers.tournaments.teams.update") }
         format.json { head :no_content }
       else
         format.html { render action: "edit" }

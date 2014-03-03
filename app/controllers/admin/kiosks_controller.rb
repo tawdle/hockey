@@ -4,7 +4,7 @@ class Admin::KiosksController < ApplicationController
     @kiosk = Kiosk.new(params[:kiosk].merge(:cookies => cookies))
     authorize! :create, @kiosk
     if @kiosk.save
-      redirect_to admin_kiosk_path, :notice => "Kiosk mode has been enabled"
+      redirect_to admin_kiosk_path, :notice => t("controllers.admin.kiosks.create.success")
     else
       render :new
     end
@@ -22,7 +22,7 @@ class Admin::KiosksController < ApplicationController
   def destroy
     authorize! :destroy, Kiosk
     @kiosk.destroy if @kiosk
-    redirect_to admin_kiosk_path, :notice => "Kiosk mode has been disabled"
+    redirect_to admin_kiosk_path, :notice => t("controllers.admin.kiosks.destroy.success")
   end
 
   private

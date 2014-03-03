@@ -18,7 +18,7 @@ class Players::ClaimsController < ApplicationController
       password_match = @kiosk && params[:claim] && Kiosk.password_matches(cookies, params[:claim][:kiosk_password])
       respond_to do |format|
         if @player.update_attributes(user_id: current_user.id, kiosk_password_matches: password_match)
-          format.html { redirect_to @player, notice: 'You have successfully claimed this player.' }
+          format.html { redirect_to @player, notice: t('controllers.players.claims.kiosk_create') }
           format.json { render json: @player, status: :created, location: @player }
         else
           format.html { render action: "new" }
@@ -30,7 +30,7 @@ class Players::ClaimsController < ApplicationController
 
       respond_to do |format|
         if @player_claim.save
-          format.html { redirect_to @player, notice: "Your claim has been created. We'll email you when your manager responds." }
+          format.html { redirect_to @player, notice: t("controllers.players.claims.create") }
           format.json { render json: @player_claim, status: created, location: @player }
         else
           format.html { render action: "new" }
@@ -51,7 +51,7 @@ class Players::ClaimsController < ApplicationController
 
     respond_to do |format|
       if @player_claim && @player_claim.approve!(current_user)
-        format.html { redirect_to @player_claim.player.team, notice: "You have successfully approved this claim." }
+        format.html { redirect_to @player_claim.player.team, notice: t("controllers.players.claims.approve") }
         format.json { render json: @player_claim, status: :created, location: @player }
       else
         format.html { redirect_to @player, notice: "Something went wrong" }
@@ -65,7 +65,7 @@ class Players::ClaimsController < ApplicationController
 
     respond_to do |format|
       if @player_claim && @player_claim.deny!(current_user)
-        format.html { redirect_to @player_claim.player.team, notice: "You have successfully denied this claim." }
+        format.html { redirect_to @player_claim.player.team, notice: t("controllers.players.claims.deny") }
         format.json { render json: @player_claim, status: :deleted, location: @player }
       else
         format.html { redirect_to @player, notice: "Something went wrong" }

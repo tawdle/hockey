@@ -19,7 +19,7 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       if @location.save
-        format.html { redirect_to location_path(@location), notice: 'Location was successfully created.' }
+        format.html { redirect_to location_path(@location), notice: t("controllers.locations.create.success") }
         format.json { render json: @location, status: :created, location: @location }
       else
         format.html { render action: "new" }
@@ -32,7 +32,7 @@ class LocationsController < ApplicationController
   def update
     respond_to do |format|
       if @location.update_attributes(params[:location])
-        format.html { redirect_to location_path(@location), notice: 'Location was successfully updated.' }
+        format.html { redirect_to location_path(@location), notice: t("controllers.locations.update.success") }
         format.json { render json: @location, status: :created, location: @location }
       else
         format.html { render action: "edit" }

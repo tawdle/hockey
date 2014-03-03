@@ -12,14 +12,14 @@ class Marker::GameOfficialsController < ApplicationController
     respond_to do |format|
       begin
         if @game.update_attributes(params[:game])
-          format.html { redirect_to marker_game_path(@game), notice: 'Game officials were succesfully updated.' }
+          format.html { redirect_to marker_game_path(@game), notice: t("controllers.marker.game_officials.update.success") }
           format.json { head :no_content }
         else
           format.html { render action: "edit" }
           format.json { render json: @game.errors, status: :unprocessable_entity }
         end
       rescue ActiveRecord::RecordInvalid => e
-        @game.errors.add(:base, "Each official may only be listed once.")
+        @game.errors.add(:base, t("controllers.marker.game_officials.update.failure") )
         format.html { render action: "edit" }
         format.json { render json: @game.errors, status: :unprocessable_entity }
       end

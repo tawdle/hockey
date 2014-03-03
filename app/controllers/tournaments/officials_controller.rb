@@ -17,7 +17,7 @@ class Tournaments::OfficialsController < ApplicationController
 
     respond_to do |wants|
       if @official.save
-        flash[:notice] = 'Official was successfully created.'
+        flash[:notice] = t("controllers.tournaments.officials.create")
         wants.html { redirect_to(tournament_officials_path(@tournament)) }
         wants.xml  { render :xml => @official, :status => :created, :location => @tournament }
       else
@@ -33,7 +33,7 @@ class Tournaments::OfficialsController < ApplicationController
   def update
     respond_to do |wants|
       if @official.update_attributes(params[:official])
-        flash[:notice] = 'Official was successfully updated.'
+        flash[:notice] = t("controllers.tournaments.officials.update")
         wants.html { redirect_to(tournament_officials_path(@tournament)) }
         wants.xml  { head :ok }
       else
@@ -47,7 +47,7 @@ class Tournaments::OfficialsController < ApplicationController
     @official.destroy
 
     respond_to do |wants|
-      flash[:notice] = 'Official was successfully removed.'
+      flash[:notice] = t("controllers.tournaments.officials.destroy")
       wants.html { redirect_to(tournament_officials_path(@tournament)) }
       wants.xml  { head :ok }
     end

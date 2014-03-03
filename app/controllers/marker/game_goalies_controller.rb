@@ -15,13 +15,13 @@ class Marker::GameGoaliesController < ApplicationController
     if @game_goalie.goalie_id == 0
       @game.game_goalies.for_team(@team).current.readonly(false).each {|gg| gg.finish! }
       respond_to do |format|
-        format.html { redirect_to @game, notice: 'Goalie was successfully pulled.' }
+        format.html { redirect_to @game, notice: t("controllers.marker.game_goalies.pulled") }
         format.json { head :no_content }
       end
     else
       respond_to do |format|
         if @game_goalie.save
-          format.html { redirect_to @game, notice: 'Goalie was successfully changed.' }
+          format.html { redirect_to @game, notice: t("controllers.marker.game_goalies.changed") }
           format.json { render json: @game, status: :created, location: @game }
         else
           format.html { render action: "new" }
