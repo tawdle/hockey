@@ -6,6 +6,10 @@
   margin-top: 10px;
   border-bottom: 1px solid #ccc;
 
+  &.owner {
+    background-color: white;
+  }
+
   img.avatar {
     position: absolute;
     top: 0;

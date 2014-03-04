@@ -32,7 +32,7 @@
 
     <%= render :partial => "games", :locals => { :games => @player.games } %>
 
-    <%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for(@player), :to => @player } %>
+    <%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for(@player), :to => @player, :owner => @player.user } %>
 
   </div>
 
