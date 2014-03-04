@@ -1,26 +1,36 @@
-<h2><%= t('.sign_in', :default => "Sign in") %></h2>
+<div class="row">
+  <div class="span6">
 
-<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
-  <div>
-    <%= f.label :email %>
-    <%= f.email_field :email, :autofocus => true %>
-  </div>
+    <div class="well">
+      <h3><%= t('.sign_in', :default => "Sign in") %></h3>
 
-  <div>
-    <%= f.label :password %>
-    <%= f.password_field :password %>
-  </div>
+      <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
+        <div>
+          <%= f.email_field :email, :autofocus => true, :placeholder => t("activerecord.attributes.user.email") %>
+        </div>
 
-  <% if devise_mapping.rememberable? -%>
-    <div>
-      <%= f.label :remember_me, :class => "checkbox" do %>
-        <%= f.check_box :remember_me %>
-        <%= t(".remember_me", :default => "Remember me") %>
+        <div>
+          <%= f.password_field :password, :placeholder => t("activerecord.attributes.user.password") %>
+        </div>
+
+        <% if devise_mapping.rememberable? -%>
+          <div>
+            <%= f.label :remember_me, :class => "checkbox" do %>
+              <%= f.check_box :remember_me, :checked => true %>
+              <%= t(".remember_me", :default => "Remember me") %>
+            <% end %>
+          </div>
+        <% end -%>
+
+        <div><%= f.submit t('.sign_in', :default => "Sign in"), :class => "btn btn-primary" %></div>
       <% end %>
+
+      <%= render "devise/shared/links" %>
     </div>
-  <% end -%>
-
-  <div><%= f.submit t('.sign_in', :default => "Sign in"), :class => "btn btn-primary" %></div>
-<% end %>
-
-<%= render "devise/shared/links" %>
+  </div>
+  <div class="span6">
+    <div class="well">
+      <%= render :partial => "mini_sign_up" %>
+    </div>
+  </div>
+</div>
