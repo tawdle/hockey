@@ -1,6 +1,7 @@
 ---
 fr:
   actions:
+    cancel: Cancel
     confirm: Êtes-vous certain(e)?
     edit: Modifier
     remove: Supprimer
@@ -170,6 +171,13 @@ fr:
       create: Staff member was successfully created.
       destroy: Staff member was successfully deleted.
       update: Staff member was successfully updated.
+    team_claims:
+      create:
+        success: Created private team claim link.
+      players:
+        update:
+          failure: You are unable to claim this player.
+          success: You have successfully claimed this player.
     tournaments:
       create: Tournament was successfully created.
       destroy: Tournament was successfully deleted.
@@ -338,6 +346,7 @@ fr:
     teams:
       show:
         a_member_of_html: Membre de %{league_link}
+        get_private_link: Get private claim link
   navigation:
     back_html: ! '&larr; Back'
     edit_account: Modifier mon profil
@@ -520,6 +529,30 @@ fr:
       rank: ! '#'
   team:
     add_player: Ajouter un joueur
+  team_claims:
+    created:
+      manager_instructions_1: Copy the link below and paste it into an email to your
+        team's mailing list.
+      manager_instructions_2: When you players (or their parents) receive this link,
+        they will be able to join BigShot and claim their player profile.
+    players:
+      edit:
+        confirmation: Is this you? If so, press the button below to claim this player
+          for your BigShot account.
+        confirmation_html: <b>Is this you?</b> If so, press the button below to claim
+          this player for your BigShot account.
+        header: Claim Player
+    show:
+      already_claimed: You have already claimed the player(s) below. Consult with
+        your team manager if you need to make corrections.
+      claim_button: Réclamer
+      claimed: Claimed by %{name}
+      manager_instructions_1: Copy the link below and paste it into an email to your
+        team's mailing list.
+      manager_instructions_2: When recipients open the link, they'll see a page that
+        looks like what you see below.
+      player_instructions_html: Locate your player below and click the <b>Claim</b>
+        button.
   time:
     formats:
       game: ! '%d/%m/%Y - %H:%M %Z'

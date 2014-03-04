@@ -1,0 +1,19 @@
+<h2><%= t(".header") %></h2>
+
+<div class="team-claim pull-left" style="margin-right: 10px;">
+  <div class="player">
+    <div><%= image_tag(@player.photo_url(:thumbnail)) %></div>
+    <div><%= @player.name_and_number %></div>
+    <div><%= @player.team.name %></div>
+    <div><%= @player.team.city %></div>
+  </div>
+</div>
+
+<div class="confirm-claim">
+  <p><%= t(".confirmation_html") %></p>
+
+  <div>
+    <%= link_to t("team_claims.show.claim_button"), team_claim_player_path(@team_claim, @player), :method => :put, :class => "btn btn-warning" %>
+    <%= link_to t("actions.cancel"), @team_claim %>
+  </div>
+</div>

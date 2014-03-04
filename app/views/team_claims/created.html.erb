@@ -1,0 +1,20 @@
+<%= javascript_tag do %>
+  $(function() {
+    $("#grab-link").click(function() {
+      $(this).select();
+      return false;
+    });
+  });
+<% end %>
+
+<h2><%= [@team.name, @team.city].compact.join(" - ") %></h2>
+
+<div class="well">
+  <p><%= t(".manager_instructions_1") %></p>
+  <input id="grab-link" type="text" value="<%= team_claim_url(@team_claim) %>" class="input-xxlarge">
+  <p><%= t(".manager_instructions_2") %></p>
+</div>
+
+<%= link_to t("navigation.back_html"), @team %>
+
+

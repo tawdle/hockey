@@ -1,0 +1,25 @@
+<h2><%= [@team.name, @team.city].compact.join(" - ") %></h2>
+
+<div class="team-claim">
+  <% if @already_claimed %>
+    <p><%= t(".already_claimed") %></p>
+  <% else %>
+    <p><%= t(".player_instructions_html") %></p>
+  <% end %> 
+
+  <% @players.each do |player| %>
+    <% if player.user %>
+      <div class="player claimed">
+        <div><%= image_tag(player.photo_url(:thumbnail)) %></div>
+        <div><%= player.name_and_number %></div>
+        <div class="claimed-text"><%= t(".claimed", :name => player.user.at_name) %></div>
+      </div>
+    <% else %>
+      <div class="player text-center unclaimed">
+        <div><%= link_to(image_tag(player.photo_url(:thumbnail)), edit_team_claim_player_path(@team_claim, player)) %></div>
+        <div><%= link_to(player.name_and_number, edit_team_claim_player_path(@team_claim, player)) %></div>
+        <div><%= link_to(t(".claim_button"), edit_team_claim_player_path(@team_claim, player), :class => "btn") %></div>
+      </div>
+    <% end %>
+  <% end %>
+</div>

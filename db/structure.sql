@@ -841,6 +841,19 @@ ALTER SEQUENCE system_names_id_seq OWNED BY system_names.id;
 
 
 --
+-- Name: team_claims; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE team_claims (
+    code character varying(255) NOT NULL,
+    team_id integer,
+    expires_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
 -- Name: teams; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1391,6 +1404,14 @@ ALTER TABLE ONLY system_names
 
 
 --
+-- Name: team_claims_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY team_claims
+    ADD CONSTRAINT team_claims_pkey PRIMARY KEY (code);
+
+
+--
 -- Name: team_users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1660,6 +1681,13 @@ CREATE UNIQUE INDEX index_system_names_on_lowercase_name ON system_names USING b
 --
 
 CREATE UNIQUE INDEX index_system_names_on_nameable_id_and_nameable_type ON system_names USING btree (nameable_id, nameable_type);
+
+
+--
+-- Name: index_team_claims_on_team_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_team_claims_on_team_id ON team_claims USING btree (team_id);
 
 
 --
@@ -1943,3 +1971,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140224233906');
 INSERT INTO schema_migrations (version) VALUES ('20140225203239');
 
 INSERT INTO schema_migrations (version) VALUES ('20140228210023');
+
+INSERT INTO schema_migrations (version) VALUES ('20140303222815');

@@ -1,0 +1,26 @@
+@mixin border-radius($radius: 1px) {
+      -webkit-border-radius: $radius;
+         -moz-border-radius: $radius;
+              border-radius: $radius;
+}
+
+.team-claim {
+  .player {
+    display: inline-block;
+    text-align: center;
+    vertical-align: top;
+    width: 125px;
+    min-height: 187px;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid #888;
+    @include border-radius(5px);
+    &.unclaimed:hover {
+      background-color: white;
+    }
+    div {
+      margin-bottom: 5px;
+    }
+  }
+}
+

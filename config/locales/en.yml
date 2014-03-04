@@ -4,6 +4,7 @@ en:
     confirm: ! 'Are you sure?'
     edit: Edit
     remove: Remove
+    cancel: Cancel
   activerecord:
     attributes:
       game:
@@ -170,6 +171,13 @@ en:
       create: Staff member was successfully created.
       update: Staff member was successfully updated.
       destroy: Staff member was successfully deleted.
+    team_claims:
+      create:
+        success: Created private team claim link.
+      players:
+        update:
+          success: You have successfully claimed this player.
+          failure: You are unable to claim this player.
     tournaments:
       games:
         create: Game was successfully scheduled.
@@ -325,6 +333,7 @@ en:
     teams:
       show:
         a_member_of_html: ! 'a member of %{league_link}'
+        get_private_link: Get private claim link
   navigation:
     back_html: ! '&larr; Back'
     greeting: Hello
@@ -497,6 +506,19 @@ en:
 
   team:
     add_player: Add Player
+  team_claims:
+    players:
+      edit:
+        header: Claim Player
+        confirmation_html: <b>Is this you?</b> If so, press the button below to claim this player for your BigShot account.
+    show:
+      already_claimed: You have already claimed the player(s) below. Consult with your team manager if you need to make corrections.
+      claim_button: Claim
+      claimed: Claimed by %{name}
+      player_instructions_html: Locate your player below and click the <b>Claim</b> button.
+    created:
+      manager_instructions_1: Copy the link below and paste it into an email to your team's mailing list.
+      manager_instructions_2: When you players (or their parents) receive this link, they will be able to join BigShot and claim their player profile.
   time:
     formats:
       game: ! "%B %e, %Y %l:%M%p %Z"

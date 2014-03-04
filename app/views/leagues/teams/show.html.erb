@@ -21,6 +21,7 @@
 
     <h3><%= Player.model_name.human.pluralize %>
       <%= link_to t("team.add_player"), new_team_player_path(@team), :class => "btn" if can? :create, Player.new(:team => @team) %>
+      <%= link_to(t(".get_private_link"), team_claims_path(:team_claim => {:team_id => @team.to_param}), :class => "btn", :method => :post) if can?(:create, TeamClaim.new(:team => @team)) %>
     </h3>
 
     <% show_user = current_user && current_user.manager_of?(@team) %>

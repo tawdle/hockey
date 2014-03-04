@@ -64,6 +64,10 @@ Hockey::Application.routes.draw do
 
   resources :system_names, :only => [:show]
 
+  resources :team_claims, :only => [:create, :show] do
+    resources :players, :only => [:edit, :update], :controller => "team_claims/players"
+  end
+
   resources :tournaments do
     resources :games, :controller => "tournaments/games"
     resources :officials, :controller => "tournaments/officials"

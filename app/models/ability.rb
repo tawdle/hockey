@@ -122,8 +122,14 @@ class Ability
     end
 
     can :destroy, Team do |team|
-      user.admin? || user.manager_of?(team.league)
+      user.manager_of?(team.league)
     end
+
+    can :create, TeamClaim do |team_claim|
+      user.manager_of?(team_claim.team)
+    end
+
+    can :read, TeamClaim
 
     can :read, Tournament
 
