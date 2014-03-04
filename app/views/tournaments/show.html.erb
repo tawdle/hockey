@@ -86,7 +86,7 @@
 
 <div class="clearfix"></div>
 
-<%= render :partial => "activity_feed", :locals => {:activity_feed_items => @tournament.activity_feed_items } %>
+<%= render :partial => "activity_feed", :locals => {:feed_items => @tournament.activity_feed_items, :to => @tournament } %>
 
 <div style="margin-top: 10px;">
   <%= link_to "Back", :back %>

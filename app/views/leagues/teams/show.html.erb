@@ -75,7 +75,7 @@
       <%= render :partial => "games", :locals => { :games => Game.for_team(@team).scheduled_or_active } %>
     <% end %>
 
-    <%= render :partial => "activity_feed", :locals => {:activity_feed_items => @team.activity_feed_items, :in_game_context => false } %>
+    <%= render :partial => "activity_feed", :locals => {:feed_items => @team.activity_feed_items, :to => @team } %>
 
   </div>
 

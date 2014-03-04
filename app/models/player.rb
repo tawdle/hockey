@@ -53,7 +53,7 @@ class Player < ActiveRecord::Base
   end
 
   def at_name
-    user.try(:at_name) || "@#{team_and_jersey}"
+    "@#{team_and_jersey}"
   end
 
   def as_json(options={})

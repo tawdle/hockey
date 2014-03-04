@@ -1,10 +1,11 @@
-<% if (current_user && defined?(new_activity_feed_item)) || activity_feed_items.any? %>
+<% if current_user || feed_items.any? %>
   <h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
 
-  <% if current_user && defined?(new_activity_feed_item) %>
-    <%= form_for(new_activity_feed_item) do |f| %>
+  <% new_item ||= Feed::UserPost.new %>
+  <% if current_user %>
+    <%= form_for(new_item) do |f| %>
       <div class="field pull-left" style="margin-right: 10px;" >
-        <%= f.text_field :message, :class => "span4", :placeholder => t("activity_feed.placeholder") %>
+        <%= f.text_field :message, :class => "span7", :placeholder => t("activity_feed.placeholder"), :value => defined?(to) ? "#{to.at_name} " : "" %>
       </div>
 
       <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
@@ -15,13 +16,15 @@
     <% end %>
   <% end %>
 
-  <% if activity_feed_items.any? %>
+  <% if feed_items.any? %>
     <div class="activity-feed">
-      <% activity_feed_items.limit(10).each do |item| %>
+      <% feed_items.limit(10).each do |item| %>
         <div class="feed-item">
           <%= cl_image_tag(item.avatar_url(:thumbnail), :class => "avatar", :width => 50, :height => 50) %>
           <p>
-            <span class="creator"><%= format_user_link(item.creator) if item.respond_to?(:creator) %></span>
+            <% if item.respond_to?(:creator) %>
+              <span class="creator"><%= item.creator.name %></span> <%= format_user_link(item.creator, "muted") %>
+            <% end %>
             <span class="created-at muted"><%= timeago_tag item.created_at %></span>
             <% if item.game && !(defined?(in_game_context) && in_game_context) %>
               <small><i>in <%= link_to "#{item.game.home_team.name} vs. #{item.game.visiting_team.name}", item.game %></i></small>

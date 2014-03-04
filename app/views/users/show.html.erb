@@ -13,7 +13,7 @@
 
     <%= link_to("Edit", edit_user_path(@user), :class => "btn") if can? :edit, @user %>
 
-    <%= render :partial => "activity_feed", :locals => {:activity_feed_items => ActivityFeedItem.for(@user) } %>
+    <%= render :partial => "activity_feed", :locals => {:feed_items => ActivityFeedItem.for(@user), :to => @user } %>
   </div>
   <div class="span4">
     <%= render :partial => "mini_sign_up" unless current_user %>
