@@ -1,7 +1,7 @@
 ---
 fr:
   actions:
-    cancel: Cancel
+    cancel: Annuler
     confirm: Êtes-vous certain(e)?
     edit: Modifier
     remove: Supprimer
@@ -174,11 +174,11 @@ fr:
       update: La mise à jour a été effectuée.
     team_claims:
       create:
-        success: Created private team claim link.
+        success: Le lien privé d'équipe a été créé.
       players:
         update:
-          failure: You are unable to claim this player.
-          success: You have successfully claimed this player.
+          failure: Vous ne pouvez pas réclamer ce joueur.
+          success: Ce joueur est maintenant associé à vous.
     tournaments:
       create: Le tournoi a été crée avec succès.
       destroy: Le tournoi a été effacé avec succès.
