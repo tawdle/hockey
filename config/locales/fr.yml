@@ -533,22 +533,22 @@ fr:
     add_player: Ajouter un joueur
   team_claims:
     created:
-      manager_instructions_1: Copy the link below and paste it into an email to your
-        team's mailing list.
-      manager_instructions_2: When you players (or their parents) receive this link,
-        they will be able to join BigShot and claim their player profile.
+      manager_instructions_1: Copiez le lien ci-dessous et faites-le suivre par e-mail
+        à vos joueurs ou à leurs parents.
+      manager_instructions_2: En cliquant sur ce lien, vos joueurs (ou leurs parents)
+        pourront s'identifier et visionner les vidéos de votre équipe.
     players:
       edit:
-        confirmation_html: <b>Is this you?</b> If so, press the button below to claim
-          this player for your BigShot account.
-        header: Claim Player
+        confirmation_html: <b>Il s'agit bien de vous?</b> Si oui, cliquez sur ce bouton
+          pour associer ce profil de joueur à votre compte BigShot.
+        header: Confirmation d'identité
     show:
-      already_claimed: You have already claimed the player(s) below. Consult with
-        your team manager if you need to make corrections.
-      claim_button: Claim
-      claimed: Claimed by %{name}
-      player_instructions_html: Locate your player below and click the <b>Claim</b>
-        button.
+      already_claimed: Vous avez déjà indiqué que vous êtes le joueur ci-dessous.
+        Veuillez contacter votre gérant d'équipe si vous souhaitez faire une correction.
+      claim_button: C'est moi!
+      claimed: ! '%{name}'
+      player_instructions_html: Localisez le joueur correspondant à votre identité
+        et cliquez sur le bouton <b>Claim</b>.
   time:
     formats:
       game: ! '%d/%m/%Y - %H:%M %Z'
