@@ -16,7 +16,7 @@ class TeamClaims::PlayersController < ApplicationController
         format.html { redirect_to @player, notice: t("controllers.team_claims.players.update.success") }
         format.json { head :no_content }
       else
-        format.html { render action: "edit", notice: t("controllers.team_claims.players.update.failure") }
+        format.html { redirect_to edit_team_claim_player_path(@team_claim, @player), notice: t("controllers.team_claims.players.update.failure") }
         format.json { render json: @player.errors, status: :unprocessable_entity }
       end
     end
