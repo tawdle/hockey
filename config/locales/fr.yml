@@ -78,99 +78,100 @@ fr:
     post: Publier
   application:
     mini_sign_in:
-      header: Already a BigShot? Sign in.
+      header: Déjà membre? Connectez-vous.
     mini_sign_up:
-      header: Want to be a BigShot? Join now.
+      header: Pour devenir un BigShot? Inscrivez-vous.
   controllers:
     admin:
       kiosks:
         create:
-          success: Kiosk mode has been enabled
+          success: Le mode kiosque est maintenant activé.
         destroy:
-          success: Kiosk mode has been disabled
+          success: Le mode kiosque est maintenant désactivé.
     feed:
       user_posts:
         create:
-          failure: Your update has been rejected.
-          success: Your update has been posted.
+          failure: La mise à jour a été rejetée.
+          success: La mise à jour a été effectuée.
     followings:
       create:
-        failure: Unable to make you a fan.
-        success: You are now a fan of %{name}.
+        failure: Impossible d'accéder à votre demande.
+        success: Vous êtes maintenant fan de %{name}.
       destroy:
-        failure: Unable to stop being a fan.
-        success: You are no longer a fan of %{name}.
+        failure: Impossible d'accéder à votre demande.
+        success: Vous n'êtes maintenant plus fan de %{name}.
     games:
       update:
-        success: Game was successfully updated.
+        success: La mise à jour a été effectuée.
     invitations:
       create:
-        success: Your invitation to %{name} has been sent.
+        success: Votre invitation a été envoyée à %{name}.
     leagues:
       create:
-        success: League was successfully created.
+        success: Votre ligue a été créee avec succès.
       destroy:
-        success: League was successfully deleted.
+        success: Votre ligue est maintenant effacée.
       games:
         create:
-          success: Game was successfully scheduled.
+          success: La partie a été créee avec succès.
         destroy:
-          failure: Unable to cancel game.
+          failure: Impossible d'annuler cette partie.
           success: Game was successfully canceled.
         update:
-          success: Game was successfully updated.
+          success: La mise à jour a été effectuée.
       officials:
         create:
-          success: Official was successfully created.
+          success: Cet officiel a été crée avec succès.
         destroy:
-          success: Official was successfully removed.
+          success: Cet officiel est maintenant effacé.
         update:
-          success: Official was successfully updated.
+          success: La mise à jour a été effectuée.
       teams:
         create:
-          success: Team was successfully created.
+          success: Cette équipe a été créee avec succès.
         destroy:
-          success: Team was successfully deleted.
+          success: Cette équipe est maintenant effacée.
         update:
-          success: Team was successfully updated.
+          success: La mise à jour a été effectuée.
       update:
         success: League was successfully updated.
     locations:
       create:
-        success: Location was successfully created.
+        success: Ce lieu a été crée avec succès.
       update:
-        success: Location was successfully updated.
+        success: La mise à jour a été effectuée.
     marker:
       game_goalies:
-        changed: Goalie was successfully changed.
-        pulled: Goalie was successfully pulled.
+        changed: Le gardien a été substitué.
+        pulled: Le gardien a été retiré.
       game_officials:
         update:
-          failure: Each official may only be listed once.
-          success: Game officials were succesfully updated.
+          failure: Un officiel ne peut apparaître qu'une fois dans la liste.
+          success: La mise à jour a été effectuée.
       game_players:
         create:
-          success: Player was successfully added.
+          success: L'ajoût à la liste des joueurs a été effectué.
         update:
-          success: Game roster was successfully updated.
+          success: La mise à jour de l'alignement a été effectuée.
       game_staff_members:
         create:
-          success: Staff member was successfully created.
+          success: L'ajoût à la liste du personnel a été effectué.
         update:
-          success: Game staff member list was successfully updated.
+          success: La mise à jour a été effectuée.
     players:
       claims:
-        approve: You have successfully approved this claim.
-        create: Your claim has been created. We'll email you when your manager responds.
-        deny: You have successfully denied this claim.
-        kiosk_create: You have successfully claimed this player.
-      create: ! '%{name} was successfully added as a team player.'
-      destroy: ! '%{name} was successfully removed from the team.'
-      update: Player was successfully updated.
+        approve: Vous avez approuvé cette requête avec succès.
+        create: Votre requête a été envoyée. Nous vous aviserons lorque votre gérant
+          y aura répondu.
+        deny: Vous avez rejeté cete requête avec succès.
+        kiosk_create: Votre compte est maintenant associé à ce joueur.
+      create: ! '%{name} a été ajouté à la liste des joueurs.'
+      destroy: ! '%{name} a été retiré de la liste des joueurs.'
+      update: La mise à jour a été effectuée.
     staff_members:
-      create: Staff member was successfully created.
-      destroy: Staff member was successfully deleted.
-      update: Staff member was successfully updated.
+      create: L'ajoût à la liste du personnel a été effectué.
+      destroy: Ce membre du personnel a été effacé.
+      update: La mise à jour a été effectuée.
     team_claims:
       create:
         success: Created private team claim link.
@@ -179,24 +180,24 @@ fr:
           failure: You are unable to claim this player.
           success: You have successfully claimed this player.
     tournaments:
-      create: Tournament was successfully created.
-      destroy: Tournament was successfully deleted.
+      create: Le tournoi a été crée avec succès.
+      destroy: Le tournoi a été effacé avec succès.
       games:
-        create: Game was successfully scheduled.
-        destroy: Game was successfully canceled.
-        update: Game was successfully updated.
+        create: La partie a été créee avec succès.
+        destroy: La partie a été effacée avec succès.
+        update: La mise à jour a été effectuée.
       officials:
-        create: Official was successfully created.
-        destroy: Official was successfully destroyed.
-        update: Official was successfuly updated.
+        create: L'officiel a été crée avec succès.
+        destroy: L'officiel a été effacé avec succès.
+        update: La mise à jour a été effectuée.
       teams:
-        update: List of teams in tournament was successfully updated.
-      upate: Tournament was successfully updated.
+        update: La mise à jour de la liste d'équipes a été effectuée avec succès.
+      upate: La mise à jour du tournoi a été effectuée avec succès.
     users:
-      impersonate: You are now impersonating %{name}.
-      update: Your profile was successfully updated.
+      impersonate: Vous êtes maintenant identifié comme étant %{name}.
+      update: Votre profil a été mis à jour avec succès.
     videos:
-      destroy: The video has been removed.
+      destroy: La vidéo a été effacée.
   feed:
     cancel_game: ! '%{user} a annulé un match entre %{visiting_team} et %{home_team}'
     cancel_goal: ! '%{user} a annulé le but de %{player}'
@@ -259,7 +260,7 @@ fr:
       teams_you_manage: Équipes que vous gérez
     welcome:
       header: Bienvenue sur BigShot!
-      tagline: Votre réseau social pour les sports amateurs et de loisirs
+      tagline: Votre réseau social pour les sports amateurs et récréatifs
   invitation:
     header: Envoyer une invitation
     predicates:
@@ -481,23 +482,23 @@ fr:
       submit: Sauvegarder
   registrations:
     new:
-      choose_username: Choose your username
+      choose_username: Choisir votre nom d'usager
       validation:
-        looks_good: Looks good!
+        looks_good: Ça marche!
         messages:
           user[email]:
-            email: Please enter a valid email address.
-            remote: This email address is already taken.
-            required: Please enter your email address.
+            email: Entrez une adressse e-mail valide.
+            remote: Cette adresse e-mail est déjà prise.
+            required: Entrez votre adressse e-mail.
           user[name]:
-            required: Please enter your full name.
+            required: Entrez votre nom.
           user[password]:
-            minlength: Passwords must have at least 8 characters.
-            required: Please create a password for your account.
+            minlength: Le mot de passe doit contenir au moins 8 caractères.
+            required: Créez votre mot de passe.
           user[system_name_attributes][name]:
-            minlength: Usernames must have at least 3 characters.
-            remote: This username is already taken.
-            required: Please choose a username.
+            minlength: Votre nom d'utilisateur doit contenir au moins 3 caractères.
+            remote: Ce nom d'utilisateur est déjà attribué.
+            required: Choisissez votre nom d'utilisateur.
   search_results:
     index:
       no_results: Désolé! Nous n'avons trouvé aucun résultat correspondant à votre
@@ -537,20 +538,14 @@ fr:
         they will be able to join BigShot and claim their player profile.
     players:
       edit:
-        confirmation: Is this you? If so, press the button below to claim this player
-          for your BigShot account.
         confirmation_html: <b>Is this you?</b> If so, press the button below to claim
           this player for your BigShot account.
         header: Claim Player
     show:
       already_claimed: You have already claimed the player(s) below. Consult with
         your team manager if you need to make corrections.
-      claim_button: Réclamer
+      claim_button: Claim
       claimed: Claimed by %{name}
-      manager_instructions_1: Copy the link below and paste it into an email to your
-        team's mailing list.
-      manager_instructions_2: When recipients open the link, they'll see a page that
-        looks like what you see below.
       player_instructions_html: Locate your player below and click the <b>Claim</b>
         button.
   time:
