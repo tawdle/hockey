@@ -222,6 +222,7 @@ fr:
     new_league_marker: ! '%{user} est maintenant marqueur(e) pour la %{league}'
     new_location_manager: ! '%{user} est maintenant gérant(e) de %{location}'
     new_penalty: ! '%{player} a écopé d''une punition: %{penalty}'
+    new_player_claim: ! '%{user} claimed %{player}'
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
     new_user: ! '%{user} est maintenant un membre BigShot'
   follow:

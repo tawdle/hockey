@@ -31,6 +31,7 @@ class Player < ActiveRecord::Base
   scope :for_user, lambda {|user| where(:user_id => user.id) }
 
   after_save :send_invitation, :if => :user_is_invited?
+  after_save :create_player_claim_feed_item, :if => :user_id_changed?
 
   mount_uploader :photo, PhotoUploader
 
@@ -110,5 +111,9 @@ class Player < ActiveRecord::Base
 
   def kiosk_password
     errors.add(:base, "Incorrect kiosk password provided") if kiosk_password_matches == false
+  end
+
+  def create_player_claim_feed_item
+    Feed::NewPlayerClaim.create!(:user => user, :player => self)
   end
 end

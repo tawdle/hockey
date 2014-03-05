@@ -188,6 +188,13 @@ module Feed
     it { item.message.should include "received a penalty" }
   end
 
+  describe NewPlayerClaim do
+    let(:item) { FactoryGirl.build(:new_player_claim) }
+    it { item.should be_valid }
+    it_behaves_like "a feed item with a user"
+    it_behaves_like "a feed item with a player"
+  end
+
   describe NewUser do
     let(:item) { FactoryGirl.build(:new_user) }
     it { item.should be_valid }

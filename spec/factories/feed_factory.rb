@@ -76,6 +76,11 @@ FactoryGirl.define do
     penalty
   end
 
+  factory :new_player_claim, class: Feed::NewPlayerClaim do
+    user
+    player
+  end
+
   factory :new_team_manager, class: Feed::NewTeamManager do
     user
     team
