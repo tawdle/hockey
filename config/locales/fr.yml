@@ -134,7 +134,7 @@ fr:
         update:
           success: La mise à jour a été effectuée.
       update:
-        success: League was successfully updated.
+        success: La mise à jour a été effectuée.
     locations:
       create:
         success: Ce lieu a été crée avec succès.
@@ -163,7 +163,7 @@ fr:
         approve: Vous avez approuvé cette requête avec succès.
         create: Votre requête a été envoyée. Nous vous aviserons lorque votre gérant
           y aura répondu.
-        deny: Vous avez rejeté cete requête avec succès.
+        deny: Vous avez rejeté cette requête avec succès.
         kiosk_create: Votre compte est maintenant associé à ce joueur.
       create: ! '%{name} a été ajouté à la liste des joueurs.'
       destroy: ! '%{name} a été retiré de la liste des joueurs.'
@@ -253,7 +253,7 @@ fr:
   home:
     orientation:
       header: Bienvenue!
-      message_html: <p>Vous semblez être nouveaux ici. Pour profiter à plein de l'expérience
+      message_html: <p>Vous semblez être nouveau ici. Pour profiter à plein de l'expérience
         BigShot, nous vous suggérons d'utiliser la barre de recherche au haut de la
         page pour trouver vos joueurs et équipes préférés. Puis cliquez sur <strong>Devenir
         fan</strong> button.</p>
@@ -548,7 +548,7 @@ fr:
       claim_button: C'est moi!
       claimed: ! '%{name}'
       player_instructions_html: Localisez le joueur correspondant à votre identité
-        et cliquez sur le bouton <b>Claim</b>.
+        et cliquez sur le bouton <b>C'est moi!</b>
   time:
     formats:
       game: ! '%d/%m/%Y - %H:%M %Z'
