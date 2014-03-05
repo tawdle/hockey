@@ -4,7 +4,7 @@ class ApplicationController < ActionController::Base
 
   before_filter :set_locale
   around_filter :user_time_zone, :if => :current_user
-  after_filter :store_location
+  before_filter :store_location
   helper_method :use_facebook
   helper_method :use_twitter
 
