@@ -26,6 +26,7 @@
 //= require rails-timeago
 //= require locales/jquery.timeago.fr-short.js
 //= require jquery.validate
+//= require feed
 
 _.templateSettings = {
     interpolate: /\{\{\=(.+?)\}\}/gim,

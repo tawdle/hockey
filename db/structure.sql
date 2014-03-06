@@ -59,7 +59,8 @@ CREATE TABLE activity_feed_items (
     player_id integer,
     player2_id integer,
     player3_id integer,
-    target_name character varying(255)
+    target_name character varying(255),
+    parent_id integer
 );
 
 
@@ -1467,6 +1468,13 @@ CREATE INDEX delayed_jobs_priority ON delayed_jobs USING btree (priority, run_at
 
 
 --
+-- Name: index_activity_feed_items_on_parent_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_activity_feed_items_on_parent_id ON activity_feed_items USING btree (parent_id);
+
+
+--
 -- Name: index_followings_on_followable_id_and_followable_type; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1973,3 +1981,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140225203239');
 INSERT INTO schema_migrations (version) VALUES ('20140228210023');
 
 INSERT INTO schema_migrations (version) VALUES ('20140303222815');
+
+INSERT INTO schema_migrations (version) VALUES ('20140305225500');

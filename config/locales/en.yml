@@ -75,6 +75,8 @@ en:
           safety_attendant: Safety Attendant
   activity_feed:
     placeholder: Enter status message here...
+    enter_your_reply: Enter your reply here...
+    reply: Reply
     post: Post
   application:
     mini_sign_up:

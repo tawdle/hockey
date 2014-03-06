@@ -74,8 +74,10 @@ fr:
           manager: Gérant
           safety_attendant: Préposé à la sécurité
   activity_feed:
+    enter_your_reply: Enter your reply here...
     placeholder: Entrer votre statut ici...
     post: Publier
+    reply: Reply
   application:
     mini_sign_in:
       header: Déjà membre? Connectez-vous.

@@ -1,18 +1,23 @@
 class ActivityFeedItem < ActiveRecord::Base
+  belongs_to :parent, :class_name => "ActivityFeedItem"
+  has_many :children, :class_name => "ActivityFeedItem", :foreign_key => :parent_id
   belongs_to :game, :inverse_of => :activity_feed_items
   has_many :mentions, :dependent => :destroy, :inverse_of => :activity_feed_item
   has_many :videos, :foreign_key => :feed_item_id, :conditions => {:deleted_at => nil }
 
-  attr_accessible :game, :game_id
+  attr_accessible :game, :game_id, :parent_id
 
   before_create :build_mentions
   after_create :broadcast_changes
 
   default_scope order("created_at desc")
+  scope :top_level, where(:parent_id => nil)
 
   def self.for_user(user)
     id = user.id
-    joins("left outer join mentions on mentions.activity_feed_item_id = activity_feed_items.id").
+    top_level.
+      includes(:children).
+      joins("left outer join mentions on mentions.activity_feed_item_id = activity_feed_items.id").
       joins("left outer join followings f1 on f1.followable_id = mentions.mentionable_id and f1.followable_type = mentions.mentionable_type").
       joins("left outer join followings f2 on f2.followable_id = creator_id and f2.followable_type = 'User'").
       joins("left outer join players on mentions.mentionable_type = 'Player' and mentions.mentionable_id = players.id").
@@ -23,10 +28,14 @@ class ActivityFeedItem < ActiveRecord::Base
   def self.for(obj)
     case obj
     when User
-      joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
+      top_level.
+        includes(:children).
+        joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
         where("creator_id = ? or (mentions.mentionable_id = ? and mentions.mentionable_type = 'User')", obj.id, obj.id);
     else
-      joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
+      top_level.
+        includes(:children).
+        joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
         where(mentions: { mentionable_id: obj.id, mentionable_type: obj.class.name })
     end
   end

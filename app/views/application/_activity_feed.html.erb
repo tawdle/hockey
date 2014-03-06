@@ -19,27 +19,7 @@
   <% if feed_items.any? %>
     <div class="activity-feed">
       <% feed_items.limit(10).each do |item| %>
-        <% owner_class = (defined?(owner) && item.respond_to?(:creator) && owner == item.creator) ? "owner" : "" %>
-        <div class="feed-item <%= owner_class %>">
-          <%= cl_image_tag(item.avatar_url(:thumbnail), :class => "avatar", :width => 50, :height => 50) %>
-          <p>
-            <% if item.respond_to?(:creator) %>
-              <span class="creator"><%= item.creator.name %></span> <%= format_user_link(item.creator, "muted") %>
-            <% end %>
-            <span class="created-at muted"><%= timeago_tag item.created_at %></span>
-            <% if item.game && !(defined?(in_game_context) && in_game_context) %>
-              <small><i>in <%= link_to "#{item.game.home_team.name} vs. #{item.game.visiting_team.name}", item.game %></i></small>
-            <% end %>
-          </p>
-          <p><%= format_message_with_usernames(item.message).html_safe %></p>
-          <% if item.videos.any? %>
-            <p class="videos">
-              <% item.videos.each do |video| %>
-                <%= link_to(image_tag(video.thumb_url), video) %>
-              <% end %>
-            </p>
-          <% end %>
-        </div>
+        <%= render :partial => "feed_item", :locals => {:item => item } %>
       <% end %>
     </div>
   <% end %>

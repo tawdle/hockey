@@ -1,3 +1,9 @@
+.replies .feed-item {
+  border-bottom: none;
+  margin-bottom: 0px;
+  padding-bottom: 5px;
+}
+
 .feed-item {
   padding-left: 60px;
   position: relative;
@@ -10,6 +16,15 @@
     background-color: white;
   }
 
+  .reply-link {
+    visibility: hidden;
+  }
+
+  &:hover {
+    .reply-link {
+      visibility: visible;
+    }
+  }
   img.avatar {
     position: absolute;
     top: 0;
@@ -39,6 +54,12 @@
       -moz-transition: opacity .25s;
       -webkit-transition: opacity .25s;
     }
+  }
+
+  form {
+    display: none;
+    margin-top: 10px;
+    margin-bottom: 0px;
   }
 }
 
