@@ -19,14 +19,12 @@
       <% end %>
     </p>
   <% end %>
-  <% if item.children.any? %>
-    <div class="replies">
-      <% item.children.reverse.each do |reply| %>
-        <%= render :partial => "feed_item", :locals => {:item => reply, :reply => true } %>
-      <% end %>
-    </div>
+  <div class="replies">
+    <% item.children.reverse.each do |reply| %>
+      <%= render :partial => "feed_item", :locals => {:item => reply, :reply => true } %>
   <% end %>
-  <% unless defined?(reply) %>
+  </div>
+  <% unless defined?(reply) && reply %>
     <div class="text-right">
       <%= link_to "#", :class => "reply-link" do %>
         <%= t("activity_feed.reply") %> <i class="icon-reply"></i>
@@ -34,12 +32,14 @@
     </div>
 
     <% if current_user %>
-      <%= form_for(Feed::UserPost.new) do |f| %>
+      <%= form_for(Feed::UserPost.new, :remote => true) do |f| %>
         <div class="field">
           <%= f.text_field :message, :class => "span7", :placeholder => t("activity_feed.enter_your_reply") %>
         </div>
 
         <%= f.hidden_field :parent_id, :value => item.to_param %>
+        <%= hidden_field_tag :reply, true %>
+        <%= hidden_field_tag :owner_id, owner.id if defined?(owner) %>
 
       <% end %>
     <% end %>

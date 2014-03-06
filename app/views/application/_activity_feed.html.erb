@@ -1,26 +1,26 @@
 <% if current_user || feed_items.any? %>
   <h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
 
-  <% new_item ||= Feed::UserPost.new %>
-  <% if current_user %>
-    <%= form_for(new_item) do |f| %>
-      <div class="field pull-left" style="margin-right: 10px;" >
-        <%= f.text_field :message, :class => "span7", :placeholder => t("activity_feed.placeholder"), :value => defined?(to) ? "#{to.at_name} " : "" %>
-      </div>
+  <div class="activity-feed">
+    <% new_item ||= Feed::UserPost.new %>
+    <% if current_user %>
+      <%= form_for(new_item, :remote => true) do |f| %>
+        <div class="field pull-left" style="margin-right: 10px;" >
+          <%= f.text_field :message, :class => "span7", :placeholder => t("activity_feed.placeholder"), :value => defined?(to) ? "#{to.at_name} " : "" %>
+        </div>
 
-      <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
+        <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
 
-      <div class="actions">
-        <%= f.submit t("activity_feed.post"), :class => "btn btn-primary" %>
-      </div>
+        <div class="actions">
+          <%= f.submit t("activity_feed.post"), :class => "btn btn-primary" %>
+        </div>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <% if feed_items.any? %>
-    <div class="activity-feed">
+    <% if feed_items.any? %>
       <% feed_items.limit(10).each do |item| %>
         <%= render :partial => "feed_item", :locals => {:item => item } %>
       <% end %>
-    </div>
-  <% end %>
+    <% end %>
+  </div>
 <% end %>
