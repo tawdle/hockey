@@ -18,7 +18,13 @@ class Feed::UserPostsController < ApplicationController
         end
         format.json { render json: @user_post, status: :created, location: @user_post }
       else
-        format.html { redirect_to :back, alert: t("controllers.feed.user_posts.create.failure") }
+        format.html do
+          if request.xhr?
+            render text: "error(s):\n#{@user_post.errors.full_messages.join('\n')}", status: :unprocessable_entity
+          else
+            redirect_to :back, alert: t("controllers.feed.user_posts.create.failure")
+          end
+        end
         format.json { render json: @user_post.errors, status: :unprocessable_entity }
       end
     end

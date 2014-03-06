@@ -1,10 +1,14 @@
 class Feed::UserPost < ActivityFeedItem
   belongs_to :creator, :class_name => "User"
 
-  attr_accessible :creator_id, :creator, :message
+  attr_accessor :target_type, :target_id
 
+  attr_accessible :creator_id, :creator, :message, :target_type, :target_id
+
+  TargetClasses = [User, Tournament, League, Location, Player, Team]
   validates_presence_of :creator
   validates_presence_of :message
+  validates_inclusion_of :target_type, :in => TargetClasses.map(&:to_s), :allow_nil => true
 
   def avatar_url(version_name = nil)
    creator.avatar_url(version_name)
@@ -28,6 +32,10 @@ class Feed::UserPost < ActivityFeedItem
         sn = SystemName.find_by_name(username)
         res << sn.nameable if sn
       end
+    end
+    if target_type && target_id
+      target = target_type.constantize.find(target_id)
+      res << target unless res.include?(target)
     end
     res
   end
