@@ -19,12 +19,12 @@
       <% end %>
     </p>
   <% end %>
-  <div class="replies">
-    <% item.children.reverse.each do |reply| %>
-      <%= render :partial => "feed_item", :locals => {:item => reply, :reply => true } %>
-  <% end %>
-  </div>
   <% unless defined?(reply) && reply %>
+    <div class="replies">
+      <% item.children.reverse.each do |reply| %>
+        <%= render :partial => "feed_item", :locals => {:item => reply, :reply => true } %>
+      <% end %>
+    </div>
     <div class="text-right">
       <%= link_to "#", :class => "reply-link" do %>
         <%= t("activity_feed.reply") %> <i class="icon-reply"></i>
