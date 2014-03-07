@@ -17,14 +17,15 @@
   }
 
   .reply-link {
-    visibility: hidden;
+    opacity: 0.5;
   }
 
   &:hover {
     .reply-link {
-      visibility: visible;
+      opacity: 1.0;
     }
   }
+
   img.avatar {
     position: absolute;
     top: 0;
