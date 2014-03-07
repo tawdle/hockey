@@ -8,7 +8,7 @@ class Feed::NewLeagueManager < ActivityFeedItem
   validates_presence_of :league
 
   def message
-    I18n.t "feed.new_league_manager", user: user.at_name, league: league.at_name
+    I18n.t "feed.new_league_manager", user: user.feed_name, league: league.feed_name
   end
 
   def mentioned_objects

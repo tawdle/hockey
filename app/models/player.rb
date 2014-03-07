@@ -42,7 +42,7 @@ class Player < ActiveRecord::Base
   end
 
   def feed_name
-    "#{name} (#{at_name})"
+    "[[#{at_name} #{name}]]"
   end
 
   def name_and_number

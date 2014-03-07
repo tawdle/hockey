@@ -8,6 +8,7 @@ class Mention < ActiveRecord::Base
   validates_presence_of :mentionable
 
   NameOrPlayerPattern = /\@(#{SystemName::NameFormat}(?:#[\d]+)?)/
+  FeedNamePattern = /\[\[#{NameOrPlayerPattern} ([^\]]+)\]\]/
 
   def self.rename(user, old_name, new_name)
     ActivityFeedItem.joins(:mentions).where(:mentions => {:user_id => user.id}).readonly(false).each do |item|

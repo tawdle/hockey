@@ -16,4 +16,17 @@ class SystemName < ActiveRecord::Base
   def at_name
     "@#{name}"
   end
+
+  def self.nameable_from_name(name)
+    return nil unless name.starts_with?("@")
+    name = name[1..-1]
+    if name.include?("#")
+      teamname, jersey = name.split("#")
+      team = where(:name => teamname).first
+      return nil unless team
+      Player.where(:team_id => team.nameable_id, :jersey_number => jersey).first
+    else
+      where(:name => name).first.try(:nameable)
+    end
+  end
 end

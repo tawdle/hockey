@@ -13,7 +13,7 @@ class Feed::CancelGoal < ActivityFeedItem
   end
 
   def message
-    I18n.t "feed.cancel_goal", user: user.at_name, player: player.feed_name
+    I18n.t "feed.cancel_goal", user: user.feed_name, player: player.feed_name
   end
 end
 

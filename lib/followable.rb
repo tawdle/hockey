@@ -15,6 +15,10 @@ module Followable
     "@#{system_name.name}"
   end
 
+  def feed_name
+    "[[#{at_name} #{name}]]"
+  end
+
   def accepted_invitation_to_follow(user, invitation)
     self.followers << user unless self.followers.include?(user)
   end

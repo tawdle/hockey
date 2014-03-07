@@ -26,11 +26,30 @@ module UsersHelper
     end
   end
 
+  def format_link(username, displayname)
+    if username.include?("#")
+      team, jersey = username.split("#")
+      dest = system_name_path(team, :j => jersey)
+    else
+      dest = system_name_path(username)
+    end
+    link_to(displayname, dest, :title => username)
+  end
+
   def format_message_with_usernames(msg)
+    matches = msg.scan(Mention::FeedNamePattern)
+    if matches.any?
+      msg = ERB::Util.html_escape(msg)
+      matches.each do |username, displayname|
+        source = Regexp.escape("[[@#{username} #{ERB::Util.html_escape(displayname)}]]")
+        msg.gsub!(/#{source}/, format_link(username, displayname))
+      end
+    end
+
     username_matches = msg.scan(Mention::NameOrPlayerPattern)
     if username_matches
       username_matches = username_matches.flatten
-      msg = msg.clone
+      msg = ERB::Util.html_escape(msg) unless matches
       username_matches.each do |username|
         at_name = Regexp.escape("@#{username}")
         if username.include?("#")

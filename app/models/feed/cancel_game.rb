@@ -11,7 +11,7 @@ class Feed::CancelGame < ActivityFeedItem
   end
 
   def message
-    I18n.t "feed.cancel_game", user: user.at_name, visiting_team: game.visiting_team.at_name, home_team: game.home_team.at_name
+    I18n.t "feed.cancel_game", user: user.feed_name, visiting_team: game.visiting_team.feed_name, home_team: game.home_team.feed_name
   end
 end
 

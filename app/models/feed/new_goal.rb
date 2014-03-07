@@ -13,8 +13,8 @@ class Feed::NewGoal < ActivityFeedItem
       player: player.feed_name,
       assist1: player2.try(:feed_name),
       assist2: player3.try(:feed_name),
-      for_team: player.team.at_name,
-      against_team: game.opposing_team(player.team).at_name
+      for_team: player.team.feed_name,
+      against_team: game.opposing_team(player.team).feed_name
     }
     msg = player3 ? "two_assists" : player2 ? "one_assist" : "solo"
     I18n.t "feed.new_goal.#{msg}", opts

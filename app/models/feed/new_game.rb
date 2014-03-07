@@ -7,7 +7,7 @@ class Feed::NewGame < ActivityFeedItem
   validates_presence_of :game
 
   def message
-    I18n.t "feed.new_game", user: user.at_name, visiting_team: game.visiting_team.at_name, home_team: game.home_team.at_name
+    I18n.t "feed.new_game", user: user.feed_name, visiting_team: game.visiting_team.feed_name, home_team: game.home_team.feed_name
   end
 
   def mentioned_objects

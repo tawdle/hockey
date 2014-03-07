@@ -55,6 +55,10 @@ class User < ActiveRecord::Base
     "@#{cached_system_name}"
   end
 
+  def feed_name
+    "[[#{at_name} #{name}]]"
+  end
+
   def merge(other)
     # Find all references to other, change them to references to us
     User.transaction do

@@ -8,7 +8,7 @@ class Feed::NewLocationManager < ActivityFeedItem
   validates_presence_of :location
 
   def message
-    I18n.t "feed.new_location_manager", user: user.at_name, location: location.at_name
+    I18n.t "feed.new_location_manager", user: user.feed_name, location: location.feed_name
   end
 
   def mentioned_objects

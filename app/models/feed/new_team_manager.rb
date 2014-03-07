@@ -8,7 +8,7 @@ class Feed::NewTeamManager < ActivityFeedItem
   validates_presence_of :team
 
   def message
-    I18n.t "feed.new_team_manager", user: user.at_name, team: team.at_name
+    I18n.t "feed.new_team_manager", user: user.feed_name, team: team.feed_name
   end
 
   def mentioned_objects

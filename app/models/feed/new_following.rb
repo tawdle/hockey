@@ -8,7 +8,7 @@ class Feed::NewFollowing < ActivityFeedItem
 
   def target=(obj)
     @target = obj
-    self.target_name = @target.at_name
+    self.target_name = @target.feed_name
   end
 
   def target
@@ -16,7 +16,7 @@ class Feed::NewFollowing < ActivityFeedItem
   end
 
   def message
-    I18n.t "feed.new_following", user: user.at_name, target: target_name
+    I18n.t "feed.new_following", user: user.feed_name, target: target_name
   end
 
   def mentioned_objects
