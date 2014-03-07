@@ -71,9 +71,7 @@
 
     <br />
 
-    <% if Game.for_team(@team).scheduled_or_active.any? %>
-      <%= render :partial => "games", :locals => { :games => Game.for_team(@team).scheduled_or_active } %>
-    <% end %>
+    <%= render :partial => "games", :locals => { :games => Game.for_team(@team).recent } %>
 
     <%= render :partial => "activity_feed", :locals => {:feed_items => @team.activity_feed_items, :to => @team } %>
 
