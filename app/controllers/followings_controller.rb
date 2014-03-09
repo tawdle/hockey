@@ -19,7 +19,7 @@ class FollowingsController < ApplicationController
   def destroy
     respond_to do |format|
       if @following.destroy
-        format.html { redirect_to :back, notice: t("controllers.followings.destroy.success") }
+        format.html { redirect_to :back, notice: t("controllers.followings.destroy.success", :name => @following.followable.name) }
         format.json { head :no_content }
       else
         format.html { redirect_to :back, error: t("controllers.followings.destroy.failure") }
