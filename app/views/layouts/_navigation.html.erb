@@ -1,25 +1,27 @@
-<%= link_to image_tag("bigshot-logo-crop.png"), root_path, :class => 'brand' %>
+<div class="navbar-header">
+  <%= link_to image_tag("bigshot-logo-crop.png"), root_path, :class => 'navbar-brand' %>
 
-<ul class="nav">
-  <% if user_signed_in? %>
-    <li>
-      <p class="navbar-text"><%= t('navigation.greeting') %>, <%= format_user_link(current_user) %>. </p>
-    </li>
-    <li>
-    <%= link_to(t('navigation.sign_out'), destroy_user_session_path, :method=>'delete') %>
-    </li>
-  <% else %>
-    <li>
-    <%= link_to(t('navigation.sign_in'), new_user_session_path)  %>
-    </li>
-  <% end %>
-  <% if user_signed_in? %>
-    <li>
-    <%= link_to(t('navigation.edit_account'), edit_user_registration_path) %>
-    </li>
-  <% else %>
-    <li>
-    <%= link_to(t('navigation.sign_up'), new_user_registration_path)  %>
-    </li>
-  <% end %>
-</ul>
+  <ul class="nav navbar-nav">
+    <% if user_signed_in? %>
+      <li>
+        <p class="navbar-text"><%= t('navigation.greeting') %>, <%= format_user_link(current_user) %>. </p>
+      </li>
+      <li>
+      <%= link_to(t('navigation.sign_out'), destroy_user_session_path, :method=>'delete') %>
+      </li>
+    <% else %>
+      <li>
+      <%= link_to(t('navigation.sign_in'), new_user_session_path)  %>
+      </li>
+    <% end %>
+    <% if user_signed_in? %>
+      <li>
+      <%= link_to(t('navigation.edit_account'), edit_user_registration_path) %>
+      </li>
+    <% else %>
+      <li>
+      <%= link_to(t('navigation.sign_up'), new_user_registration_path)  %>
+      </li>
+    <% end %>
+  </ul>
+</div>
