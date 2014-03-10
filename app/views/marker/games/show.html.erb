@@ -88,106 +88,112 @@
 
 <ul id="feed-items"></ul>
 
-<div class="clock-editor modal hide" data-backdrop="static" tabindex="-1">
-  <div class="modal-header"><h3>Adjust game clock</h3></div>
-  <div class="modal-body">
-    <form class="form-inline">
-      <input id="clock-minutes" type="number"></input>
-      <label for="clock-minutes">Minutes</label>
-      <input id="clock-seconds" type="number"></input>
-      <label for="clock-seconds">Seconds</label>
-  </div>
+<div class="clock-editor modal" data-backdrop="static" tabindex="-1">
+  <div class="modal-content">
+    <div class="modal-header"><h3>Adjust game clock</h3></div>
+    <div class="modal-body">
+      <form class="form-inline">
+        <input id="clock-minutes" type="number"></input>
+        <label for="clock-minutes">Minutes</label>
+        <input id="clock-seconds" type="number"></input>
+        <label for="clock-seconds">Seconds</label>
+    </div>
 
-  <div class="modal-footer">
-    <%= link_to "Cancel", "#", :class => "cancel" %>
-    <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+    <div class="modal-footer">
+      <%= link_to "Cancel", "#", :class => "cancel" %>
+      <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+    </div>
   </div>
 </div>
 
-<div class="penalty-editor modal hide" data-backdrop="static" tabindex="-1">
-  <div class="modal-header"><h3><i class="icon-flag"></i> <span class="title"><%= t "penalty.editor.title" %></span></h3></div>
-  <div class="modal-body">
-    <form>
+<div class="penalty-editor modal" data-backdrop="static" tabindex="-1">
+  <div class="modal-content">
+    <div class="modal-header"><h3><i class="icon-flag"></i> <span class="title"><%= t "penalty.editor.title" %></span></h3></div>
+    <div class="modal-body">
+      <form>
 
-      <fieldset>
-        <legend><%= Team.model_name.human %></legend>
-        <div class="penalty-team">
-          <label class="radio">
-            <input type="radio" id="penalty-team-<%= @game.home_team_id %>" value="<%= @game.home_team_id %>" name="penalty[team_id]"></input>
-            <%= @game.home_team.name %>
-          </label>
-          <label class="radio">
-            <input type="radio" id="penalty-team-<%= @game.visiting_team_id %>" value="<%= @game.visiting_team_id %>" name="penalty[team_id]" ></input>
-            <%= @game.visiting_team.name %>
-          </label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend><%= Player.model_name.human %></legend>
-        <div class="penalty-player">
-          <div id="penalty-players-team-<%= @game.home_team_id %>"></div>
-          <div id="penalty-players-team-<%= @game.visiting_team_id %>"></div>
-        </div>
-        <select class="other-player"></select>
-        <div>
-          <label class="checkbox">
-            <input type="checkbox" class="served-by-other-player"></input>
-            Served by another player
-          </label>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <div class="penalty-serving-player">
-          <div class="home-team"></div>
-          <div class="visiting-team"></div>
-        </div>
-      </fieldset>
-
-      <fieldset>
-        <legend><%= Penalty.human_attribute_name(:category) %></legend>
-        <div class="penalty-category">
-          <select>
-            <%= options_for_select(Penalty::Codes.keys.map {|category| [t(category, :scope => "penalties.categories"), category] }) %>
-          </select>
-        </div>
-      </fieldset>
-
-      <fieldset class="clearfix">
-        <legend><%= Penalty.human_attribute_name(:infraction) %></fieldset>
-        <div class="penalty-infraction">
-          <div class="penalty-infraction-radios">
-            <% abbr = t("penalties.infractions.abbreviations") %>
-            <% Penalty::Codes[:minor][:common].keys.each do |id| %>
-              <input id="penalty-infraction-radio-<%= id %>" type="radio" name="penalty[infraction]" value="<%= id %>"></input>
-              <label for="penalty-infraction-radio-<%= id %>" class="btn"><%= abbr[id] || t(id, :scope => "penalties.infractions") %></label>
-            <% end %>
+        <fieldset>
+          <legend><%= Team.model_name.human %></legend>
+          <div class="penalty-team">
+            <label class="radio">
+              <input type="radio" id="penalty-team-<%= @game.home_team_id %>" value="<%= @game.home_team_id %>" name="penalty[team_id]"></input>
+              <%= @game.home_team.name %>
+            </label>
+            <label class="radio">
+              <input type="radio" id="penalty-team-<%= @game.visiting_team_id %>" value="<%= @game.visiting_team_id %>" name="penalty[team_id]" ></input>
+              <%= @game.visiting_team.name %>
+            </label>
           </div>
+        </fieldset>
 
+        <fieldset>
+          <legend><%= Player.model_name.human %></legend>
+          <div class="penalty-player">
+            <div id="penalty-players-team-<%= @game.home_team_id %>"></div>
+            <div id="penalty-players-team-<%= @game.visiting_team_id %>"></div>
+          </div>
+          <select class="other-player"></select>
           <div>
-            <select></select>
+            <label class="checkbox">
+              <input type="checkbox" class="served-by-other-player"></input>
+              Served by another player
+            </label>
           </div>
-        </div>
-      </fieldset>
-    </form>
-  </div>
-  <div class="modal-footer">
-    <%= link_to "Cancel", "#", :class => "cancel" %>
-    <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+        </fieldset>
+
+        <fieldset>
+          <div class="penalty-serving-player">
+            <div class="home-team"></div>
+            <div class="visiting-team"></div>
+          </div>
+        </fieldset>
+
+        <fieldset>
+          <legend><%= Penalty.human_attribute_name(:category) %></legend>
+          <div class="penalty-category">
+            <select>
+              <%= options_for_select(Penalty::Codes.keys.map {|category| [t(category, :scope => "penalties.categories"), category] }) %>
+            </select>
+          </div>
+        </fieldset>
+
+        <fieldset class="clearfix">
+          <legend><%= Penalty.human_attribute_name(:infraction) %></fieldset>
+          <div class="penalty-infraction">
+            <div class="penalty-infraction-radios">
+              <% abbr = t("penalties.infractions.abbreviations") %>
+              <% Penalty::Codes[:minor][:common].keys.each do |id| %>
+                <input id="penalty-infraction-radio-<%= id %>" type="radio" name="penalty[infraction]" value="<%= id %>"></input>
+                <label for="penalty-infraction-radio-<%= id %>" class="btn"><%= abbr[id] || t(id, :scope => "penalties.infractions") %></label>
+              <% end %>
+            </div>
+
+            <div>
+              <select></select>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <%= link_to "Cancel", "#", :class => "cancel" %>
+      <%= link_to "Save", "#", :class => "save btn btn-primary" %>
+    </div>
   </div>
 </div>
 
-<div class="mvp-editor modal hide" data-backdrop="static" tabindex="-1">
-  <div class="modal-header"><h1>Joueur du match</h1></div>
-  <div class="modal-body">
-    <h2><%= @game.visiting_team.name %></h2>
-    <div class="visiting-players"></div>
-    <h2><%= @game.home_team.name %></h2>
-    <div class="home-players"></div>
-  </div>
-  <div class="modal-footer">
-    <%= link_to "Close", "#", :class => "btn cancel" %>
+<div class="mvp-editor modal" data-backdrop="static" tabindex="-1">
+  <div class="modal-content">
+    <div class="modal-header"><h1>Joueur du match</h1></div>
+    <div class="modal-body">
+      <h2><%= @game.visiting_team.name %></h2>
+      <div class="visiting-players"></div>
+      <h2><%= @game.home_team.name %></h2>
+      <div class="home-players"></div>
+    </div>
+    <div class="modal-footer">
+      <%= link_to "Close", "#", :class => "btn cancel" %>
+    </div>
   </div>
 
 </div>
