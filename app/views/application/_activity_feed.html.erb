@@ -4,10 +4,12 @@
   <div class="activity-feed">
     <% new_item ||= Feed::UserPost.new %>
     <% if current_user %>
-      <%= form_for(new_item, :remote => true) do |f| %>
-        <div class="form-group pull-left" style="margin-right: 10px;" >
-          <%= f.label :message, :class => "sr-only">
-          <%= f.text_field :message, :class => "form-control col-md-7", :placeholder => t("activity_feed.placeholder") %>
+      <%= form_for(new_item, :remote => true, :class => "form-inline") do |f| %>
+        <div class="form-group">
+          <%= f.label :message, :class => "sr-only" %>
+          <div class="col-md-7">
+            <%= f.text_field :message, :class => "form-control", :placeholder => t("activity_feed.placeholder") %>
+          </div>
         </div>
 
         <%= f.hidden_field :game_id, :value => f.object.game.to_param %>

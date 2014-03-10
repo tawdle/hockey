@@ -15,7 +15,7 @@
     <div class="col-md-4">
       <div class="form-group">
         <%= f.label :name %>
-        <%= f.text_field :name, :class => "form-control col-md-4", :"data-suggest-system-name-in" => "location_system_name_attributes_name" %>
+        <%= f.text_field :name, :class => "form-control", :"data-suggest-system-name-in" => "location_system_name_attributes_name" %>
       </div>
 
       <%= f.fields_for :system_name do |snf| %>
@@ -30,11 +30,11 @@
 
       <div class="form-group">
         <%= f.label :address_1 %>
-        <%= f.text_field :address_1, :class => "form-control col-md-4" %>
+        <%= f.text_field :address_1, :class => "form-control" %>
       </div>
 
       <div class="form-group">
-        <%= f.text_field :address_2, :class => "form-control col-md-4" %>
+        <%= f.text_field :address_2, :class => "form-control" %>
       </div>
 
       <div class="form-group">
