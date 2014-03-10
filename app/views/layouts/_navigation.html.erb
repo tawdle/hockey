@@ -10,7 +10,12 @@
 </div>
 
 <div class="navbar-collapse collapse">
-  <ul class="nav navbar-nav">
+  <%= form_tag(search_index_path, :method => :get, :class => "navbar-form navbar-left") do %>
+    <div class="form-group">
+      <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t("search_results.index.placeholder"), :style => "min-width: 250px;" %>
+    </div>
+  <% end %>
+  <ul class="nav navbar-nav navbar-right">
     <% if user_signed_in? %>
       <li>
         <p class="navbar-text"><%= t('navigation.greeting') %>, <%= format_user_link(current_user) %>. </p>
@@ -33,9 +38,4 @@
       </li>
     <% end %>
   </ul>
-  <%= form_tag(search_index_path, :method => :get, :class => "navbar-form navbar-left") do %>
-    <div class="form-group">
-      <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t("search_results.index.placeholder"), :style => "min-width: 250px;" %>
-    </div>
-  <% end %>
 </div>
