@@ -34,7 +34,7 @@
     <% if current_user %>
       <%= form_for(Feed::UserPost.new, :remote => true) do |f| %>
         <div class="field">
-          <%= f.text_field :message, :class => "span7", :placeholder => t("activity_feed.enter_your_reply") %>
+          <%= f.text_field :message, :class => "col-md-7", :placeholder => t("activity_feed.enter_your_reply") %>
         </div>
 
         <%= f.hidden_field :parent_id, :value => item.to_param %>

@@ -1,11 +1,11 @@
 <div class="row">
-  <div class="span8">
+  <div class="col-md-8">
     <%= render :partial => "invitations" %>
     <%= render :partial => "claims" %>
     <%= render :partial => "orientation" %>
     <%= render :partial => "tournaments", :locals => {:tournaments => Tournament } %>
   </div>
-  <div class="span4">
+  <div class="col-md-4">
     <%= render :partial => "players" %>
     <%= render :partial => "authorizations" %>
     <%= render :partial => "admin" if current_user.admin? %>

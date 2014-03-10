@@ -36,7 +36,7 @@
             :style => "visibility: #{game_player ? 'visible' : 'hidden'}" %>
         </td>
         <td>
-          <%= text_field_tag "game[game_players_attributes][#{player.id}][player_attributes][jersey_number]", player.jersey_number, :class => "span1", :style => "position: relative; top: 6px; margin-left: 8px;" %>
+          <%= text_field_tag "game[game_players_attributes][#{player.id}][player_attributes][jersey_number]", player.jersey_number, :class => "col-md-1", :style => "position: relative; top: 6px; margin-left: 8px;" %>
           <%= hidden_field_tag "game[game_players_attributes][#{player.id}][player_attributes][id]", player.id %>
         </td>
       </tr>

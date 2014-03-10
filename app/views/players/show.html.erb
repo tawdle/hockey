@@ -1,7 +1,7 @@
 <% title [@player.name, @player.team.name, @player.team.league.name].join(" - ") %>
 
 <div class="row">
-  <div class="span8">
+  <div class="col-md-8">
 
     <h3>Player: <%= @player.name %>
       <%= render partial: "follow_button", locals: { target: @player } %>
@@ -36,7 +36,7 @@
 
   </div>
 
-  <div class="span4">
+  <div class="col-md-4">
     <%= render :partial => "mini_sign_up" unless current_user %>
     <%= render :partial => "followers", :locals => {:target => @player } %>
   </div>

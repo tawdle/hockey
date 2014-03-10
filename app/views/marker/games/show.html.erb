@@ -75,7 +75,7 @@
 <% if current_user %>
   <%= form_for(Feed::UserPost.new(:game => @game), :remote => true) do |f| %>
     <div class="field pull-left" style="margin-right: 10px;" >
-      <%= f.text_field :message, :class => "span4", :placeholder => t("activity_feed.placeholder") %>
+      <%= f.text_field :message, :class => "col-md-4", :placeholder => t("activity_feed.placeholder") %>
     </div>
 
     <%= f.hidden_field :game_id, :value => f.object.game.to_param %>

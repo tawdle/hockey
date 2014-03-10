@@ -1,7 +1,7 @@
 <% title @league.name %>
 
 <div class="row">
-  <div class="span8">
+  <div class="col-md-8">
     <h2>
       <% if @league.logo.present? %>
         <%= cl_image_tag @league.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
@@ -34,7 +34,7 @@
     <%= link_to "New Team", new_league_team_path(@league), :class => "btn" %>
   </div>
 
-  <div class="column span4">
+  <div class="column col-md-4">
     <%= render :partial => "followers", :locals => {:target => @league } %>
 
     <div class="well">
