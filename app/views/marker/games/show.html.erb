@@ -224,10 +224,10 @@
 <td class="infraction">{{= App.translations.penalties.infractions[infraction] + " - " + App.translations.penalties.categories[category] }}</td>
 <td style="white-space: nowrap">
   <span class="timer" style="white-space: nowrap"></span>
-  <%= link_to "#", :class => "edit btn btn-small" do %>
+  <%= link_to "#", :class => "edit btn btn-default btn-sm" do %>
     <i class="icon-edit"></i>
   <% end %>
-  <%= link_to "#", :class => "delete btn btn-small btn-danger" do %>
+  <%= link_to "#", :class => "delete btn btn-sm btn-danger" do %>
     <i class="icon-remove"></i>
   <% end %>
 </td>
@@ -238,10 +238,10 @@
 <td>{{= App.displaySeconds(elapsed_time) }}</td>
 <td>{{= players.join("<br>") }}</td>
 <td>
-  <%= link_to "#", :class => "edit btn btn-small" do %>
+  <%= link_to "#", :class => "edit btn btn-sm btn-default" do %>
     <i class="icon-edit"></i>
   <% end %>
-  <%= link_to "#", :class => "delete btn btn-small btn-danger" do %>
+  <%= link_to "#", :class => "delete btn btn-sm btn-danger" do %>
     <i class="icon-remove"></i>
   <% end %>
 </td>

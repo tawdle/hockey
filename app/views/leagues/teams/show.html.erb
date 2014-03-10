@@ -9,7 +9,7 @@
 
       <div class="team-name">
         <%= @team.name %>
-        <%= link_to t("actions.edit"), edit_team_path(@team), :class => "btn btn-small" if can? :edit, @team %>
+        <%= link_to t("actions.edit"), edit_team_path(@team), :class => "btn btn-default btn-sm" if can? :edit, @team %>
         <%= render :partial => "follow_button", :locals => {:target => @team } %>
       </div>
       <div><%= format_team_link(@team) %></div>
@@ -83,7 +83,7 @@
     <div class="well">
       <h4><%= t("manager", :scope => "activerecord.values.authorization.role").pluralize %>
         <% if can?(:create, Invitation.new(:target => @team)) %>
-          <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @team.to_param, :target_type => "Team"), :class => "btn btn-small" %>
+          <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @team.to_param, :target_type => "Team"), :class => "btn btn-default btn-sm" %>
       <% end %>
       </h4>
 
@@ -92,7 +92,7 @@
 
     <div class="well">
       <h4><%= StaffMember.model_name.human.pluralize %>
-        <%= link_to "Edit", team_staff_members_path(@team), :class => "btn btn-small" if can? :update, @team %>
+        <%= link_to "Edit", team_staff_members_path(@team), :class => "btn btn-default btn-sm" if can? :update, @team %>
       </h4>
       <p> <%= @team.staff_members.sort_by {|sm| StaffMember::Roles.index(sm.role) || 0}.collect(&:name_and_role).join(", ") || "<em>none</em>".html_safe %> </p>
     </div>

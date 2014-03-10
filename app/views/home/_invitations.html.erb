@@ -5,8 +5,8 @@
         <a class="close" href="#" data-dismiss="alert">&#215;</a>
         <%= invitation.creator.name %> has invited you to <%= invitation.predicate %> <%= invitation.target.name %>.
         <div class="btn-group" style="margin-left: 20px">
-          <%= link_to "Accept", accept_invitation_path(invitation), :class => "btn btn-small" %>
-          <%= link_to "Decline", decline_invitation_path(invitation), :class => "btn btn-small" %>
+          <%= link_to "Accept", accept_invitation_path(invitation), :class => "btn btn-default btn-sm" %>
+          <%= link_to "Decline", decline_invitation_path(invitation), :class => "btn btn-default btn-sm" %>
         </div>
       </div>
     <% end %>

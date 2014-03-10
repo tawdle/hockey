@@ -8,12 +8,12 @@
       <%= f.hidden_field :user_id %>
       <%= f.hidden_field :followable_type %>
       <%= f.hidden_field :followable_id %>
-      <%= f.submit t("follow.start_following"), :class => "btn btn-small btn-primary" %>
+      <%= f.submit t("follow.start_following"), :class => "btn btn-sm btn-primary" %>
     <% end %>
   <% elsif unfollowing %>
     <%= form_for unfollowing, :method => "delete" do |f| %>
       <%= f.hidden_field :id %>
-      <%= f.submit t("follow.stop_following"), :class => "btn btn-small" %>
+      <%= f.submit t("follow.stop_following"), :class => "btn btn-sm btn-default" %>
     <% end %>
   <% end %>
 <% end %>

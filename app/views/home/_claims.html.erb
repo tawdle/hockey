@@ -4,7 +4,7 @@
       <div class="alert alert-info">
         <a class="close" href="#" data-dismiss="alert">&#215;</a>
         You have a player claim waiting to be approved from <%= format_user_link(player_claim.creator) %>.
-        <%= link_to "See claim", player_claim_path(player_claim.player, player_claim), :class => "btn btn-small pull-right" %>
+        <%= link_to "See claim", player_claim_path(player_claim.player, player_claim), :class => "btn btn-default btn-sm pull-right" %>
       </div>
     <% end %>
   </div>
