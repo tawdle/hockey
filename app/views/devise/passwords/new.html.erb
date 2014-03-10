@@ -5,7 +5,7 @@
 
   <div class="form-group">
     <%= f.label :email %>
-    <%= f.email_field :email, :autofocus => true %>
+    <%= f.email_field :email, :autofocus => true, :class => "form-control" %>
   </div>
 
   <div><%= f.submit t('.send_me_reset_password_instructions', :default => "Send me reset password instructions"), :class => "btn btn-primary" %></div>

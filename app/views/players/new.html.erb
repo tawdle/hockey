@@ -17,12 +17,12 @@
 
   <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class => "form-control" %>
   </div>
 
   <div class="form-group">
     <%= f.label :jersey_number %>
-    <%= f.text_field :jersey_number, :class => "col-md-1" %>
+    <%= f.text_field :jersey_number, :class => "form-control col-md-1" %>
   </div>
 
   <div class="form-group">
@@ -33,9 +33,9 @@
   <div class="form-group">
     <%= f.label :username_or_email %>
     <% if @player.new_record? %>
-      <%= f.text_field :username_or_email, :placeholder => "Optional: enter email address to invite"  %>
+      <%= f.text_field :username_or_email, :class => "form-control", :placeholder => "Optional: enter email address to invite"  %>
     <% else %>
-      <%= f.text_field :ignore, :value => @player.at_name, :disabled => true %>
+      <%= f.text_field :ignore, :value => @player.at_name, :class => "form-control", :disabled => true %>
     <% end %>
   </div>
 

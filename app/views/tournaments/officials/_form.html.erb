@@ -1,7 +1,7 @@
 <%= form_for([@tournament, @official]) do |f| %>
   <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class => "form-control" %>
   </div>
   <div>
     <%= f.submit :class => "btn btn-primary" %>

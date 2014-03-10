@@ -15,7 +15,7 @@
     <div class="col-md-4">
       <div class="form-group">
         <%= f.label :name %>
-        <%= f.text_field :name, :class => "col-md-4", :"data-suggest-system-name-in" => "location_system_name_attributes_name" %>
+        <%= f.text_field :name, :class => "form-control col-md-4", :"data-suggest-system-name-in" => "location_system_name_attributes_name" %>
       </div>
 
       <%= f.fields_for :system_name do |snf| %>
@@ -23,33 +23,33 @@
           <%= snf.label :name %>
           <div class="input-prepend">
             <span class="add-on">@</span>
-            <%= snf.text_field :name %>
+            <%= snf.text_field :name, :class => "form-control" %>
           </div>
         </div>
       <% end %>
 
       <div class="form-group">
         <%= f.label :address_1 %>
-        <%= f.text_field :address_1, :class => "col-md-4" %>
+        <%= f.text_field :address_1, :class => "form-control col-md-4" %>
       </div>
 
       <div class="form-group">
-        <%= f.text_field :address_2, :class => "col-md-4" %>
+        <%= f.text_field :address_2, :class => "form-control col-md-4" %>
       </div>
 
       <div class="form-group">
         <%= f.label :city %>
-        <%= f.text_field :city %>
+        <%= f.text_field :city, :class => "form-control" %>
       </div>
 
       <div class="form-group">
         <%= f.label :state %>
-        <%= f.text_field :state %>
+        <%= f.text_field :state, :class => "form-control" %>
       </div>
 
       <div class="form-group">
         <%= f.label :zip %>
-        <%= f.text_field :zip %>
+        <%= f.text_field :zip, :class => "form-control" %>
       </div>
 
       <div class="form-group">
@@ -61,17 +61,17 @@
     <div class="col-md-4">
       <div class="form-group">
         <%= f.label :telephone %>
-        <%= f.telephone_field :telephone %>
+        <%= f.telephone_field :telephone, :class => "form-control" %>
       </div>
 
       <div class="form-group">
         <%= f.label :email %>
-        <%= f.email_field :email %>
+        <%= f.email_field :email, :class => "form-control" %>
       </div>
 
       <div class="form-group">
         <%= f.label :website %>
-        <%= f.url_field :website %>
+        <%= f.url_field :website, :class => "form-control" %>
       </div>
     </div>
   </div>

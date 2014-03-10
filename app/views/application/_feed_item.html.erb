@@ -35,7 +35,7 @@
       <%= form_for(Feed::UserPost.new, :remote => true) do |f| %>
         <div class="form-group">
           <%= f.label :message, :class => "sr-only">
-          <%= f.text_field :message, :class => "col-md-7", :placeholder => t("activity_feed.enter_your_reply") %>
+          <%= f.text_field :message, :class => "form-control col-md-7", :placeholder => t("activity_feed.enter_your_reply") %>
         </div>
 
         <%= f.hidden_field :parent_id, :value => item.to_param %>

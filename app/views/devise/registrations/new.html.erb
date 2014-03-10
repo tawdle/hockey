@@ -47,23 +47,23 @@
 
   <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class => "form-control" %>
   </div>
 
   <div class="form-group">
     <%= f.label :email %>
-    <%= f.email_field :email %>
+    <%= f.email_field :email, :class => "form-control" %>
   </div>
 
   <div class="form-group">
     <%= f.label :password %>
-    <%= f.password_field :password, :value => resource.password %>
+    <%= f.password_field :password, :value => resource.password, :class => "form-control" %>
   </div>
 
   <%= f.fields_for :system_name do |ff| %>
     <div class="form-group">
       <%= ff.label :name, t("registrations.new.choose_username") %>
-      <%= ff.text_field :name %>
+      <%= ff.text_field :name, :class => "form-control" %>
     </div>
   <% end %>
 

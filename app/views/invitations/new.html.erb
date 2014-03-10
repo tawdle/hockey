@@ -17,7 +17,7 @@
 
   <div class="form-group">
     <%= f.label :username_or_email, :class => "sr-only" %>
-    <%= f.text_field :username_or_email, :autofocus => true %>
+    <%= f.text_field :username_or_email, :class => "form-control", :autofocus => true %>
   </div>
   <%= f.hidden_field :predicate, :value => @invitation.predicate %>
   <%= f.hidden_field :target_id, :value => @invitation.target.to_param %>

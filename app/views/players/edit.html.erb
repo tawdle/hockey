@@ -15,19 +15,19 @@
 
   <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :class => "form-control" %>
   </div>
 
   <% unless @player.user %>
     <div class="form-group">
       <%= f.label :email %>
-      <%= f.text_field :email %>
+      <%= f.text_field :email, :class => "form-control" %>
     </div>
   <% end %>
 
   <div class="form-group">
     <%= f.label :jersey_number %>
-    <%= f.text_field :jersey_number, :class => "col-md-1" %>
+    <%= f.text_field :jersey_number, :class => "col-md-1 form-control" %>
   </div>
 
   <div class="form-group">
@@ -40,7 +40,7 @@
     <div style="margin-bottom: 10px">
       <%= cl_image_tag(@player.photo_url(:small)) if @player.photo? %>
     </div>
-    <%= f.file_field :photo %>
+    <%= f.file_field :photo, :class => "form-control" %>
     <%= f.hidden_field :photo_cache %>
   </div>
 

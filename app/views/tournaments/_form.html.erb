@@ -13,7 +13,7 @@
 
   <div class="form-group">
     <%= f.label :name %>
-    <%= f.text_field :name, :"data-suggest-system-name-in" => "tournament_system_name_attributes_name" %>
+    <%= f.text_field :name, :class => "form-control", :"data-suggest-system-name-in" => "tournament_system_name_attributes_name" %>
   </div>
 
   <%= f.fields_for :system_name do |snf| %>
@@ -21,7 +21,7 @@
       <%= snf.label :name %>
       <div class="input-prepend">
         <span class="add-on">@</span>
-        <%= snf.text_field :name %>
+        <%= snf.text_field :name, :class => "form-control" %>
       </div>
     </div>
   <% end %>
