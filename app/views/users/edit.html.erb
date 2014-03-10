@@ -12,19 +12,19 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :email %>
     <%= f.text_field :email %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
 
   <%= f.hidden_field :avatar_cache %>
 
-  <div class="field">
+  <div class="form-group">
     <% if @user.avatar.present? %>
       <%= cl_image_tag @user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
     <% end %>
@@ -33,12 +33,12 @@
     <%= f.file_field :avatar %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :time_zone %>
     <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :language %>
     <%= f.collection_select :language, [["Français", :fr], ["English", :en]], :second, :first %>
   </div>

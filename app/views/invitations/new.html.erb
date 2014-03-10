@@ -15,15 +15,16 @@
     </div>
   <% end %>
 
-  <div class="fields">
+  <div class="form-group">
+    <%= f.label :username_or_email, :class => "sr-only" %>
     <%= f.text_field :username_or_email, :autofocus => true %>
-    <%= f.hidden_field :predicate, :value => @invitation.predicate %>
-    <%= f.hidden_field :target_id, :value => @invitation.target.to_param %>
-    <%= f.hidden_field :target_type, :value => @invitation.target.class.to_s %>
-    <% if params[:back_to] %>
-      <%= hidden_field_tag :back_to, params[:back_to] %>
-    <% end %>
   </div>
+  <%= f.hidden_field :predicate, :value => @invitation.predicate %>
+  <%= f.hidden_field :target_id, :value => @invitation.target.to_param %>
+  <%= f.hidden_field :target_type, :value => @invitation.target.class.to_s %>
+  <% if params[:back_to] %>
+    <%= hidden_field_tag :back_to, params[:back_to] %>
+  <% end %>
   <div class="actions">
     <%= f.submit :class => "btn btn-primary" %>
   </div>

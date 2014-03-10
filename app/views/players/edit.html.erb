@@ -13,29 +13,29 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
 
   <% unless @player.user %>
-    <div class="field">
+    <div class="form-group">
       <%= f.label :email %>
       <%= f.text_field :email %>
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :jersey_number %>
     <%= f.text_field :jersey_number, :class => "col-md-1" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :role %>
     <%= f.collection_select :role, Player::Roles.map {|r| [r, t(r, :scope => "activerecord.values.player.role")]}, :first, :second %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :photo %>
     <div style="margin-bottom: 10px">
       <%= cl_image_tag(@player.photo_url(:small)) if @player.photo? %>

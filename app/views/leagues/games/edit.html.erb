@@ -15,12 +15,12 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :location %>
     <%= f.collection_select :location_id, Location.all, :id, :name %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :start_time %>
     <%= f.datetime_select :start_time, { :default => DateTime.now.at_beginning_of_hour + 7.days, :start_year => DateTime.now.year}, { :class => "col-md-1" } %>
   </div>

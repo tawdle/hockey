@@ -11,22 +11,22 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :visiting_team %>
     <%= f.collection_select :visiting_team_id, @league.teams, :id, :full_name %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :home_team %>
     <%= f.collection_select :home_team_id, @league.teams, :id, :full_name %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :location %>
     <%= f.collection_select :location_id, Location.all, :id, :name %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :start_time %>
     <%= f.datetime_select :start_time, { :default => DateTime.now.at_beginning_of_hour + 7.days, :start_year => DateTime.now.year}, { :class => "col-md-1" } %>
   </div>
@@ -53,7 +53,7 @@
     </table>
   </fieldset>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :number %>
     <%= f.text_field :number %>
   </div>

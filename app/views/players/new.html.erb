@@ -15,22 +15,22 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :jersey_number %>
     <%= f.text_field :jersey_number, :class => "col-md-1" %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :role %>
     <%= f.collection_select :role, Player::Roles.map {|r| [r, r.to_s.humanize]}, :first, :second %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :username_or_email %>
     <% if @player.new_record? %>
       <%= f.text_field :username_or_email, :placeholder => "Optional: enter email address to invite"  %>

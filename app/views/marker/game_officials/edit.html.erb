@@ -13,15 +13,15 @@
     </div>
   <% end %>
 
-  <div>
+  <div class="form-group">
     <label for="referee">Referee</label>
     <%= select_tag "game[referee_ids][]", options_for_select(@game_officials, @game.referee_ids[0]), :include_blank => true %>
   </div>
-  <div>
+  <div class="form-group">
     <label for "linesman1">Linesman</label>
     <%= select_tag "game[linesman_ids][]", options_for_select(@game_officials, @game.linesman_ids[0]), :include_blank => true %>
   </div>
-  <div>
+  <div class="form-group">
     <label for "linesman2">Linesman</label>
     <%= select_tag "game[linesman_ids][]", options_for_select(@game_officials, @game.linesman_ids[1]), :include_blank => true %>
   </div>

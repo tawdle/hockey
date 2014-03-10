@@ -11,13 +11,13 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :name %>
     <%= f.text_field :name, :"data-suggest-system-name-in" => "tournament_system_name_attributes_name" %>
   </div>
 
   <%= f.fields_for :system_name do |snf| %>
-    <div class="field">
+    <div class="form-group">
       <%= snf.label :name %>
       <div class="input-prepend">
         <span class="add-on">@</span>
@@ -26,19 +26,19 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :division %>
     <%= f.select :division, League::Divisions.map {|d| [t("league.divisions.#{d}"), d]} %>
   </div>
 
-  <div class="field">
+  <div class="form-group">
     <%= f.label :classification %>
     <%= f.select :classification, League::Classifications.map {|c| [t("league.classifications.#{c}"), c]}, :include_blank => true %>
   </div>
 
   <%= f.hidden_field :logo_cache %>
 
-  <div class="field">
+  <div class="form-group">
     <% if @tournament.logo.present? %>
       <%= cl_image_tag @tournament.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
     <% end %>

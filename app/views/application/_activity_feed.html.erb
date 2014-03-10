@@ -5,7 +5,8 @@
     <% new_item ||= Feed::UserPost.new %>
     <% if current_user %>
       <%= form_for(new_item, :remote => true) do |f| %>
-        <div class="field pull-left" style="margin-right: 10px;" >
+        <div class="form-group pull-left" style="margin-right: 10px;" >
+          <%= f.label :message, :class => "sr-only">
           <%= f.text_field :message, :class => "col-md-7", :placeholder => t("activity_feed.placeholder") %>
         </div>
 
