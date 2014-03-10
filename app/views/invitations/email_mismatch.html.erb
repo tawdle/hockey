@@ -7,5 +7,5 @@ However, the email address associated with your account (<%= current_user.email 
 
 <div class="actions">
   <%= link_to "Yes, accept", accept_invitation_path(@invitation, :confirm => true), :class => "btn btn-primary" %>
-  <%= link_to "No, don't accept", root_path, :class => "btn" %>
+  <%= link_to "No, don't accept", root_path, :class => "btn btn-default" %>
 </div>

@@ -18,7 +18,7 @@
       <div class="player text-center unclaimed">
         <div><%= link_to(image_tag(player.photo_url(:thumbnail)), edit_team_claim_player_path(@team_claim, player)) %></div>
         <div><%= link_to(player.name_and_number, edit_team_claim_player_path(@team_claim, player)) %></div>
-        <div><%= link_to(t(".claim_button"), edit_team_claim_player_path(@team_claim, player), :class => "btn") %></div>
+        <div><%= link_to(t(".claim_button"), edit_team_claim_player_path(@team_claim, player), :class => "btn btn-default") %></div>
       </div>
     <% end %>
   <% end %>

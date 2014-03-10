@@ -34,7 +34,7 @@
 
       </address>
 
-      <%= link_to "Edit", edit_location_path(@location), :class => "btn" if can? :edit, @location %>
+      <%= link_to "Edit", edit_location_path(@location), :class => "btn btn-default" if can? :edit, @location %>
     </div>
   </div>
 
@@ -43,7 +43,7 @@
     <%= render :partial => "mini_sign_up" unless current_user %>
     <%= render :partial => "followers", :locals => {:target => @location } %>
     <div class="well" style="margin-top: 10px;">
-      <h3 class="page-header">Managers <%= link_to("+", new_invitation_path(:predicate => :manage, :target_id => @location.to_param, :target_type => "Location"), :class => "btn") if can?(:manage, @location) %></h3>
+      <h3 class="page-header">Managers <%= link_to("+", new_invitation_path(:predicate => :manage, :target_id => @location.to_param, :target_type => "Location"), :class => "btn btn-default") if can?(:manage, @location) %></h3>
       <%= @location.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe %>
     </div>
   </div>

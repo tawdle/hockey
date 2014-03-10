@@ -64,7 +64,7 @@
     <%= format_message_with_usernames(@video.feed_item.message).html_safe %>
     <% if can? :destroy, @video %>
       <small>
-        <%= link_to "Destroy", @video, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-mini" %>
+        <%= link_to "Destroy", @video, method: :delete, data: { confirm: 'Are you sure?' }, class: "btn btn-default btn-xs" %>
       </small>
     <% end %>
   </h4>

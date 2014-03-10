@@ -1,6 +1,6 @@
 <h3><%= Game.model_name.human.pluralize %>
 <% if defined?(new_game_path) && new_game_path.present? %>
-    <%= link_to "Schedule a new game", new_game_path, :class => "btn" %>
+    <%= link_to "Schedule a new game", new_game_path, :class => "btn btn-default" %>
 <% end %>
 </h3>
 
@@ -63,8 +63,8 @@
         <% end %>
       </td>
       <td style="text-align: right;">
-        <%= link_to t("games.see_game"), game, :class => "btn btn-mini" %>
-        <%= link_to(t("games.edit_game"), edit_path.call(game), :class => "btn btn-mini") if defined?(edit_path) && can?(:edit, game) %>
+        <%= link_to t("games.see_game"), game, :class => "btn btn-default btn-xs" %>
+        <%= link_to(t("games.edit_game"), edit_path.call(game), :class => "btn btn-default btn-xs") if defined?(edit_path) && can?(:edit, game) %>
       </td>
     </tr>
   <% end %>

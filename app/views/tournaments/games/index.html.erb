@@ -1,6 +1,6 @@
 <h2><%= @tournament.name %> - Games</h2>
 
 <%= render :partial => "games", :locals => {:games => @tournament.games, :edit_path => proc {|game| edit_tournament_game_path(@tournament, game) }} %>
-<%= link_to "Schedule a New Game", new_tournament_game_path(@tournament), :class => "btn" %>
+<%= link_to "Schedule a New Game", new_tournament_game_path(@tournament), :class => "btn btn-default" %>
 
 <%= link_to "Back", @tournament %>

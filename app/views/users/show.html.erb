@@ -11,7 +11,7 @@
 
     <div class="clearfix"></div>
 
-    <%= link_to("Edit", edit_user_path(@user), :class => "btn") if can? :edit, @user %>
+    <%= link_to("Edit", edit_user_path(@user), :class => "btn btn-default") if can? :edit, @user %>
 
     <%= render :partial => "activity_feed", :locals => {:feed_items => ActivityFeedItem.for(@user), :to => @user, :owner => @user } %>
   </div>

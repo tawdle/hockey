@@ -38,7 +38,7 @@
 <% if @game.ended_at %>
   <p><%= t("games.ended", { :end_time => timeago_tag(@game.ended_at)}).html_safe %>
     <% if @game.completed? %>
-      <%= link_to "View gamesheet", game_path(@game, :format => :pdf), :class => "btn" %>
+      <%= link_to "View gamesheet", game_path(@game, :format => :pdf), :class => "btn btn-default " %>
     <% end %>
   </p>
 <% elsif @game.started_at %>
