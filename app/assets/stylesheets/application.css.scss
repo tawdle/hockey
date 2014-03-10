@@ -33,8 +33,12 @@
   box-shadow: 0 1px 2px rgba(0,0,0,.15);
 }
 
-img.navbar-brand {
-  height: 50px;
+a.navbar-brand {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  img {
+    height: 50px;
+  }
 }
 
 .map-icon {
