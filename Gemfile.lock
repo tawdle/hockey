@@ -42,7 +42,7 @@ GEM
       uuidtools (~> 2.1)
     aws_cf_signer (0.1.2)
     bcrypt-ruby (3.1.2)
-    bootstrap-sass (2.3.2.2)
+    bootstrap-sass (3.1.1.0)
       sass (~> 3.2)
     builder (3.0.4)
     cancan (1.6.10)
@@ -249,7 +249,7 @@ DEPENDENCIES
   active_model_serializers
   acts_as_list
   aws-sdk
-  bootstrap-sass (~> 2)
+  bootstrap-sass (~> 3.1.1)
   cancan
   carrierwave
   cloudinary
@@ -276,7 +276,7 @@ DEPENDENCIES
   rails-timeago (~> 2.0)
   rails_12factor
   rspec-rails (~> 2.0)
-  sass-rails (~> 3.2.3)
+  sass-rails (>= 3.2)
   shoulda-matchers
   state_machine
   strip_attributes

@@ -14,7 +14,6 @@ gem 'pg'
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
@@ -41,10 +40,11 @@ group :test do
   gem 'shoulda-matchers'
 end
 
+
 gem 'active_model_serializers'
 gem 'acts_as_list'
 gem 'aws-sdk'
-gem 'bootstrap-sass', '~> 2'
+gem 'bootstrap-sass', '~> 3.1.1'
 gem 'cancan'
 gem 'carrierwave'
 gem 'cloudinary'
@@ -61,6 +61,7 @@ gem 'prawn'
 gem 'pg_search'
 gem 'rails-i18n', '~> 3.0.0' # For 3.x
 gem 'rails_12factor', :group => [:production, :staging]
+gem 'sass-rails', '>= 3.2' # sass-rails needs to be higher than 3.2
 gem 'state_machine'
 gem 'strip_attributes'
 gem 'symbolize'
