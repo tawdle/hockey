@@ -41,7 +41,7 @@
     <%= link_to "<i class='icon-stop icon-2x'></i>".html_safe, "#", :id => "game-stop", :class => "btn btn-large btn-danger" if can? :mark, @game %>
   </div>
 
-  <div class="row-fluid">
+  <div class="row">
     <%= render :partial => "team_box", :locals => {:team => @game.visiting_team, :home_or_visiting => :visiting } %>
     <%= render :partial => "team_box", :locals => {:team => @game.home_team, :home_or_visiting => :home } %>
   </div>
