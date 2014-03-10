@@ -10,11 +10,6 @@
 </div>
 
 <div class="navbar-collapse collapse">
-  <%= form_tag(search_index_path, :method => :get, :class => "navbar-form navbar-left") do %>
-    <div class="form-group">
-      <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t("search_results.index.placeholder"), :style => "min-width: 250px;" %>
-    </div>
-  <% end %>
   <ul class="nav navbar-nav navbar-right">
     <% if user_signed_in? %>
       <li>
@@ -38,4 +33,12 @@
       </li>
     <% end %>
   </ul>
+  <%= form_tag(search_index_path, :method => :get, :class => "navbar-form") do %>
+    <div class="form-group" style="display: inline;">
+      <div class="input-group">
+        <span class="input-group-addon"><span class="icon icon-search"></span></span>
+        <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t("search_results.index.placeholder")  %>
+      </div>
+    </div>
+  <% end %>
 </div>
