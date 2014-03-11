@@ -22,3 +22,12 @@ h3 span.badge {
   position: relative;
   top: -4px;
 }
+
+nav {
+  input[type=text] {
+    @include border-right-radius(15px);
+  }
+  .input-group-addon {
+    @include border-left-radius(15px);
+  }
+}
