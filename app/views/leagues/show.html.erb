@@ -4,7 +4,7 @@
   <div class="col-md-8">
     <h2>
       <% if @league.logo.present? %>
-        <%= cl_image_tag @league.logo_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
+        <%= cl_image_tag @league.logo_url(:thumbnail), :style => "float: left; margin-right: 10px" %>
     <% end %>
       <%= @league.name %>
       <%= link_to 'Edit', edit_league_path(@league), class: "btn btn-default btn-sm" if can? :edit, @league %>
@@ -23,7 +23,7 @@
 
       <% @league.teams.each do |team| %>
         <tr>
-        <td><%= cl_image_tag team.logo_url(:thumbnail), :height => 50, :width => 50 if team.logo.present? %></td>
+        <td><%= cl_image_tag team.logo_url(:thumbnail) if team.logo.present? %></td>
         <td><%= link_to team.name, team %></td>
         <td><%= link_to 'Edit', edit_team_path(team) if can? :edit, team %></td>
         <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, team %></td>
