@@ -33,12 +33,14 @@
       </li>
     <% end %>
   </ul>
-  <%= form_tag(search_index_path, :method => :get, :class => "navbar-form") do %>
-    <div class="form-group" style="display: inline;">
-      <div class="input-group">
-        <span class="input-group-addon"><span class="icon icon-search"></span></span>
-        <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t("search_results.index.placeholder")  %>
+  <% unless params[:controller] == "search_results" %>
+    <%= form_tag(search_index_path, :method => :get, :class => "navbar-form") do %>
+      <div class="form-group" style="display: inline;">
+        <div class="input-group">
+          <span class="input-group-addon"><span class="icon icon-search"></span></span>
+          <%= text_field_tag :q, nil, :class => "form-control", :placeholder => t("search_results.index.placeholder")  %>
+        </div>
       </div>
-    </div>
+    <% end %>
   <% end %>
 </div>
