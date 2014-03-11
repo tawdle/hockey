@@ -69,7 +69,7 @@
     <%= link_to "Add new player", new_marker_game_roster_path(@game, :team => @home_or_visiting) %>
   </div>
   <div>
-    <%= link_to "Back", @game %>
+    <%= link_to t("navigation.back_html"), marker_game_path(@game) %>
   </div>
 <% end %>
 
