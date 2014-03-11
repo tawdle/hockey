@@ -119,7 +119,7 @@ class Penalty < ActiveRecord::Base
         grabbing_hair_without_advantage: "B10",
         grabbing_hair_with_advantage: "B11",
         use_of_mask_as_weapon: "B12",
-        using_rings_as_weapons: "B13",
+        use_of_rings_as_weapons: "B13",
         slashing: "B22",
         spearing: "B23",
         butt_ending: "B24",
@@ -212,7 +212,7 @@ class Penalty < ActiveRecord::Base
       infractions: {
         grabbing_hair_with_advantage: "E11",
         use_of_mask_as_weapon: "E12",
-        using_rings_as_weapons: "E13",
+        use_of_rings_as_weapons: "E13",
         slashing: "E22",
         spearing: "E23",
         butt_ending: "E24",
