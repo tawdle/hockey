@@ -4,6 +4,7 @@
       function toggleSelectVisibility(e) {
         var checked = $(this).is(":checked");
         $("select", $(e.target).parents("tr")).css({visibility: (checked ? "visible" : "hidden")});
+        $("input[type=text]", $(e.target).parents("tr")).css({visibility: (checked ? "visible": "hidden")});
       }
 
       $(".players input[type=checkbox]").on("click", toggleSelectVisibility);
@@ -16,6 +17,18 @@
 
 <%= form_for(@game, :url => marker_game_roster_path(@game, :team => @home_or_visiting), :remote => request.xhr?) do |f| %>
 
+  <% if @game.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@game.errors.count, "error") %> prohibited your update from being saved:</h2>
+
+      <ul>
+      <% @game.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
   <table class="players">
     <% @team.players.each do |player| %>
       <tr>
@@ -25,10 +38,12 @@
         <% end %>
         <input name="game[game_players_attributes][<%= player.id %>][player_id]" value="<%= player.id %>" type="hidden" />
         <td>
-          <%= label_tag "player_#{player.id}", :class => "checkbox inline" do %>
-            <%= check_box_tag "game[game_players_attributes[#{player.id}][selected]", true, game_player.present?, :id => "player_#{player.id}" %>
-            <%= player.name_and_number %>
-          <% end %>
+          <div class="checkbox">
+            <%= label_tag "player_#{player.id}" do %>
+              <%= check_box_tag "game[game_players_attributes[#{player.id}][selected]", true, game_player.present?, :id => "player_#{player.id}" %>
+              <%= player.name_and_number %>
+            <% end %>
+          </div>
         </td>
         <td>
           <%= select_tag "game[game_players_attributes][#{player.id}][role]",
@@ -36,7 +51,7 @@
             :style => "visibility: #{game_player ? 'visible' : 'hidden'}" %>
         </td>
         <td>
-          <%= text_field_tag "game[game_players_attributes][#{player.id}][player_attributes][jersey_number]", player.jersey_number, :class => "col-md-1", :style => "position: relative; top: 6px; margin-left: 8px;" %>
+          <%= text_field_tag "game[game_players_attributes][#{player.id}][player_attributes][jersey_number]", player.jersey_number, :style => "visibility: #{game_player ? 'visible' : 'hidden'}; margin-left: 8px;" %>
           <%= hidden_field_tag "game[game_players_attributes][#{player.id}][player_attributes][id]", player.id %>
         </td>
       </tr>
