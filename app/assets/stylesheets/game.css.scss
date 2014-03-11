@@ -2,7 +2,7 @@ span#game-clock, span#game-period {
   background-color: black;
   color: lightgreen;
   padding: 11px 19px;
-  font-size: 35px;
+  font-size: 31px;
   line-height: 36px;
   border: 1px solid grey;
   position: relative;
@@ -25,9 +25,6 @@ span#game-clock, span#game-period {
 
 #start-stop-clock {
   text-align: center;
-  a {
-    width: 28px;
-  }
   margin-bottom: 10px;
 }
 
