@@ -114,6 +114,6 @@ class Player < ActiveRecord::Base
   end
 
   def create_player_claim_feed_item
-    Feed::NewPlayerClaim.create!(:user => user, :player => self)
+    Feed::NewPlayerClaim.create!(:user => user, :player => self) if user
   end
 end
