@@ -27,9 +27,7 @@
 
   <div class="form-group">
     <%= f.label :jersey_number %>
-    <div class="col-md-1">
-      <%= f.text_field :jersey_number, :class => "form-control" %>
-    </div>
+    <%= f.text_field :jersey_number, :class => "form-control" %>
   </div>
 
   <div class="form-group">
@@ -51,6 +49,8 @@
   </div>
 <% end %>
 
-<%= link_to t("navigation.back_html"), team_path(@player.team) %>
+<br>
+
+<p><%= link_to t("navigation.back_html"), team_path(@player.team) %></p>
 
 
