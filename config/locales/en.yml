@@ -222,7 +222,7 @@ en:
     new_user: "%{user} just became a BigShot"
     new_team_manager: "%{user} became a manager of %{team}"
   follow:
-    start_following: I'm a fan
+    start_following: Become a fan
     stop_following: "Stop being a fan"
   followers:
     header: Fans
@@ -433,10 +433,12 @@ en:
   player:
     belongs_to_html: This player belongs to %{user}.
     claim:
-      prompt_html: Is this you? Click here to %{claim} this player for your account.
+      header: Is this you?
+      prompt_html: ! '%{claim} this player for your account.'
       button: Claim
     invite_claim:
-      prompt_html: Do you know this player? %{invite} them to own this player.
+      header: Do you know this player?
+      prompt_html: ! '%{invite} them to own this player.'
       button: Invite
     invite_fan:
       button: Invite a fan

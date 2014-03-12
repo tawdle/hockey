@@ -1,43 +1,99 @@
 <% title [@player.name, @player.team.name, @player.team.league.name].join(" - ") %>
 
-<div class="row">
-  <div class="col-md-8">
-
-    <h3>Player: <%= @player.name %>
-      <%= render partial: "follow_button", locals: { target: @player } %>
-    </h3>
-
-    <%= format_player_link(@player) %>
-
-    <h4>Team: <%= format_team_link(@player.team) %></h4>
-
-    <div>
-      <%= cl_image_tag(@player.photo.url(:small)) %>
+<div class="row breadcrumbs">
+  <div class="col-xs-12">
+    <div class="league pull-left">
+      <div class="name"><%= link_to(@league.name, @league) %></div>
+      <div>
+        <%= t(@league.division, :scope => "league.divisions") %>
+        <%= t(@league.classification, :scope => "league.classifications") if @league.classification.present? %>
+      </div>
+      <div><%= format_team_link(@league) %></div>
     </div>
+    <span class="divider text-muted">&gt;</span>
+    <div class="team">
+      <div class="logo pull-left"><%= link_to(image_tag(@team.logo_url(:medium)), @team) %></div>
+      <div class="meta">
+        <div class="name"><%= link_to(@team.name, @team) %></div>
+        <div><%= @team.city %></div>
+        <div><%= format_team_link(@team) %></div>
+      </div>
+    </div>
+  </div>
+</div>
 
+<hr>
+
+<div class="row player-meta">
+  <div class="col-xs-4 photo">
+    <%= image_tag(@player.photo_url(:medium_face)) %><span class="jersey">#<%= @player.jersey_number %></span>
+  </div>
+  <div class="col-xs-6">
+    <h1>
+      <%= @player.name %>
+      <small>
+        <%= t(@player.role, :scope => "player.roles") unless @player.role == :player %>
+      </small>
+    </h1>
     <% if @player.user %>
       <p><%= t("player.belongs_to_html", { :user => format_user_link(@player.user) }) %></p>
     <% elsif current_user %>
+      <% unless Player.where(:team_id => @player.team_id, :user_id => current_user.id).any? %>
+        <h4><%= t("player.claim.header") %></h4>
+        <p><%= t("player.claim.prompt_html", { :claim => link_to(t("player.claim.button"), new_player_claim_path(@player), :class => "btn btn-default btn-sm") } ) %></p>
+      <% end %>
       <% if can?(:create, Invitation.new(:target => @player)) %>
+        <h4><%= t("player.invite_claim.header") %></h4>
         <p>
-        <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, :opts => {:label => t("player.invite_claim.button") }) }) %>
+          <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, :opts => {:label => t("player.invite_claim.button") }) }) %>
         </p>
       <% end %>
-      <p>
-        <%= t("player.claim.prompt_html", { :claim => link_to(t("player.claim.button"), new_player_claim_path(@player), :class => "btn btn-default btn-sm") } ) %>
-      </p>
     <% end %>
 
-    <%= link_to "Edit", edit_player_path(@player), :class => "btn btn-default" if can?(:edit, @player) %>
+  </div>
+  <div class="col-xs-2">
+    <div class="buttons">
+      <div class="text-right"><p class="text-right"><%= render partial: "follow_button", locals: { target: @player } %></p></div>
+      <p class="text-right"><%= link_to t("actions.edit"), edit_player_path(@player), :class => "btn btn-default btn-sm" if can?(:edit, @player) %></p>
+    </div>
+  </div>
+</div>
 
-    <%= render :partial => "games", :locals => { :games => @player.games } %>
+<hr>
 
-    <%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for(@player), :to => @player, :owner => @player.user } %>
+<%= javascript_tag do %>
+  $(function() {
+    $(".nav-tabs a").click(function(e) {
+      e.preventDefault();
+      $(this).tab("show");
+    });
+    $(".nav-tabs a:first").tab("show");
+  });
+<% end %>
+
+<ul class="nav nav-tabs">
+  <li><%= link_to ActivityFeedItem.model_name.human.pluralize, "#feed", :data => {:toggle => "tab" } %></li>
+  <li><%= link_to Game.model_name.human.pluralize, "#games", :data => {:toggle => "tab" } %></li>
+  <li><%= link_to t("header", :scope => "followers", :name => @player.name), "#fans", :data => {:toggle => "tab" } %></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active fade in" id="feed">
+    <%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for(@player), :to => @player, :owner => @player.user, :hide_header => true } %>
+  </div>
+  <div class="tab-pane fade" id="games">
+    <%= render :partial => "games", :locals => { :games => @player.games, :compact => true } %>
+  </div>
+  <div class="tab-pane fade" id="fans">
+    <%= render :partial => "followers", :locals => {:target => @player } %>
+  </div>
+</div>
+
+<div class="row">
 
   </div>
 
   <div class="col-md-4">
     <%= render :partial => "mini_sign_up" unless current_user %>
-    <%= render :partial => "followers", :locals => {:target => @player } %>
   </div>
 </div>

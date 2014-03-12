@@ -1,5 +1,7 @@
 <% if current_user || feed_items.any? %>
-  <h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
+  <% unless defined?(hide_header) && hide_header %>
+    <h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
+  <% end %>
 
   <div class="activity-feed">
     <% new_item ||= Feed::UserPost.new %>
@@ -7,7 +9,7 @@
       <%= form_for(new_item, :remote => true, :class => "form-inline") do |f| %>
         <div class="form-group">
           <%= f.label :message, :class => "sr-only" %>
-          <div class="col-md-7">
+          <div class="col-xs-10">
             <%= f.text_field :message, :class => "form-control", :placeholder => t("activity_feed.placeholder") %>
           </div>
         </div>

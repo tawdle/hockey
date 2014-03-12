@@ -458,12 +458,14 @@ fr:
   player:
     belongs_to_html: Ce joueur appartient à %{user}.
     claim:
-      button: réclamer
-      prompt_html: Est-ce vous? Cliquez ici pour %{claim} ce joueur.
+      header: Est-ce vous?
+      button: Réclamer
+      prompt_html: ! '%{claim} ce joueur.'
     invitation_sent: Invitation envoyée
     invite_claim:
+      header: Connaissez-vous ce joueur?
       button: Invitez-le
-      prompt_html: Connaissez-vous ce joueur? %{invite} à joindre BigShot.
+      prompt_html: ! '%{invite} à joindre BigShot.'
     invite_fan:
       button: Invitez un fan
   player_claim_mailer:
