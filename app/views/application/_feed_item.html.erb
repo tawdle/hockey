@@ -32,19 +32,21 @@
     </div>
 
     <% if current_user %>
-      <%= form_for(Feed::UserPost.new, :remote => true) do |f| %>
-        <div class="form-group">
-          <%= f.label :message, :class => "sr-only" %>
-          <div class="col-md-7">
-            <%= f.text_field :message, :class => "form-control", :placeholder => t("activity_feed.enter_your_reply") %>
+      <div class="row">
+        <%= form_for(Feed::UserPost.new, :remote => true) do |f| %>
+          <div class="form-group">
+            <%= f.label :message, :class => "sr-only" %>
+            <div class="col-md-7">
+              <%= f.text_field :message, :class => "form-control", :placeholder => t("activity_feed.enter_your_reply") %>
+            </div>
           </div>
-        </div>
 
-        <%= f.hidden_field :parent_id, :value => item.to_param %>
-        <%= hidden_field_tag :reply, true %>
-        <%= hidden_field_tag :owner_id, owner.id if defined?(owner) %>
+          <%= f.hidden_field :parent_id, :value => item.to_param %>
+          <%= hidden_field_tag :reply, true %>
+          <%= hidden_field_tag :owner_id, owner.id if defined?(owner) %>
 
-      <% end %>
+        <% end %>
+      </div>
     <% end %>
 
   <% end %>
