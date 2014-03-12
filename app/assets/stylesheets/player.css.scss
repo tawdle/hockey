@@ -1,6 +1,48 @@
-.player-box-small {
-  text-align: center;
-  img {
+.players.show {
+  .player-meta {
+    background-color: #cecece;
+  }
+
+  .breadcrumbs {
     margin-bottom: 10px;
   }
+
+  .divider {
+    float: left;
+    font-size: 300%;
+    position: relative;
+    left: 12px;
+    top: -4px;
+  }
+
+  .logo {
+    margin-left: 30px;
+    margin-right: 10px;
+  }
+
+  .photo {
+    background-color: black;
+    img {
+      position: relative;
+      width: 100%;
+    }
+  }
+
+  .jersey {
+    position: absolute;
+    top: -10px;
+    right: 10px;
+    font-size: 36px;
+    font-weight: bold;
+    padding: 5px;
+    color: white;
+    opacity: .8;
+  }
+
+  h1 {
+    margin-top: 0px;
+    font-weight: bold;
+  }
 }
+
+
