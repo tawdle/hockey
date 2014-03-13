@@ -1,0 +1,13 @@
+<ul>
+  <% @team.managers.order(:name).each do |manager| %>
+    <li><%= manager.name %> (<%= format_user_link(manager) %>, <%= t("activerecord.values.authorization.role.manager") %>)</li>
+  <% end %>
+  <% @team.staff_members.sort_by {|sm| StaffMember::Roles.index(sm.role) || 0}.each do |sm| %>
+    <% unless sm.role == :manager && @team.managers.map(&:name).include?(sm.name) %>
+      <li><%= sm.name_and_role %></li>
+    <% end %>
+  <% end %>
+</ul>
+
+<%= link_to t("actions.edit"), team_staff_members_path(@team), :class => "btn btn-default btn-sm" if can? :update, @team %>
+<%= invitation_button(:manage, @team) %>

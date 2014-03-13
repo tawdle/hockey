@@ -4,7 +4,7 @@
               border-radius: $radius;
 }
 
-.team-claim {
+.team-claim, .leagues-teams.show {
   .player {
     display: inline-block;
     text-align: center;
@@ -23,4 +23,66 @@
     }
   }
 }
+
+.leagues-teams.show {
+  .team-meta {
+    background-color: #cecece;
+
+    .photo {
+      background-color: black;
+      img {
+        width: 100%;
+        padding: 10px;
+        -webkit-filter: drop-shadow(2px 2px 1px rgba(255, 0, 0, .5));
+        filter: drop-shadow(2px 2px 1px rgba(255, 0, 0, .5));
+      }
+    }
+  }
+
+  .breadcrumbs {
+    margin-bottom: 10px;
+  }
+
+  h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: bold;
+  }
+  h2 {
+    margin-top: 0px;
+  }
+
+  .tab-content {
+    margin-top: 10px;
+  }
+
+  .player {
+    position: relative;
+    min-height: 220px;
+    .photo {
+      position: relative;
+    }
+    .jersey {
+      text-align: right;
+      line-height: 0px;
+      font-size: 20px;
+      font-weight: bold;
+      position: relative;
+      color: white;
+      opacity: 0.9;
+      top: -5px;
+      -webkit-filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, .5));
+      filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, .5));
+    }
+    .dropup {
+      position: absolute;
+      bottom: 0px;
+      right: 6px;
+      text-align: right;
+    }
+  }
+}
+
+
+
 

@@ -348,9 +348,12 @@ fr:
       university: Universitaire
   leagues:
     teams:
+      players:
+        no_players: This team has no players.
       show:
         a_member_of_html: Membre de %{league_link}
         get_private_link: Get private claim link
+        staff_members: Membres du personnel
   navigation:
     back_html: ! '&larr; Back'
     edit_account: Modifier mon profil
@@ -458,13 +461,13 @@ fr:
   player:
     belongs_to_html: Ce joueur appartient à %{user}.
     claim:
-      header: Est-ce vous?
       button: Réclamer
+      header: Est-ce vous?
       prompt_html: ! '%{claim} ce joueur.'
     invitation_sent: Invitation envoyée
     invite_claim:
-      header: Connaissez-vous ce joueur?
       button: Invitez-le
+      header: Connaissez-vous ce joueur?
       prompt_html: ! '%{invite} à joindre BigShot.'
     invite_fan:
       button: Invitez un fan

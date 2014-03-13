@@ -12,7 +12,7 @@
     </div>
     <span class="divider text-muted">&gt;</span>
     <div class="team">
-      <div class="logo pull-left"><%= link_to(image_tag(@team.logo_url(:medium)), @team) %></div>
+      <div class="logo pull-left"><%= link_to(image_tag(@team.logo_url(:small)), @team) %></div>
       <div class="meta">
         <div class="name"><%= link_to(@team.name, @team) %></div>
         <div><%= @team.city %></div>
@@ -45,7 +45,7 @@
       <% if can?(:create, Invitation.new(:target => @player)) %>
         <h4><%= t("player.invite_claim.header") %></h4>
         <p>
-          <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, :opts => {:label => t("player.invite_claim.button") }) }) %>
+          <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, {:label => t("player.invite_claim.button") }) }) %>
         </p>
       <% end %>
     <% end %>

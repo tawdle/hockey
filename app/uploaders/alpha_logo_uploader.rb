@@ -30,7 +30,7 @@ class AlphaLogoUploader < CarrierWave::Uploader::Base
   end
 
   version :medium do
-    resize_to_fit(100, 100)
+    resize_to_fit(300, 300)
     cloudinary_transformation :radius => 5
   end
 

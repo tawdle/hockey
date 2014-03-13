@@ -1,7 +1,7 @@
 <div id=<%= "#{home_or_visiting}-team" %> class="team-box col-md-6">
   <div class="well well-large">
     <h3>
-      <%= cl_image_tag team.logo_url(:medium), :alt => "team logo", :style => "float: left; margin-right: 10px; margin-bottom: 10px;" %>
+      <%= cl_image_tag team.logo_url(:small), :alt => "team logo", :style => "float: left; margin-right: 10px; margin-bottom: 10px;" %>
       <span class="team-name"><%= team.name %></span>
       <span class="score pull-right"></span>
     </h3>

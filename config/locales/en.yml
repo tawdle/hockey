@@ -334,9 +334,12 @@ en:
       house: "House"
   leagues:
     teams:
+      players:
+        no_players: This team has no players.
       show:
         a_member_of_html: ! 'a member of %{league_link}'
         get_private_link: Get private claim link
+        staff_members: Staff Members
   navigation:
     back_html: ! '&larr; Back'
     greeting: Hello

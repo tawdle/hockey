@@ -1,6 +1,6 @@
 <% @authorizations.each do |obj| %>
   <div class="well text-center">
     <h3><%= link_to(obj.name, obj) %></h3>
-    <div><%= link_to(image_tag(obj.logo_url(:medium)), obj) %></div>
+    <div><%= link_to(image_tag(obj.logo_url(:small)), obj) %></div>
   </div>
 <% end %>

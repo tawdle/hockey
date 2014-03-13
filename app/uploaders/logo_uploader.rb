@@ -33,8 +33,13 @@ class LogoUploader < CarrierWave::Uploader::Base
     cloudinary_transformation :radius => 5
   end
 
-  version :medium do
+  version :small do
     resize_to_fit(100, 100)
+    cloudinary_transformation :radius => 5
+  end
+
+  version :medium do
+    resize_to_fit(300, 300)
     cloudinary_transformation :radius => 5
   end
 
