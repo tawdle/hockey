@@ -8,8 +8,13 @@
       <%= t("league.classifications.#{@tournament.classification}") %>
     </h2>
     <p><%= format_team_link(@tournament) %></p>
-    <p><%= @tournament.locations.map(&:name).sort.join(", ") %><br>
-       <%= l @tournament.start_date %> - <%= l @tournament.end_date %></p>
+    <p>
+      <%= @tournament.locations.map(&:name).sort.join(", ") %>
+      <br>
+      <% if @tournament.games.any? %>
+        <%= l @tournament.start_date %> - <%= l @tournament.end_date %>
+      <% end %>
+    </p>
   </div>
   <div class="col-xs-4">
     <div class="buttons text-right">
