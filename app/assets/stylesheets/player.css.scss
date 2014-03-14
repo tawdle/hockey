@@ -21,7 +21,7 @@
   }
 
   .photo {
-    background-color: black;
+    background: black image-url("ice_bg.jpg") left bottom repeat-x;
     img {
       position: relative;
       width: 100%;
