@@ -14,4 +14,8 @@ class Tournament < League
   def end_date
     games.maximum(:start_time).try(:to_date)
   end
+
+  def locations
+    Location.joins(:games).where(:games => {:league_id => id }).select('distinct "locations".*')
+  end
 end

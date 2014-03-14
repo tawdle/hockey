@@ -1,0 +1,37 @@
+<div class="row">
+  <div class="col-xs-4">
+    <h3 class="page-header">Managers</h3>
+      <p class="text-right">
+        <%= invitation_button(:manage, @tournament) %>
+      </p>
+      <ul>
+      <% @tournament.managers.each do |manager| %>
+        <li><%= manager.name %> (<%= format_user_link(manager) %>)</li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="col-xs-4">
+    <h3 class="page-header">Markers</h3>
+    <p class="text-right">
+      <%= invitation_button(:mark, @tournament) %>
+    </p>
+    <ul>
+      <% @tournament.markers.each do |marker| %>
+        <li><%= marker.name %> (<%= format_user_link(marker) %></li>
+      <% end %>
+    </ul>
+  </div>
+
+  <div class="col-xs-4">
+    <h3 class="page-header">Officials</h3>
+    <p class="text-right">
+      <%= link_to t("actions.edit"), tournament_officials_path(@tournament), :class => "btn btn-default btn-sm" %>
+    </p>
+    <ul>
+      <% @tournament.officials.each do |official| %>
+        <li><%= official.name %></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

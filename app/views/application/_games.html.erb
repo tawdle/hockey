@@ -1,8 +1,13 @@
-<h3><%= Game.model_name.human.pluralize %>
-<% if defined?(new_game_path) && new_game_path.present? %>
-    <%= link_to "Schedule a new game", new_game_path, :class => "btn btn-default" %>
+<% unless defined?(hide_header) && hide_header %>
+  <h3><%= Game.model_name.human.pluralize %>
+  </h3>
 <% end %>
-</h3>
+
+<p class="text-right">
+  <% if defined?(new_game_path) && new_game_path.present? %>
+    <%= link_to "Schedule a new game", new_game_path, :class => "btn btn-default" %>
+  <% end %>
+</p>
 
 <% games = games.without_deleted.not_canceled %>
 

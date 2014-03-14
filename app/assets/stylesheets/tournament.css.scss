@@ -1,3 +1,22 @@
+.tournaments.show {
+  .meta {
+    background-color: #cecece;
+  }
+  h1 {
+    margin-bottom: 0px;
+    font-weight: bold;
+  }
+  h2 {
+    margin-top: 0px;
+  }
+  .buttons {
+    margin-top: 25px;
+  }
+  .tab-content {
+    margin-top: 15px;
+  }
+}
+
 table.tournaments {
   td.division {
     white-space: nowrap;
