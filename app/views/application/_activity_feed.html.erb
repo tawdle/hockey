@@ -9,8 +9,11 @@
       <%= form_for(new_item, :remote => true, :class => "form-inline") do |f| %>
         <div class="form-group">
           <%= f.label :message, :class => "sr-only" %>
-          <div class="col-xs-10">
-            <%= f.text_field :message, :class => "form-control", :placeholder => t("activity_feed.placeholder") %>
+          <div class="input-group">
+              <%= f.text_field :message, :class => "form-control", :placeholder => t("activity_feed.placeholder") %>
+              <span class="input-group-btn">
+                <%= f.submit t("activity_feed.post"), :class => "btn btn-primary" %>
+              </span>
           </div>
         </div>
 
@@ -19,10 +22,6 @@
           <%= f.hidden_field :target_type, :value => to.class.to_s %>
           <%= f.hidden_field :target_id, :value => to.to_param %>
         <% end %>
-
-        <div class="actions">
-          <%= f.submit t("activity_feed.post"), :class => "btn btn-primary" %>
-        </div>
       <% end %>
     <% end %>
 
