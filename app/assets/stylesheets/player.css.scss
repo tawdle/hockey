@@ -1,6 +1,7 @@
 .players.show {
   .player-meta {
-    background-color: #cecece;
+    background-color: #363636;
+    color: white;
   }
 
   .breadcrumbs {
@@ -42,6 +43,9 @@
   h1 {
     margin-top: 0px;
     font-weight: bold;
+  }
+  .tab-content {
+    margin-top: 10px;
   }
 }
 
