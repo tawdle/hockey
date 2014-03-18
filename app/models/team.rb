@@ -30,6 +30,9 @@ class Team < ActiveRecord::Base
     SystemName.find_by_name_and_nameable_type(name, "Team").try(:nameable)
   end
 
+  delegate :division, :to => :league
+  delegate :classification, :to => :league
+
   def full_name
     [name, city].compact.join(" - ")
   end

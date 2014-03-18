@@ -36,7 +36,7 @@ fr:
         password: Mot de passe
         password_confirmation: Confirmation du mot de passe
     models:
-      activity_feed_item: Activités récentes
+      activity_feed_item: Activités
       game: Partie
       player: Joueur
       staff_member: Membres du personnel

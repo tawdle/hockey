@@ -1,11 +1,13 @@
 <% followers = Following.where(:followable_type => target.class.name, :followable_id => target.id).map(&:user) %>
 
 <div class="well">
-  <h3><%= t(current_user == target ? "self_header" : "header", :scope => "followers", :name => target.name) %>
-    <% if followers.any? %>
-      <span class="badge"><%= followers.count %></span>
-    <% end %>
-  </h3>
+  <% unless defined?(hide_header) && hide_header %>
+    <h3><%= t(current_user == target ? "self_header" : "header", :scope => "followers", :name => target.name) %>
+      <% if followers.any? %>
+        <span class="badge"><%= followers.count %></span>
+      <% end %>
+    </h3>
+  <% end %>
 
   <div class="followers-box">
     <% followers.each do |user| %>

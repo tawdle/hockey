@@ -37,6 +37,9 @@ class Player < ActiveRecord::Base
 
   multisearchable :against => [:name, :jersey_number]
 
+  delegate :classification, :to => :team
+  delegate :division, :to => :team
+
   def league
     team.league
   end

@@ -36,7 +36,7 @@ en:
       system_name:
         name: "@Name"
     models:
-      activity_feed_item: Recent Activity
+      activity_feed_item: Activity
       team: Team
       player: Player
       game: Game
