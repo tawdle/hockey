@@ -247,6 +247,16 @@ en:
   goalie:
     pulled: Empty net
   home:
+    about:
+      header: About Us
+    contact:
+      header: Contact Us
+    privacy:
+      header: Privacy
+    terms:
+      header: Terms of Service
+
+
     orientation:
       header: ! 'Welcome!'
       message_html: <p>Seems like you're new here. To get the most of your BigShot experience,
@@ -304,6 +314,12 @@ en:
       subject: "Invitation to become Marker for Tournament"
       message: ! "%{creator_name} has invited you to become an official marker for the tournament %{target_name}."
 
+  layouts:
+    footer:
+      about: About Us
+      contact: Contact
+      privacy: Privacy Policy
+      terms: Terms of Service
   league:
     classifications:
       a: "A"

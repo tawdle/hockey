@@ -147,6 +147,10 @@ Hockey::Application.routes.draw do
   # just remember to delete public/index.html.
   # root :to => 'welcome#index'
   root :to => 'home#index'
+  get 'about' => 'home#about'
+  get 'terms' => 'home#terms'
+  get 'privacy' => 'home#privacy'
+  get 'contact' => 'home#contact'
 
   # See how all your routes lay out with "rake routes"
 

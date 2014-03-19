@@ -253,14 +253,22 @@ fr:
   goalie:
     pulled: Filet désert
   home:
+    about:
+      header: About Us
+    contact:
+      header: Contact Us
     orientation:
       header: Bienvenue!
       message_html: <p>Vous semblez être nouveau ici. Pour profiter à plein de l'expérience
         BigShot, nous vous suggérons d'utiliser la barre de recherche au haut de la
         page pour trouver vos joueurs et équipes préférés. Puis cliquez sur <strong>Devenir
         fan</strong> button.</p>
+    privacy:
+      header: Privacy
     teams_managed:
       teams_you_manage: Équipes que vous gérez
+    terms:
+      header: Terms of Service
     welcome:
       header: Bienvenue sur BigShot!
       tagline: Votre réseau social pour les sports amateurs et récréatifs
@@ -318,6 +326,12 @@ fr:
       message: ! '%{creator_name} vous invite à devenir marqueur officiel pour le
         tournoi %{target_name}.'
       subject: Invitation pour devenir marqueur officiel
+  layouts:
+    footer:
+      about: About Us
+      contact: Contact
+      privacy: Privacy Policy
+      terms: Terms of Service
   league:
     classifications:
       a: A

@@ -66,3 +66,30 @@ form.new_user {
   }
 }
 
+footer {
+  margin-top: 15px;
+  padding: 15px 0px 15px 0px;
+  background-color: #363636;
+  color: white;
+  a {
+    color: white;
+    &:hover {
+      color: white;
+    }
+  }
+  ul {
+    list-style-type: none;
+    padding-left: 0px;
+    font-size: small;
+    line-height: 1.6;
+  }
+  h4 {
+    color: white;
+    text-transform: uppercase;
+    margin-bottom: 5px;
+    font-size: 100%;
+  }
+  .copyright {
+    margin-top: 10px;
+  }
+}
