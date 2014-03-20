@@ -28,12 +28,12 @@
     <% elsif current_user %>
       <% unless Player.where(:team_id => @player.team_id, :user_id => current_user.id).any? %>
         <h4><%= t("player.claim.header") %></h4>
-        <p><%= t("player.claim.prompt_html", { :claim => link_to(t("player.claim.button"), new_player_claim_path(@player), :class => "btn btn-default btn-sm") } ) %></p>
+        <p><%= t("player.claim.prompt_html", { :claim => link_to(t("player.claim.button"), new_player_claim_path(@player), :class => "btn btn-primary btn-sm") } ) %></p>
       <% end %>
       <% if can?(:create, Invitation.new(:target => @player)) %>
         <h4><%= t("player.invite_claim.header") %></h4>
         <p>
-          <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, {:label => t("player.invite_claim.button") }) }) %>
+        <%= t("player.invite_claim.prompt_html", { :invite => invitation_button(:claim, @player, {:label => t("player.invite_claim.button"), :class => "btn btn-primary btn-sm" }) }) %>
         </p>
       <% end %>
     <% end %>
