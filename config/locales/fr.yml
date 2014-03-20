@@ -74,10 +74,10 @@ fr:
           manager: Gérant
           safety_attendant: Préposé à la sécurité
   activity_feed:
-    enter_your_reply: Enter your reply here...
-    placeholder: Entrer votre statut ici...
+    enter_your_reply: Entrer votre reponse ici...
+    placeholder: Entrer votre commentaire ici...
     post: Publier
-    reply: Reply
+    reply: Repliquer
   application:
     mini_sign_in:
       header: Déjà membre? Connectez-vous.
@@ -199,7 +199,7 @@ fr:
       impersonate: Vous êtes maintenant identifié comme étant %{name}.
       update: Votre profil a été mis à jour avec succès.
     videos:
-      destroy: La vidéo a été effacée.
+      destroy: Le vidéo a été effacée.
   feed:
     cancel_game: ! '%{user} a annulé un match entre %{visiting_team} et %{home_team}'
     cancel_goal: ! '%{user} a annulé le but de %{player}'
@@ -224,7 +224,7 @@ fr:
     new_league_marker: ! '%{user} est maintenant marqueur(e) pour la %{league}'
     new_location_manager: ! '%{user} est maintenant gérant(e) de %{location}'
     new_penalty: ! '%{player} a écopé d''une punition: %{penalty}'
-    new_player_claim: ! '%{user} claimed %{player}'
+    new_player_claim: ! '%{user} a réclamé %{player}'
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
     new_user: ! '%{user} est maintenant un membre BigShot'
   follow:
@@ -367,7 +367,7 @@ fr:
       show:
         a_member_of_html: Membre de %{league_link}
         get_private_link: Get private claim link
-        staff_members: Membres du personnel
+        staff_members: Personnel
   navigation:
     back_html: ! '&larr; Back'
     edit_account: Modifier mon profil
