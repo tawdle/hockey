@@ -26,17 +26,32 @@
 
 .leagues-teams.show {
   .team-meta {
-    background-color: #cecece;
+    background-color: #363636;
+    color: white;
 
     .photo {
-      background-color: black;
       img {
         width: 100%;
         padding: 10px;
-        -webkit-filter: drop-shadow(2px 2px 1px rgba(255, 0, 0, .5));
-        filter: drop-shadow(2px 2px 1px rgba(255, 0, 0, .5));
+        -webkit-filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, .7));
+        filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, .7));
       }
     }
+  }
+
+  .team-name, .buttons {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .team-name {
+    a, span.username {
+      color: white;
+    }
+  }
+
+  .buttons {
+    line-height: 35px;
   }
 
   .breadcrumbs {
