@@ -10,3 +10,67 @@ form.new_game {
   }
 }
 
+
+.leagues.show {
+  .league-meta {
+    background-color: #363636;
+    color: white;
+
+    .photo {
+      img {
+        width: 100%;
+        padding: 10px;
+        -webkit-filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, .7));
+        filter: drop-shadow(2px 2px 1px rgba(0, 0, 0, .7));
+      }
+    }
+  }
+
+  .league-name, .buttons {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .league-name {
+    a, span.username {
+      color: white;
+    }
+  }
+
+  .buttons {
+    line-height: 35px;
+  }
+
+  h1 {
+    margin-top: 0px;
+    margin-bottom: 0px;
+    font-weight: bold;
+  }
+  h2 {
+    margin-top: 0px;
+  }
+
+  .tab-content {
+    margin-top: 10px;
+  }
+
+  .team {
+    padding-bottom: 15px;
+    position: relative;
+  }
+
+  .dropdown {
+    opacity: 0.5;
+  }
+
+  .team:hover .dropdown {
+    opacity: 1.0;
+  }
+
+  .logo {
+    margin-right: 10px;
+  }
+}
+
+
+

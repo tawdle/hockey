@@ -40,6 +40,7 @@ en:
       team: Team
       player: Player
       game: Game
+      official: Official
       staff_member: Staff Member
       tournament: Tournament
       user: User
@@ -258,7 +259,7 @@ en:
 
 
     orientation:
-      header: ! 'Welcome!'
+      header: ! 'Welcome, %{name}!'
       message_html: <p>Seems like you're new here. To get the most of your BigShot experience,
         we suggest that you become a fan of a player or a team. It's easy. Just use
         the search box at the top of the page to find something that you like,
@@ -349,13 +350,17 @@ en:
       university: "University"
       house: "House"
   leagues:
+    show:
+      staff_members: Staff
+    staff_members:
+      new_official: New Official
     teams:
       players:
         no_players: This team has no players.
       show:
         a_member_of_html: ! 'a member of %{league_link}'
         get_private_link: Get private claim link
-        staff_members: Staff Members
+        staff_members: Staff
   navigation:
     back_html: ! '&larr; Back'
     greeting: Hello

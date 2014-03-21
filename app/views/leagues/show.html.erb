@@ -1,88 +1,69 @@
 <% title @league.name %>
 
-<div class="row">
-  <div class="col-md-8">
-    <h2>
-      <% if @league.logo.present? %>
-        <%= cl_image_tag @league.logo_url(:thumbnail), :style => "float: left; margin-right: 10px" %>
-    <% end %>
-      <%= @league.name %>
-      <%= link_to 'Edit', edit_league_path(@league), class: "btn btn-default btn-sm" if can? :edit, @league %>
-    </h2>
-    <%= format_team_link(@league) %><%= render :partial => "follow_button", :locals => { :target => @league } %>
-
-    <h3>Teams</h3>
-
-    <table class="table table-hover">
-      <tr>
-        <th style="width: 50px;">Logo</th>
-        <th>Name</th>
-        <th></th>
-        <th></th>
-      </tr>
-
-      <% @league.teams.each do |team| %>
-        <tr>
-        <td><%= cl_image_tag team.logo_url(:thumbnail) if team.logo.present? %></td>
-        <td><%= link_to team.name, team %></td>
-        <td><%= link_to 'Edit', edit_team_path(team) if can? :edit, team %></td>
-        <td><%= link_to 'Destroy', team, method: :delete, data: { confirm: 'Are you sure?' } if can? :destroy, team %></td>
-      </tr>
-    <% end %>
-    </table>
-
-    <%= link_to "New Team", new_league_team_path(@league), :class => "btn btn-default" %>
+<div class="row league-meta">
+  <div class="col-xs-12 col-sm-4 photo">
+    <%= image_tag(@league.logo_url(:medium)) %>
   </div>
-
-  <div class="column col-md-4">
-    <%= render :partial => "followers", :locals => {:target => @league } %>
-
-    <div class="well">
-      <h3>Managers
-        <%= link_to 'Invite', new_invitation_path(:predicate => :manage, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-default btn-sm" if can? :create, Invitation.new(:target => @league) %>
-      </h3>
-
-      <%= @league.managers.collect {|manager| format_user_link(manager) }.join(", ").html_safe || "(none)" %>
-    </div>
-
-    <div class="well">
-      <h3>Markers
-        <%= link_to 'invite', new_invitation_path(:predicate => :mark, :target_id => @league.to_param, :target_type => "League"), :class => "btn btn-default btn-sm" if can? :create, Invitation.new(:target => @league)  %>
+  <div class="col-xs-12 col-sm-5 league-name">
+    <h1>
+      <%= @league.name %>
+      <small style="white-space: nowrap;">
+        <%= t(@league.division, :scope => "league.divisions") %>
+        <%= t(@league.classification, :scope => "league.classifications") if @league.classification.present? %>
       </small>
-      </h3>
-
-      <%= @league.markers.collect {|marker| format_user_link(marker) }.join(", ").html_safe || "(none)" %>
-    </div>
-
-    <div class="well">
-      <h3>Officials</h3>
-
-      <table class="table table-hover">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody>
-          <% @league.officials.each do |official| %>
-            <tr>
-              <td><%= link_to official.name, league_official_path(@league, official) %>
-              <td><%= link_to "Edit", edit_league_official_path(@league, official) if can? :edit, official %></td>
-              <td><%= link_to "Remove", league_official_path(@league, official), :method => :delete, :data => { confirm: 'Remove this official?' } if can? :destroy, official %>
-            </tr>
-          <% end %>
-        </tbody>
-      </table>
-
-      <%= link_to "New Official", new_league_official_path(@league), :class => "btn btn-default" if can? :create, Invitation.new(:target => @league) %>
+    </h1>
+    <%= format_team_link(@league) %>
+  </div>
+  <div class="col-xs-12 col-sm-3 buttons">
+    <div class="text-right">
+      <%= render partial: "follow_button", locals: { target: @league } %>
+      <%= link_to t("actions.edit"), edit_league_path(@league), :class => "btn btn-default btn-sm" if can?(:edit, @league) %>
+      <p></p>
     </div>
   </div>
 </div>
 
-<% new_game_path = new_league_game_path(@league) if can? :create, @league.games.build %>
-<%= render :partial => "games", :locals => { :games => @league.games.order("start_time asc"), :new_game_path => new_game_path, :edit_path => proc {|game| edit_league_game_path(@league, game)  } } %>
+<hr>
 
-<%= render :partial => "activity_feed", :locals => {:feed_items => ActivityFeedItem.for(@league), :to => @league } %>
+<%= javascript_tag do %>
+  $(function() {
+    $(".nav-tabs a").click(function(e) {
+      e.preventDefault();
+      $(this).tab("show");
+    });
+    $(".nav-tabs a:first").tab("show");
+  });
+<% end %>
 
-<%= link_to 'Back', leagues_path %>
+<ul class="nav nav-tabs">
+  <li><%= link_to ActivityFeedItem.model_name.human.pluralize, "#feed", :data => {:toggle => "tab" } %></li>
+  <li><%= link_to Team.model_name.human.pluralize, "#teams", :data => {:toggle => "tab" } %></li>
+  <li><%= link_to Game.model_name.human.pluralize, "#games", :data => {:toggle => "tab" } %></li>
+  <li><%= link_to "#fans", :data => {:toggle => "tab" } do %>
+    <%= t("header", :scope => "followers", :name => @league.name) %>
+      <span class="badge"><%= @league.followers.count %></span>
+    <% end %>
+  </li>
+  <li><%= link_to t(".staff_members"), "#staff", :data => {:toggle => "tab" } %></li>
+</ul>
+
+<div class="tab-content">
+  <div class="tab-pane active fade" id="feed">
+    <%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for(@league), :to => @league, :hide_header => true } %>
+  </div>
+  <div class="tab-pane fade" id="teams">
+    <%= render :partial => "teams", :locals => { :teams => @league.teams } %>
+  </div>
+  <div class="tab-pane fade" id="games">
+    <% new_game_path = new_league_game_path(@league) if can? :create, @league.games.build %>
+    <%= render :partial => "games", :locals => { :games => @league.games, :compact => true, :hide_header => true, :new_game_path => new_game_path, :edit_path => proc {|game| edit_league_game_path(@league, game) } } %>
+  </div>
+  <div class="tab-pane fade" id="fans">
+    <%= render :partial => "followers", :locals => {:target => @league, :hide_header => true } %>
+  </div>
+  <div class="tab-pane fade" id="staff">
+    <%= render :partial => "staff_members" %>
+  </div>
+</div>
+
+<p><br><%= link_to t("navigation.back_html"), root_path %></p>

@@ -38,6 +38,7 @@ fr:
     models:
       activity_feed_item: Activités
       game: Partie
+      official: Official
       player: Joueur
       staff_member: Membres du personnel
       team: Équipe
@@ -258,7 +259,7 @@ fr:
     contact:
       header: Contact Us
     orientation:
-      header: Bienvenue!
+      header: Bienvenue, %{name}!
       message_html: <p>Vous semblez être nouveau ici. Pour profiter à plein de l'expérience
         BigShot, nous vous suggérons d'utiliser la barre de recherche au haut de la
         page pour trouver vos joueurs et équipes préférés. Puis cliquez sur <strong>Devenir
@@ -361,6 +362,10 @@ fr:
       senior: Sénior
       university: Universitaire
   leagues:
+    show:
+      staff_members: Personnel
+    staff_members:
+      new_official: New Official
     teams:
       players:
         no_players: This team has no players.

@@ -1,0 +1,21 @@
+<div class="row teams">
+  <div class="col-xs-12 text-right buttons">
+    <%= link_to "New Team", new_league_team_path(@league), :class => "btn btn-default" if can?(:create, Team.new(:league => @league)) %>
+  </div>
+  <% teams.order(:name).each do |team| %>
+    <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3 team">
+      <% if can?(:edit, team) || can?(:delete, team) %>
+        <div class="dropdown pull-right">
+          <%= link_to raw('<span class="glyphicon glyphicon-cog"><b class="caret"></b>'), "#", :data => {:toggle => "dropdown" } %>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li><%= link_to t("actions.edit"), edit_team_path(team) if can? :edit, team %></li>
+            <li><%= link_to t("actions.remove"), team, method: :delete, data: { confirm: t("actions.confirm") } if can? :delete, team %></li>
+          </ul>
+        </div>
+      <% end %>
+      <%= link_to(image_tag(team.logo_url(:thumbnail)), team, :class => "logo pull-left") %>
+      <div><%= link_to(team.name, team) %></div>
+      <div><%= team.city %></div>
+    </div>
+  <% end %>
+</div>
