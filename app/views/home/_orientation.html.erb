@@ -1,4 +1,4 @@
 <% unless current_user.players.any? || Following.where(:user_id => current_user.id).any? %>
-  <h2><%= t(".header") %></h2>
+  <h2><%= t(".header", :name => current_user.name) %></h2>
   <%= t(".message_html") %>
 <% end %>
