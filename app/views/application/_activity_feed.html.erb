@@ -27,7 +27,7 @@
 
     <% if feed_items.any? %>
       <% feed_items.limit(10).each do |item| %>
-        <%= render :partial => "feed_item", :locals => {:item => item } %>
+        <%= render :partial => "feed_item", :locals => {:item => item, :owner => owner } %>
       <% end %>
     <% end %>
   </div>
