@@ -1,18 +1,47 @@
-<div class="row">
-  <div class="col-md-8">
-    <%= render :partial => "invitations" %>
-    <%= render :partial => "claims" %>
-    <%= render :partial => "orientation" %>
-    <%= render :partial => "tournaments", :locals => {:tournaments => Tournament } %>
-  </div>
-  <div class="col-md-4">
-    <%= render :partial => "players" %>
-    <%= render :partial => "authorizations" %>
-    <%= render :partial => "admin" if current_user.admin? %>
-    <%= render :partial => "followers", :locals => {:target => current_user } %>
-    <%= render :partial => "followings", :locals => {:user => current_user } %>
-  </div>
+<%= render :partial => "invitations" %>
+<%= render :partial => "claims" %>
+<%= render :partial => "orientation" %>
+<%= render :partial => "admin" if current_user.admin? %>
+
+<div class="row tiles">
+  <%= render :partial => "players" %>
+  <%= render :partial => "teams", :locals => { :teams => current_user.teams } %>
+  <%= render :partial => "leagues", :locals => { :leagues => current_user.leagues } %>
+  <%= render :partial => "locations", :locals => { :locations => current_user.locations } %>
 </div>
 
-<%= render :partial => "games", :locals => {:games => Game.for_user(current_user).recent, :reverse => true } %>
-<%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for_user(current_user) } %>
+<%= javascript_tag do %>
+  $(function() {
+    $(".nav-tabs a:first").tab("show");
+  });
+<% end %>
+
+<div class="row main">
+  <div class="col-xs-12">
+    <ul class="nav nav-tabs">
+      <li><%= link_to ActivityFeedItem.model_name.human.pluralize, "#feed", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to Game.model_name.human.pluralize, "#games", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to Following.model_name.human.pluralize, "#followings", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to "#fans", :data => {:toggle => "tab" } do %>
+      <%= t("header", :scope => "followers", :name => current_user.name) %>
+      <span class="badge"><%= current_user.followers.count %></span>
+    <% end %>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active fade" id="feed">
+        <%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for_user(current_user), :owner => current_user, :hide_header => true } %>
+      </div>
+      <div class="tab-pane fade" id="games">
+        <%= render :partial => "games", :locals => { :games => Game.for_user(current_user), :compact => true, :hide_header => true, :reverse => true } %>
+      </div>
+      <div class="tab-pane fade" id="followings">
+        <%= render :partial => "followings", :locals => {:user => current_user } %>
+      </div>
+      <div class="tab-pane fade" id="fans">
+        <%= render :partial => "followers", :locals => {:target => current_user, :hide_header => true } %>
+      </div>
+    </div>
+  </div>
+</div>

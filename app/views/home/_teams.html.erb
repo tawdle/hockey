@@ -1,7 +1,19 @@
-<% if Player.for_user(current_user).without_deleted.any? %>
-  <% Player.for_user(current_user).map(&:team).each do |team| %>
-    <h2 class="page-header"><%= link_to team.name, team %> <small>You're a member of this team</small></h2>
-    <%= render :partial => "games", :locals => {:games => Game.for_team(team) } %>
-  <% end %>
+<% teams.each do |team| %>
+  <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="team tile">
+      <div class="pull-left"><%= link_to(image_tag(team.logo_url(:thumbnail)), team) %></div>
+      <div class="meta">
+        <p>
+          <%= link_to(team) do %>
+            <%= team.name %>
+            <span class="text-muted">
+              <%= t(team.division, :scope => "league.divisions") %>
+              <%= t(team.classification, :scope => "league.classifications") if team.classification.present? %>
+            </span>
+          <% end %>
+        </p>
+        <p><%= link_to(team.city, team) %></p>
+      </div>
+    </div>
+  </div>
 <% end %>
-

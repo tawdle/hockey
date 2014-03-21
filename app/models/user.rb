@@ -17,8 +17,9 @@ class User < ActiveRecord::Base
 
   has_many :authorizations, :dependent => :destroy
   has_many :players, :dependent => :destroy, :conditions => { deleted_at: nil }
-  has_many :teams, :through => :players
   has_one :system_name, :as => :nameable, :inverse_of => :nameable
+  has_many :followings, :as => :followable
+  has_many :followers, :through => :followings, :source => :user
 
   mount_uploader :avatar, AvatarUploader
 
@@ -57,6 +58,18 @@ class User < ActiveRecord::Base
 
   def feed_name
     "[[#{at_name} #{name}]]"
+  end
+
+  def teams
+    Team.joins(:authorizations).where(authorizations: { user_id: id }).select('distinct "teams".*').order(:name)
+  end
+
+  def leagues
+    League.joins(:authorizations).where(authorizations: { user_id: id}).select('distinct "leagues".*').order(:name)
+  end
+
+  def locations
+    Location.joins(:authorizations).where(authorizations: { user_id: id}).select('distinct "locations".*').order(:name)
   end
 
   def merge(other)

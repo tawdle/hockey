@@ -1,0 +1,15 @@
+<% leagues.each do |league| %>
+  <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="league tile">
+      <div class="pull-left"><%= link_to(image_tag(league.logo_url(:thumbnail)), league) %></div>
+      <div class="meta">
+        <p><%= link_to(league.name, league) %></p>
+        <p>
+          <%= t(league.division, :scope => "league.divisions") %>
+          <%= t(league.classification, :scope => "league.classifications") if league.classification.present? %>
+        </p>
+      </div>
+    </div>
+  </div>
+<% end %>
+

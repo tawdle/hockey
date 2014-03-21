@@ -1,0 +1,11 @@
+<% locations.each do |location| %>
+  <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="location tile">
+      <div class="pull-left"><%= link_to(image_tag(location.logo_url(:thumbnail)), location) %></div>
+      <div class="meta">
+        <p><%= link_to(location.name, location) %></p>
+      </div>
+    </div>
+  </div>
+<% end %>
+

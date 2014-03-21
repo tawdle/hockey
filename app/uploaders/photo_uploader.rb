@@ -29,7 +29,7 @@ class PhotoUploader < CarrierWave::Uploader::Base
   process :convert => 'png'
 
   version :thumbnail do
-    cloudinary_transformation :radius => 10, :crop => :thumb, :width => 100, :height => 100, :gravity => :face
+    cloudinary_transformation :radius => 10, :crop => :thumb, :width => 50, :height => 50, :gravity => :face
   end
 
   version :medium_face do

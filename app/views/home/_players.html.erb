@@ -1,9 +1,11 @@
 <% current_user.players.each do |player| %>
-  <div class="well">
-    <h3 class="text-center"><%= link_to(player.name, player) %></h3>
-    <div class="player-box-small">
-      <div><%= link_to(image_tag(player.photo_url(:small)), player) %></div>
-      <div><%= link_to("##{player.jersey_number} - #{player.team.name}", player) %></div>
+  <div class="col-xs-12 col-sm-6 col-md-4">
+    <div class="player tile">
+      <div class="pull-left"><%= link_to(image_tag(player.photo_url(:thumbnail)), player) %></div>
+      <div class="meta">
+        <p class="name"><%= link_to(player.name, player) %></p>
+        <p><%= link_to("##{player.jersey_number} - #{player.team.name}", player) %></p>
+      </div>
     </div>
   </div>
 <% end %>
