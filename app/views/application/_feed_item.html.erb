@@ -23,7 +23,7 @@
   <% unless defined?(reply) && reply %>
     <div class="replies">
       <% item.children.reverse.each do |reply| %>
-        <%= render :partial => "feed_item", :locals => {:item => reply, :reply => true, :owner => owner } %>
+        <%= render :partial => "feed_item", :locals => {:item => reply, :reply => true, :owner => defined?(owner) ? owner : nil } %>
       <% end %>
     </div>
     <div class="text-right">
@@ -44,7 +44,7 @@
 
           <%= f.hidden_field :parent_id, :value => item.to_param %>
           <%= hidden_field_tag :reply, true %>
-          <%= hidden_field_tag :owner_id, owner.id if defined?(owner) %>
+          <%= hidden_field_tag :owner_id, owner.id if defined?(owner) && owner %>
 
         <% end %>
       </div>

@@ -22,12 +22,15 @@
           <%= f.hidden_field :target_type, :value => to.class.to_s %>
           <%= f.hidden_field :target_id, :value => to.to_param %>
         <% end %>
+        <% if defined?(owner) && owner %>
+          <%= hidden_field_tag :owner_id, owner.to_param %>
+        <% end %>
       <% end %>
     <% end %>
 
     <% if feed_items.any? %>
       <% feed_items.limit(10).each do |item| %>
-        <%= render :partial => "feed_item", :locals => {:item => item, :owner => owner } %>
+        <%= render :partial => "feed_item", :locals => {:item => item, :owner => defined?(owner) ? owner : nil } %>
       <% end %>
     <% end %>
   </div>
