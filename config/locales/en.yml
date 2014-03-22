@@ -256,8 +256,6 @@ en:
       header: Privacy
     terms:
       header: Terms of Service
-
-
     orientation:
       header: ! 'Welcome, %{name}!'
       message_html: <p>Seems like you're new here. To get the most of your BigShot experience,
@@ -269,6 +267,9 @@ en:
     welcome:
       header: Welcome to BigShot!
       tagline: Your social network for amateur and recreational sports
+    index:
+      your_fans: Your fans
+      fans_of: Fans of
   invitation:
     header: Send an invitation
     prompt: "Please enter the email address of the person you'd like to invite to %{predicate} %{target_name}."

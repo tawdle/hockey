@@ -21,9 +21,9 @@
     <ul class="nav nav-tabs">
       <li><%= link_to ActivityFeedItem.model_name.human.pluralize, "#feed", :data => {:toggle => "tab" } %></li>
       <li><%= link_to Game.model_name.human.pluralize, "#games", :data => {:toggle => "tab" } %></li>
-      <li><%= link_to Following.model_name.human.pluralize, "#followings", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to t("home.index.fans_of"), "#followings", :data => {:toggle => "tab" } %></li>
       <li><%= link_to "#fans", :data => {:toggle => "tab" } do %>
-      <%= t("header", :scope => "followers", :name => current_user.name) %>
+      <%= t("home.index.your_fans") %>
       <span class="badge"><%= current_user.followers.count %></span>
     <% end %>
       </li>

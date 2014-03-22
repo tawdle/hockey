@@ -258,6 +258,10 @@ fr:
       header: About Us
     contact:
       header: Contact Us
+    fans_of: Fans of
+    index:
+      fans_of: Fans of
+      your_fans: Your fans
     orientation:
       header: Bienvenue, %{name}!
       message_html: <p>Vous semblez être nouveau ici. Pour profiter à plein de l'expérience
@@ -273,6 +277,7 @@ fr:
     welcome:
       header: Bienvenue sur BigShot!
       tagline: Votre réseau social pour les sports amateurs et récréatifs
+    your_fans: Your fans
   invitation:
     header: Envoyer une invitation
     predicates:
