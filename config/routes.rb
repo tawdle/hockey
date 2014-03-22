@@ -150,6 +150,7 @@ Hockey::Application.routes.draw do
   get 'about' => 'home#about'
   get 'terms' => 'home#terms'
   get 'privacy' => 'home#privacy'
+  get 'press' => 'home#press'
   get 'contact' => 'home#contact'
 
   # See how all your routes lay out with "rake routes"

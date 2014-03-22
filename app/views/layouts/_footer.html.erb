@@ -1,23 +1,25 @@
 <div class="container footer">
   <div class="row">
     <div class="col-xs-4 col-sm-4 col-md-3">
-      <h4>Company</h4>
+      <h4><%= t(".company") %></h4>
       <ul>
         <li><%= link_to t(".about"), about_path %></li>
+        <li><%= link_to t(".press"), press_path %></li>
         <li><%= link_to t(".terms"), terms_path %></li>
         <li><%= link_to t(".privacy"), privacy_path %></li>
       </ul>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-3">
-      <h4>Areas</h4>
+      <h4><%= t(".areas") %></h4>
       <ul>
+        <li><%= link_to t(".tournaments"), tournaments_path %></li>
         <li><%= link_to t(".leagues"), leagues_path %></li>
         <li><%= link_to t(".teams"), teams_path %></li>
         <li><%= link_to t(".locations"), locations_path %></li>
       </ul>
     </div>
     <div class="col-xs-4 col-sm-4 col-md-3">
-      <h4>Support</h4>
+      <h4><%= t(".support") %></h4>
       <ul>
         <li><%= link_to t(".contact"), contact_path %></li>
       </ul>
