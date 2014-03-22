@@ -18,6 +18,7 @@
       <li class="dropdown hidden-xs">
         <%= link_to raw('<span class="glyphicon glyphicon-cog"><b class="caret"></b>'), "#", :data => {:toggle => "dropdown" } %>
         <ul class="dropdown-menu">
+          <%= render :partial => "layouts/admin" if current_user.admin? %>
           <li><%= link_to(t('navigation.edit_account'), edit_user_registration_path) %></li>
           <li><%= link_to(t('navigation.sign_out'), destroy_user_session_path, :method=>'delete') %></li>
         </ul>
