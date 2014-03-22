@@ -41,7 +41,7 @@
   <li><%= link_to Game.model_name.human.pluralize, "#games", :data => {:toggle => "tab" } %></li>
   <li><%= link_to "#fans", :data => {:toggle => "tab" } do %>
     <%= t("header", :scope => "followers", :name => @league.name) %>
-      <span class="badge"><%= @league.followers.count %></span>
+      <span class="badge"><%= @league.followers.count if @league.followers.any? %></span>
     <% end %>
   </li>
   <li><%= link_to t(".staff_members"), "#staff", :data => {:toggle => "tab" } %></li>

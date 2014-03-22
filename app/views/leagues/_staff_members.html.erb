@@ -29,6 +29,6 @@
       <% end %>
     </ul>
 
-    <%= link_to t(".new_official"), new_league_official_path(@league), :class => "btn btn-default" if can? :create, Invitation.new(:target => @league) %>
+    <%= link_to t(".new_official"), new_league_official_path(@league), :class => "btn btn-default btn-sm" if can? :create, Invitation.new(:target => @league) %>
   </div>
 </div>
