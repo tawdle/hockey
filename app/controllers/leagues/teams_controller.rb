@@ -15,6 +15,7 @@ class Leagues::TeamsController < ApplicationController
   # GET /teams/1
   # GET /teams/1.json
   def show
+    raise ActiveRecord::RecordNotFound if @team.deleted_at
     @league = @team.league
     respond_to do |format|
       format.html # show.html.erb
