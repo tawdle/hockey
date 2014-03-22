@@ -62,7 +62,7 @@
         <%= render :partial => "players", :locals => { :players => @team.players } %>
       </div>
       <div class="tab-pane fade" id="games">
-        <%= render :partial => "games", :locals => { :games => Game.for_team(@team), :compact => true } %>
+        <%= render :partial => "games", :locals => { :games => Game.for_team(@team), :compact => true, :hide_header => true } %>
       </div>
       <div class="tab-pane fade" id="fans">
         <%= render :partial => "followers", :locals => {:target => @team, :hide_header => true } %>
