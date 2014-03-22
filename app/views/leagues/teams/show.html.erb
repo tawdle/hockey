@@ -39,34 +39,39 @@
   });
 <% end %>
 
-<ul class="nav nav-tabs">
-  <li><%= link_to ActivityFeedItem.model_name.human.pluralize, "#feed", :data => {:toggle => "tab" } %></li>
-  <li><%= link_to Player.model_name.human.pluralize, "#players", :data => {:toggle => "tab" } %></li>
-  <li><%= link_to Game.model_name.human.pluralize, "#games", :data => {:toggle => "tab" } %></li>
-  <li><%= link_to "#fans", :data => {:toggle => "tab" } do %>
-    <%= t("header", :scope => "followers", :name => @team.name) %>
-      <span class="badge"><%= @team.followers.count %></span>
-    <% end %>
-  </li>
-  <li><%= link_to t(".staff_members"), "#staff", :data => {:toggle => "tab" } %></li>
-</ul>
+<div class="row main">
+  <div class="col-xs-12">
 
-<div class="tab-content">
-  <div class="tab-pane active fade" id="feed">
-    <%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for(@team), :to => @team, :hide_header => true } %>
-  </div>
-  <div class="tab-pane fade" id="players">
-    <%= render :partial => "players", :locals => { :players => @team.players } %>
-  </div>
-  <div class="tab-pane fade" id="games">
-    <%= render :partial => "games", :locals => { :games => Game.for_team(@team), :compact => true } %>
-  </div>
-  <div class="tab-pane fade" id="fans">
-    <%= render :partial => "followers", :locals => {:target => @team, :hide_header => true } %>
-  </div>
-  <div class="tab-pane fade" id="staff">
-    <%= render :partial => "staff_members" %>
+    <ul class="nav nav-tabs">
+      <li><%= link_to ActivityFeedItem.model_name.human.pluralize, "#feed", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to Player.model_name.human.pluralize, "#players", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to Game.model_name.human.pluralize, "#games", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to "#fans", :data => {:toggle => "tab" } do %>
+        <%= t("header", :scope => "followers", :name => @team.name) %>
+          <span class="badge"><%= @team.followers.count %></span>
+        <% end %>
+      </li>
+      <li><%= link_to t(".staff_members"), "#staff", :data => {:toggle => "tab" } %></li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active fade" id="feed">
+        <%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for(@team), :to => @team, :hide_header => true } %>
+      </div>
+      <div class="tab-pane fade" id="players">
+        <%= render :partial => "players", :locals => { :players => @team.players } %>
+      </div>
+      <div class="tab-pane fade" id="games">
+        <%= render :partial => "games", :locals => { :games => Game.for_team(@team), :compact => true } %>
+      </div>
+      <div class="tab-pane fade" id="fans">
+        <%= render :partial => "followers", :locals => {:target => @team, :hide_header => true } %>
+      </div>
+      <div class="tab-pane fade" id="staff">
+        <%= render :partial => "staff_members" %>
+      </div>
+    </div>
+
   </div>
 </div>
-
 <p><br><%= link_to t("navigation.back_html"), root_path %></p>
