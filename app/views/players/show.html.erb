@@ -71,12 +71,12 @@
     </li>
   </ul>
 
-  <div class="tab-content col-xs-12">
+  <div class="tab-content">
     <div class="tab-pane active fade in" id="feed">
       <%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for(@player), :to => @player, :owner => @player.user, :hide_header => true } %>
     </div>
     <div class="tab-pane fade" id="games">
-      <%= render :partial => "games", :locals => { :games => @player.games, :compact => true } %>
+      <%= render :partial => "games", :locals => { :games => @player.games, :compact => true, :hide_header => true } %>
     </div>
     <div class="tab-pane fade" id="fans">
       <%= render :partial => "followers", :locals => {:target => @player, :hide_header => true } %>
