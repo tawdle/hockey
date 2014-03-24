@@ -1,0 +1,28 @@
+.tiles {
+  margin-top: 15px;
+}
+
+.tile {
+  background-color: #363636;
+  color: white;
+  a { color: white; }
+  border-radius: 3px;
+  padding: 10px;
+  height: 70px;
+  margin-bottom: 5px;
+  p {
+    margin-bottom: 0px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  img {
+    max-height: 50px;
+  }
+  .meta {
+    padding-left: 10px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
+
