@@ -3,10 +3,10 @@
 <%= render :partial => "orientation" %>
 
 <div class="row tiles">
-  <%= render :partial => "players" %>
-  <%= render :partial => "teams", :locals => { :teams => current_user.teams } %>
-  <%= render :partial => "leagues", :locals => { :leagues => current_user.leagues } %>
-  <%= render :partial => "locations", :locals => { :locations => current_user.locations } %>
+  <%= render :partial => "application/tiles/players", :locals => { :players => current_user.players } %>
+  <%= render :partial => "application/tiles/teams", :locals => { :teams => current_user.teams } %>
+  <%= render :partial => "application/tiles/leagues", :locals => { :leagues => current_user.leagues } %>
+  <%= render :partial => "application/tiles/locations", :locals => { :locations => current_user.locations } %>
 </div>
 
 <%= javascript_tag do %>
