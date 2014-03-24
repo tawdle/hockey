@@ -1,41 +1,64 @@
-<div class="row">
-  <div class="col-md-8">
-
-    <h2><%= @user.name %></h2>
-
-    <%= cl_image_tag(@user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px;") %>
-
-    <%= format_user_link(@user) %>
-
-    <%= render :partial => "follow_button", :locals => {:target => @user } %>
-
-    <div class="clearfix"></div>
-
-    <%= link_to("Edit", edit_user_path(@user), :class => "btn btn-default") if can? :edit, @user %>
-
-    <%= render :partial => "activity_feed", :locals => {:feed_items => ActivityFeedItem.for(@user), :to => @user, :owner => @user } %>
+<div class="row user-meta">
+  <div class="col-xs-12 col-sm-4 photo">
+    <%= image_tag(@user.avatar_url(:medium)) %>
   </div>
-  <div class="col-md-4">
-    <%= render :partial => "mini_sign_up" unless current_user %>
-    <%= render :partial => "followers", :locals => {:target => @user } %>
-    <%= render :partial => "followings", :locals => {:user => @user } %>
-    <div class="well">
-      <% if @user.authorizations.any? && (current_user && (@user == current_user || current_user.admin?))  %>
-        <h3>Authorizations</h3>
-        <ul>
-          <% @user.authorizations.each do |auth| %>
-            <li>
-              <%= auth.role %>
-              <% if auth.authorizable %>
-                of <%= link_to auth.authorizable.name, auth.authorizable %>
-              <% end %>
-            </li>
-          <% end %>
-        </ul>
-      <% end %>
+
+  <div class="col-xs-12 col-sm-5 user-name">
+    <h1>
+      <%= @user.name %>
+    </h1>
+    <p><%= format_user_link(@user) %><p>
+  </div>
+
+  <div class="col-xs-12 col-sm-3 buttons">
+    <div class="text-right">
+      <%= render partial: "follow_button", locals: { target: @user } %>
+      <%= link_to t("actions.edit"), edit_user_path(@user), :class => "btn btn-default btn-sm" if can?(:edit, @user) %>
+      <p></p>
     </div>
-
-
   </div>
 </div>
 
+<%= javascript_tag do %>
+  $(function() {
+    $(".nav-tabs a:first").tab("show");
+  });
+<% end %>
+
+<div class="row tiles">
+  <%= render :partial => "application/tiles/players", :locals => { :players => @user.players } %>
+  <%= render :partial => "application/tiles/teams", :locals => { :teams => @user.teams } %>
+  <%= render :partial => "application/tiles/leagues", :locals => { :leagues => @user.leagues } %>
+  <%= render :partial => "application/tiles/locations", :locals => { :locations => @user.locations } %>
+</div>
+
+<div class="row main">
+  <div class="col-xs-12">
+    <ul class="nav nav-tabs">
+      <li><%= link_to ActivityFeedItem.model_name.human.pluralize, "#feed", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to Game.model_name.human.pluralize, "#games", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to t("home.index.fans_of"), "#followings", :data => {:toggle => "tab" } %></li>
+      <li>
+        <%= link_to "#fans", :data => {:toggle => "tab" } do %>
+          <%= t(@user == current_user ? "self_header" : "header", :scope => "followers") %>
+          <span class="badge"><%= @user.followers.count %></span>
+        <% end %>
+      </li>
+    </ul>
+
+    <div class="tab-content">
+      <div class="tab-pane active fade" id="feed">
+        <%= render :partial => "activity_feed", :locals => { :feed_items => ActivityFeedItem.for(@user), :owner => @user, :hide_header => true } %>
+      </div>
+      <div class="tab-pane fade" id="games">
+        <%= render :partial => "games", :locals => { :games => Game.for_user(@user), :compact => true, :hide_header => true, :reverse => true } %>
+      </div>
+      <div class="tab-pane fade" id="followings">
+        <%= render :partial => "followings", :locals => {:user => @user, :hide_header => true } %>
+      </div>
+      <div class="tab-pane fade" id="fans">
+        <%= render :partial => "followers", :locals => {:target => @user, :hide_header => true } %>
+      </div>
+    </div>
+  </div>
+</div>
