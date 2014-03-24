@@ -3,8 +3,7 @@ class HomeController < ApplicationController
 
   def index
     if current_user
-      @authorizations = current_user.authorizations.
-        order(:authorizable_type).map(&:authorizable).compact.uniq
+      current_user.update_attribute(:last_viewed_home_page_at, Time.now)
     end
   end
 

@@ -980,7 +980,8 @@ CREATE TABLE users (
     avatar character varying(255),
     time_zone character varying(255),
     language character varying(255),
-    name character varying(255)
+    name character varying(255),
+    last_viewed_home_page_at timestamp without time zone
 );
 
 
@@ -1985,3 +1986,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140303222815');
 INSERT INTO schema_migrations (version) VALUES ('20140305225500');
 
 INSERT INTO schema_migrations (version) VALUES ('20140307005148');
+
+INSERT INTO schema_migrations (version) VALUES ('20140324184355');
