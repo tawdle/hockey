@@ -29,13 +29,16 @@ class AvatarUploader < CarrierWave::Uploader::Base
   process :convert => 'png'
 
   version :thumbnail do
-    resize_to_fit(50, 50)
-    cloudinary_transformation :radius => 10
+    cloudinary_transformation :radius => 5, :crop => :fit, :width => 50, :height => 50
   end
 
   version :small do
     resize_to_fit(100, 100)
     cloudinary_transformation :radius => 10
+  end
+
+  version :medium do
+    cloudinary_transformation :crop => :fit, :width => 300, :height => 300
   end
 
   # Provide a default URL as a default if there hasn't been a file uploaded:
