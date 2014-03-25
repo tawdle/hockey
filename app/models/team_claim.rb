@@ -6,9 +6,7 @@ class TeamClaim < ActiveRecord::Base
 
   before_create :set_code
 
-  require 'securerandom'
-
   def set_code
-    self.code = Digest::SHA1.hexdigest(SecureRandom.random_bytes(32))
+    self.code = RandomToken.generate
   end
 end

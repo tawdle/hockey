@@ -72,7 +72,7 @@ class Invitation < ActiveRecord::Base
   end
 
   def set_code
-    self.code = Digest::SHA1.hexdigest(email + Time.now.to_s)
+    self.code = RandomToken.generate
   end
 
   def send_invitation
