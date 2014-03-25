@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>BigShot.io</title>
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  </head>
+
+  <body style="margin:0;padding:0;">
+
+    <p>Hello, <%= @user.name %>!</p>
+
+    <p>Here's what's new since your last visit to <%= link_to "BigShot.io", root_url, :style => "text-decoration:none;" %>.</p>
+
+    <table>
+      <tbody>
+        <% @items.each do |item| %>
+          <%= render :partial => "feed_item", :locals => { :item => item } %>
+        <% end %>
+      </tbody>
+    </table>
+
+    <p>To see these items or to reply, please log into your account at <%= link_to "BigShot.io", root_url, :style => "text-decoration:none;" %>.
+  </body>
+</html>
+

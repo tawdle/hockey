@@ -1,0 +1,36 @@
+<tr>
+  <td style="vertical-align:top;padding-right:10px;"><%= item.respond_to?(:creator) && item.creator.avatar.present? ? cl_image_tag(item.avatar_url(:thumbnail)) : image_tag(attachments['avatar.png'].url, :only_path => false) %></td>
+  <td>
+    <% table_style = defined?(reply) && reply ? "width:100%;padding-bottom:10px;margin-bottom:10px;" : "width:100%;padding-bottom:10px;border-bottom:1px solid #cccccc;margin-bottom:10px;" %>
+    <table style="<%= table_style %>">
+      <tbody><tr><td style="vertical-align:top;width:100%;">
+        <% if item.respond_to?(:creator) %>
+          <span style="font-weight: bold;"><%= item.creator.name %></span>
+          <%= format_user_link(item.creator, {:only_path => false }, {:style => "text-decoration:none;color:#999999;" }) %>
+        <% end %>
+        <span style="color:#999999;"><%= timeago_tag item.created_at %></span>
+        <% if item.game %>
+          <small><i>in <%= link_to "#{item.game.home_team.name} vs. #{item.game.visiting_team.name}", game_path(item.game, :only_path => false), :style => "text-decoration:none;" %></i></small>
+        <% end %>
+      </td></tr>
+      <tr><td style="vertical-align:top;"><%= format_message_with_usernames(item.message, {:only_path => false}, {:style => "text-decoration:none;"}).html_safe %></td></tr>
+      <% if item.videos.any? %>
+        <tr><td style="vertical-align:top;">
+          <% item.videos.each do |video| %>
+            <%= link_to(image_tag(video.thumb_url), video_path(video, :only_path => false)) %>
+          <% end %>
+        </td></tr>
+      <% end %>
+      <% if item.children.any? %>
+        <table><tbody>
+        <% item.children.reverse.each do |reply| %>
+          <%= render :partial => "feed_item", :locals => {:item => reply, :reply => true, :owner => defined?(owner) ? owner : nil } %>
+        <% end %>
+        </tbody></table>
+      <% end %>
+      </tbody>
+    </table>
+  </td>
+</tr>
+
+
