@@ -8,9 +8,15 @@
 
   <body style="margin:0;padding:0;">
 
-    <p><%= t("navigation.greeting") %>, <%= @user.name %>!</p>
-
-    <p><%= t(".what_is_new_html", :link => link_to("BigShot.io", root_url, :style => "text-decoration:none;")) %></p>
+  <table><tbody>
+    <tr><td>
+      <%= link_to(image_tag(attachments['logo.png'].url,  :alt => "BigShot Logo", :width => 100), root_url) %>
+    </td></tr>
+    <tr><td>
+      <p><%= t("navigation.greeting") %>, <%= @user.name %>!</p>
+      <p><%= t(".what_is_new_html", :link => link_to("BigShot.io", root_url, :style => "text-decoration:none;")) %></p>
+    </td></tr>
+  </tbody></table>
 
     <table>
       <tbody>
