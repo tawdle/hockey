@@ -8,9 +8,9 @@
 
   <body style="margin:0;padding:0;">
 
-    <p>Hello, <%= @user.name %>!</p>
+    <p><%= t("navigation.greeting") %>, <%= @user.name %>!</p>
 
-    <p>Here's what's new since your last visit to <%= link_to "BigShot.io", root_url, :style => "text-decoration:none;" %>.</p>
+    <p><%= t(".what_is_new_html", :link => link_to("BigShot.io", root_url, :style => "text-decoration:none;")) %></p>
 
     <table>
       <tbody>
@@ -20,7 +20,7 @@
       </tbody>
     </table>
 
-    <p>To see these items or to reply, please log into your account at <%= link_to "BigShot.io", root_url, :style => "text-decoration:none;" %>.
+    <p><%= t(".to_see_or_reply_html", :link => link_to("BigShot.io", root_url, :style => "text-decoration:none;")) %></p>
   </body>
 </html>
 
