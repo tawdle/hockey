@@ -14,7 +14,7 @@ namespace :notifications do
       end
     end
     task :send => :environment do
-      User.order(:id).limit(3).each do |user|
+      User.order(:id).where(:subscribed_daily_activity_feed => true).find_each do |user|
         items = new_feed_items_for(user)
         NotificationMailer.new_feed_items(user, items).deliver if items.any?
       end

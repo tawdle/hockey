@@ -981,7 +981,9 @@ CREATE TABLE users (
     time_zone character varying(255),
     language character varying(255),
     name character varying(255),
-    last_viewed_home_page_at timestamp without time zone
+    last_viewed_home_page_at timestamp without time zone,
+    unsubscribe_token character varying(255),
+    subscribed_daily_activity_feed boolean DEFAULT true NOT NULL
 );
 
 
@@ -1770,6 +1772,13 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (re
 
 
 --
+-- Name: index_users_on_unsubscribe_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE UNIQUE INDEX index_users_on_unsubscribe_token ON users USING btree (unsubscribe_token);
+
+
+--
 -- Name: index_videos_on_feed_item_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -1988,3 +1997,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140305225500');
 INSERT INTO schema_migrations (version) VALUES ('20140307005148');
 
 INSERT INTO schema_migrations (version) VALUES ('20140324184355');
+
+INSERT INTO schema_migrations (version) VALUES ('20140325161714');

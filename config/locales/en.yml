@@ -375,6 +375,8 @@ en:
       subject: New activity for %{name}
       what_is_new_html: Here's what's new since your last visit to %{link}.
       to_see_or_reply_html: To see these items or to reply, sign into your account at %{link}.
+      unsubscribe_link_text: Unsubscribe
+      unsubscribe_html: ! '%{link} from these emails'
   penalties:
     categories:
       minor: "Minor (2 minutes)"
@@ -555,6 +557,10 @@ en:
     created:
       manager_instructions_1: Copy the link below and paste it into an email to your team's mailing list.
       manager_instructions_2: When you players (or their parents) receive this link, they will be able to join BigShot and claim their player profile.
+  unsubscribe:
+    success:
+      header: Success
+      body: The email address %{email} has been successfully unsubscribed.
   time:
     formats:
       game: ! "%B %e, %Y %l:%M%p %Z"

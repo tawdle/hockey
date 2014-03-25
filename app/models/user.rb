@@ -29,6 +29,7 @@ class User < ActiveRecord::Base
   before_update :update_mentions, :if => :cached_system_name_changed?
   before_create :cache_name
   before_create :set_language
+  before_create :set_unsubscribe_token
   after_create :create_feed_item
 
   accepts_nested_attributes_for :system_name
@@ -111,6 +112,10 @@ class User < ActiveRecord::Base
 
   def init_system_name
     self.system_name ||= SystemName.new if new_record?
+  end
+
+  def set_unsubscribe_token
+    self.unsubscribe_token = RandomToken.generate
   end
 
   def update_id(model, field, other)

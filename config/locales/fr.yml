@@ -387,7 +387,10 @@ fr:
   notification_mailer:
     new_feed_items:
       subject: Nouvelles activités pour %{name}
-      to_see_or_reply_html: Pour voir ou commenter, connectez-vous sur votre compte %{link}.
+      to_see_or_reply_html: Pour voir ou commenter, connectez-vous sur votre compte
+        %{link}.
+      unsubscribe_html: ! '%{link} de ces courriels'
+      unsubscribe_link_text: Se désabonner
       what_is_new_html: Voici ce qui se passe sur %{link} depuis votre dernière visite.
   penalties:
     categories:
@@ -587,6 +590,10 @@ fr:
   time:
     formats:
       game: ! '%d/%m/%Y - %H:%M %Z'
+  unsubscribe:
+    success:
+      body: L'adresse couriel %{email} est présentement désabonné.
+      header: Succès
   videos:
     show:
       header: But!

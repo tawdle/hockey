@@ -21,6 +21,8 @@
     </table>
 
     <p><%= t(".to_see_or_reply_html", :link => link_to("BigShot.io", root_url, :style => "text-decoration:none;")) %></p>
+    <% link = link_to(t(".unsubscribe_link_text"), {:only_path => false, :controller => :unsubscribe, :action => :unsubscribe, :user_id => @user.id, :token => @user.unsubscribe_token, :category => :daily_activity_feed}, :style => "text-decoration:none;") %>
+    <p><%= t(".unsubscribe_html", :link => link) %></p>
   </body>
 </html>
 
