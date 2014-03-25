@@ -19,10 +19,11 @@ class ActivityFeedItem < ActiveRecord::Base
       includes(:children).
       joins("left outer join mentions on mentions.activity_feed_item_id = activity_feed_items.id").
       joins("left outer join followings f1 on f1.followable_id = mentions.mentionable_id and f1.followable_type = mentions.mentionable_type").
-      joins("left outer join followings f2 on f2.followable_id = creator_id and f2.followable_type = 'User'").
+      joins("left outer join followings f2 on f2.followable_id = activity_feed_items.creator_id and f2.followable_type = 'User'").
       joins("left outer join players on mentions.mentionable_type = 'Player' and mentions.mentionable_id = players.id").
       where("activity_feed_items.creator_id = ? or f1.user_id = ? or f2.user_id = ? or (mentions.mentionable_type = 'User' and mentions.mentionable_id = ?) or players.user_id = ?",
-            id, id, id, id, id);
+            id, id, id, id, id).
+      select('distinct "activity_feed_items".*')
   end
 
   def self.for(obj)
@@ -31,12 +32,14 @@ class ActivityFeedItem < ActiveRecord::Base
       top_level.
         includes(:children).
         joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
-        where("creator_id = ? or (mentions.mentionable_id = ? and mentions.mentionable_type = 'User')", obj.id, obj.id);
+        where("creator_id = ? or (mentions.mentionable_id = ? and mentions.mentionable_type = 'User')", obj.id, obj.id).
+        select('distinct "activity_feed_items".*')
     else
       top_level.
         includes(:children).
         joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
-        where(mentions: { mentionable_id: obj.id, mentionable_type: obj.class.name })
+        where(mentions: { mentionable_id: obj.id, mentionable_type: obj.class.name }).
+        select('distinct "activity_feed_items".*')
     end
   end
 
