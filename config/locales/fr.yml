@@ -386,10 +386,9 @@ fr:
     sign_up: Inscris-toi!
   notification_mailer:
     new_feed_items:
-      subject: New activity for %{name}
-      to_see_or_reply_html: To see these items or to reply, please into your account
-        at %{link}.
-      what_is_new_html: Here's what's new since your last visit to %{link}.
+      subject: Nouvelles activités pour %{name}
+      to_see_or_reply_html: Pour voir ou commenter, connectez-vous sur votre compte %{link}.
+      what_is_new_html: Voici ce qui se passe sur %{link} depuis votre dernière visite.
   penalties:
     categories:
       game_misconduct: Extrême inconduite (expulsion)

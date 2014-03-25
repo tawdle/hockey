@@ -11,18 +11,18 @@ class NotificationMailer < ActionMailer::Base
 
   def new_feed_items(user, items)
     attachments.inline['avatar.png'] = File.read(Rails.root.join("app/assets/images/fallback/avatar_thumbnail.png"))
-    send_localized_mail(user, I18n.t("notification_mailer.new_feed_items.subject", :name => user.name), items)
+    send_localized_mail(user, "notification_mailer.new_feed_items.subject", items)
   end
 
   private
 
   DEFAULT_LANGUAGE = 'fr'
 
-  def send_localized_mail(user, subject, items)
+  def send_localized_mail(user, subject_key, items)
     @user = user
     @items = items
     I18n.with_locale(user.language || DEFAULT_LANGUAGE) do
-      mail to: [user.email], subject: subject
+      mail to: [user.email], subject: I18n.t(subject_key, :name => user.name)
     end
   end
 end
