@@ -5,7 +5,7 @@
   <p>
     <% if item.respond_to?(:creator) %>
       <span class="creator"><%= item.creator.name %></span>
-      <%= format_user_link(item.creator, "text-muted") %>
+      <%= format_user_link(item.creator, {}, :class => "text-muted") %>
     <% end %>
     <span class="created-at text-muted"><%= timeago_tag item.created_at %></span>
     <% if item.game && !(defined?(in_game_context) && in_game_context) %>
