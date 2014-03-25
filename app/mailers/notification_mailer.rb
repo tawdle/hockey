@@ -21,8 +21,10 @@ class NotificationMailer < ActionMailer::Base
   def send_localized_mail(user, subject_key, items)
     @user = user
     @items = items
+    subject = I18n.t(subject_key, :name => user.name)
+    subject = "[staging] #{subject}" if Rails.env.staging?
     I18n.with_locale(user.language || DEFAULT_LANGUAGE) do
-      mail to: [user.email], subject: I18n.t(subject_key, :name => user.name)
+      mail to: [user.email], subject: subject
     end
   end
 end
