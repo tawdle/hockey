@@ -46,3 +46,12 @@ $(function() {
     }
   });
 });
+
+$(function() {
+  $(".video-thumb").click(function(e) {
+    e.preventDefault();
+    var url = $(this).attr("data-url");
+    $(".video.modal video").attr("src", url)[0].load();
+    $(".video.modal").modal("toggle");
+  });
+});

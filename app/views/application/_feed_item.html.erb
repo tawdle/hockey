@@ -16,7 +16,7 @@
   <% if item.videos.any? %>
     <p class="videos">
       <% item.videos.each do |video| %>
-        <%= link_to(image_tag(video.thumb_url), video) %>
+        <%= link_to(image_tag(video.thumb_url), "#", :class => "video-thumb", :data => {:url => video.file_url }) %>
       <% end %>
     </p>
   <% end %>

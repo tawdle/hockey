@@ -4,6 +4,25 @@
   padding-bottom: 5px;
 }
 
+.video.modal {
+  video {
+    width: 100%;
+  }
+  .modal-content {
+    background-color: #363636;
+  }
+  .close {
+    color: white;
+    opacity: .7;
+    position: absolute;
+    right: 5px;
+    top: 0px;
+    &:hover {
+      opacity: 1;
+    }
+  }
+}
+
 .feed-item {
   position: relative;
   padding: 5px 5px 5px 60px;
