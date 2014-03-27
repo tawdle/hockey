@@ -4,6 +4,8 @@ Hockey::Application.routes.draw do
     resources :user_posts, :only => [:create]
   end
 
+  resources :feed_items, :only => [:show]
+
   resources :followings, :only => [:create, :destroy]
 
   resources :games, :only => [:show, :update]

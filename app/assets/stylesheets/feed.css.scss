@@ -69,6 +69,8 @@ p.videos {
 
   .reply-link {
     opacity: 0.5;
+    margin-right: 5px;
+    text-decoration: none;
   }
 
   &:hover {
@@ -95,6 +97,23 @@ p.videos {
     display: none;
     margin-top: 10px;
     margin-bottom: 0px;
+  }
+
+  .share-links {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    line-height: 1.2;
+  }
+
+  .twitter-share-button {
+    position: relative;
+    top: 5px;
+  }
+  .fb-share-button {
+    display: inline-block !important;
+    width: auto !important;
+    position: relative;
+    top: 2px;
   }
 }
 

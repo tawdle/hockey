@@ -74,7 +74,7 @@
 <% content_for(:head) do %>
   <meta property="fb:app_id" content="501253019996420">
   <meta property="og:site_name" content="BigShot">
-  <meta property="og:description" content="<%= @video.feed_item.message %>">
+  <meta property="og:description" content="<%= format_message_text_only(@video.feed_item.message) %>">
   <meta property="og:title" content="Goal!">
   <meta property="og:image" content="<%= @video.poster_url %>">
 <% end %>

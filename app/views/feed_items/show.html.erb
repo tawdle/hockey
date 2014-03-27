@@ -1,0 +1,15 @@
+<% title raw format_message_text_only(@feed_item.message) %>
+<div class="activity-feed">
+  <%= render :partial => "feed_item", :locals => { :item => @feed_item } %>
+</div>
+
+<% content_for(:head) do %>
+  <meta property="fb:app_id" content="501253019996420">
+  <meta property="og:site_name" content="BigShot">
+  <meta property="og:description" content="<%= format_message_text_only(@feed_item.message) %>">
+  <meta property="og:title" content="Goal!">
+  <% if @feed_item.videos.any? %>
+    <meta property="og:image" content="<%= @feed_item.videos.first.poster_url %>">
+  <% end %>
+<% end %>
+

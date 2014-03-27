@@ -9,9 +9,9 @@ class Feed::UserPostsController < ApplicationController
         format.html do
           if request.xhr?
             locals = {:item => @user_post }
-            locals.merge!(:reply => true) if params[:reply] == true
+            locals.merge!(:reply => true) if params[:reply]
             locals.merge!(:owner => User.find(params[:owner_id])) if params[:owner_id]
-            render :partial => "feed_item", :locals => locals, :layout => false
+            render(:partial => "feed_item", :locals => locals, :layout => false)
           else
             redirect_to :back, notice: t("controllers.feed.user_posts.create.success")
           end

@@ -36,6 +36,18 @@ module UsersHelper
     link_to(displayname, dest, html_opts.merge(:title => username))
   end
 
+  def format_message_text_only(msg)
+    matches = msg.scan(Mention::FeedNamePattern)
+    if matches.any?
+      msg = ERB::Util.html_escape(msg)
+      matches.each do |username, displayname|
+        source = Regexp.escape("[[@#{username} #{ERB::Util.html_escape(displayname)}]]")
+        msg.gsub!(/#{source}/, displayname)
+      end
+    end
+    msg
+  end
+
   def format_message_with_usernames(msg, url_opts={}, html_opts={})
     matches = msg.scan(Mention::FeedNamePattern)
     if matches.any?
