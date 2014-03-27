@@ -49,6 +49,7 @@ module UsersHelper
   end
 
   def format_message_with_usernames(msg, url_opts={}, html_opts={})
+    msg = msg.dup
     matches = msg.scan(Mention::FeedNamePattern)
     if matches.any?
       msg = ERB::Util.html_escape(msg)
