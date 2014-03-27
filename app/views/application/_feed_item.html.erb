@@ -16,7 +16,11 @@
   <% if item.videos.any? %>
     <p class="videos">
       <% item.videos.each do |video| %>
-        <%= link_to(image_tag(video.thumb_url), "#", :class => "video-thumb", :data => {:url => video.file_url }) %>
+        <% if current_user %>
+          <%= link_to(image_tag(video.thumb_url), "#", :class => "video-thumb", :data => {:url => video.file_url }) %>
+        <% else %>
+          <%= link_to(image_tag(video.thumb_url), new_user_session_path, :class => "video-thumb") %>
+        <% end %>
       <% end %>
     </p>
   <% end %>
