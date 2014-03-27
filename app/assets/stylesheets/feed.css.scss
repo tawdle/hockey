@@ -1,7 +1,12 @@
 .replies .feed-item {
-  border-bottom: none;
+  border-bottom: 1px solid #eee;
   margin-bottom: 0px;
   padding-bottom: 5px;
+  min-height: 60px;
+}
+
+.replies .feed-item:last-child {
+  border-bottom: none;
 }
 
 .video.modal {
@@ -54,10 +59,14 @@ p.videos {
 
 .feed-item {
   position: relative;
-  padding: 5px 5px 5px 60px;
+  padding: 0px 5px 10px 60px;
   margin-bottom: 10px;
   margin-top: 10px;
   border-bottom: 1px solid #ccc;
+
+  &:last-child {
+    border-bottom: none;
+  }
 
   &.owner {
     background-color: #ddd;
@@ -82,7 +91,6 @@ p.videos {
 
   img.avatar {
     position: absolute;
-    top: 5px;
     left: 5px;
   }
 
