@@ -149,7 +149,9 @@ class Ability
       user.admin?
     end
 
-    can :read, Video
+    can :read, Video do
+      user.persisted?
+    end
 
     can :destroy, Video do
       user.admin?

@@ -15,6 +15,10 @@ class Video < ActiveRecord::Base
     bucket.objects[thumb_key].public_url.to_s
   end
 
+  def secure_url
+    CloudFront.get_signed_expiring_url("https://#{ENV['AWS_CLOUDFRONT_DOMAIN']}/#{file_key}", 60.seconds)
+  end
+
   def file_url
     bucket.objects[file_key].url_for(:read, :expires => 10.minutes).to_s
   end

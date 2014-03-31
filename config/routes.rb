@@ -89,7 +89,7 @@ Hockey::Application.routes.draw do
     end
   end
 
-  resources :videos, :only => [:show, :destroy]
+  resources :videos, :only => [:show]
 
   match 'typeahead/get_users' => 'typeahead#get_users'
 
