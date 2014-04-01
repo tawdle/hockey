@@ -8,7 +8,7 @@ en:
   activerecord:
     attributes:
       contact:
-        name: Name (optional)
+        name: Your name (optional)
         email: Email
         subject: Subject
         message: Message
@@ -273,8 +273,6 @@ en:
   home:
     about:
       header: About Us
-    contact:
-      header: Contact Us
     press:
       header: Press
     privacy:

@@ -10,7 +10,7 @@ fr:
       contact:
         email: Email
         message: Message
-        name: Name (optional)
+        name: Your name (optional)
         subject: Subject
       game:
         home_team: Local
@@ -100,7 +100,7 @@ fr:
       submit: Send
     success:
       header: Message sent
-      message: Your message has been sent. We'll get back to you shortly.
+      message: Thanks for your message! We'll get back to you shortly.
   controllers:
     admin:
       kiosks:
@@ -278,8 +278,6 @@ fr:
   home:
     about:
       header: About Us
-    contact:
-      header: Contact Us
     index:
       fans_of: Fans de
       your_fans: Vos fans
