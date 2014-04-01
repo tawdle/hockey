@@ -268,8 +268,10 @@ fr:
         BigShot, nous vous suggérons d'utiliser la barre de recherche au haut de la
         page pour trouver vos joueurs et équipes préférés. Puis cliquez sur <strong>Devenir
         fan</strong> button.</p>
+    press:
+      header: Press
     privacy:
-      header: Privacy
+      header: Privacy Policy
     teams_managed:
       teams_you_manage: Équipes que vous gérez
     terms:

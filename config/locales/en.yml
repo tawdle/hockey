@@ -253,8 +253,10 @@ en:
       header: About Us
     contact:
       header: Contact Us
+    press:
+      header: Press
     privacy:
-      header: Privacy
+      header: Privacy Policy
     terms:
       header: Terms of Service
     orientation:
