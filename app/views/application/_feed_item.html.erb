@@ -51,7 +51,7 @@
       <%= link_to "#", :class => "reply-link" do %>
         <%= t("activity_feed.reply") %> <i class="icon-reply"></i>
       <% end %>
-      <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= Rails.env.production? ? feed_item_url(item, locale: I18n.locale) : "https://bigshot.io/" %>" data-count="none" data-hashtags="bigshot" data-lang="<%= I18n.locale %>" data-text="<%= raw format_message_text_only(item.message) %>">Tweet</a>
+      <a href="https://twitter.com/share" class="twitter-share-button" data-url="<%= Rails.env.production? ? feed_item_url(item, locale: I18n.locale) : "https://bigshot.io/" %>" data-count="none" data-lang="<%= I18n.locale %>" data-via="bigshotsports" data-text="<%= raw format_message_text_only(item.message) %> ">Tweet</a>
       <div class="fb-share-button" data-href="<%= Rails.env.production? ? feed_item_path(item, locale: I18n.locale) : "https://bigshot.io/" %>" data-type="button"></div>
     </div>
 
