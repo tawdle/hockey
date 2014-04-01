@@ -67,6 +67,6 @@ class Contact
   private
 
   def send_email
-    ContactMailer.incoming(self).deliver
+    ContactMailer.delay.incoming(self)
   end
 end
