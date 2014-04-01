@@ -1,5 +1,7 @@
 Hockey::Application.routes.draw do
 
+  resources :contacts, :only => [:new, :create]
+
   namespace :feed do
     resources :user_posts, :only => [:create]
   end

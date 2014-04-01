@@ -1,0 +1,16 @@
+Hi! This is the contact mailer. I'm forwarding an incoming contact from the website.
+
+Name: <%= @contact.name %>
+Email: <%= @contact.email %>
+<% if @contact.user_id && user = User.find_by_id(@contact.user_id) %>
+  User: <%= user.at_name %> <%= user_url(user) %>
+<% end %>
+Subject: <%= @contact.subject %>
+
+IP address: <%= @contact.ip %>
+Referer: <%= @contact.referer %>
+UserAgent: <%= @contact.useragent %>
+
+Message:
+<%= @contact.message %>
+

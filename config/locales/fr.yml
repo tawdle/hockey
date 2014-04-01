@@ -7,6 +7,11 @@ fr:
     remove: Supprimer
   activerecord:
     attributes:
+      contact:
+        email: Email
+        message: Message
+        name: Name (optional)
+        subject: Subject
       game:
         home_team: Local
         location: Aréna
@@ -84,6 +89,18 @@ fr:
       header: Déjà membre? Connectez-vous.
     mini_sign_up:
       header: Vous n'êtes pas un BigShot? Inscrivez-vous.
+  contacts:
+    new:
+      header: Contact us
+      subjects:
+        bigshot_at_my_arena: I want BigShot at my arena
+        i_have_an_idea: I have an idea for you
+        other: Other
+        technical_problem: I'm having a technical problem
+      submit: Send
+    success:
+      header: Message sent
+      message: Your message has been sent. We'll get back to you shortly.
   controllers:
     admin:
       kiosks:
@@ -238,6 +255,10 @@ fr:
   followings:
     header: ! '%{name} est fan de'
     self_header: Vous êtes fan de
+  forms:
+    errors:
+      error: problems
+      header: There are %{errors} with your submission.
   games:
     edit_game: Modifier
     ended: Cette partie s'est terminée à %{end_time}.

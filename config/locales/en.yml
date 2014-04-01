@@ -7,6 +7,11 @@ en:
     cancel: Cancel
   activerecord:
     attributes:
+      contact:
+        name: Name (optional)
+        email: Email
+        subject: Subject
+        message: Message
       game:
         home_team: Home
         location: Arena
@@ -84,6 +89,19 @@ en:
       header: Want to be a BigShot? Join now.
     mini_sign_in:
       header: Already a BigShot? Sign in.
+  contacts:
+    new:
+      header: Contact us
+      subjects:
+        bigshot_at_my_arena: I want BigShot at my arena
+        i_have_an_idea: I have an idea for you
+        technical_problem: I'm having a technical problem
+        other: Other
+      submit: Send
+    success:
+      header: Message sent
+      message: Thanks for your message! We'll get back to you shortly.
+
   controllers:
     admin:
       kiosks:
@@ -232,6 +250,10 @@ en:
   followings:
     header: ! "%{name} is a fan of"
     self_header: You are a fan of
+  forms:
+    errors:
+      error: problems
+      header: There are %{errors} with your submission.
   games:
     show:
       sign_in_to_view_html: ! '%{sign_in} to view'
