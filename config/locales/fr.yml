@@ -218,6 +218,7 @@ fr:
       one_assist: ! '%{player} a marqué un but contre les %{against_team}, avec l''aide
         de %{assist1}'
       solo: ! '%{player} a marqué un but sans aide contre les %{against_team}'
+      title: But!
       two_assists: ! '%{player} a marqué un but contre les %{against_team}, avec l''aide
         de %{assist1} et de %{assist2}'
     new_goalie: ! '%{player} est devant le filet pour %{team}'

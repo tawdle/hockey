@@ -50,6 +50,10 @@ class ActivityFeedItem < ActiveRecord::Base
    User.new.avatar_url(version_name)
   end
 
+  def title
+    ApplicationController.helpers.format_message_text_only(message)
+  end
+
   def active_model_serializer
     ActivityFeedItemSerializer
   end

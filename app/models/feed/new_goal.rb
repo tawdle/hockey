@@ -21,7 +21,11 @@ class Feed::NewGoal < ActivityFeedItem
   end
 
   def mentioned_objects
-    [player, player2, player3].compact
+    [player.team, player, player2, player3].compact
+  end
+
+  def title
+    I18n.t("feed.new_goal.title")
   end
 end
 

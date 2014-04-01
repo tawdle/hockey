@@ -214,6 +214,7 @@ en:
       solo: "%{player} scored a goal against %{against_team}"
       one_assist: "%{player} scored a goal against %{against_team}, assisted by %{assist1}"
       two_assists: "%{player} scored a goal against %{against_team}, assisted by %{assist1} and %{assist2}"
+      title: Goal!
     new_goalie: "%{player} is in the net for %{team}"
     new_league_manager: "%{user} became a manager of %{league}"
     new_league_marker: "%{user} became a marker for %{league}"
