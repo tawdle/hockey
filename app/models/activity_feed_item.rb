@@ -34,6 +34,11 @@ class ActivityFeedItem < ActiveRecord::Base
         joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
         where("creator_id = ? or (mentions.mentionable_id = ? and mentions.mentionable_type = 'User')", obj.id, obj.id).
         select('distinct "activity_feed_items".*')
+    when Game
+      top_level
+      includes(:children).
+        where("activity_feed_items.game_id = ?", obj.id).
+        select('distinct "activity_feed_items".*')
     else
       top_level.
         includes(:children).

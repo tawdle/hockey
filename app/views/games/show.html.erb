@@ -8,7 +8,6 @@
   $(function() {
     App.translations =  <%= I18n.t(".").to_json.html_safe %>;
     App.periods = <%= Game::Periods.to_json.html_safe %>;
-    App.feedItems = new App.FeedItems(<%= json_for(@game.activity_feed_items).html_safe %>, {gameId: <%= @game.id %>});
     App.game = new App.Game(<%= json_for(@game, :methods => [:faye_uri]).html_safe %>);
     App.gameSummaryView = new App.GameSummaryView({ model: App.game, el: ".content" });
   });
@@ -105,37 +104,4 @@
   <% end %>
 </div>
 
-<h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
-
-<% if current_user %>
-  <%= form_for(Feed::UserPost.new(:game => @game), :class => "form-inline", :remote => true) do |f| %>
-    <div class="form-group">
-      <%= f.label :message, :class => "sr-only" %>
-      <div class="col-md-4">
-        <%= f.text_field :message, :class => "form-control", :placeholder => t("activity_feed.placeholder") %>
-      </div>
-    </div>
-
-    <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
-
-    <div class="actions">
-      <%= f.submit t("activity_feed.post"), :class => "btn btn-primary" %>
-    </div>
-  <% end %>
-<% end %>
-
-<ul id="feed-items"></ul>
-
-<script type="text/html" id="feed-item">
-  <div class="feed-item">
-    <img src="{{= avatar_thumbnail_url }}" height="50" width="50" class="avatar">
-    <p>
-      <span class="creator">{{= creator }}</span>
-      <span class="created-at text-muted"><time class="timeago" datetime="{{= created_at }}"></span>
-    </p>
-    <p>{{= message }}</p>
-    <p class="videos">{{ _.each(videos, function(video) { }}<a href="{{= video.show_url }}"><img src="{{= video.thumb_url }}"></a> {{ }); }}</p>
-  </div>
-</script>
-
-
+<%= render :partial => "activity_feed", :locals => { new_item: Feed::UserPost.new(game: @game), context: @game } %>
