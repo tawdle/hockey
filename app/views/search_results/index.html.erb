@@ -1,4 +1,4 @@
-<div class="col-md-6">
+<div class="col-md-12">
   <div class="well search-results">
     <%= form_tag(search_index_path, :method => :get, :class => "form-search") do %>
       <div class="input-group">
@@ -14,9 +14,11 @@
     <% if @results.any? %>
       <% @results.each do |result| %>
         <% class_name = result.class.name.downcase %>
-        <div class="result <%= class_name %>">
-          <%= render :partial => class_name, :locals => {  class_name.to_sym => result } %>
-          <div class="pull-right">
+        <div class="row result <%= class_name %>">
+          <div class="col-sm-8">
+            <%= render :partial => class_name, :locals => {  class_name.to_sym => result } %>
+          </div>
+          <div class="col-sm-4 text-right">
             <%= render :partial => "follow_button", :locals => { :target => result } %>
           </div>
         </div>
