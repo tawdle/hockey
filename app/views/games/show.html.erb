@@ -13,82 +13,78 @@
   });
 <% end %>
 
-<h1><%= @game.visiting_team.name %> vs <%= @game.home_team.name %>
-  <% if can? :mark, @game %>
-    <%= link_to "Mark this game", marker_game_path(@game), :class => "btn btn-primary" %>
-  <% end %>
-  <% if can? :edit, @game %>
-    <%= link_to "Edit this game", edit_game_path(@game), :class => "btn btn-primary" %>
-  <% end %>
-</h1>
-<p>
-  <%= l @game.start_time, :format => :game %>
-  <% if @game.start_time > DateTime.now %>
-    (<%= timeago_tag @game.start_time %>)
-  <% end %>
-  <br />
-  <%= @game.location.name %>
-  <br />
-  <%= @game.number.present? ? "##{@game.number}" : "" %>
-  in <%= format_team_link(@game.league) %>
-</p>
-
-
-<% if @game.ended_at %>
-  <p><%= t("games.ended", { :end_time => timeago_tag(@game.ended_at)}).html_safe %>
-    <% if @game.completed? %>
-      <%= link_to "View gamesheet", game_path(@game, :format => :pdf), :class => "btn btn-default " %>
-    <% end %>
-  </p>
-<% elsif @game.started_at %>
-  <p><%= t("games.started", { :start_time => timeago_tag(@game.started_at)}).html_safe %></p>
-<% end %>
-
-<div class="well well-large" style="text-align: center;">
-  <div class="game-summary">
-    <div class="period"><%= @game.completed? ? "Final" : "#{t('activerecord.attributes.game.period')} #{@game.period_text}" %></div>
-    <div class="visiting-team">
-      <div class="name-block">
-        <%= link_to @game.visiting_team do %>
-          <div class="team-name"><%= @game.visiting_team.name %></div>
-          <div><%= @game.visiting_team.city %></div>
+<div class="row game-meta">
+  <div class="col-xs-12">
+    <div class="row">
+      <div class="col-xs-5 text-center">
+        <%= link_to @game.visiting_team, :class => "team-name" do %>
+          <%= @game.visiting_team.name %><br>
+          <%= @game.visiting_team.city %>
         <% end %>
-        <div><%= format_team_link(@game.visiting_team) %></div>
+        <div><%= link_to image_tag(@game.visiting_team.logo_url(:small)), @game.visiting_team %></div>
       </div>
-      <%= link_to cl_image_tag(@game.visiting_team.logo_url(:large)), @game.visiting_team %>
-    </div>
-
-    <div class="score">
-      <% if @game.live? || @game.completed? %>
-        <%= @game.visiting_team_score %> - <%= @game.home_team_score %>
-      <% else %>
-        VS
-      <% end %>
-    </div>
-
-    <div class="home-team">
-      <%= link_to cl_image_tag(@game.home_team.logo_url(:large)), @game.home_team %>
-      <div class="name-block">
-        <%= link_to @game.home_team do %>
-          <div class="team-name"><%= @game.home_team.name %></div>
-          <div><%= @game.home_team.city %></div>
+      <div class="col-xs-2 text-center">
+        <div class="score">
+          <% if @game.live? || @game.completed? %>
+            <%= @game.visiting_team_score %> - <%= @game.home_team_score %>
+          <% else %>
+            VS
+          <% end %>
+        </div>
+        <div class="period"><%= @game.completed? ? "Final" : "#{t('activerecord.attributes.game.period')} #{@game.period_text}" %></div>
+      </div>
+      <div class="col-xs-5 text-center">
+        <%= link_to @game.home_team, :class => "team-name" do %>
+          <%= @game.home_team.name %><br>
+          <%= @game.home_team.city %>
         <% end %>
-        <div><%= format_team_link(@game.home_team) %></div>
+        <div><%= link_to image_tag(@game.home_team.logo_url(:small)), @game.home_team %></div>
+      </div>
+    </div>
+
+    <div class="row other-meta">
+      <div class="col-md-6 time-and-place">
+        <p>
+          <%= l @game.start_time, :format => :game %>
+          <% if @game.start_time > DateTime.now %>
+            (<%= timeago_tag @game.start_time %>)
+          <% end %>
+          <br />
+          <%= link_to @game.location.name, @game.location %>
+          <br />
+          <%= @game.number.present? ? "##{@game.number} -" : "" %>
+          <%= link_to(@game.league.name, @game.league) %>
+        </p>
+        <% if @game.ended_at %>
+          <p><%= t("games.ended", { :end_time => timeago_tag(@game.ended_at)}).html_safe %>
+          </p>
+        <% elsif @game.started_at %>
+          <p><%= t("games.started", { :start_time => timeago_tag(@game.started_at)}).html_safe %></p>
+        <% end %>
+      </div>
+
+      <div class="col-md-6 buttons">
+        <% if @game.completed? %>
+          <%= link_to "View gamesheet", game_path(@game, :format => :pdf), :class => "btn btn-default " %>
+        <% end %>
+        <% if can? :mark, @game %>
+          <%= link_to "Mark this game", marker_game_path(@game), :class => "btn btn-default" %>
+        <% end %>
+        <% if can? :edit, @game %>
+          <%= link_to "Edit this game", edit_game_path(@game), :class => "btn btn-default" %>
+        <% end %>
       </div>
     </div>
   </div>
 </div>
 
-<div class="clearfix"></div>
-
-
-<div class="game-highlights">
+<div class="row game-highlights">
   <% if @game.vimeo_id.present? %>
     <h2><%= t("games.highlights") %></h2>
     <% if current_user %>
-      <iframe src="//player.vimeo.com/video/<%= @game.vimeo_id %>" width="500" height="281"
-        frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen>
-      </iframe>
+      <div class="vimeo-container">
+        <iframe src="//player.vimeo.com/video/<%= @game.vimeo_id %>" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+      </div>
     <% else %>
       <div class="video-poster" onclick="document.location='<%= new_user_session_path %>'">
         <p><%= t(".sign_in_to_view_html", :sign_in => link_to(t('navigation.sign_in'), new_user_session_path)) %></p>
@@ -96,12 +92,16 @@
     <% end %>
   <% end %>
 
-  <% if current_user.try(:admin?) %>
-    <%= form_for(@game, :html => {:class => "form-inline"}) do |f| %>
-      <%= f.text_field :vimeo_id %>
-      <%= f.submit "Set Vimeo code", :class => "btn btn-primary" %>
+  <div class="text-right">
+    <% if current_user.try(:admin?) %>
+      <%= form_for(@game, :html => {:class => "form-inline"}) do |f| %>
+        <%= f.text_field :vimeo_id %>
+        <%= f.submit "Set Vimeo code", :class => "btn btn-primary" %>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </div>
 
-<%= render :partial => "activity_feed", :locals => { new_item: Feed::UserPost.new(game: @game), context: @game } %>
+<div class="row">
+  <%= render :partial => "activity_feed", :locals => { new_item: Feed::UserPost.new(game: @game), context: @game } %>
+</div>
