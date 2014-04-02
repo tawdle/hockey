@@ -1,0 +1,11 @@
+<% last_id = nil %>
+<% @feed_items.limit(10).each do |item| %>
+  <%= render :partial => "feed_item", :locals => {:owner => @owner, :item => item} %>
+  <% last_id = item.id %>
+<% end %>
+<%
+  opts = {:last_id => last_id }
+  opts.merge!(:context_type => @context.class.to_s, :context_id => @context.to_param) if @context
+  opts.merge!(:owner_id => @owner.to_param) if @owner
+%>
+<%= link_to t("activity_feed.more"), feed_items_path(opts), :class => "btn btn-default more", :remote => true, :data => {:disable_with => t("activity_feed.loading") } if @more %>

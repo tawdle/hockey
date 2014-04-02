@@ -1,3 +1,4 @@
+<% feed_items = defined?(context) && context ? ActivityFeedItem.for(context) : ActivityFeedItem.for_user(current_user) %>
 <% if current_user || feed_items.any? %>
   <% unless defined?(hide_header) && hide_header %>
     <h3><%= ActivityFeedItem.model_name.human.pluralize %></h3>
@@ -10,17 +11,18 @@
         <div class="form-group">
           <%= f.label :message, :class => "sr-only" %>
           <div class="input-group">
-              <%= f.text_field :message, :class => "form-control", :placeholder => t("activity_feed.placeholder") %>
-              <span class="input-group-btn">
-                <%= f.submit t("activity_feed.post"), :class => "btn btn-primary" %>
-              </span>
+            <%= f.text_field :message, :class => "form-control", :autocomplete => "off", :placeholder => t("activity_feed.placeholder") %>
+            <span class="input-group-btn">
+              <%= f.submit t("activity_feed.post"), :class => "btn btn-primary" %>
+            </span>
           </div>
         </div>
 
         <%= f.hidden_field :game_id, :value => f.object.game.to_param %>
-        <% if defined?(to) %>
-          <%= f.hidden_field :target_type, :value => to.class.to_s %>
-          <%= f.hidden_field :target_id, :value => to.to_param %>
+        <% if defined?(context) && context != current_user %>
+          <% "context is #{context}" %>
+          <%= f.hidden_field :target_type, :value => context.class.to_s %>
+          <%= f.hidden_field :target_id, :value => context.to_param %>
         <% end %>
         <% if defined?(owner) && owner %>
           <%= hidden_field_tag :owner_id, owner.to_param %>
@@ -29,9 +31,17 @@
     <% end %>
 
     <% if feed_items.any? %>
+      <% last_id = nil %>
       <% feed_items.limit(10).each do |item| %>
         <%= render :partial => "feed_item", :locals => {:item => item, :owner => defined?(owner) ? owner : nil } %>
+        <% last_id = item.id %>
       <% end %>
+      <%
+        opts = {:last_id => last_id }
+        opts.merge!({:context_type => context.class.to_s, :context_id => context.to_param}) if defined?(context)
+        opts.merge!({:owner_id => owner.to_param}) if defined?(owner)
+      %>
+      <%= link_to t("activity_feed.more"), feed_items_path(opts), :class => "btn btn-default more", :remote => true, :data => {:disable_with => t("activity_feed.loading")} %>
     <% end %>
   </div>
 <% end %>

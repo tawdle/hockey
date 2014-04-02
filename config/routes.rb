@@ -6,7 +6,7 @@ Hockey::Application.routes.draw do
     resources :user_posts, :only => [:create]
   end
 
-  resources :feed_items, :only => [:show]
+  resources :feed_items, :only => [:index, :show]
 
   resources :followings, :only => [:create, :destroy]
 
