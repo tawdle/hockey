@@ -62,6 +62,80 @@ describe Game do
     end
   end
 
+  describe ".for_user" do
+    it "finds games involving teams on which I am a player" do
+      @game = FactoryGirl.create(:game, :with_players)
+      @player = @game.home_team.players.first
+      @user = FactoryGirl.create(:user)
+      @player.update_attribute(:user_id, @user.id)
+
+      Game.for_user(@user).should include(@game)
+    end
+    it "finds games involving teams which I managage" do
+      @game = FactoryGirl.create(:game)
+      @user = @game.home_team.managers.first
+
+      Game.for_user(@user).should include(@game)
+    end
+    it "finds games involving teams that are part of leagues that I mark" do
+      @game = FactoryGirl.create(:game)
+      @user = FactoryGirl.create(:user)
+      Authorization.create!(:user => @user, :authorizable => @game.league, :role => :marker)
+
+      Game.for_user(@user).should include(@game)
+    end
+    it "finds games at a location that I manage" do
+      @game = FactoryGirl.create(:game)
+      @location = @game.location
+      @user = FactoryGirl.create(:user)
+      Authorization.create!(:user => @user, :authorizable => @game.location, :role => :manager)
+
+      Game.for_user(@user).should include(@game)
+    end
+    it "finds games involving players that I follow" do
+      @game = FactoryGirl.create(:game, :with_players)
+      @player = @game.home_team.players.first
+      @user = FactoryGirl.create(:user)
+      @player.followers << @user
+
+      Game.for_user(@user).should include(@game)
+    end
+    it "finds games involving teams that I follow" do
+      @game = FactoryGirl.create(:game)
+      @team = @game.home_team
+      @user = FactoryGirl.create(:user)
+      @team.followers << @user
+
+      Game.for_user(@user).should include(@game)
+    end
+    it "finds games involving leagues that I follow" do
+      @game = FactoryGirl.create(:game)
+      @league = @game.league
+      @user = FactoryGirl.create(:user)
+      @league.followers << @user
+
+      Game.for_user(@user).should include(@game)
+    end
+    it "finds games at a location that I follow" do
+      @game = FactoryGirl.create(:game)
+      @location = @game.location
+      @user = FactoryGirl.create(:user)
+      @location.followers << @user
+
+      Game.for_user(@user).should include(@game)
+    end
+    it "finds games involving a user that I follow" do
+      @game = FactoryGirl.create(:game, :with_players)
+      @player = @game.home_team.players.first
+      @followed_user = FactoryGirl.create(:user)
+      @player.update_attribute(:user_id, @followed_user.id)
+      @user = FactoryGirl.create(:user)
+      @followed_user.followers << @user
+
+      Game.for_user(@user).should include(@game)
+    end
+  end
+
   describe "#states" do
     let(:game) { FactoryGirl.build(:game) }
 
