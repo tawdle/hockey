@@ -43,7 +43,7 @@ class ActivityFeedItem < ActiveRecord::Base
       top_level.
         includes(:children).
         joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
-        where(mentions: { mentionable_id: obj.id, mentionable_type: obj.class.name }).
+        where(mentions: { mentionable_id: obj.id, mentionable_type: obj.class.base_class.name }).
         select('distinct "activity_feed_items".*')
     end
   end
