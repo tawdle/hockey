@@ -5,14 +5,15 @@
 
   <% if following %>
     <%= form_for following do |f| %>
-      <%= f.hidden_field :user_id %>
       <%= f.hidden_field :followable_type %>
       <%= f.hidden_field :followable_id %>
+      <%= hidden_field_tag :back_to, back_to if defined?(back_to) %>
       <%= f.submit t("follow.start_following"), :class => "btn btn-sm btn-primary" %>
     <% end %>
   <% elsif unfollowing %>
     <%= form_for unfollowing, :method => "delete" do |f| %>
       <%= f.hidden_field :id %>
+      <%= hidden_field_tag :back_to, back_to if defined?(back_to) %>
       <%= f.submit t("follow.stop_following"), :class => "btn btn-sm btn-default" %>
     <% end %>
   <% end %>

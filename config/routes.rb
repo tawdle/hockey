@@ -9,6 +9,7 @@ Hockey::Application.routes.draw do
   resources :feed_items, :only => [:index, :show]
 
   resources :followings, :only => [:create, :destroy]
+  get 'followings' => "followings#create"
 
   resources :games, :only => [:show, :update]
 

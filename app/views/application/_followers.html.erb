@@ -12,6 +12,7 @@
   <% if current_user %>
     <div class="text-right">
       <%= invitation_button(:follow, target, {:label => t("player.invite_fan.button") }) %>
+      <%= link_to "Fan Link", followings_url(:following => { :followable_type => target.class.name, :followable_id => target.to_param}) if current_user.admin? %>
     </div>
   <% end %>
 
