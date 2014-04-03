@@ -48,6 +48,10 @@ class Player < ActiveRecord::Base
     "[[#{at_name} #{name}]]"
   end
 
+  def team_feed_name
+    "[[#{at_name} #{team.name} ##{jersey_number}]]"
+  end
+
   def name_and_number
     "#{jersey_number} - #{name} "
   end

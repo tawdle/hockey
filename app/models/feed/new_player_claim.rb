@@ -8,7 +8,7 @@ class Feed::NewPlayerClaim < ActivityFeedItem
   validates_presence_of :player
 
   def message
-    I18n.t "feed.new_player_claim", user: user.feed_name, player: player.feed_name
+    I18n.t "feed.new_player_claim", user: user.feed_name, player: player.team_feed_name
   end
 
   def mentioned_objects
