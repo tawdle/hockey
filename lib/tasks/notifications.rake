@@ -5,7 +5,7 @@ namespace :notifications do
       # that have recent replies from others, which is not what I want.
       items = ActivityFeedItem.for_user(user).where("(activity_feed_items.creator_id is null OR activity_feed_items.creator_id <> ?)", user.id)
       mindate = [user.last_viewed_home_page_at, user.last_activity_feed_notification_sent_at].compact.min
-      items = items.having("greatest(activity_feed_items.created_at, max(children.created_at)) < ?", mindate) if mindate
+      items = items.before(mindate) if mindate
       items
     end
 
