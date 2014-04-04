@@ -61,25 +61,27 @@
 <hr>
 
 <div class="row main">
-  <ul class="nav nav-tabs">
-    <li><%= link_to ActivityFeedItem.model_name.human.pluralize, "#feed", :data => {:toggle => "tab" } %></li>
-    <li><%= link_to Game.model_name.human.pluralize, "#games", :data => {:toggle => "tab" } %></li>
-    <li><%= link_to "#fans", :data => {:toggle => "tab" } do %>
-      <%= t("header", :scope => "followers", :name => @player.name) %>
-        <span class="badge"><%= @player.followers.count %></span>
-      <% end %>
-    </li>
-  </ul>
+  <div class="col-xs-12">
+    <ul class="nav nav-tabs">
+      <li><%= link_to ActivityFeedItem.model_name.human.pluralize, "#feed", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to Game.model_name.human.pluralize, "#games", :data => {:toggle => "tab" } %></li>
+      <li><%= link_to "#fans", :data => {:toggle => "tab" } do %>
+        <%= t("header", :scope => "followers", :name => @player.name) %>
+          <span class="badge"><%= @player.followers.count %></span>
+        <% end %>
+      </li>
+    </ul>
 
-  <div class="tab-content">
-    <div class="tab-pane active fade in" id="feed">
-      <%= render :partial => "activity_feed", :locals => { :context => @player, :owner => @player.user, :hide_header => true } %>
-    </div>
-    <div class="tab-pane fade" id="games">
-      <%= render :partial => "games", :locals => { :games => @player.games, :compact => true, :hide_header => true } %>
-    </div>
-    <div class="tab-pane fade" id="fans">
-      <%= render :partial => "followers", :locals => {:target => @player, :hide_header => true } %>
+    <div class="tab-content">
+      <div class="tab-pane active fade in" id="feed">
+        <%= render :partial => "activity_feed", :locals => { :context => @player, :owner => @player.user, :hide_header => true } %>
+      </div>
+      <div class="tab-pane fade" id="games">
+        <%= render :partial => "games", :locals => { :games => @player.games, :compact => true, :hide_header => true } %>
+      </div>
+      <div class="tab-pane fade" id="fans">
+        <%= render :partial => "followers", :locals => {:target => @player, :hide_header => true } %>
+      </div>
     </div>
   </div>
 </div>
