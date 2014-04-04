@@ -1,5 +1,7 @@
 class SharedLinkMailer < ActionMailer::Base
 
+  helper :users
+
   def self.format_address(email, display_name)
     address = Mail::Address.new(email)
     address.display_name = display_name

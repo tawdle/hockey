@@ -30,4 +30,28 @@ $(function() {
     $(".activity-feed time").timeago();
     renderShareButtons();
   });
+
+  $(".activity-feed").on("click", ".email-share-link", function(event) {
+    event.preventDefault();
+    $(".shared-link.modal #shared_link_link_id").attr("value", $(this).attr("data-item-id"));
+    $(".shared-link.modal .error-explanation").hide();
+    $(".shared-link.modal form")[0].reset();
+    $(".shared-link.modal").modal();
+  });
+
+  $(".shared-link.modal form").on("ajax:error", function(event, xhr, status, error) {
+    $(".shared-link.modal .errors").empty();
+    $.each(xhr.responseJSON, function(i, error) {
+      $(".shared-link.modal .errors").append("<li>" + error + "</li>");
+    });
+    $(".shared-link.modal .error-explanation").slideDown("fast");
+  });
+
+  $(".shared-link.modal form").on("ajax:success", function(event, data) {
+    $(".shared-link.modal").modal("hide");
+    $(".navbar-header").append('<div class="success-flash"><span>' + data.message + '</span></div>');
+    setTimeout(function() {
+      $(".success-flash").fadeOut("normal", function() { this.remove(); });
+    }, 3000);
+  });
 });

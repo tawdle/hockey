@@ -1,0 +1,37 @@
+<div class="shared-link modal" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg">
+    <%= form_for SharedLink.new, :remote => true, :format => :json do |f| %>
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="modal-title"><%= t("shared_links.new.header") %></h4>
+        </div>
+        <div class="modal-body">
+          <div class="error-explanation">
+            <div class="alert alert-danger">
+              <%= t("forms.errors.header_generic") %>
+            </div>
+            <ul class="errors"></ul>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :email, :class => "control-label" %>
+            <%= f.email_field :email, :class => "form-control" %>
+          </div>
+
+          <div class="form-group">
+            <%= f.label :message, :class => "control-label" %>
+            <%= f.text_area :message, :class => "form-control", :rows => 3 %>
+          </div>
+
+          <%= f.hidden_field :link_id %>
+        </div>
+        <div class="modal-footer">
+          <%= link_to t("actions.cancel"), "#", :class => "btn btn-default", :data => {:dismiss => "modal" } %>
+          <%= f.submit t("shared_links.new.submit"), :class => "btn btn-primary", :disable_with => "Sending..." %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
+

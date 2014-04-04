@@ -8,7 +8,7 @@
         <%= @shared_link.message %>
       </p>
     <% end %>
-    <p style="margin-top:20px; text-align:center; font-size: 130%;"><%= link_to @shared_link.link.title, feed_item_url(@shared_link.link), :style => "text-decoration:none;" %></p>
+    <p style="margin-top:20px; text-align:center; font-size: 130%;"><%= link_to format_message_text_only(@shared_link.link.message), feed_item_url(@shared_link.link), :style => "text-decoration:none;" %></p>
 
     <table cellspacing="0" style="margin-top:40px;">
       <tr>

@@ -13,10 +13,10 @@ class SharedLinksController < ApplicationController
     respond_to do |format|
       if @shared_link.save
         format.html { render action: "success" }
-        format.json { render json: @shared_link, status: :created, location: @shared_link }
+        format.json { render json: { message: I18n.t("controllers.shared_links.create.success", :email => @shared_link.email) }, status: :created, location: @shared_link }
       else
         format.html { render action: "new" }
-        format.json { render json: @shared_link.errors, status: :unprocessable_entity }
+        format.json { render json: @shared_link.errors.full_messages, status: :unprocessable_entity }
       end
     end
   end

@@ -193,6 +193,9 @@ fr:
       create: ! '%{name} a été ajouté à la liste des joueurs.'
       destroy: ! '%{name} a été retiré de la liste des joueurs.'
       update: La mise à jour a été effectuée.
+    shared_links:
+      create:
+        success: Email has been sent to %{email}.
     staff_members:
       create: L'ajoût à la liste du personnel a été effectué.
       destroy: Ce membre du personnel a été effacé.
@@ -264,6 +267,7 @@ fr:
     errors:
       error: problem
       header: We found %{errors} with your submission.
+      header_generic: We found problems with your submission.
   games:
     edit_game: Modifier
     ended: Cette partie s'est terminée à %{end_time}.

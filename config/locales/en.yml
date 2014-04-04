@@ -193,6 +193,9 @@ en:
       create: ! '%{name} was successfully added as a team player.'
       update: Player was successfully updated.
       destroy: ! '%{name} was successfully removed from the team.'
+    shared_links:
+      create:
+        success: Email has been sent to %{email}.
     staff_members:
       create: Staff member was successfully created.
       update: Staff member was successfully updated.
@@ -259,6 +262,7 @@ en:
     errors:
       error: problem
       header: We found %{errors} with your submission.
+      header_generic: We found problems with your submission.
   games:
     show:
       sign_in_to_view_html: ! '%{sign_in} to view'

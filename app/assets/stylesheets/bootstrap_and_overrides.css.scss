@@ -44,5 +44,20 @@ nav {
   @extend .has-error;
 }
 
+.success-flash {
+  position: fixed;
+  width: 100%;
+  top: 15px;
+  z-index: 100;
+  text-align: center;
+  span {
+    background-color: #ffffa0;
+    padding: 10px;
+    border: 1px solid #c0c040;
+    border-radius: 3px;
+    font-size: 130%;
+  }
+}
+
 @import "user";
 @import "tiles";
