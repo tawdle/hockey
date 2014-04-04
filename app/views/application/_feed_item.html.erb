@@ -1,6 +1,6 @@
 <% owner_class = (defined?(owner) && item.respond_to?(:creator) && owner == item.creator) ? "owner" : "" %>
 
-<div class="feed-item <%= owner_class %>">
+<div class="feed-item <%= owner_class %>" id="feed-item-<%= item.id %>">
   <%= cl_image_tag(item.avatar_url(:thumbnail), :class => "avatar") %>
   <p>
     <% if item.respond_to?(:creator) %>

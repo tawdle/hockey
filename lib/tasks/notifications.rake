@@ -1,9 +1,11 @@
 namespace :notifications do
   namespace :new_feed_items do
     def new_feed_items_for(user)
+      # The idea here is not to notify users about their own posts. But as written, this logic will exclude posts I wrote
+      # that have recent replies from others, which is not what I want.
       items = ActivityFeedItem.for_user(user).where("(activity_feed_items.creator_id is null OR activity_feed_items.creator_id <> ?)", user.id)
-      items = items.where("activity_feed_items.created_at > ?", user.last_viewed_home_page_at) if user.last_viewed_home_page_at
-      items = items.where("activity_feed_items.created_at > ?", user.last_activity_feed_notification_sent_at) if user.last_activity_feed_notification_sent_at
+      mindate = [user.last_viewed_home_page_at, user.last_activity_feed_notification_sent_at].compact.min
+      items = items.having("greatest(activity_feed_items.created_at, max(children.created_at)) < ?", mindate) if mindate
       items
     end
 

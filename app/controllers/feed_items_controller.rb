@@ -11,8 +11,10 @@ class FeedItemsController < ApplicationController
         @context = nil
         @feed_items = ActivityFeedItem.for_user(current_user)
       end
-      @feed_items = @feed_items.where("activity_feed_items.id < ?", params[:last_id]) if params[:last_id]
+      @feed_items = @feed_items.having("greatest(activity_feed_items.created_at, max(children.created_at)) < ?", params[:last_date]) if params[:last_date]
+      @feed_items = @feed_items.limit(10 + 1).all
       @more = @feed_items.count > 10
+      @feed_items.pop if @more
       @owner = User.find_by_id(params[:owner_id]) if params[:owner_id]
       render :layout => false
     else

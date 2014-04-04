@@ -1,10 +1,8 @@
-<% last_id = nil %>
-<% @feed_items.limit(10).each do |item| %>
+<% @feed_items.each do |item| %>
   <%= render :partial => "feed_item", :locals => {:owner => @owner, :item => item} %>
-  <% last_id = item.id %>
 <% end %>
 <%
-  opts = {:last_id => last_id }
+  opts = {:last_date => @feed_items.last.order_date }
   opts.merge!(:context_type => @context.class.to_s, :context_id => @context.to_param) if @context
   opts.merge!(:owner_id => @owner.to_param) if @owner
 %>

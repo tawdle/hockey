@@ -10,41 +10,52 @@ class ActivityFeedItem < ActiveRecord::Base
   before_create :build_mentions
   after_create :broadcast_changes
 
-  default_scope order("created_at desc")
   scope :top_level, where(:parent_id => nil)
+  scope :joins_children, joins('left outer join activity_feed_items children on children.parent_id = activity_feed_items.id')
+  scope :joins_parent_and_child_mentions, joins("left outer join mentions on mentions.activity_feed_item_id = activity_feed_items.id or mentions.activity_feed_item_id = children.id")
+  scope :select_and_group, select('distinct activity_feed_items.*').group('activity_feed_items.id')
+  scope :ordered, select('greatest(activity_feed_items.created_at, max(children.created_at)) as order_date').order('order_date desc')
 
   def self.for_user(user)
     id = user.id
+    includes(:children).
     top_level.
-      includes(:children).
-      joins("left outer join mentions on mentions.activity_feed_item_id = activity_feed_items.id").
-      joins("left outer join followings f1 on f1.followable_id = mentions.mentionable_id and f1.followable_type = mentions.mentionable_type").
-      joins("left outer join followings f2 on f2.followable_id = activity_feed_items.creator_id and f2.followable_type = 'User'").
-      joins("left outer join players on mentions.mentionable_type = 'Player' and mentions.mentionable_id = players.id").
-      where("activity_feed_items.creator_id = ? or f1.user_id = ? or f2.user_id = ? or (mentions.mentionable_type = 'User' and mentions.mentionable_id = ?) or players.user_id = ?",
-            id, id, id, id, id).
-      select('distinct "activity_feed_items".*')
+    joins_children.
+    joins_parent_and_child_mentions.
+    select_and_group.
+    ordered.
+    joins("left outer join followings f1 on f1.followable_id = mentions.mentionable_id and f1.followable_type = mentions.mentionable_type").
+    joins("left outer join followings f2 on f2.followable_id = activity_feed_items.creator_id and f2.followable_type = 'User'").
+    joins("left outer join players on mentions.mentionable_type = 'Player' and mentions.mentionable_id = players.id").
+    where("activity_feed_items.creator_id = ? or children.creator_id = ? or f1.user_id = ? or f2.user_id = ? or (mentions.mentionable_type = 'User' and mentions.mentionable_id = ?) or players.user_id = ?",
+          id, id, id, id, id, id)
   end
 
   def self.for(obj)
     case obj
     when User
-      top_level.
-        includes(:children).
-        joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
-        where("creator_id = ? or (mentions.mentionable_id = ? and mentions.mentionable_type = 'User')", obj.id, obj.id).
-        select('distinct "activity_feed_items".*')
-    when Game
-      top_level
       includes(:children).
-        where("activity_feed_items.game_id = ?", obj.id).
-        select('distinct "activity_feed_items".*')
-    else
       top_level.
-        includes(:children).
-        joins('LEFT OUTER JOIN mentions on activity_feed_items.id = mentions.activity_feed_item_id').
-        where(mentions: { mentionable_id: obj.id, mentionable_type: obj.class.base_class.name }).
-        select('distinct "activity_feed_items".*')
+      joins_children.
+      joins_parent_and_child_mentions.
+      select_and_group.
+      ordered.
+      where("activity_feed_items.creator_id = ? OR children.creator_id = ? OR (mentions.mentionable_id = ? and mentions.mentionable_type = 'User')", obj.id, obj.id, obj.id)
+    when Game
+      includes(:children).
+      top_level.
+      joins_children.
+      select_and_group.
+      ordered.
+      where("activity_feed_items.game_id = ?", obj.id)
+    else
+      includes(:children).
+      top_level.
+      joins_children.
+      joins_parent_and_child_mentions.
+      select_and_group.
+      ordered.
+      where(mentions: { mentionable_id: obj.id, mentionable_type: obj.class.base_class.name })
     end
   end
 
