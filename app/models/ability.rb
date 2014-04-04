@@ -110,6 +110,10 @@ class Ability
       user.persisted?
     end
 
+    can :create, SharedLink do
+      user.persisted?
+    end
+
     can :read, Team
 
     can :create, Team do |team|

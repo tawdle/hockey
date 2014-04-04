@@ -49,6 +49,8 @@ Hockey::Application.routes.draw do
 
   resources :search, :only => :index, :controller => "search_results"
 
+  resources :shared_links, :only => [:new, :create]
+
   resources :teams, :only => [:index, :show, :edit, :update, :destroy], :controller => "leagues/teams" do
     resources :players, :only => [:new, :create]
     resources :staff_members

@@ -33,6 +33,9 @@ en:
         name: Name
         role: Role
         photo: Photo
+      shared_link:
+        email: Email address to share to
+        message: Your personalized message (optional)
       user:
         name: Full name
         email: Email address
@@ -254,8 +257,8 @@ en:
     self_header: You are a fan of
   forms:
     errors:
-      error: problems
-      header: There are %{errors} with your submission.
+      error: problem
+      header: We found %{errors} with your submission.
   games:
     show:
       sign_in_to_view_html: ! '%{sign_in} to view'
@@ -544,6 +547,14 @@ en:
       placeholder: Search for players, teams...
       search: Search
       title: Results
+  shared_links:
+    new:
+      header: Share a link by email
+      submit: Share
+  shared_link_mailer:
+    share:
+      header: ! '%{user} has shared a BigShot link with you'
+      subject: ! '%{user} has shared a link with you'
   stats:
     teams:
       differential: Diff

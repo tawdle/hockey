@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+  <body>
+    <h1><%= t(".header", :user => @shared_link.user.name) %></h1>
+    <% if @shared_link.message.present? %>
+      <p style="padding: 10px; background-color: #cccccc; margin-top: 30px; border: 1px solid #aaaaaa; border-radius: 3px;">
+        <%= @shared_link.message %>
+      </p>
+    <% end %>
+    <p style="margin-top:20px; text-align:center; font-size: 130%;"><%= link_to @shared_link.link.title, feed_item_url(@shared_link.link), :style => "text-decoration:none;" %></p>
+
+    <table cellspacing="0" style="margin-top:40px;">
+      <tr>
+        <td>
+          <%= link_to(image_tag(attachments['logo.png'].url,  :alt => "BigShot Logo", :width => 100, :height => 82, :style => "margin-right: 10px;"), root_url) %>
+        </td>
+        <td style="position:relative;top:-4px;">
+          <div>
+            <%= link_to("BigShot.io", root_url, :style => "text-decoration:none; font-weight:bold;") %>
+          </div>
+          <div>
+            <%= t("home.welcome.tagline") %>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

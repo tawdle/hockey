@@ -1,0 +1,30 @@
+<h1><%= t(".header") %></h1>
+
+<%= form_for @shared_link do |f| %>
+  <% if @shared_link.errors.any? %>
+    <div id="error_explanation">
+      <div class="alert alert-danger">
+        <%= t("forms.errors.header", :errors => pluralize(@shared_link.errors.count, t("forms.errors.error"))) %>
+      </div>
+      <ul>
+        <% @shared_link.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :email, :class => "control-label" %>
+    <%= f.text_field :email, :class => "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :message, :class => "control-label" %>
+    <%= f.text_area :message, :class => "form-control", :rows => 3 %>
+  </div>
+
+  <%= f.hidden_field :link_id %>
+
+  <%= f.submit t(".submit"), :class => "btn btn-primary" %>
+<% end %>
