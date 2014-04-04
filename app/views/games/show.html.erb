@@ -21,7 +21,7 @@
           <%= @game.visiting_team.name %><br>
           <%= @game.visiting_team.city %>
         <% end %>
-        <div><%= link_to image_tag(@game.visiting_team.logo_url(:small)), @game.visiting_team %></div>
+        <div><%= link_to image_tag(@game.visiting_team.logo_url(:medium)), @game.visiting_team %></div>
       </div>
       <div class="col-xs-2 text-center">
         <div class="score">
@@ -38,7 +38,7 @@
           <%= @game.home_team.name %><br>
           <%= @game.home_team.city %>
         <% end %>
-        <div><%= link_to image_tag(@game.home_team.logo_url(:small)), @game.home_team %></div>
+        <div><%= link_to image_tag(@game.home_team.logo_url(:medium)), @game.home_team %></div>
       </div>
     </div>
 
