@@ -27,6 +27,7 @@ $(function() {
   $(".activity-feed").on("ajax:success", ".more", function(event, data, status, xhr) {
     $(this).remove();
     $(".activity-feed").append(data);
+    $(".activity-feed time").timeago();
     renderShareButtons();
   });
 });
