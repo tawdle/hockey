@@ -98,10 +98,10 @@ fr:
     new:
       header: Contact us
       subjects:
-        bigshot_at_my_arena: I want BigShot at my arena
-        i_have_an_idea: I have an idea for you
-        other: Other
-        technical_problem: I'm having a technical problem
+        bigshot_at_my_arena: Je veux BigShot à mon aréna
+        i_have_an_idea: J'ai une idée pour vous
+        other: Autre
+        technical_problem: J'ai des difficultés techniques
       submit: Send
     success:
       header: Message sent
