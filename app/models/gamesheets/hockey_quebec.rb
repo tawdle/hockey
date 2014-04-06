@@ -156,7 +156,7 @@ class Gamesheets::HockeyQuebec < Prawn::Document
     translate(0, 611) do
       draw_text(@game.location.name, at: [65, 0])
       draw_text(@game.location.city, at: [255, 0])
-      draw_text(@game.started_at.to_date, at: [430, 0])
+      draw_text(@game.started_at.try(:to_date), at: [430, 0])
       draw_text(I18n.t(@game.league.division, :scope => "league.divisions") , at: [539, 0])
       draw_text(I18n.t(@game.league.classification, :scope => "league.classifications"), at: [682, 0]) if @game.league.classification
       draw_text(@game.number, at: [775, 0])
