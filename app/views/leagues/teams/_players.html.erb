@@ -11,10 +11,17 @@
         <%= link_to(image_tag(player.photo_url(:thumbnail)), player) %>
         <div class="jersey">#<%= player.jersey_number %></div>
       </div>
-      <div><%= link_to(player.name, player) %></div>
-      <div><%= link_to(player.user.at_name) if player.user %></div>
+      <%= link_to(player.name, player, :class => "name") %>
+      <% if player.user %>
+        <%= link_to(player.user.at_name, player, :class => "at_name") %>
+      <% else %>
+        <div class="at_name"></div>
+      <% end %>
+      <% if current_user %>
+        <div><%= render :partial => "follow_button", :locals => {:target => player, :back_to => request.url, :button_size => "xs" } %></div>
+      <% end %>
       <% if can?(:edit, player) || can?(:delete, player) %>
-        <div class="dropup">
+        <div class="dropdown btn btn-default btn-xs">
           <%= link_to raw('<span class="glyphicon glyphicon-cog"><b class="caret"></b>'), "#", :data => {:toggle => "dropdown" } %>
           <ul class="dropdown-menu dropdown-menu-right">
             <li><%= link_to t("actions.edit"), edit_player_path(player) if can? :edit, player %></li>
