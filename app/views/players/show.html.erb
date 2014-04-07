@@ -42,6 +42,7 @@
   <div class="col-xs-12 col-sm-3 buttons">
     <div class="text-right">
       <%= render partial: "follow_button", locals: { target: @player } %>
+      <%= invitation_button(:follow, @player, :label => t("player.invite_fan.button")) if Following.lookup(current_user, @player) %>
       <%= link_to t("actions.edit"), edit_player_path(@player), :class => "btn btn-default btn-sm" if can?(:edit, @player) %>
       <p></p>
     </div>
