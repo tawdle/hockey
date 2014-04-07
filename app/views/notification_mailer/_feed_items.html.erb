@@ -30,7 +30,7 @@
             <tr>
               <td style="vertical-align:top;padding-top:10px;padding-bottom:10px;">
                 <% item.videos.each do |video| %>
-                  <%= link_to(image_tag(video.thumb_url), video_path(video, :only_path => false)) %>
+                  <%= link_to(image_tag(video.thumb_url), feed_item_url(item)) %>
                 <% end %>
               </td>
             </tr>
@@ -42,9 +42,28 @@
               </td>
             </tr>
           <% end %>
+          <% unless reply %>
+            <tr>
+              <td style="padding-top:10px;">
+                <table>
+                  <tr>
+                    <td style="border-radius:3px;background-color:#428bca;color:white;padding:6px 12px;">
+                      <%= link_to(feed_item_url(item, :require_login => true), :style => "text-decoration:none;color:white;") do %>
+                        <%= t("activity_feed.reply") %> <i class="icon-reply"></i>
+                      <% end %>
+                    </td>
+                    <td style="border-radius:3px;background-color:#428bca;color:white;padding:6px 12px;">
+                      <%= link_to(feed_item_url(item), :style => "text-decoration:none;color:white;") do %>
+                        <%= t("activity_feed.share") %> <i class="icon-reply"></i>
+                      <% end %>
+                    </td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+          <% end %>
         </table>
       </td>
     </tr>
   <% end %>
 </table>
-
