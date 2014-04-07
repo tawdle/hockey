@@ -23,7 +23,6 @@ class FeedItemsController < ApplicationController
   end
 
   def show
-    authenticate_user!
   end
 
   private
