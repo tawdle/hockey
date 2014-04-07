@@ -1,6 +1,15 @@
 <% title raw format_message_text_only(@feed_item.message) %>
-<div class="activity-feed">
-  <%= render :partial => "feed_item", :locals => { :item => @feed_item } %>
+
+<div class="row">
+  <div class="activity-feed col-xs-12 col-md-8 col-lg-7">
+    <%= render :partial => "feed_item", :locals => { :item => @feed_item } %>
+  </div>
+  <div class="mentions col-xs-12 col-md-4 col-lg-5">
+    <h4><%= t(".mentioned_header") %></h4>
+    <% @feed_item.mentions.each do |mention| %>
+      <%= render :partial => "chiclet", :locals => {:obj => mention.mentionable } %>
+    <% end %>
+  </div>
 </div>
 
 <% content_for(:head) do %>

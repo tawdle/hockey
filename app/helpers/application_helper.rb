@@ -20,4 +20,17 @@ module ApplicationHelper
       link_to opts[:label] || "Invite", new_invitation_path(:predicate => predicate, :target_id => target.to_param, :target_type => target.class.name, :back_to => opts[:back_to]), :class => opts[:class] || "btn btn-default btn-sm"
     end
   end
+
+  def chiclet_image(obj)
+    case obj
+    when User
+      obj.avatar_url(:small)
+    when Player
+      obj.photo_url(:thumbnail)
+    when Team
+      obj.alpha_logo_url(:thumbnail)
+    else
+      obj.logo_url(:thumbnail)
+    end
+  end
 end

@@ -59,5 +59,27 @@ nav {
   }
 }
 
+
+.chiclet {
+  display: inline-block;
+  padding: 5px;
+  border-radius: 3px;
+  border: 1px solid #cecece;
+  text-align: center;
+  width: 120px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  > * {
+    display: block;
+    margin-bottom: 5px;
+  }
+
+  .logo {
+    height: 100px;
+  }
+}
+
 @import "user";
 @import "tiles";

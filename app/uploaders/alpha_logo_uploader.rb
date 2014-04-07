@@ -25,7 +25,7 @@ class AlphaLogoUploader < CarrierWave::Uploader::Base
   process :convert => 'png'
 
   version :thumbnail do
-    resize_to_fit(75, 75)
+    resize_to_fit(100, 100)
     cloudinary_transformation :radius => 5
   end
 

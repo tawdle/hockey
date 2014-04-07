@@ -254,6 +254,9 @@ fr:
     new_player_claim: ! '%{user} a réclamé %{player}'
     new_team_manager: ! '%{user} est maintenant gérant(e) des %{team}'
     new_user: ! '%{user} est maintenant un membre BigShot'
+  feed_items:
+    show:
+      mentioned_header: Mentioned in this Post
   follow:
     start_following: Devenir fan
     stop_following: Ne plus être fan

@@ -249,6 +249,9 @@ en:
     new_player_claim: ! '%{user} claimed %{player}'
     new_user: "%{user} just became a BigShot"
     new_team_manager: "%{user} became a manager of %{team}"
+  feed_items:
+    show:
+      mentioned_header: Mentioned in this Post
   follow:
     start_following: Become a fan
     stop_following: "Stop being a fan"
