@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_filter :set_locale
   around_filter :user_time_zone, :if => :current_user
   before_filter :store_location
+  before_filter :require_login
   helper_method :use_facebook
   helper_method :use_twitter
 
@@ -36,6 +37,10 @@ class ApplicationController < ActionController::Base
 
     I18n.locale = (I18n::available_locales.include? extracted_locale.to_sym) ?
       extracted_locale : I18n.default_locale
+  end
+
+  def require_login
+    authenticate_user! if params[:require_login]
   end
 
   protected
