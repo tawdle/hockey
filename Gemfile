@@ -30,6 +30,7 @@ group :development, :test do
   gem "factory_girl_rails", "~> 3.0"
   gem 'rspec-rails', '~> 2.0'
   gem 'jasmine'
+  gem "mail_view", "~> 2.0.4"
 end
 
 group :development do

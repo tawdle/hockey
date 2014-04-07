@@ -171,4 +171,8 @@ Hockey::Application.routes.draw do
   match '/404', :to => 'errors#not_found'
   match '/422', :to => 'errors#server_error'
   match '/500', :to => 'errors#server_error'
+
+  if Rails.env.development?
+    mount MailPreview => 'mail_view'
+  end
 end

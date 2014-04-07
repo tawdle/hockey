@@ -124,6 +124,8 @@ GEM
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
+    mail_view (2.0.4)
+      tilt
     mime-types (1.25.1)
     mini_portile (0.5.2)
     multi_json (1.8.2)
@@ -267,6 +269,7 @@ DEPENDENCIES
   i18n_country_select
   jasmine
   jquery-rails
+  mail_view (~> 2.0.4)
   nokogiri
   pg
   pg_search
