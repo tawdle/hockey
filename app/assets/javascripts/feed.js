@@ -37,6 +37,7 @@ $(function() {
     $(".shared-link.modal .error-explanation").hide();
     $(".shared-link.modal form")[0].reset();
     $(".shared-link.modal").modal();
+    $(".shared-link.modal #shared_link_email").focus();
   });
 
   $(".shared-link.modal form").on("ajax:error", function(event, xhr, status, error) {
