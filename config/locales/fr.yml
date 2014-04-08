@@ -8,10 +8,10 @@ fr:
   activerecord:
     attributes:
       contact:
-        email: Email
+        email: Adrese couriel
         message: Message
-        name: Your name (optional)
-        subject: Subject
+        name: Votre nom (optionel)
+        subject: Sujet
       game:
         home_team: Local
         location: Aréna
@@ -97,7 +97,7 @@ fr:
       header: Vous n'êtes pas un BigShot? Inscrivez-vous.
   contacts:
     new:
-      header: Contact us
+      header: Contactez-nous
       subjects:
         bigshot_at_my_arena: Je veux BigShot à mon aréna
         i_have_an_idea: J'ai une idée pour vous
@@ -105,8 +105,8 @@ fr:
         technical_problem: J'ai des difficultés techniques
       submit: Send
     success:
-      header: Message sent
-      message: Thanks for your message! We'll get back to you shortly.
+      header: Le message a été envoyé
+      message: Merci pour votre message! Nous vous répondrons sous peu.
   controllers:
     admin:
       kiosks:
@@ -367,11 +367,18 @@ fr:
       subject: Invitation pour devenir marqueur officiel
   layouts:
     footer:
-      about: About Us
-      contact: Contact
-      press: Press
-      privacy: Privacy Policy
-      terms: Terms of Service
+      areas: Hockey
+      about: À propos de nous
+      contact: Contactez-nous
+      company: Notre Entreprise
+      copyright_html: ! '&copy; 2014 8680884 Canada Inc. Tous droits réservés.'
+      press: Revue de presse
+      privacy: Politique de confidentialité
+      terms: Conditions de service
+      tournaments: Tournois
+      leagues: Ligues
+      locations: Arènas
+      teams: Équipes
   league:
     classifications:
       a: A
@@ -413,7 +420,7 @@ fr:
         get_private_link: Get private claim link
         staff_members: Personnel
   navigation:
-    back_html: ! '&larr; Back'
+    back_html: ! '&larr; Retour'
     edit_account: Modifier mon profil
     greeting: Bonjour
     sign_in: Connexion

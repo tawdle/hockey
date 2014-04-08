@@ -354,11 +354,18 @@ en:
 
   layouts:
     footer:
+      copyright_html: ! '&copy; 2014 8680884 Canada Inc. All rights reserved.'
       about: About Us
       contact: Contact
       press: Press
       privacy: Privacy Policy
       terms: Terms of Service
+      company: Company
+      press: Press
+      tournaments: Tournaments
+      teams: Teams
+      leagues: Leagues
+      locations: Locations
   league:
     classifications:
       a: "A"
