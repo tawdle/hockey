@@ -47,12 +47,12 @@
               <td style="padding-top:10px;">
                 <table>
                   <tr>
-                    <td style="border-radius:3px;background-color:#428bca;color:white;padding:6px 12px;">
+                    <td style="border-radius:3px;background-color:#428bca;color:white;padding:1px 5px;line-height:1.5;font-size:12px;">
                       <%= link_to(feed_item_url(item, :require_login => true), :style => "text-decoration:none;color:white;") do %>
                         <%= t("activity_feed.reply") %> <i class="icon-reply"></i>
                       <% end %>
                     </td>
-                    <td style="border-radius:3px;background-color:#428bca;color:white;padding:6px 12px;">
+                    <td style="border-radius:3px;background-color:#428bca;color:white;padding:1px 5px;line-height:1.5;font-size:12px;">
                       <%= link_to(feed_item_url(item), :style => "text-decoration:none;color:white;") do %>
                         <%= t("activity_feed.share") %> <i class="icon-reply"></i>
                       <% end %>
