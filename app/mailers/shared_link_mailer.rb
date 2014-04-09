@@ -12,6 +12,7 @@ class SharedLinkMailer < ActionMailer::Base
 
   def share(shared_link)
     attachments.inline['logo.png'] = File.read(Rails.root.join("app/assets/images/bigshot-logo.png"))
+    attachments.inline['avatar.png'] = File.read(Rails.root.join("app/assets/images/fallback/avatar_thumbnail.png"))
     @shared_link = shared_link
     send_localized_mail
   end
