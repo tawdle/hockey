@@ -84,8 +84,8 @@ fr:
           safety_attendant: Préposé à la sécurité
   activity_feed:
     enter_your_reply: Entrer votre reponse ici...
-    loading: Loading...
-    more: More
+    loading: Chargement...
+    more: Plus
     placeholder: Entrer votre commentaire ici...
     post: Publier
     reply: Commenter
@@ -290,7 +290,7 @@ fr:
     pulled: Filet désert
   home:
     about:
-      header: About Us
+      header: À propos de nous
     index:
       fans_of: Fans de
       your_fans: Vos fans
