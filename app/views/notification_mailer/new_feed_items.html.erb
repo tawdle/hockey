@@ -10,7 +10,7 @@
   </head>
 
   <body style="margin:0;padding:5px;font-family: 'Open Sans', Arial, Helvetica, sans-serif;">
-    <div style="width:100%;border-top:2px solid red;border-bottom:1px solid #363636;"></div>
+    <div style="width:100%;border-top:2px solid red;border-bottom:1px solid #363636;margin-top:10px;margin-bottom:10px;"></div>
     <table style="margin-top:5px;width:100%;">
       <tr>
         <td>
@@ -21,14 +21,14 @@
       </tr>
     </table>
 
-    <div style="width:100%;border-top:1px solid red;border-bottom:1px solid #363636;margin-bottom:5px;"></div>
+    <div style="width:100%;border-top:2px solid red;border-bottom:1px solid #363636;margin-bottom:5px;"></div>
 
     <%= render :partial => "feed_items", :locals => { :items => @items, :reply => false, :owner => @user } %>
 
     <div style="background-color:#363636;border-top:3px solid red;color:white;padding:10px;">
-      <p><%= t(".to_see_or_reply_html", :link => link_to("BigShot.io", root_url, :style => "text-decoration:none;color:white;")) %></p>
-      <% link = link_to(t(".unsubscribe_link_text"), {:only_path => false, :controller => :unsubscribe, :action => :unsubscribe, :user_id => @user.id, :token => @user.unsubscribe_token, :category => :daily_activity_feed}, :style => "text-decoration:none;color:white;") %>
+      <% link = link_to(t(".unsubscribe_link_text"), {:only_path => false, :controller => :unsubscribe, :action => :unsubscribe, :user_id => @user.id, :token => @user.unsubscribe_token, :category => :daily_activity_feed}, :style => "color:white;") %>
       <p><%= t(".unsubscribe_html", :link => link) %>.</p>
+      <p><%= t("layouts.footer.copyright_html") %></p>
     </div>
 
   </body>
