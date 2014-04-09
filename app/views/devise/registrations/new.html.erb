@@ -28,7 +28,7 @@
       },
       errorClass: "error help-inline",
       success: function(label, input) {
-        label.html('<%= t("registrations.new.validation.looks_good") %>').addClass("help-inline");
+        label.html('<%= t("registrations.new.validation.looks_good") %>').addClass("help-block");
       },
       messages: <%= raw I18n.t("registrations.new.validation.messages").to_json %>
     });
