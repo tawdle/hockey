@@ -8,7 +8,7 @@ fr:
   activerecord:
     attributes:
       contact:
-        email: Adrese couriel
+        email: Adrese courriel
         message: Message
         name: Votre nom (optionel)
         subject: Sujet
@@ -34,8 +34,8 @@ fr:
         photo: Photo
         role: Rôle
       shared_link:
-        email: Email address to share to
-        message: Your personalized message (optional)
+        email: Adressse courriel du destinataire
+        message: Votre message personnalisé (optionel)
       system_name:
         name: ! '@Name'
       user:
@@ -89,7 +89,7 @@ fr:
     placeholder: Entrer votre commentaire ici...
     post: Publier
     reply: Commenter
-    share: Share
+    share: Partager
   application:
     mini_sign_in:
       header: Déjà membre? Connectez-vous.
@@ -105,7 +105,7 @@ fr:
         technical_problem: J'ai des difficultés techniques
       submit: Send
     success:
-      header: Le message a été envoyé
+      header: Votre message a été envoyé
       message: Merci pour votre message! Nous vous répondrons sous peu.
   controllers:
     admin:
@@ -196,7 +196,7 @@ fr:
       update: La mise à jour a été effectuée.
     shared_links:
       create:
-        success: Email has been sent to %{email}.
+        success: Votre courriel a été envoyé à %{email}.
     staff_members:
       create: L'ajoût à la liste du personnel a été effectué.
       destroy: Ce membre du personnel a été effacé.
@@ -270,8 +270,8 @@ fr:
   forms:
     errors:
       error: problem
-      header: We found %{errors} with your submission.
-      header_generic: We found problems with your submission.
+      header:  We found %{errors} with your submission.
+      header_generic: Nous avons trouvé un probleme avec votre requête.
   games:
     edit_game: Modifier
     ended: Cette partie s'est terminée à %{end_time}.
@@ -373,7 +373,7 @@ fr:
       company: Notre Entreprise
       copyright_html: ! '&copy; 2014 8680884 Canada Inc. Tous droits réservés.'
       press: Revue de presse
-      privacy: Politique de confidentialité
+      privacy: Confidentialité
       terms: Conditions de service
       tournaments: Tournois
       leagues: Ligues
@@ -589,12 +589,12 @@ fr:
       title: Résultats
   shared_link_mailer:
     share:
-      header: ! '%{user} has shared a BigShot link with you'
-      subject: ! '%{user} has shared a link with you'
+      header: ! '%{user} a partagé un lien BigShot avec vous'
+      subject: ! '%{user} a partagé un lien avec vous'
   shared_links:
     new:
-      header: Share a link by email
-      submit: Share
+      header: Partager un lien par courriel
+      submit: Partager
   stats:
     teams:
       differential: Diff
@@ -642,7 +642,7 @@ fr:
       game: ! '%d/%m/%Y - %H:%M %Z'
   unsubscribe:
     success:
-      body: L'adresse couriel %{email} est présentement désabonné.
+      body: L'adresse courriel %{email} est présentement désabonné.
       header: Succès
   videos:
     show:
