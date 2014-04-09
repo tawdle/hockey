@@ -5,6 +5,7 @@ en:
     edit: Edit
     remove: Remove
     cancel: Cancel
+    update: Update
   activerecord:
     attributes:
       contact:

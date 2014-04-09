@@ -5,6 +5,7 @@ fr:
     confirm: Êtes-vous certain(e)?
     edit: Modifier
     remove: Supprimer
+    update: Update
   activerecord:
     attributes:
       contact:
@@ -270,7 +271,7 @@ fr:
   forms:
     errors:
       error: problem
-      header:  We found %{errors} with your submission.
+      header: We found %{errors} with your submission.
       header_generic: Nous avons trouvé un probleme avec votre requête.
   games:
     edit_game: Modifier
@@ -367,18 +368,18 @@ fr:
       subject: Invitation pour devenir marqueur officiel
   layouts:
     footer:
-      areas: Hockey
       about: À propos de nous
-      contact: Contactez-nous
+      areas: Hockey
       company: Notre Entreprise
+      contact: Contactez-nous
       copyright_html: ! '&copy; 2014 8680884 Canada Inc. Tous droits réservés.'
-      press: Revue de presse
-      privacy: Confidentialité
-      terms: Conditions de service
-      tournaments: Tournois
       leagues: Ligues
       locations: Arènas
+      press: Revue de presse
+      privacy: Confidentialité
       teams: Équipes
+      terms: Conditions de service
+      tournaments: Tournois
   league:
     classifications:
       a: A

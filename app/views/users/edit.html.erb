@@ -1,4 +1,4 @@
-<h2>Editing user profile for @<%= @user.name %>
+<h2><%= @user.name %></h2>
 <%= form_for(@user) do |f| %>
   <% if @user.errors.any? %>
     <div id="error_explanation">
@@ -25,26 +25,27 @@
   <%= f.hidden_field :avatar_cache %>
 
   <div class="form-group">
+    <%= f.label :avatar %>
     <% if @user.avatar.present? %>
-      <%= cl_image_tag @user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "float: left; margin-right: 10px" %>
+      <%= cl_image_tag @user.avatar_url(:thumbnail), :height => 50, :width => 50, :style => "display: block;margin-bottom:5px;" %>
     <% end %>
 
-    <%= f.label :avatar %>
-    <%= f.file_field :avatar %>
+    <%= f.file_field :avatar, :class => "form-control" %>
   </div>
 
   <div class="form-group">
     <%= f.label :time_zone %>
-    <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, :default => "Eastern Time (US & Canada)" %>
+    <%= f.time_zone_select :time_zone, ActiveSupport::TimeZone.us_zones, { :default => "Eastern Time (US & Canada)" }, { :class => "form-control" } %>
   </div>
 
   <div class="form-group">
     <%= f.label :language %>
-    <%= f.collection_select :language, [["Français", :fr], ["English", :en]], :second, :first %>
+    <%= f.collection_select :language, [["Français", :fr], ["English", :en]], :second, :first, {}, {:class => "form-control"} %>
   </div>
 
   <div class="actions">
-    <%= f.submit :class => "btn btn-primary" %>
+    <%= f.submit t("actions.update"), :class => "btn btn-primary" %>
   </div>
 <% end %>
 
+<p><br /><%= link_to t("navigation.back_html"), root_url %></p>
