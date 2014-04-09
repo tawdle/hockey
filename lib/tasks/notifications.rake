@@ -2,8 +2,8 @@ namespace :notifications do
   namespace :new_feed_items do
     def new_feed_items_for(user)
       items = ActivityFeedItem.for_user(user)
-      mindate = [user.last_viewed_home_page_at, user.last_activity_feed_notification_sent_at].compact.min
-      items = items.before(mindate) if mindate
+      mindate = [user.last_viewed_home_page_at, user.last_activity_feed_notification_sent_at].compact.max
+      items = items.after(mindate) if mindate
       items
     end
 
