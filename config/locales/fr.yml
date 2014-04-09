@@ -5,7 +5,7 @@ fr:
     confirm: Êtes-vous certain(e)?
     edit: Modifier
     remove: Supprimer
-    update: Update
+    update: Mise à jour
   activerecord:
     attributes:
       contact:
@@ -258,7 +258,7 @@ fr:
     new_user: ! '%{user} est maintenant un membre BigShot'
   feed_items:
     show:
-      mentioned_header: Mentioned in this Post
+      mentioned_header: Mentionné dans ce message
   follow:
     start_following: Devenir fan
     stop_following: Ne plus être fan
