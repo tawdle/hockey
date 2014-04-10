@@ -52,6 +52,11 @@
         <% end %>
       </li>
       <li><%= link_to t(".staff_members"), "#staff", :data => {:toggle => "tab" } %></li>
+      <li>
+        <%= link_to "#videos", :data => {:toggle => "tab" } do %>
+          <span class="glyphicon glyphicon-facetime-video"></span>
+        <% end %>
+      </li>
     </ul>
 
     <div class="tab-content">
@@ -69,6 +74,9 @@
       </div>
       <div class="tab-pane fade" id="staff">
         <%= render :partial => "staff_members" %>
+      </div>
+      <div class="tab-pane fade" id="videos">
+        <%= render :partial => "videos", :locals => {:target => @team } %>
       </div>
     </div>
 
