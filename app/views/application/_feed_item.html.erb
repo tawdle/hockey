@@ -26,7 +26,7 @@
   <% end %>
   <% unless defined?(reply) && reply %>
     <div class="replies">
-      <% item.children.each do |reply| %>
+      <% item.children.order(:created_at).each do |reply| %>
         <%= render :partial => "feed_item", :locals => {:item => reply, :reply => true, :owner => defined?(owner) ? owner : nil } %>
       <% end %>
     </div>

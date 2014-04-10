@@ -38,7 +38,7 @@
           <% if item.children.any? %>
             <tr>
               <td>
-                <%= render :partial => "notification_mailer/feed_items", :locals => {:items => item.children.reverse, :reply => true, :owner => defined?(owner) ? owner : nil } %>
+                <%= render :partial => "notification_mailer/feed_items", :locals => {:items => item.children.order(:created_at), :reply => true, :owner => defined?(owner) ? owner : nil } %>
               </td>
             </tr>
           <% end %>
