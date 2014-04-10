@@ -9,6 +9,12 @@ nav {
   padding-bottom: 5px;
 }
 
+.content {
+  @media (min-width: 768px) {
+    padding-top: 20px;
+  }
+}
+
 input[type=file] {
   margin-bottom: 10px;
   line-height: 10px;
