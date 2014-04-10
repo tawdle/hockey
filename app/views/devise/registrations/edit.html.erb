@@ -17,7 +17,7 @@
   </div>
 
   <div class="form-group">
-    <%= f.label :password, t("activerecord.attributes.new_password") %>
+    <%= f.label :password, t("activerecord.attributes.user.new_password") %>
     <%= f.password_field :password, :class => "form-control", :autocomplete => "off" %>
     <span class="help-block">
       <i>(<%= t('.leave_blank_if_you_don_t_want_to_change_it', :default => "leave blank if you don't want to change it") %>)</i>
@@ -29,7 +29,10 @@
     <%= f.password_field :password_confirmation, :class => "form-control" %>
   </div>
 
-  <div><%= f.submit t('actions.update', :default => "Update"), :class => "btn btn-primary" %></div>
+  <div>
+    <%= link_to t('actions.cancel'), root_path %>
+    <%= f.submit t('actions.update', :default => "Update"), :class => "btn btn-primary" %>
+  </div>
 <% end %>
 
 <h3><%= t('.cancel_my_account', :default => 'Cancel my account') %></h3>
