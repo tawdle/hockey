@@ -11,13 +11,13 @@
     <%= f.password_field :password, :class => "form-control", :placeholder => t("activerecord.attributes.user.password") %>
   </div>
 
-  <div class="checkbox">
+  <div class="checkbox" style="height:40px;">
     <%= f.label :remember_me do %>
       <%= f.check_box :remember_me, :checked => true %>
-      <%= t(".remember_me", :default => "Remember me") %>
+      <%= t("devise.sessions.new.remember_me", :default => "Remember me") %>
     <% end %>
   </div>
 
-  <div><%= f.submit t('.sign_in', :default => "Sign in"), :class => "btn btn-primary" %></div>
+  <div><%= f.submit t('devise.sessions.new.sign_in', :default => "Sign in"), :class => "btn btn-primary" %></div>
 <% end %>
 
