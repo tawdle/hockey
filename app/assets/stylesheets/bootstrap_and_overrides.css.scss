@@ -79,6 +79,8 @@ nav {
   }
 
   .logo {
+    display: table-cell;
+    vertical-align: middle;
     height: 100px;
   }
   .follow-button {
