@@ -110,5 +110,13 @@ nav {
   }
 }
 
+.video-thumbnails {
+  line-height: 100px;
+  a {
+    margin-right: 10px;
+  }
+}
+
+
 @import "user";
 @import "tiles";

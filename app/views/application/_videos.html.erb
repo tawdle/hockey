@@ -1,0 +1,10 @@
+<% items = ActivityFeedItem.for(target).joins(:videos) %>
+
+<p class="video-thumbnails">
+  <% items.each do |item| %>
+    <% text = format_message_text_only(item.message) %>
+    <% item.videos.each do |video| %>
+      <%= link_to(image_tag(video.thumb_url, :alt => text, :title => text), feed_item_path(item)) %>
+    <% end %>
+  <% end %>
+</p>
