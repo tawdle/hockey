@@ -30,7 +30,7 @@ module ApplicationHelper
     when Team
       obj.alpha_logo_url(:thumbnail)
     else
-      obj.logo_url(:thumbnail)
+      obj.logo_url(:small)
     end
   end
 end

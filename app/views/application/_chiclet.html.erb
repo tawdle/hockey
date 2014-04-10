@@ -1,5 +1,5 @@
 <div class="chiclet">
-  <%= link_to(image_tag(chiclet_image(obj), :alt => obj.name), obj, :class => "logo") %>
+  <%= link_to(image_tag(chiclet_image(obj), :alt => obj.name), obj, :class => "logo", :title => obj.name) %>
   <%= link_to(obj.name, obj, :class => "name") %>
   <div class="follow-button">
     <%= render :partial => "follow_button", :locals => {:target => obj, :button_size => "xs", :back_to => request.url } %>
