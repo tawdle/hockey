@@ -40,8 +40,10 @@ fr:
       system_name:
         name: ! '@Name'
       user:
+        current_password: Mot de passe actuel
         email: Adresse e-mail
         name: Nom complet
+        new_password: Nouveau mot de passe
         password: Mot de passe
         password_confirmation: Confirmation du mot de passe
     models:

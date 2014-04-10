@@ -3,33 +3,37 @@
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
 
-  <div class="form-group"><%= f.label :email %>
-  <%= f.email_field :email, :class => "form-control" %></div>
-
   <div class="form-group">
-    <%= f.label :password %>
-    <%= f.password_field :password, :class => "form-control", :autocomplete => "off" %>
-    <span class="help-inline">
-      <i>(<%= t('.leave_blank_if_you_don_t_want_to_change_it', :default => "leave blank if you don't want to change it") %>)</i>
-    </span>
+    <%= f.label :email %>
+    <%= f.email_field :email, :class => "form-control" %>
   </div>
-
-  <div class="form-group"><%= f.label :password_confirmation %>
-  <%= f.password_field :password_confirmation, :class => "form-control" %></div>
 
   <div class="form-group">
     <%= f.label :current_password %>
     <%= f.password_field :current_password, :class => "form-control" %>
-    <span class="help-inline">
+    <span class="help-block">
       <i>(<%= t('.we_need_your_current_password_to_confirm_your_changes', :default => 'we need your current password to confirm your changes') %>)</i>
     </span>
   </div>
 
-  <div><%= f.submit t('.update', :default => "Update"), :class => "btn btn-primary" %></div>
+  <div class="form-group">
+    <%= f.label :password, t("activerecord.attributes.new_password") %>
+    <%= f.password_field :password, :class => "form-control", :autocomplete => "off" %>
+    <span class="help-block">
+      <i>(<%= t('.leave_blank_if_you_don_t_want_to_change_it', :default => "leave blank if you don't want to change it") %>)</i>
+    </span>
+  </div>
+
+  <div class="form-group">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation, :class => "form-control" %>
+  </div>
+
+  <div><%= f.submit t('actions.update', :default => "Update"), :class => "btn btn-primary" %></div>
 <% end %>
 
 <h3><%= t('.cancel_my_account', :default => 'Cancel my account') %></h3>
 
 <p><%= t('.unhappy', :default => 'Unhappy') %>? <%= link_to t('.cancel_my_account', :default => "Cancel my account"), registration_path(resource_name), :data => { :confirm => t('.are_you_sure', :default => "Are you sure?") }, :method => :delete %>.</p>
 
-<%= link_to "Back", :back %>
+<p><br /><%= link_to t("navigation.back_html"), :back %></p>

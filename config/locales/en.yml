@@ -42,6 +42,8 @@ en:
         email: Email address
         password: Password
         password_confirmation: Password confirmation
+        current_password: Current password
+        new_password: New password
       system_name:
         name: "@Name"
     models:
