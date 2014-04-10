@@ -26,7 +26,7 @@ module ApplicationHelper
     when User
       obj.avatar_url(:small)
     when Player
-      obj.photo_url(:thumbnail)
+      obj.photo_url(:small_face)
     when Team
       obj.alpha_logo_url(:thumbnail)
     else

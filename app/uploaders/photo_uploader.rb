@@ -32,6 +32,10 @@ class PhotoUploader < CarrierWave::Uploader::Base
     cloudinary_transformation :radius => 10, :crop => :thumb, :width => 50, :height => 50, :gravity => :face
   end
 
+  version :small_face do
+    cloudinary_transformation :crop => :fill, :width => 100, :height => 100, :gravity => :face
+  end
+
   version :medium_face do
     cloudinary_transformation :crop => :fill, :width => 300, :height => 300, :gravity => :face
   end
