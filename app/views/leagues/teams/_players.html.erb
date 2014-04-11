@@ -8,7 +8,7 @@
   <% players.each do |player| %>
     <div class="player">
       <div class="photo">
-        <%= link_to(image_tag(player.photo_url(:thumbnail)), player) %>
+        <%= link_to(image_tag(player.photo_url(:small_face)), player) %>
         <div class="jersey">#<%= player.jersey_number %></div>
       </div>
       <%= link_to(player.name, player, :class => "name") %>
