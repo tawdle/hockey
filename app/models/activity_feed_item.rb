@@ -16,6 +16,7 @@ class ActivityFeedItem < ActiveRecord::Base
   scope :select_and_group, select('distinct activity_feed_items.*').group('activity_feed_items.id')
   scope :ordered, select('greatest(activity_feed_items.created_at, max(children.created_at)) as order_date').order('order_date desc')
   scope :after, lambda { |date| having("greatest(activity_feed_items.created_at, max(children.created_at)) > ?", date) }
+  scope :before, lambda { |date| having("greatest(activity_feed_items.created_at, max(children.created_at)) < ?", date) }
 
   def self.for_user(user)
     id = user.id
