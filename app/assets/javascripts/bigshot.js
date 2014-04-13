@@ -53,5 +53,6 @@ $(function() {
     var url = $(this).attr("data-url");
     $(".video.modal video").attr("src", url)[0].load();
     $(".video.modal").modal("toggle");
+    ga('send', 'event', 'video', 'view', { 'page': url });
   });
 });
