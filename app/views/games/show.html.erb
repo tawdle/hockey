@@ -1,4 +1,5 @@
 <% title [@game.visiting_team.name, @game.visiting_team.city, "vs", @game.home_team.name, @game.home_team.city, @game.location.name, l(@game.start_time, :format => :game)].compact.join(" - ") %>
+<% description "BigShot hockey game: #{@game.visiting_team.city} #{@game.visiting_team.name} vs. #{@game.home_team.city} #{@game.home_team.name} at #{@game.location.name} on #{@game.start_time.to_s(:long)}" %>
 
 <% content_for(:head) do %>
   <%= javascript_include_tag AsyncMessaging::FAYE_CONFIG[:script] %>

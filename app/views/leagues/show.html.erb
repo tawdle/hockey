@@ -1,4 +1,5 @@
 <% title @league.name %>
+<% description "BigShot hockey page for #{@league.name} #{t(@league.division, :scope => "league.divisions")} #{t(@league.classification, :scope => "league.classifications") if @league.classification.present?}" %>
 
 <div class="row league-meta">
   <div class="col-xs-12 col-sm-4 photo">

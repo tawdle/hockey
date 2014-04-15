@@ -15,6 +15,10 @@ module ApplicationHelper
     content_for(:title) { page_title }
   end
 
+  def description(desc)
+    content_for(:description) { desc }
+  end
+
   def invitation_button(predicate, target, opts = {})
     if can? :create, Invitation.new(:target => target, :predicate => predicate)
       link_to opts[:label] || "Invite", new_invitation_path(:predicate => predicate, :target_id => target.to_param, :target_type => target.class.name, :back_to => opts[:back_to]), :class => opts[:class] || "btn btn-default btn-sm"
