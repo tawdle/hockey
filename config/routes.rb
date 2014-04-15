@@ -159,6 +159,7 @@ Hockey::Application.routes.draw do
   get 'privacy' => 'home#privacy'
   get 'press' => 'home#press'
   get 'contact' => 'home#contact'
+  get 'account_created' => 'home#account_created'
 
   get 'unsubscribe/:user_id/:token/:category' => 'unsubscribe#unsubscribe'
 

@@ -7,4 +7,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
       super
     end
   end
+
+  def created
+  end
+
+  def after_sign_up_path_for(resource)
+    account_created_path
+  end
 end

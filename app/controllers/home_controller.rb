@@ -23,4 +23,6 @@ class HomeController < ApplicationController
     redirect_to new_contact_path
   end
 
+  def account_created
+  end
 end

@@ -6,6 +6,7 @@ fr:
     edit: Modifier
     remove: Supprimer
     update: Mise à jour
+    continue: Continuer
   activerecord:
     attributes:
       contact:
