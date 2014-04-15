@@ -13,7 +13,7 @@ class SharedLink
   attr_accessor :message
   attr_accessor :link_id
 
-  validates_presence_of :email
+  validates_format_of :email, :with => /.+@.+\..+/i
   validates_presence_of :user
   validates_presence_of :link
 
@@ -31,7 +31,7 @@ class SharedLink
   end
 
   def link
-    ActivityFeedItem.find_by_id(link_id) if link_id
+    ActivityFeedItem.find_by_id(link_id) if link_id.present?
   end
 
   def save
