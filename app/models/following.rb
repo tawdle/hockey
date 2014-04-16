@@ -21,7 +21,7 @@ class Following < ActiveRecord::Base
   end
 
   def self.popular
-    group(:followable_type, :followable_id).select("followable_type, followable_id, count(*) as follows").order("follows desc")
+    group(:followable_type, :followable_id).select("followable_type, followable_id, count(*) as follows").order("follows desc").limit(20)
   end
 
   private
