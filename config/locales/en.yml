@@ -307,6 +307,7 @@ en:
         we suggest that you become a fan of a player or a team. It's easy. Just use
         the search box at the top of the page to find something that you like,
         then click the <strong>Become a fan</strong> button.</p>
+        <p>Or, you can look to see <a href="/popular">what's popular</a>.</p>
     teams_managed:
       teams_you_manage: Teams you manage
     welcome:
@@ -368,6 +369,7 @@ en:
       contact: Contact
       press: Press
       privacy: Privacy Policy
+      popular: Popular
       terms: Terms of Service
       company: Company
       press: Press

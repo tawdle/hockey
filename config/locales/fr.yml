@@ -304,6 +304,7 @@ fr:
         BigShot, nous vous suggérons d'utiliser la barre de recherche au haut de la
         page pour trouver vos joueurs et équipes préférés. Puis cliquez sur <strong>Devenir
         fan</strong> button.</p>
+        <p>Or, you can look to see <a href="/popular">what's popular</a>.</p>
     popular:
       fans:
         one: 1 fan
@@ -383,6 +384,7 @@ fr:
       copyright_html: ! '&copy; 2014 8680884 Canada Inc. Tous droits réservés.'
       leagues: Ligues
       locations: Arènas
+      popular: Popular
       press: Revue de presse
       privacy: Confidentialité
       teams: Équipes
