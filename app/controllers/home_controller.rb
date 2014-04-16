@@ -25,4 +25,7 @@ class HomeController < ApplicationController
 
   def account_created
   end
+
+  def popular
+  end
 end

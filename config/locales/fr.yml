@@ -3,10 +3,10 @@ fr:
   actions:
     cancel: Annuler
     confirm: Êtes-vous certain(e)?
+    continue: Continuer
     edit: Modifier
     remove: Supprimer
     update: Mise à jour
-    continue: Continuer
   activerecord:
     attributes:
       contact:
@@ -304,6 +304,11 @@ fr:
         BigShot, nous vous suggérons d'utiliser la barre de recherche au haut de la
         page pour trouver vos joueurs et équipes préférés. Puis cliquez sur <strong>Devenir
         fan</strong> button.</p>
+    popular:
+      fans:
+        one: 1 fan
+        other: ! '%{count} fans'
+      header: Popular on BigShot
     press:
       header: Press
     privacy:

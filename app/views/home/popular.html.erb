@@ -1,0 +1,19 @@
+<h1><%= t(".header") %></h1>
+
+<div class="search-results">
+  <% Following.popular.each do |following| %>
+    <% obj = following.followable %>
+    <% class_name = obj.class.name.downcase %>
+    <% fans = following.follows.to_i %>
+
+    <div class="row result <%= class_name %>">
+      <div class="col-sm-8">
+        <%= render :partial => "search_results/#{class_name}", :locals => { class_name.to_sym => obj } %>
+      </div>
+      <div class="col-sm-4 text-right">
+        <span class="fan-count"><%= t(".fans", :count => fans) %></span>
+        <%= render :partial => "follow_button", :locals => { :target => obj, :back_to => request.url } %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -290,6 +290,11 @@ en:
   home:
     about:
       header: About Us
+    popular:
+      fans:
+        one: '1 fan'
+        other: ! '%{count} fans'
+      header: Popular on BigShot
     press:
       header: Press
     privacy:

@@ -160,6 +160,7 @@ Hockey::Application.routes.draw do
   get 'press' => 'home#press'
   get 'contact' => 'home#contact'
   get 'account_created' => 'home#account_created'
+  get 'popular' => "home#popular"
 
   get 'unsubscribe/:user_id/:token/:category' => 'unsubscribe#unsubscribe'
 

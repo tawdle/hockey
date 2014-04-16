@@ -20,6 +20,10 @@ class Following < ActiveRecord::Base
     where(:user_id => user).map(&:followable)
   end
 
+  def self.popular
+    group(:followable_type, :followable_id).select("followable_type, followable_id, count(*) as follows").order("follows desc")
+  end
+
   private
 
   def user_is_not_followable
