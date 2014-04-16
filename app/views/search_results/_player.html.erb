@@ -1,4 +1,4 @@
-<%= link_to(image_tag(player.photo_url(:thumbnail)), player) %>
+<%= link_to(image_tag(player.photo_url(:small_face)), player) %>
 <div class="meta">
   <div class="title"><%= link_to(player.name_and_number, player) %></div>
   <div><%= [player.team.name, player.team.city].compact.join(" - ") %></div>
