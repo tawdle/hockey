@@ -19,18 +19,27 @@ class ActivityFeedItem < ActiveRecord::Base
   scope :before, lambda { |date| having("greatest(activity_feed_items.created_at, max(children.created_at)) < ?", date) }
 
   def self.for_user(user)
-    id = user.id
-    includes(:children).
-    top_level.
-    joins_children.
-    joins_parent_and_child_mentions.
-    select_and_group.
-    ordered.
-    joins("left outer join followings f1 on f1.followable_id = mentions.mentionable_id and f1.followable_type = mentions.mentionable_type").
-    joins("left outer join followings f2 on f2.followable_id = activity_feed_items.creator_id and f2.followable_type = 'User'").
-    joins("left outer join players on mentions.mentionable_type = 'Player' and mentions.mentionable_id = players.id").
-    where("activity_feed_items.creator_id = ? or children.creator_id = ? or f1.user_id = ? or f2.user_id = ? or (mentions.mentionable_type = 'User' and mentions.mentionable_id = ?) or players.user_id = ?",
-          id, id, id, id, id, id)
+    if user.admin?
+      includes(:children).
+      top_level.
+      joins_children.
+      joins_parent_and_child_mentions.
+      select_and_group.
+      ordered
+    else
+      id = user.id
+      includes(:children).
+      top_level.
+      joins_children.
+      joins_parent_and_child_mentions.
+      select_and_group.
+      ordered.
+      joins("left outer join followings f1 on f1.followable_id = mentions.mentionable_id and f1.followable_type = mentions.mentionable_type").
+      joins("left outer join followings f2 on f2.followable_id = activity_feed_items.creator_id and f2.followable_type = 'User'").
+      joins("left outer join players on mentions.mentionable_type = 'Player' and mentions.mentionable_id = players.id").
+      where("activity_feed_items.creator_id = ? or children.creator_id = ? or f1.user_id = ? or f2.user_id = ? or (mentions.mentionable_type = 'User' and mentions.mentionable_id = ?) or players.user_id = ?",
+            id, id, id, id, id, id)
+    end
   end
 
   def self.for(obj)
