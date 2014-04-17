@@ -4,7 +4,7 @@ class FeedItemsController < ApplicationController
 
   def index
     if request.xhr?
-      @feed_items = if params[:context_type] && params[:context_id]
+      if params[:context_type] && params[:context_id]
         @context = params[:context_type].constantize.find(params[:context_id])
         @feed_items = ActivityFeedItem.for(@context)
       else
