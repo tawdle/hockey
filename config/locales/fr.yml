@@ -309,7 +309,7 @@ fr:
       fans:
         one: 1 fan
         other: ! '%{count} fans'
-      header: Popular on BigShot
+      header: Populaire sur BigShot
     press:
       header: Press
     privacy:
@@ -384,7 +384,7 @@ fr:
       copyright_html: ! '&copy; 2014 8680884 Canada Inc. Tous droits réservés.'
       leagues: Ligues
       locations: Arènas
-      popular: Popular
+      popular: Populaire
       press: Revue de presse
       privacy: Confidentialité
       teams: Équipes
