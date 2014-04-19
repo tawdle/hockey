@@ -27,4 +27,12 @@ namespace :notifications do
       end
     end
   end
+  namespace :invitations do
+    task :send => :environment do
+      Invitation.where(:state => :pending).where("greatest(created_at, last_reminder_sent_at) < ?", 1.week.ago).each do |invitation|
+        InvitationMailer.remind(invitation).deliver
+        invitation.update_attribute(:last_reminder_sent_at, Time.now)
+      end
+    end
+  end
 end

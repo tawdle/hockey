@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>Hello!</p>
+
+    <p>This is a reminder that <%= @invitation.creator.name %> is still awaiting your response to their invitation:</p>
+
+    <p style="padding: 10px; background-color: #cccccc; margin: 20px; border: 1px solid #aaaaaa; border-radius: 3px;">
+      <%= @message %>
+    </p>
+
+    <p>Click on the button below to accept or decline <%= @invitation.creator.name %>'s invitation.</p>
+
+    <p style="margin-top:20px;">
+      <%= link_to "Accept", accept_invitation_url(@invitation), :style => "border-radius:3px;background-color:#428bca;color:white;padding:1px 5px;line-height:1.5;font-size:12px;" %>
+      <%= link_to "Decline", decline_invitation_url(@invitation), :style => "border-radius:3px;background-color:#d9534f;color:white;padding:1px 5px;line-height:1.5;font-size:12px;" %>
+    </p>
+  </body>
+</html>

@@ -445,7 +445,8 @@ CREATE TABLE invitations (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     user_id integer,
-    language character varying(255)
+    language character varying(255),
+    last_reminder_sent_at timestamp without time zone
 );
 
 
@@ -2002,3 +2003,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140324184355');
 INSERT INTO schema_migrations (version) VALUES ('20140325161714');
 
 INSERT INTO schema_migrations (version) VALUES ('20140325181427');
+
+INSERT INTO schema_migrations (version) VALUES ('20140418233919');

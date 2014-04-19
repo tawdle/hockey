@@ -9,7 +9,7 @@ class InvitationMailer < ActionMailer::Base
 
   default from: format_address("mailer@bigshot.io", "BigShot.io")
 
-  def invite(invitation)
+  def setup(invitation, subject_prefix=nil)
     @invitation = invitation
     I18n.with_locale(invitation.language || DEFAULT_LANGUAGE) do
       opts = case invitation.target
@@ -24,8 +24,18 @@ class InvitationMailer < ActionMailer::Base
              end
 
       scope = "invitation_mailer.#{invitation.predicate}_#{invitation.target.class.name.downcase}"
+      subject = I18n.t(:subject, :scope => scope)
+      subject = "#{I18n.t(subject_prefix, :scope => "invitation_mailer")}: #{subject}" if subject_prefix
       @message = I18n.t(:message, opts.merge(:scope => scope))
-      mail to: @invitation.email, subject: I18n.t(:subject, :scope => scope)
+      mail to: @invitation.email, subject: subject
     end
+  end
+
+  def invite(invitation)
+    setup(invitation)
+  end
+
+  def remind(invitation)
+    setup(invitation, :reminder)
   end
 end

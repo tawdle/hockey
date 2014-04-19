@@ -325,6 +325,7 @@ en:
       claim: claim ownership of
       follow: become a fan of
   invitation_mailer:
+    reminder: Reminder
     follow_league:
       subject: "Invitation to Become a Fan"
       message: ! "%{creator_name} has invited you to become a fan of %{target_name}."
