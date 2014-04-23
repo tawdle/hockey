@@ -137,6 +137,7 @@ en:
     invitations:
       create:
         success: ! 'Your invitation to %{name} has been sent.'
+      decline: You have declined the invitation.
     leagues:
       create:
         success: League was successfully created.

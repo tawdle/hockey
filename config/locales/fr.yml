@@ -136,6 +136,7 @@ fr:
     invitations:
       create:
         success: Votre invitation a été envoyée à %{name}.
+      decline: Vous avez refusé cette invitation.
     leagues:
       create:
         success: Votre ligue a été créee avec succès.
@@ -303,8 +304,7 @@ fr:
       message_html: <p>Vous semblez être nouveau ici. Pour profiter à plein de l'expérience
         BigShot, nous vous suggérons d'utiliser la barre de recherche au haut de la
         page pour trouver vos joueurs et équipes préférés. Puis cliquez sur <strong>Devenir
-        fan</strong> button.</p> <p>Or, you can look to see <a href="/popular">what's
-        popular</a>.</p>
+        fan</strong> button.</p> <p>Ou vous pouvez regarder pour voir <a href="/popular">ce qui est populaire</a>.</p>
     popular:
       fans:
         one: 1 fan
@@ -375,7 +375,7 @@ fr:
       message: ! '%{creator_name} vous invite à devenir marqueur officiel pour le
         tournoi %{target_name}.'
       subject: Invitation pour devenir marqueur officiel
-    reminder: Reminder
+    reminder: Rappel
   layouts:
     footer:
       about: À propos de nous

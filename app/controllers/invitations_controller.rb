@@ -38,6 +38,6 @@ class InvitationsController < ApplicationController
     if @invitation.state == :pending
       @invitation.decline!
     end
-    redirect_to :root
+    redirect_to :root, notice: t("controllers.invitations.decline")
   end
 end
