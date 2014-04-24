@@ -304,7 +304,8 @@ fr:
       message_html: <p>Vous semblez être nouveau ici. Pour profiter à plein de l'expérience
         BigShot, nous vous suggérons d'utiliser la barre de recherche au haut de la
         page pour trouver vos joueurs et équipes préférés. Puis cliquez sur <strong>Devenir
-        fan</strong> button.</p> <p>Ou vous pouvez regarder pour voir <a href="/popular">ce qui est populaire</a>.</p>
+        fan</strong> button.</p> <p>Ou vous pouvez regarder pour voir <a href="/popular">ce
+        qui est populaire</a>.</p>
     popular:
       fans:
         one: 1 fan
@@ -446,6 +447,17 @@ fr:
       unsubscribe_html: ! '%{link} de ces courriels'
       unsubscribe_link_text: Se désabonner
       what_is_new_html: Voici ce qui se passe sur %{link} depuis votre dernière visite.
+    no_follows:
+      create_some_follows_html: <p>Merci d’avoir créer un compte sur BigShot.io! Nous
+        sommes heureux de vous avoir comme membre.</p> <p>Pour profiter au maximum
+        de votre expérience BigShot, nous suggérons devenir un fan de vos équipes
+        et joueurs préférés, des ligues, des tournois, des arénas ou des utilisateurs.
+        C’est est facile! <a href="%{link}">Connectez vous</a> à votre compte, utilisez
+        la boîte de recherche en haut de la page pour trouver quelqu'un ou quelque
+        chose qui vous intéresse et cliquez sur le bouton "Devenir fan".</p> <p>Nous
+        veillerons à ce que vous ayez toujours les dernières informations sur les
+        choses qui vous intéressent.</p>
+      subject: Bienvenue à BigShot!
   penalties:
     categories:
       game_misconduct: Extrême inconduite (expulsion)

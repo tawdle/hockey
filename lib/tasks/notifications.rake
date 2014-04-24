@@ -19,9 +19,14 @@ namespace :notifications do
     task :send => :environment do
       User.order(:id).where(:subscribed_daily_activity_feed => true).find_each do |user|
         mark_time = Time.now
-        items = new_feed_items_for(user).all
-        if items.any?
-          NotificationMailer.new_feed_items(user, items).deliver
+        if Following.followables_for(user).any?
+          items = new_feed_items_for(user).all
+          if items.any?
+            NotificationMailer.new_feed_items(user, items).deliver
+            user.update_attribute(:last_activity_feed_notification_sent_at, mark_time)
+          end
+        elsif user.last_activity_feed_notification_sent_at.nil?
+          NotificationMailer.no_follows(user).deliver
           user.update_attribute(:last_activity_feed_notification_sent_at, mark_time)
         end
       end

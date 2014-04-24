@@ -433,6 +433,16 @@ en:
       to_see_or_reply_html: To see these items or to reply, sign into your account at %{link}.
       unsubscribe_link_text: Unsubscribe
       unsubscribe_html: ! '%{link} from these emails'
+    no_follows:
+      create_some_follows_html: <p>Thanks for creating an account on BigShot.io! We're
+        happy to have you as a member.</p>To get the most out of your BigShot experience,
+        we suggest that you become a fan of your favorite teams, players, leagues,
+        tournaments, arenas or users. It's easy. Just <a href="%{link}">sign in</a>
+        to your account, use the search box at the top of the page to find someone
+        or something you're interested in, and click the "Become a fan" button.</p><p>We'll
+        make sure that you always have the latest information about the things that
+        interest you.</p>
+      subject: Welcome to BigShot!
   penalties:
     categories:
       minor: "Minor (2 minutes)"
