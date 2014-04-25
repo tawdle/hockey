@@ -985,7 +985,8 @@ CREATE TABLE users (
     last_viewed_home_page_at timestamp without time zone,
     unsubscribe_token character varying(255),
     subscribed_daily_activity_feed boolean DEFAULT true NOT NULL,
-    last_activity_feed_notification_sent_at timestamp without time zone
+    last_activity_feed_notification_sent_at timestamp without time zone,
+    no_followings_notification_sent_at timestamp without time zone
 );
 
 
@@ -2005,3 +2006,5 @@ INSERT INTO schema_migrations (version) VALUES ('20140325161714');
 INSERT INTO schema_migrations (version) VALUES ('20140325181427');
 
 INSERT INTO schema_migrations (version) VALUES ('20140418233919');
+
+INSERT INTO schema_migrations (version) VALUES ('20140425172825');
