@@ -67,6 +67,7 @@ gem 'state_machine'
 gem 'strip_attributes'
 gem 'symbolize'
 gem 'rails-timeago', '~> 2.0'
+gem 'workless'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

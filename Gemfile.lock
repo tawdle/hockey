@@ -87,6 +87,7 @@ GEM
     exception_notification (4.0.1)
       actionmailer (>= 3.0.4)
       activesupport (>= 3.0.4)
+    excon (0.33.0)
     execjs (2.0.2)
     factory_girl (3.6.2)
       activesupport (>= 3.0.0)
@@ -99,6 +100,9 @@ GEM
       bundler (~> 1.0)
       rails (>= 3, < 5)
     hashery (2.1.1)
+    heroku-api (0.3.18)
+      excon (~> 0.27)
+      multi_json (~> 1.8)
     heroku-deflater (0.5.3)
       rack (>= 1.4.5)
     hike (1.2.3)
@@ -202,6 +206,8 @@ GEM
       rspec-mocks (~> 2.14.0)
     ruby-rc4 (0.1.5)
     rubyzip (1.0.0)
+    rush (0.6.8)
+      session
     sass (3.2.12)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -212,6 +218,7 @@ GEM
       multi_json (~> 1.0)
       rubyzip (~> 1.0.0)
       websocket (~> 1.0.4)
+    session (3.2.0)
     shoulda-matchers (2.5.0)
       activesupport (>= 3.0.0)
     sprockets (2.2.2)
@@ -243,6 +250,11 @@ GEM
       rack (>= 1.0)
     webrick (1.3.1)
     websocket (1.0.7)
+    workless (1.2.3)
+      delayed_job (>= 2.0.7)
+      heroku-api
+      rails
+      rush
 
 PLATFORMS
   ruby
@@ -286,3 +298,4 @@ DEPENDENCIES
   symbolize
   uglifier (>= 1.0.3)
   webrick (~> 1.3.1)
+  workless
