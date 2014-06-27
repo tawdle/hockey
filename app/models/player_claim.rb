@@ -19,22 +19,36 @@ class PlayerClaim < ActiveRecord::Base
   end
 
   def approve!(manager)
-    result = false
-    PlayerClaim.transaction do
-      update_attributes(:state => :approved, :manager => manager)
-      result = player.update_attributes(:user_id => creator.id)
-      PlayerClaimMailer.delay.approved(self)
+    case state
+    when :pending
+      result = false
+      PlayerClaim.transaction do
+        update_attributes(:state => :approved, :manager => manager)
+        result = player.update_attributes(:user_id => creator.id)
+        PlayerClaimMailer.delay.approved(self)
+      end
+      result
+    when :approved
+      true
+    when :denied
+      false
     end
-    result
   end
 
   def deny!(manager)
-    result = false
-    PlayerClaim.transaction do
-      result = update_attributes(:state => :denied, :manager => manager)
-      PlayerClaimMailer.delay.denied(self)
+    case state
+    when :pending
+      result = false
+      PlayerClaim.transaction do
+        result = update_attributes(:state => :denied, :manager => manager)
+        PlayerClaimMailer.delay.denied(self)
+      end
+      result
+    when :approved
+      false
+    when :denied
+      true
     end
-    result
   end
 
   private

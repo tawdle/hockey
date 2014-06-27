@@ -32,30 +32,79 @@ describe PlayerClaim do
   end
 
   describe "#approve!" do
-    let(:player_claim) { FactoryGirl.create(:player_claim) }
-    let(:manager) { player_claim.player.team.managers.first }
-    it "links the player and creator" do
-      expect {
+    context "with a pending claim" do
+      let(:player_claim) { FactoryGirl.create(:player_claim) }
+      let(:manager) { player_claim.player.team.managers.first }
+      it "links the player and creator" do
+        expect {
+          player_claim.approve!(manager)
+        }.to change { player_claim.player.reload.user }.from(nil).to(player_claim.creator)
+      end
+      it "sends an email to the creator" do
+        PlayerClaimMailer.should receive(:approved).with(player_claim).and_return(mail)
         player_claim.approve!(manager)
-      }.to change { player_claim.player.reload.user }.from(nil).to(player_claim.creator)
+      end
     end
-    it "sends an email to the creator" do
-      PlayerClaimMailer.should receive(:approved).with(player_claim).and_return(mail)
-      player_claim.approve!(manager)
+    context "with an already-approved claim" do
+      let(:manager) { FactoryGirl.create(:user) }
+      let(:player_claim) { FactoryGirl.create(:player_claim, :state => :approved, :manager => manager) }
+      it "returns true" do
+        player_claim.approve!(manager).should be_true
+      end
+
+      it "sends no email" do
+        PlayerClaimMailer.should_not receive(:approved)
+        player_claim.approve!(manager)
+      end
+    end
+    context "with an already-denied claim" do
+      let(:manager) { FactoryGirl.create(:user) }
+      let(:player_claim) { FactoryGirl.create(:player_claim, :state => :denied, :manager => manager) }
+      it "returns false" do
+        player_claim.approve!(manager).should be_false
+      end
+      it "sends no email" do
+        PlayerClaimMailer.should_not receive(:approved)
+        player_claim.approve!(manager)
+      end
     end
   end
 
   describe "#deny!" do
-    let(:player_claim) { FactoryGirl.create(:player_claim) }
-    let(:manager) { player_claim.player.team.managers.first }
-    it "doesn't link the player and creator" do
-      expect {
+    context "with a pending claim" do
+      let(:player_claim) { FactoryGirl.create(:player_claim) }
+      let(:manager) { player_claim.player.team.managers.first }
+      it "doesn't link the player and creator" do
+        expect {
+          player_claim.deny!(manager)
+        }.not_to change { player_claim.player.reload }.from(nil)
+      end
+      it "sends an email to the creator" do
+        PlayerClaimMailer.should receive(:denied).with(player_claim).and_return(mail)
         player_claim.deny!(manager)
-      }.not_to change { player_claim.player.reload }.from(nil)
+      end
     end
-    it "sends an email to the creator" do
-      PlayerClaimMailer.should receive(:denied).with(player_claim).and_return(mail)
-      player_claim.deny!(manager)
+    context "with an already-approved claim" do
+      let(:manager) { FactoryGirl.create(:user) }
+      let(:player_claim) { FactoryGirl.create(:player_claim, :state => :approved, :manager => manager) }
+      it "returns false" do
+        player_claim.deny!(manager).should be_false
+      end
+      it "sends no email" do
+        PlayerClaimMailer.should_not receive(:denied)
+        player_claim.deny!(manager)
+      end
+    end
+    context "with an already-denied claim" do
+      let(:manager) { FactoryGirl.create(:user) }
+      let(:player_claim) { FactoryGirl.create(:player_claim, :state => :denied, :manager => manager) }
+      it "returns true" do
+        player_claim.deny!(manager).should be_true
+      end
+      it "sends no email" do
+        PlayerClaimMailer.should_not receive(:denied)
+        player_claim.deny!(manager)
+      end
     end
   end
 
